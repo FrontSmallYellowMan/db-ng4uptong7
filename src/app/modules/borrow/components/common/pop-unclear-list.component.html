@@ -1,0 +1,80 @@
+<div class="modal">
+    <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+        <div class="modal-header m-dialog-head">
+            <span>未清项列表</span>
+            <i class="iqon-close" (click)="hide()"></i>
+        </div>
+
+        <div class="m-content-right">
+            <i class="iqon-query" (click)="search()"></i>
+            <input [(ngModel)]="reservationNo" (keyup.enter)="search()" class="search" name="reservationNo" type="text" placeholder="-请输入预留号">
+        </div>
+
+        <div class="m-content-right" style="overflow:scroll;height:400px;">
+            <ul class="table-uls">
+
+                <li class="table-list" *ngFor="let po of unClearItemList;index as i">
+                    <input type="checkbox" icheck [(ngModel)]="po.checked" (onClick)="checkUnClear($event,po)">
+                    <div class="table-list-header">
+                        <div class="list-info">
+                            <div>
+                                <p>预留号</p><span>{{po.unClearItem.reservationNo}}</span></div>
+                            <div>
+                                <p>借用客户</p><span>{{po.unClearItem.borrowCustomerName}}</span></div>
+                            <div>
+                                <p>项目名称</p><span>{{po.unClearItem.projectName}}</span></div>
+                        </div>
+
+                        <div class="list-info">
+                            <div>
+                                <p>借用日期</p><span>{{po.unClearItem.borrowDate|iqDate:'YYYY-MM-DD'}}</span></div>
+                            <div>
+                                <p>超期天数</p><span>{{po.unClearItem.overdueDays}}</span></div>
+                            <div>
+                                <p>预计归还日期</p><span>{{po.unClearItem.giveBackDay|iqDate:'YYYY-MM-DD'}}</span></div>
+
+                        </div>
+                    </div>
+
+                    <div class="table-list-body">
+                        <div style="width: 100%;padding-top:10px">
+                            <table class="m-info-table">
+                                <thead>
+                                    <tr>
+                                        <th class="wp5">序号</th>
+                                        <th class="wp10">物料编号</th>
+                                        <th class="wp10">物料描述</th>
+                                        <th class="wp5">批次</th>
+                                        <th class="wp5">单位</th>
+                                        <th class="wp10">借用数量</th>
+                                        <th class="wp10">金额</th>
+                                        <th class="wp10">工厂</th>
+                                        <th class="wp10">借用在途库</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let material of po.unclearMaterialItemList;index as j">
+                                    <tr>
+                                        <td>{{j+1}}</td>
+                                        <td>{{material.meterialNo}}</td>
+                                        <td>{{material.meterialMemo}}</td>
+                                        <td>{{material.batch}}</td>
+                                        <td>{{material.unit}}</td>
+                                        <td>{{material.usableCount}}</td>
+                                        <td>{{material.price*material.usableCount}}</td>
+                                        <td>{{material.factory}}</td>
+                                        <td>{{material.onwayStore}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="modal-footer">
+            <button class="m-btn-cancel btn-blue" (click)="save(unClearItemList)">确定</button>
+            <button class="m-btn-cancel" (click)="hide(true)">关闭</button>
+        </div>
+    </div>

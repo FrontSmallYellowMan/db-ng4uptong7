@@ -1,0 +1,234 @@
+<div class="m-overclass">
+  <div class="m-list-menu">
+    <ul class="m-state" (click)="onTab($event)" #tab>
+      <!-- <li class="active" data-state="sExamine" #tab>审批中</li>
+      <li data-state="sFinish" #tab>已完成</li>
+      <li data-state="sAll" #tab>全部</li>
+      <li data-state="sTemp" #tab>草稿</li> -->
+      <li class="active" data-state="0">待我审批</li>
+      <li data-state="1">我已审批</li>
+      <li data-state="2">全部</li>
+    </ul>
+
+    <!-- <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+
+      <div style="display:inline">
+        <button type="button" class="m-btn-default" style="height:30px;font-size:12px;">导出列表数据</button>
+      </div>
+
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i>
+        高级搜索
+      </div>
+    </div> -->
+
+    <!-- 高级搜索 -->
+    <!-- <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div> -->
+    <!-- <div style="float: right;margin: 10px 20px 0 0;" [ngClass]="{'hide': !highSearchShow}">
+      <button type="button" class="m-btn-default" style="height:30px;font-size:12px;">导出列表数据</button>
+    </div> -->
+    <!-- <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <form #form="ngForm">
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">本部</label>
+          <input type="text" name="Platform" placeholder="-请填写本部" [(ngModel)]="myApprovalQuery.BBMC" trim>
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">事业部</label>
+          <input type="text" name="SYBMC" placeholder="-请填写事业部" trim [(ngModel)]="myApprovalQuery.SYBMC">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">申请人</label>
+          <input type="text" name="User" placeholder="-请填写申请人" trim [(ngModel)]="myApprovalQuery.User">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">需求跟踪号</label>
+          <input type="text" name="TrackingNumber" placeholder="-请填写需求跟踪号" trim [(ngModel)]="myApprovalQuery.TrackingNumber">
+        </div>
+
+        <div class="m-search-item">
+          <label>ERP订单号
+            <br>(修改前)</label>
+          <input type="text" name="OriginalERPOrderNo" placeholder="-请填写ERP订单号(修改前)" trim [(ngModel)]="myApprovalQuery.OriginalERPOrderNo">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">申请单号</label>
+          <input type="text" name="ERPOrderChangeNo" placeholder="-请填写申请单号" trim [(ngModel)]="myApprovalQuery.ERPOrderChangeNo">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding-top:10px;">供应商名称</label>
+          <input type="text" name="Vendor" placeholder="-请填写供应商名称" trim [(ngModel)]="myApprovalQuery.Vendor">
+        </div>
+
+        <div class="m-search-item">
+          <label>是否采购
+            <br>冲红</label>
+          <div class="m-select m-select-width">
+            <i class="iqon-xia"></i>
+            <select name="IsRedInvoice" [(ngModel)]="myApprovalQuery.IsRedInvoice">
+              <option value="" disabled selected>-请选择</option>
+              <option value="">全部</option>
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="m-search-item m-search-items m-search-clear">
+          <label>申请日期</label>
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start">
+              <my-datepicker [(ngModel)]="myApprovalQuery.BeginTime" format="YYYY-MM-DD" [EndDate]="myApprovalQuery.EndTime" PlaceHolder="-开始日期" name="BeginDate"></my-datepicker>
+            </div>
+            <span>~</span>
+            <div class="m-datepicker-end">
+              <my-datepicker [(ngModel)]="myApprovalQuery.EndTime" format="YYYY-MM-DD" [StartDate]="myApprovalQuery.BeginTime" PlaceHolder="-结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="m-search-btn">
+          <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </form>
+    </div> -->
+
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+        <div style="display:inline">
+            <button type="button" class="m-btn-default" style="height:30px;font-size:12px;">导出列表数据</button>
+        </div>
+        <div class="m-search-high" (click)="highSearchShow=true">
+          <i class="iqon-highsearch"></i> 高级搜索
+        </div>
+      </div>
+  
+      <!-- 高级搜索 -->
+      <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="highSearchShow = false">
+        收起高级搜索
+      </div>
+      <div style="float: right;margin: 10px 20px 0 0;" [ngClass]="{'hide': !highSearchShow}">
+          <button type="button" class="m-btn-default" style="height:30px;font-size:12px;">导出列表数据</button>
+      </div>
+      <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+        <div class="form">
+          <div class="m-search-item">
+            <label>本部</label>
+            <input type="text" name="BBMC" placeholder="-请填写本部" [(ngModel)]="myApprovalQuery.BBMC" trim>
+          </div>
+          <div class="m-search-item">
+            <label>事业部</label>
+            <input type="text" name="SYBMC" placeholder="-请填写事业部" trim [(ngModel)]="myApprovalQuery.SYBMC">
+          </div>
+          <div class="m-search-item">
+            <label>申请人</label>
+            <input type="text" name="User" placeholder="-请填写申请人" trim [(ngModel)]="myApprovalQuery.User">
+          </div>
+          <div class="m-search-item">
+              <label>需求跟踪号</label>
+              <input type="text" name="TrackingNumber" placeholder="-请填写需求跟踪号" trim [(ngModel)]="myApprovalQuery.TrackingNumber" style="position: relative;top: 3px;">
+          </div>
+          <div class="m-search-item">
+              <label style="position: relative;top: 5px;">ERP订单号<br>(修改前)</label>
+              <input style="position: relative;top: -4px;" type="text" name="OriginalERPOrderNo" placeholder="-请填写ERP订单号(修改前)" trim [(ngModel)]="myApprovalQuery.OriginalERPOrderNo">
+          </div>
+          <div class="m-search-item" style="position: relative;top: 4px;">
+              <label>申请单号</label>
+              <input type="text" name="ERPOrderChangeNo" placeholder="-请填写申请单号" trim [(ngModel)]="myApprovalQuery.ERPOrderChangeNo">
+          </div>
+          <div class="m-search-item">
+              <label>供应商名称</label>
+              <input type="text" name="Vendor" placeholder="-请填写供应商名称" trim [(ngModel)]="myApprovalQuery.Vendor">
+          </div>
+          <div class="m-search-item" style="width:31%;text-align:right;    position: relative;top: -8px;left: -4px;">
+              <label style="position: relative;top: 7px;">是否采购<br>冲红</label>
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select name="IsRedInvoice" [(ngModel)]="myApprovalQuery.IsRedInvoice">
+                  <option value="" disabled selected>-请选择</option>
+                  <option value="">全部</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+              </div>
+          </div>
+  
+          <div class="m-search-item m-search-items">
+            <label>申请日期</label>
+            <div class="m-datepicker-comb">
+              <div class="m-datepicker-start">
+                <my-datepicker [(ngModel)]="myApprovalQuery.BeginTime" format="YYYY-MM-DD" [EndDate]="myApprovalQuery.EndTime" PlaceHolder="-开始日期" name="BeginDate"></my-datepicker>
+              </div> ~
+              <div class="m-datepicker-end">
+                <my-datepicker [(ngModel)]="myApprovalQuery.EndTime" format="YYYY-MM-DD" [StartDate]="myApprovalQuery.BeginTime" PlaceHolder="-结束日期" name="EndDate"></my-datepicker>                
+              </div>
+            </div>
+          </div>
+          <div class="m-search-btn">
+              <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+              <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" [ngClass]="{'hideStyle':isHide}">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <p class="m-p-notice">点击“新建采购订单修改”新建数据吧~</p>
+    </div>
+  </div>
+
+  <!-- 我的审批列表 -->
+  <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}" style="width:auto">
+    <div class="table-auto-content">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr style="line-height:18px!important">
+              <th style="width:5%;">序号</th>
+              <th style="width:13%">申请单号</th>
+              <th style="width:9%">需求跟踪号</th>
+              <th style="width:8%">ERP订单号<br>(修改前)</th>
+              <th style="width:12%">供应商名称</th>
+              <th style="width:8%">订单金额<br>(修改前)</th>
+              <th style="width:9%">当前处理人</th>
+              <th style="width:8%">当前环节名称</th>
+              <th style="width:5%">申请人</th>
+              <th style="width:8%">申请日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of searchList;index as i" style="cursor: auto;">
+            <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+            <td [title]="item.ERPOrderChangeNo"><span (click)="getDetail(i)" class="list-first-td">{{item.ERPOrderChangeNo}}</span></td>
+            <td [title]="item.TrackingNumber">{{item.TrackingNumber}}</td>
+            <td [title]="item.OriginalERPOrderNo">{{item.OriginalERPOrderNo}}</td>
+            <td [title]="item.Vendor">{{item.Vendor}}</td>
+            <td>{{item.OriginalOrderAmount|number:"1.2"}}</td>
+            <td [title]="item.currentNodeApprovers"><p class="m-p-warp">{{item.currentNodeApprovers?item.currentNodeApprovers:''}}</p></td>
+            <td>{{item.currentNodeName?item.currentNodeName:'已完成'}}</td>
+            <td>{{item.Proposer}}</td>
+            <td>{{item.ApplyDate|iqDate:"YYYY-MM-DD"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

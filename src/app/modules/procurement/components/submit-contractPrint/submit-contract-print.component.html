@@ -1,0 +1,58 @@
+<form #contractPrintForm="ngForm">
+  <ul class="addApp-base-list">
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>合同名称</label>
+        <input class="addApp-form-input" required type="text" name="contractName" ngModel 
+          [(ngModel)]="contractInfo.ContractName" (ngModelChange)="onChangeData()" placeholder="-请填写合同名称">
+      </div>
+      <p class="m-p-warn procu-warn" *ngIf="!contractInfo.ContractName && isSubmit">请填写合同名称</p>
+    </li>
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>用印金额</label>
+        <input class="addApp-form-input" required type="text" name="contractMoney" ngModel 
+          [(ngModel)]="contractInfo.ContractMoney" (blur)="onChangeData()" placeholder="-请填写用印金额">
+      </div>
+      <p class="m-p-warn procu-warn" *ngIf="contractInfo.ContractMoney==null && isSubmit">请填写用印金额</p>
+    </li>
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>用印平台</label>
+        <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.plateInfo" required name="plateform" ngModel (selected)="getPlateform($event)"
+          [active]=avtivePlate [(ngModel)]=avtivePlate></ng-select>
+      </div>
+      <p class="m-p-warn procu-warn" *ngIf="!contractInfo.Platform_C_ID && isSubmit">请选择用印平台</p>
+    </li>
+  </ul>
+  <ul class="addApp-base-list" style="margin-top:0">
+    <li class="addApp-textarea-box">
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>合同内容摘要</label>
+        <textarea class="addApp-form-input addApp-form-textarea" required cols="30" rows="10" name="contractContent" 
+        ngModel [(ngModel)]="contractInfo.ContractContent" (ngModelChange)="onChangeData()" placeholder="-请填写合同内容摘要"></textarea>
+      </div>
+      <p class="m-p-warn procu-warn" *ngIf="!contractInfo.ContractContent && isSubmit">请填写合同内容摘要</p>
+    </li>
+  </ul>
+  <ul class="addApp-base-list accessory-content" style="margin-top:0">
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>上传附件</label>
+        <div class="accessory-item">
+          <iq-file-upload upType="1" [url]="contractPrintUrl" (onSuccess)="onUploadBack($event)" (onDeleteItem)="onDeleteItem($event)"
+            [hasUploaded]="AccessorySee_India" upLoadBtnId='twoUploadFiles'></iq-file-upload>
+        </div>
+      </div>
+      <p class="m-p-warn procu-warn" *ngIf="(!contractInfo.PurchaseContractInfoAccessories || !contractInfo.PurchaseContractInfoAccessories.length) && isSubmit">请上传用印文件</p>
+    </li>
+  </ul>
+  <add-seals #seals [sealsInfo] = "sealInfo" [platfromid] = "contractInfo.Platform_C_ID" 
+    [editData]="editData"
+    [isEdit] = "true" (scSeals)="scSeals($event)"></add-seals>
+</form>

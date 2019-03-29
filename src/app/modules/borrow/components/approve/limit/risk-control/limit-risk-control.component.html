@@ -1,0 +1,102 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left">
+            <h1 class="apply-tit-h1">额度申请</h1>
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">基础信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-p-infor  m-clearfix">
+                    <div class="m-exm-item" style="height:280px;width:100%">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <!--div class="m-user-info-small">
+                                        <div class="m-user-members" style="float: left;">
+                                            <div user-image [hasClose]="false" [user]="userInfo" *ngIf="notChange"></div>
+                                        </div>
+                                    </div-->
+                                    {{mainData.applyUserName}}
+                                    <span style="color: #a8b1bd;">{{mainData.applyItCode}}</span>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">联系方式</div>
+                                <div class="m-exm-cont">{{mainData.applyUserTel}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">员工编号</div>
+                                <div class="m-exm-cont">{{mainData.applyUserNo}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">平台</div>
+                                <div class="m-exm-cont">{{mainData.platformName}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请维度</div>
+                                <div class="m-exm-cont">
+                                    <input type="radio" class="radio" icheck [(ngModel)]="mainData.applyDimension" name="applyDimension" #radio1 value="1" disabled=true>
+                                    <label for="radio1" class="radio-label">事业部</label>
+                                    <input type="radio" class="radio" icheck [(ngModel)]="mainData.applyDimension" name="applyDimension" #radio2 value="0" disabled=true/>
+                                    <label for="radio2" class="radio-label">本部</label>
+
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">
+                                    <span *ngIf="mainData.applyDimension==='1'">事业部</span>
+                                    <span *ngIf="mainData.applyDimension==='0'">本部</span>
+                                </div>
+                                <div class="m-exm-cont" *ngIf="mainData.applyDimension==='1'">{{mainData.deptName}}</div>
+                                <div class="m-exm-cont" *ngIf="mainData.applyDimension==='0'">{{mainData.baseDeptName}}</div>
+                            </li>
+                            <li class="m-exm-half" *ngFor="let item of subData">
+                                <div class="m-exm-label">{{item.businessScopeCode}}</div>
+                                <div class="m-exm-cont">{{item.setAmount}}万元</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">当前常规额度</div>
+                                <div class="m-exm-cont">{{mainData.currentAmount}}万元</div>
+                            </li>
+                            <!--li class="m-exm-half">
+                                <div class="m-exm-label">已使用额度</div>
+                                <div class="m-exm-cont">{{mainData.usedAmount==null?"":mainData.usedAmount+"万元"}}</div>
+                            </li-->
+                            <li>
+                                <div class="m-exm-label">申请理由</div>
+                                <div class="m-exm-cont" style="width:88%;">{{mainData.applyReason}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--审批记录 -->
+
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+            <div class="apply-opinion" *ngIf="!isView">
+                <div class="m-exm-item">
+                    <p class="m-exm-advice">审批意见</p>
+                    <textarea  class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="remark"></textarea>
+                </div>
+            </div>
+
+            <!--jy-wfapproval [saveId6Flag]="saveId6Flag" *ngIf="!isView" [appParms]="appParms" (onSave)="saveBill($event)"></jy-wfapproval-->
+            <div class="addApp-sub-btns" style="text-align: center">
+                <!--div class="m-exm-btn"-->
+                <ng-container *ngIf="!isView">
+                    <button class="m-btn-agree apply-agree" (click)="agree()" >同意</button>
+                    <button class="m-btn-refuse apply-refuse" (click)="reject()" style="color:aliceblue">驳回</button>
+                </ng-container>
+                <!--div class="addApp-sub-btns" style="text-align: center" *ngIf="isView"-->
+                <button class="m-btn-refuse" type="button"  (click)="goback()">返回</button>
+            </div>
+
+        </div>
+        <!--审批过程 -->
+        <div class="apply-p-right ">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

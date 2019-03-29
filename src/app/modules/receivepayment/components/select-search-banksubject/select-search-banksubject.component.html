@@ -1,0 +1,16 @@
+<div class="select-search">
+  <div class="select-modal" [ngClass]="{'m-select-warn':!selectedItem?.SUBJECT_NO && isSubmit}" #element (click)="toggle()">
+    {{selectedItem?.SUBJECT_NO}}-{{selectedItem?.BANKNAME}}
+    <i class="iqon-xia"></i>
+  </div>
+  <div class="search-modal" [ngClass]="{'hide': !optionShow}">
+    <div class="search-wrap">
+      <input [(ngModel)]="keyWord" (keyup)="search(keyWord)" class="m-input" type="text" name="search" id="searchOption" placeholder="-请输入搜索条件">
+    </div>
+    <div class="option-wrap">
+      <ul class="option-list">
+        <li *ngFor="let item of _optionList;index as i" (click)="selectItem(item)">{{item?.SUBJECT_NO}}-{{item?.BANKNAME}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

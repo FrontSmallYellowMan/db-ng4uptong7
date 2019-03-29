@@ -1,0 +1,26 @@
+<div class="container m-order-number">
+    <div class="modal-header m-list-head">
+        <span>维护税号</span>
+        <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <form #form="ngForm">
+    <div class="modal-body clearfix">
+        <div class="m-form-item">
+          <span class="m-form-need">*</span>税号
+          <div class="m-form-input">
+            <input type="text" #forminput maxlength=18 minlength=15 name="taxCode" required pattern="^\+?[1-9][0-9]*$" [(ngModel)]="params.TaxNumber" #taxCode="ngModel">
+          </div>
+          <p class="m-warn-tip" *ngIf="(taxCode.touched || form.submitted) && taxCode.invalid">
+            <span *ngIf="taxCode.errors?.required">税号必填</span>
+            <span *ngIf="taxCode.errors?.pattern">税号为数字</span>
+            <span *ngIf="taxCode.errors?.minlength">税号不能少于15个字</span>
+            <span *ngIf="taxCode.errors?.maxlength">税号不能超过18个字</span>
+          </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="m-btn-confirm" type="button" (click) = "submit($event)">确定</button>
+        <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+/*我的申请头部*/
+.m-boardmenu{
+  display:inline-block;
+  line-height: 50px;
+  >a{
+    display: inline-block;
+    position: relative;
+    padding: 0 25px;
+    color: #4a4a4a;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover{
+      color: #4a4a4a;
+    }
+    .m-num {
+      top: 16px;
+      left: 90px;
+      padding: 0 7px;
+      height: 17px;
+      line-height: 17px;
+      color: #fff;
+      background-color: #ff4d4d;
+      border-radius: 3px;
+    }
+    .m-nums {
+      @extend .m-num;
+    }
+  }
+  .active:after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 13px;
+    width: 80px;
+    height: 4px;
+    background-color: #57b9f8;
+  }
+}

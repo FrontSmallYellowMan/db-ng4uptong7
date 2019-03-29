@@ -1,0 +1,213 @@
+<div class="m-boardtop clearfix">
+    <!--菜单-->
+    <div class="m-crumb">
+        <ul>
+            我的位置：
+            <li><a>DCG业务管理平台</a></li>
+            <li><a>借用管理</a></li>
+            <li><a>借用跟踪</a></li>
+            <li><a>冻结人员信息</a></li>
+        </ul>
+    </div>
+    <!--iq-breadcrumb></iq-breadcrumb-->
+    <button
+        type="button"
+        class="m-btn-main-2 g-fr"
+        style="margin-top: 7px;background-color: #4cc9a7;"
+        (click)="addFreeze()"
+    >
+        +新建申请
+    </button>
+</div>
+<div class="m-overclass">
+    <!--缺省页开始-->
+    <div
+        class="m-apply"
+        [ngClass]="{
+            hide:
+                isSearch ||
+                (freezePersonnelData && freezePersonnelData.length > 0)
+        }"
+    >
+        <loading [show]="loading"></loading>
+        <div class="m-apply-circle j-null-info">
+            <i class="iqon-plus-circle" (click)="addFreeze()"></i>
+            <span>借用跟踪-冻结人员信息为空</span>
+            <p>点击右上角“新建申请”按钮，新建冻结人员信息吧~</p>
+        </div>
+    </div>
+    <!--缺省页结束-->
+
+    <!--内容页开始-->
+    <div
+        class="m-contclass"
+        [ngClass]="{
+            hide:
+                !isSearch &&
+                !(freezePersonnelData && freezePersonnelData.length > 0)
+        }"
+    >
+        <!--搜索-->
+        <div class="m-list-menu">
+            <div class="m-search j-seach">
+                <i class="iqon-query" (click)="search()"></i>
+                <input
+                    placeholder="冻结人员ITCode"
+                    [(ngModel)]="query.keyWord"
+                    (keyup.enter)="search()"
+                    type="text"
+                />
+            </div>
+        </div>
+        <!--搜索结果缺省页开始-->
+        <div
+            class="m-noresult"
+            [ngClass]="{
+                hide:
+                    !isSearch ||
+                    (freezePersonnelData && freezePersonnelData.length > 0)
+            }"
+        >
+            <loading [show]="loading"></loading>
+            <div class="m-noresult-msg">
+                <i class="iqon-query"></i>
+                <p class="m-noresult-notice">
+                    暂无相关数据
+                </p>
+                <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+            </div>
+        </div>
+        <!--搜索结果缺省页结束-->
+        <div
+            style="position: relative;overflow: hidden"
+            class="m-card-cont"
+            [ngClass]="{
+                hide: !freezePersonnelData || freezePersonnelData.length == 0
+            }"
+        >
+            <loading [show]="loading"></loading>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                <!-- <th style="min-width:70px;text-align:center;">已选{{checkedNum}}项</th> -->
+                <div
+                    style="position: absolute;height: 46px;line-height: 46px;padding-left: 20px;width: 100%;left: 40px;background: #fff;z-index:1"
+                >
+                    <th class="list-edit">
+                        已选{{ checkedNum }}项<button
+                            style="margin-left: 40px;
+                    padding: 6px 10px;
+                    background: #f1f4f6;
+                    border: none;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    font-weight: normal;
+                    line-height: 12px;"
+                            type="button"
+                            class="m-btn-del"
+                            name="button"
+                            (click)="deleteFreeze()"
+                        >
+                            删除
+                        </button>
+                    </th>
+                </div>
+                <!-- <th style="min-width:160px;"></th>
+<th style="min-width:360px;"></th>
+<th style="min-width:125px;text-align:center;"></th> -->
+            </ng-container>
+            <table class="table table-hover table-list">
+                <thead>
+                    <tr>
+                        <th style="width:28px;">
+                            <input
+                                icheck
+                                type="checkbox"
+                                allcheck="selectedAll"
+                                [(ngModel)]="fullChecked"
+                                style="position: absolute; opacity: 0;"
+                                [indeterminate]="fullCheckedIndeterminate"
+                                (onCount)="checkedNum = $event"
+                                (onIndeterminate)="CheckIndeterminate($event)"
+                            />
+                        </th>
+
+                        <!-- <ng-container -->
+                        <!-- *ngIf="!fullChecked && !fullCheckedIndeterminate" > -->
+                        <th style="min-width:70px;text-align:center;">
+                            序号
+                        </th>
+                        <th style="min-width:160px;">冻结人员</th>
+                        <th style="min-width:160px;">操作人</th>
+                        <th style="min-width:360px;">豁免结果</th>
+                        <th style="min-width:125px;text-align:center;">
+                            操作
+                        </th>
+                        <!-- </ng-container> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of freezePersonnelData">
+                        <td style="width:28px;">
+                            <input
+                                icheck
+                                type="checkbox"
+                                allcheckChild="selectedAll"
+                                [(ngModel)]="item.checked"
+                            />
+                        </td>
+                        <td style="text-align:center;min-width: 70px">
+                            {{ item["num"] }}
+                        </td>
+                        <td
+                            style="min-width:160px;"
+                            (click)="clickFreezePersonnel(item)"
+                        >
+                            <div class="m-user-info">
+                                <span class="m-user-name">{{
+                                    item["frozenUserName"]
+                                }}</span>
+                                <span class="m-user-ename">{{
+                                    item["frozenItCode"]
+                                }}</span>
+                            </div>
+                        </td>
+                        <td style="min-width:160px;">
+                            <div class="m-user-info">
+                                <span class="m-user-name">{{
+                                    item["lastModifiedName"]
+                                }}</span>
+                                <span class="m-user-ename">{{
+                                    item["lastModifiedItcode"]
+                                }}</span>
+                            </div>
+                        </td>
+                        <td style="min-width:360px;">
+                            {{ item["freeResult"] ? "不豁免" : "豁免" }}
+                        </td>
+                        <td
+                            style="min-width:125px;text-align:center;"
+                            class="operate"
+                        >
+                            <span (click)="exempt(item)">豁免</span
+                            ><span (click)="unexempt(item)" style="width:45px;"
+                                >不豁免</span
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div
+                class=""
+                [ngClass]="{
+                    hide:
+                        !isSearch &&
+                        (freezePersonnelData && freezePersonnelData.length > 0)
+                }"
+            ></div>
+            <iq-pager
+                [data]="pagerData"
+                (onChange)="onChangePage($event)"
+            ></iq-pager>
+        </div>
+    </div>
+    <!--内容页结束-->
+</div>

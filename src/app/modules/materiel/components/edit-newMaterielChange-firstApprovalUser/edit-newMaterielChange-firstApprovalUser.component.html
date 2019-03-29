@@ -1,0 +1,25 @@
+<!--一级预审审批人列表-->
+<div class="edit-nmc-firstApprovalUser">
+  <div class="edit-nmc-salesList-title">请选择一级预审人</div>
+  <table class="m-info-table" style="table-layout:auto">
+      <thead>
+          <tr>
+              <th>姓名</th>
+              <th>ITCODE</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let list of approvalUserList;let i=index;" (click)="getApprovalUser(i)">
+              <td>
+                  {{list.UserName}}
+              </td>
+              <td>{{list.ITCode}}</td>
+          </tr>
+      </tbody>
+  </table>
+
+  <div class="edit-nmc-button">
+      <button type="button" class="m-btn-default" (click)="cancel()">关闭</button>
+  </div>
+
+</div>

@@ -1,0 +1,76 @@
+.m-cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998;
+  background: rgba(0,0,0,.3);
+}
+.m-option{
+  width: 51%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  background: #fff;
+  z-index: 9999;
+
+
+  .m-search{
+    margin: 10px auto 0;
+    text-align: center;
+    width: 98%;
+    min-width: 500px;
+
+    input{
+      width: 75%;
+      line-height: 35px;
+      height: 35px;
+    }
+
+    button{
+      width: 22%;
+    }
+  }
+
+  .m-search-material{
+    margin: 10px 10px 0;
+    width: 30%;
+    position: relative;
+    min-width: 200px;
+
+    input{
+      padding-right: 32px;
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .iqon-query {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 30px;
+      text-align: center;
+      line-height: 30px;
+      font-size: 12px;
+      color: #d2d8e0;
+      border-left: 1px solid #e1e3eb;
+      cursor: pointer;
+  }
+
+  }
+
+  .m-option-list{
+    padding: 0 15px 15px;
+
+    .table thead > tr > th{
+      line-height: 40px;
+    }
+
+    .table-list > tbody > tr {
+      height: 30px;
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+      <button class="m-btn-success m-btn-addContract" type="button" (click)='addContract()'>+ 新建合同物料</button>
+</div>
+<div class="m-overclass">
+  <div class="m-list-menu" >
+    <ul class="m-state">
+      <li [class.active]="currentType == 'undone'" (click) = "tabMenu('undone')">未完成</li>
+      <li [class.active]="currentType == 'completed'" (click) = "tabMenu('completed')">已完成</li>
+      <li [class.active]="currentType == 'all'" (click) = "tabMenu('all')">全部</li>
+    </ul>
+    <div class="m-search">
+      <i class="iqon-query" (click)='searchItcode()'></i>
+      <input type="text" [(ngModel)]='contractList.ContractInfo' name="Keyword" autocomplete='off' placeholder="搜索合同编号,客户名称..." (keyup.enter)='searchItcode()'>
+    </div>
+  </div>
+  <loading [show]="loading"></loading>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" *ngIf="default">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <p class="m-p-notice">快来点击右上角“新建合同物料”按钮，开始新建物料吧</p>
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont" *ngIf="!default">
+
+    <table class="table table-hover table-list">
+      <thead>
+        <tr>
+          <th class="w200">合同号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='contractSort()'></i></th>
+          <th>客户名称</th>
+          <th>销售员</th>
+          <th class="money-right">合同金额</th>
+          <th class="w130">已开销售单</th>
+          <th class="w130">是否有可开单物料</th>
+          <th>创建日期 <i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='contractSort()'></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of materialInfo">
+          <td title="{{item.ContractCode}}"><span (click)='goLink(item,item.HasMaterial)' class="clickText">{{item.ContractCode}}</span></td>
+          <td title="{{item.BuyerName}}">{{item.BuyerName}}</td>
+          <td title="{{item.SalesName}}">{{item.SalesName}}</td>
+          <td title="{{item.ContractMoney}}" class="money-right">{{(item.ContractMoney||0) |iqNumber:'1.2-2'}}</td>
+          <td>{{item.SaleOrderCount}}</td>
+          <td>{{item.HasMaterial==0?'否':'是'}}</td>
+          <td>{{item.CreateTime | iqDate:"YYYY-MM-DD"}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  </div>
+  <!-- 缺省页 -->
+  <!-- <div class="m-home-default" *ngIf="default">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>销售订单 -合同物料查询 -{{ currentTypeName }}为空</h3>
+          <h4>快来点击右上角“新建申请”按钮，开始新建申请吧~</h4>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

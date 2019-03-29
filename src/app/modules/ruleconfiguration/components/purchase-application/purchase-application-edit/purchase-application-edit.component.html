@@ -1,0 +1,247 @@
+<form #form="ngForm">
+  <div class="m-main" [ngClass]="{'enterAnimation':isEnter,'overAnimation':!isEnter}">
+
+    <h4>新建采购申请规则配置</h4>
+
+    <div class="m-main-content clearfix">
+
+      <!-- 维护信息 -->
+      <div class="m-form-content">
+
+        <h5 class="m-form-content-title">维护信息</h5>
+
+        <div class="m-form-content-items">
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>规则名称</label>
+            <input type="text" placeholder="-请填写规则名称" required #RoleName='ngModel' name='RoleName' [(ngModel)]="baseRole.RoleName" [ngClass]="{'m-input-warn':RoleName.invalid&&(RoleName.touched||isSubmit)}">
+            <p class="m-p-warn" *ngIf="RoleName.invalid&&(RoleName.touched||isSubmit)">
+              请填写规则名称
+            </p>
+          </div>
+
+          <div class="m-form-content-item">
+            <!-- 占位用，无实际意义 -->
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>创建人</label>
+            <div class="m-form-text">
+              <span>{{userInfo.userCN}}
+                <i>{{userInfo.userEN}}</i>
+              </span>
+            </div>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>创建日期</label>
+            <div class="m-form-text">
+              <span>{{baseRole.Createtime|iqDate:'YYYY-MM-DD'}}</span>
+            </div>
+          </div>
+
+          <div class="m-form-content-item m-form-content-item-connect">
+            <label class="m-form-content-item-connect-title m-ie-hack">
+              <i class="m-requiredMark">*</i>本部</label>
+              <div class="m-form-component" style="width:39%">
+                <iq-select class="iqSelect" [required]="!BBMC" #IqSelect name="BBMC" ngModel [(ngModel)]="ruleDetial.BBMC"
+                [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" listApi="InitData/GetPageDataBBMC"
+                placeHolder="-请选择本部" [queryParams]="{queryStr:'BBMC'}" (onSelect)="getBBMC($event)" showIndex='0' [isControlClick]="isControlClick" (click)="isSelectDepartment()"></iq-select>
+              </div>
+              <p class="m-p-warn" *ngIf="!ruleDetial.BBMC&&isSubmit" style="display:inline-block; padding-left:10px">
+                请填选择本部
+              </p>
+          </div>
+
+          <div class="m-form-content-item m-form-content-item-connect">
+            <label class="m-form-content-item-connect-title m-ie-hack">
+              <i class="m-requiredMark">*</i>事业部</label>
+            <div class="m-form-component">
+              <rule-configuration-select title="请选择事业部" listAPI='InitData/GetPageDataByBBMC' saveParameterIndex='2' [(ngModel)]="departmentList"
+                name="DepartmentList" #DepartmentList [alreadyChosenData]='departmentList' (onSelectValue)="getDepartmentList($event)" required [queryParameter]="{'querycontent':'SYBMC','BBMC':ruleDetial.BBMC}" [isNotClick]="!ruleDetial.BBMC" (ngModelChange)="getStandardRevolveDays(departmentList)"></rule-configuration-select>
+            </div>
+            <p class="m-p-warn m-p-location" *ngIf="departmentList&&departmentList.length===0||!departmentList&&isSubmit">
+              请填选择事业部
+            </p>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>采购主体</label>
+            <div class="m-form-text">
+              <input type="radio" icheck name="CompanyCode" value="0080" #CompanyCode="ngModel" [(ngModel)]="ruleDetial.CompanyCode" required>
+              <span class="m-form-text-span">0080澳门</span>
+              <input type="radio" icheck name="CompanyCode" value="0065" #CompanyCode="ngModel" [(ngModel)]="ruleDetial.CompanyCode" required>
+              <span class="m-form-text-span">0065香港</span>
+              <input type="radio" icheck name="CompanyCode" value="0000" #CompanyCode="ngModel" [(ngModel)]="ruleDetial.CompanyCode" required>
+              <span class="m-form-text-span">其他</span>
+              <span class="m-p-warn" *ngIf="CompanyCode.invalid&&(CompanyCode.touched||isSubmit)">请选择采购主体</span>
+            </div>
+
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark"></i>供应商</label>
+            <div class="m-form-text">
+              <iq-select name="AllSupplierCode" #AllSupplierCode="ngModel" [(ngModel)]="allSupplierCode" [modalShow]="true"
+                [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" [enterShowList]="false"
+                (onSelect)="getSupplier($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"
+                showIndex='10'></iq-select>
+                <!-- <rule-configuration-select title="请选择供应商" listAPI='InitData/GetPageDataVendorFromERP' saveParameterIndex='1' [(ngModel)]="supplierList"
+                name="SupplierList" #SupplierList [alreadyChosenData]='supplierList' (onSelectValue)="getSupplierList($event)"></rule-configuration-select> -->
+            </div>
+            <p class="m-p-tips" *ngIf="allSupplierCode">
+              提示：所选供应商的类型需与所选事业部的供应商类型相同
+            </p>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>供应商类型</label>
+            <div class="m-form-text">
+              <input type="radio" icheck value="核心" name="VendorClass" #VendorClass="ngModel" [(ngModel)]="ruleDetial.VendorClass" required (ngModelChange)="watchVendorClassChange()">
+              <span class="m-form-text-span">核心</span>
+              <input type="radio" icheck name="" value="非核心" name="VendorClass" #VendorClass="ngModel" [(ngModel)]="ruleDetial.VendorClass" required (ngModelChange)="watchVendorClassChange()">
+              <span class="m-form-text-span">非核心</span>
+              <input type="radio" icheck name="" value="新产品" name="VendorClass" #VendorClass="ngModel" [(ngModel)]="ruleDetial.VendorClass" required (ngModelChange)="watchVendorClassChange()">
+              <span class="m-form-text-span">新产品</span>
+              <span class="m-p-warn" *ngIf="VendorClass.invalid&&(VendorClass.touched||isSubmit)">请选择供应商类型</span>
+            </div>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>申请单类型</label>
+            <div class="m-form-text">
+              <input type="radio" icheck value="合同单采购" name="PurchaseType" #PurchaseType="ngModel" [(ngModel)]="ruleDetial.PurchaseType" required >
+              <span class="m-form-text-span">合同采购申请</span>
+              <input type="radio" icheck value="预下单采购" name="PurchaseType" #PurchaseType="ngModel" [(ngModel)]="ruleDetial.PurchaseType" required [disabled]="ruleDetial.VendorClass=='非核心'">
+              <span class="m-form-text-span">预下采购申请</span>
+              <input type="radio" icheck value="备货单采购" name="PurchaseType" #PurchaseType="ngModel" [(ngModel)]="ruleDetial.PurchaseType" required [disabled]="ruleDetial.VendorClass=='非核心'||ruleDetial.VendorClass=='新产品'" (ngModelChange)="getStandardRevolveDays(departmentList)">
+              <span class="m-form-text-span">备货采购申请</span>
+            </div>
+            <p class="m-p-warn" *ngIf="PurchaseType.invalid&&(PurchaseType.touched||isSubmit)">请选择申请单类型</p>
+          </div>
+
+          <div class="m-form-content-item" style="width:100%">
+            <label style="width:9.8%">
+              <i class="m-requiredMark">*</i>授权额度</label>
+            <div class="m-form-text-select-small" style="width:80%">
+              <input type="radio" name="AmountRelate" #AmountRelate="ngModel" icheck value=0 [(ngModel)]="ruleDetial.AmountRelate"><span style="margin:0 10px;">无关</span>
+              <input type="radio" name="AmountRelate" #AmountRelate="ngModel" icheck value=1 [(ngModel)]="ruleDetial.AmountRelate"><span style="margin:0 10px;">有关</span>
+              <ng-container *ngIf="ruleDetial.AmountRelate==1">
+              ( <div class="m-form-select-div">
+                  <i class="iqon-xia m-iqon-xia-select"></i>
+                <select name="StartAmountLimit" [(ngModel)]="ruleDetial.StartAmountLimit">
+                  <option value=1>包含</option>
+                  <option value=0>不包含</option>
+              </select></div>
+              <input type="text" [required]="ruleDetial.AmountRelate==1" [(ngModel)]="ruleDetial.StartAmount" name="StartAmount" #StartAmount="ngModel" only-number onlyNumberSeveralDigits="0" [ngClass]="{'m-input-warn':StartAmount.invalid&&(StartAmount.touched||isSubmit)}" (blur)="testAmountLimit('start')"> ~
+              <div class="m-form-select-div">
+                  <i class="iqon-xia"></i>
+              <select name="EndAmountLimit" [(ngModel)]="ruleDetial.EndAmountLimit">
+                  <option value=1>包含</option>
+                  <option value=0>不包含</option>
+              </select>
+              </div>
+              <input type="text" [(ngModel)]="ruleDetial.EndAmount" name="EndAmount" #EndAmount="ngModel" only-number onlyNumberSeveralDigits="0" (blur)="testAmountLimit('end')"> 万元)
+            </ng-container>
+
+              <!-- <span class="m-form-text-span" *ngIf="ruleDetial.AmountLimit!=-3">
+                <input type="text" name="Amount" #Amount="ngModel" [required]="ruleDetial.AmountLimit!=-3" placeholder="-请填写授权额度" only-number [(ngModel)]="ruleDetial.Amount" [ngClass]="{'m-input-warn':Amount.invalid&&(Amount.touched||isSubmit)}">
+              </span> -->
+            <p class="m-p-warn" *ngIf="ruleDetial.AmountRelate==1&&(!(ruleDetial.StartAmount>=0)||ruleDetial.StartAmount==0&&ruleDetial.EndAmount==0)" style="padding-right:10px; display:inline">请填写授权额度</p>              
+            </div>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark" *ngIf="ruleDetial.PurchaseType=='备货单采购'">*</i>标准周转天数</label>
+            <div class="m-form-text">
+              <input type="text" name="StandardRevolveDays" [required]="ruleDetial.PurchaseType=='备货单采购'" #StandardRevolveDays="ngModel" style="width:89%" placeholder="-请填写标准周转天数" only-number onlyNumberSeveralDigits='0' [(ngModel)]="ruleDetial.StandardRevolveDays" [ngClass]="{'m-input-warn':StandardRevolveDays.invalid&&(StandardRevolveDays.touched||isSubmit)}">
+              <span class="m-form-text-span">天</span>
+            </div>
+            <p class="m-p-warn" *ngIf="StandardRevolveDays.invalid&&(StandardRevolveDays.touched||isSubmit)">请填写标准周转天数</p>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark" *ngIf="ruleDetial.PurchaseType=='备货单采购'">*</i>实际周转天数</label>
+            <div class="m-form-text-select-small">
+              <div class="m-form-select-div">
+                  <i class="iqon-xia"></i>
+              <select name="RevolveDaysLimit" #RevolveDaysLimit="ngModel" [required]="ruleDetial.PurchaseType=='备货单采购'" [(ngModel)]="ruleDetial.RevolveDaysLimit" [ngClass]="{'m-select-warn':RevolveDaysLimit.invalid&&(RevolveDaysLimit.touched||isSubmit)}" (ngModelChange)="showDCGApprover(ruleDetial.PurchaseType)">
+                  <option value=99 selected disabled>请选择</option>
+                  <option value=1>&gt;</option>
+                  <option value=-2>≤</option>
+                  <option value=-3>无关</option>
+              </select>
+              </div>
+              <span class="m-form-text-span">标准周转天数</span>
+              <span class="m-p-warn" *ngIf="ruleDetial.PurchaseType=='备货单采购'&&ruleDetial.RevolveDaysLimit==99">请选择周转天数限制</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 审批人信息 -->
+      <div class="m-form-content">
+
+        <h5 class="m-form-content-title">审批人序列</h5>
+
+        <div class="m-form-table-box">
+
+          <table class="m-form-table">
+            <tr>
+              <th width="6%">请选择</th>
+              <th width="10%">是否必选</th>
+              <th width="10%">审批环节</th>
+              <th width="74%">审批人</th>
+            </tr>
+            <!-- <ng-container *ngFor="let item of workFlowNodes;index as i">
+            <tr *ngIf="item.isShow">
+              <td><input type="checkbox" icheck [name]="'checked'+i" [attr.name]="'checked'+i" [(ngModel)]="item.IsOpened" [disabled]='item.valueList.length>0' (ngModelChange)="changeIsOpened(i,item.IsOpened)"></td>
+              <td>
+                  <input type="radio" icheck [name]="'IfRequired'+i" [attr.name]="'IfRequired'+i" [(ngModel)]="item.IfRequired" value=1 [disabled]="!item.valueList||item.valueList.length===0||item.NodeID===15"><span style="padding-left:5px;">是</span>
+                  <input type="radio" icheck [name]="'IfRequired'+i" [attr.name]="'IfRequired'+i" [(ngModel)]="item.IfRequired" value=0 [disabled]="!item.valueList||item.valueList.length===0||item.NodeID===15"><span style="padding-left:5px;">否</span>
+              </td>
+              <td>{{item.NodeName}}</td>
+              <td><input type="text" [required]="item.IfRequired=='1'" #ApprovalPerson="ngModel" [name]="'approvalPerson'+i" [attr.name]="'approvalPerson'+i" [(ngModel)]="item.valueList" (ngModelChange)="getChecked(i,item.valueList)" trim only-itcode [ngClass]="{'m-input-warn':ApprovalPerson.invalid&&(ApprovalPerson.touched||isSubmit)}" [disabled]="item.NodeID===15"></td>
+            </tr>
+            </ng-container> -->
+
+            <ng-container *ngFor="let item of workFlowNodes;index as i">
+              <tr *ngIf="item.isShow">
+                <td><input type="checkbox" icheck [name]="'checked'+i" [attr.name]="'checked'+i" [(ngModel)]="item.IsOpened" [disabled]='item.valueList.length>0' (ngModelChange)="changeIsOpened(i,item.IsOpened)"></td>
+                <td>
+                    <input type="radio" icheck [name]="'IfRequired'+i" [attr.name]="'IfRequired'+i" [(ngModel)]="item.IfRequired" value=1 [disabled]="!item.valueList||item.valueList.length===0||item.NodeID===15"><span style="padding-left:5px;">是</span>
+                    <input type="radio" icheck [name]="'IfRequired'+i" [attr.name]="'IfRequired'+i" [(ngModel)]="item.IfRequired" value=0 [disabled]="!item.valueList||item.valueList.length===0||item.NodeID===15"><span style="padding-left:5px;">否</span>
+                </td>
+                <td>{{item.NodeName}}</td>
+                <td>
+                   <rule-configuration-select-person APIAddress='BaseData/GetUserList' compontentTitle='请选择审批人' [(ngModel)]="item.valueList" name="{{'approverList'+i}}" (ngModelChange)="getChecked(i,item.valueList)" [required]="item.IfRequired=='1'" ngModel [readonly]="item.NodeID===15"></rule-configuration-select-person>
+              </tr>
+              </ng-container>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- 功能按钮 -->
+     <div class="m-button-box">
+       <button type="button" class="m-btn-confirm" (click)="save()">保存</button>
+       <button type="button" class="m-btn-default" (click)="cancle()">取消</button>
+     </div>
+     
+    </div>
+
+  </div>
+
+</form>

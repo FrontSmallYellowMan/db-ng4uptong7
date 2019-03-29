@@ -1,0 +1,377 @@
+@import '../../../../../sass/base/util';
+
+.m-srs{
+	width:85%!important;
+	float: left;
+	padding: 0 25px 20px 0;
+	h3{
+		margin: 0 0 0 20px;
+		line-height: 68px;
+	}
+
+    .m-exm{
+		width: 100%;
+		margin:0 0 0 20px!important;
+    	.m-exm-item{
+    		position: relative;
+			width: 100%;
+			padding:20px 25px 10px!important;
+			li{
+				line-height: 30px;
+				display: flex;
+				margin-top:10px!important;
+				.m-exm-label{
+					position: relative;
+					width: 18%;
+    				margin-right: 15px;
+					text-align: right;
+				}
+				.m-enmc-cont{
+					width: 82%;
+					padding: 0;
+				}
+				.m-input-widthStyel-1{
+					width: 75%;
+					padding: 0;
+				}
+			}
+    	}
+    }
+}
+.m-cnm-title{
+	color: #76BAF2;
+	//border-bottom: 1px solid #EEEFF4;
+	margin: 0 auto 20px;
+	padding:0 0 15px 0;
+	display: flex;
+	justify-content: space-between;
+	div:nth-child(2){
+		display: ruby\0;
+	}
+
+	h5{
+		display: inline-block;
+	}
+
+	button{
+		width: 100px;
+		height: 20px;
+	}
+
+}
+
+.m-srs-titleStyle{
+
+    width: 100px!important;
+}
+
+.m-srs-titleWidth{
+
+    padding-left: 120px!important;
+}
+
+.m-form-need{
+	color:red;
+}
+
+.m-enmc-cont{
+	padding: 0 0 0 110px;
+}
+
+.m-input-widthStyel-1{
+	width: 80%;
+	padding: 0 0 0 110px;
+	
+}
+
+.m-enmc-line{
+	line-height: 30px;
+	margin: 8px 0 0 0;
+	display: flex;
+	width:100%;
+	.m-exm-label{
+		display: inline-block;
+		width: 9%;
+    	text-align: right;
+		font-weight: bold;
+		margin-right: 15px;
+	}
+	
+	.m-enmc-input{
+		width: 91%;
+		display: inline-block;
+	}
+}
+
+.line-style-1{
+	margin: 20px auto 0;
+	height: 1px;
+	border-top: 1px dotted #ccc;
+}
+
+.m-btn-marginBottom{
+	margin: 0 auto 15px;
+	text-align: center;
+}
+
+.m-materielChange-tips{
+	color:#DA686A;
+	font-size: 16px;
+	padding: 0 0 0 10px;
+}
+
+.m-enmc-table{
+   width: 100%;
+   margin: 10px auto 0;
+
+   td,th{
+	   height: 25px;
+	   font-size: 12px;
+	   font-weight: normal;
+	   padding: 2px;
+   }
+
+   .addApp-reduce{
+	   font-size: 25px;
+   }
+   
+}
+
+.m-enmc-handStyle{
+	cursor: pointer;
+}
+
+.m-btn-tempsave{
+	height: 40px;
+}
+
+.addButtonStyle{
+//font-size: 14px;
+//line-height: 20px;
+padding:2px 4px;
+border: 1px solid #76BAF2;
+background-color: #fff;
+}
+
+.addButtonStyle:hover{
+	//font-size: 14px;
+	//line-height: 20px;
+	padding:2px 4px;
+	border: 1px solid #76BAF2;
+	background-color:#76BAF2;
+	color: #fff;
+	}
+
+
+.bubble-tips{
+	position: absolute;
+	transition: all 0.2s linear;
+	opacity: 0;
+	z-index: 100;
+	width: 60px;
+
+    .triangle-style{
+		position: absolute;
+		width: 8px;
+		height: 8px;
+		background-color:#333333;  
+		transform: rotate(45deg);
+		-ms-transform:rotate(45deg); 	/* IE 9 */
+		-moz-transform:rotate(45deg); 	/* Firefox */
+		-webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+		-o-transform:rotate(45deg); 
+		margin: -15px 0 0 30px;
+	}
+
+	.bubble-content{
+		background-color:#333333;  
+		padding:5px;
+		border-radius: 3px;
+		color:#fff;
+		font-size: 12px;
+		line-height: 20px;
+		margin:-25px 0 0 34px;
+		width: 100%;
+		
+		
+	  }
+
+
+}
+
+.m-info-table{
+	width: 100%;
+	th{
+		vertical-align: top;
+	}
+	td{
+		line-height: 16px!important;
+		height: 70px;
+		background-color: #fff;
+	}
+
+	td:last-child:hover{
+		.bubble-tips{
+			transition: all 0.5s linear;
+			opacity: 1;
+		}	
+	}
+
+	.m-td-border tr td:first-child{
+		border-left: none;
+	}
+
+	textarea{
+		padding: 0 2px;
+		margin: 2px 1px;
+		border: 1px solid #E1E3EA;
+		border-radius: 3px;
+		line-height: 15px;
+		display: block;
+		width: 100%;
+		max-height: 123px;
+		min-height: 23px;
+		overflow: hidden;  
+		outline: 0 none;  
+		resize: none;
+		vertical-align: middle;
+		white-space:pre-wrap;
+		text-overflow:ellipsis;
+	}
+
+	.textareaStyle{
+		border: none;
+	}
+	tbody tr:nth-child(even) .textareaStyle{
+		background: #fbfbfb;
+	}
+}
+
+.apply-p-right{
+	width: 170px;
+    margin-left: 20px;
+    position: absolute;
+    right: 26px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.cursorStyle{
+	cursor: not-allowed;
+}
+
+:host/deep/.apply-opinion{//修改组件内部样式
+	background-color: #fff;
+   
+	.m-exm-advice{
+		color: #70B7F3;
+		font-size: 14px;
+		font-weight: 500;
+		margin: 0 0 20px 0px;
+		padding: 0 0 0 20px;
+		line-height: 45px;
+		border-bottom: 1px solid #E1E3EA;
+		text-align: left;
+	}
+
+	.m-exm-item{
+		text-align: center;
+	}
+
+	textarea{
+		width: 97%;
+		margin: 0 auto 20px;
+	}
+	
+
+
+}
+
+:host/deep/.approval-buttons{//修改组件内部样式
+	margin: 20px auto;
+}
+
+:host/deep/.m-user-noimg{//修改组件内部样式
+	display: none;
+}
+
+.buttonStyle{
+   margin: 0 auto;
+   text-align: center;
+}
+
+// :host/deep/.m-exm-item{
+// 	padding-top: 5px!important;
+// 	//margin: 20px;
+// }
+
+:host/deep/.m-apply-users{
+	width: auto!important;
+}
+
+.m-div-margin{
+	margin: 0 0 0 20px;
+    width: 100%;
+}
+.wp20{
+	width: 20%;
+}
+.wp6{
+	width: 6%;
+}
+.wp9{
+	width:9%;
+}
+.wp18{
+	width: 18%;
+}
+.wp12{
+	width: 12%;
+}
+.wp8{
+	width:8%;
+}
+.m-info-table th:nth-child(1){
+	padding: 2px!important;
+	text-align: left!important;
+}
+
+.m-list-head{
+	
+		h5{
+			color: #76BAF2;
+			display: inline-block;
+			font-size: 14px;
+			vertical-align: middle;
+		}
+	}
+
+.m-button-margin{
+	margin: 20px auto;
+	text-align: center;
+}
+
+.approval-button-back{
+	text-align: center;
+	width: 86px;
+	height: 45px;
+	line-height: 45px;
+	border: none;
+	cursor: pointer;
+	font-size: 14px;
+	background-color:#F3F3F3!important;
+}
+
+.m-enclosure{
+	border: none!important;
+	margin: 0 auto!important;
+
+	li{
+		line-height: 1!important;
+		padding: 0!important;
+	}
+	
+}
+
+
+

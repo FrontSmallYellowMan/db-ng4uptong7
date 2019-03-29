@@ -1,0 +1,61 @@
+<div class="container m-order-number">
+  <div class="m-advance-footer">
+    <ul>
+      <li>
+        <i class="addApp-form-tips">*</i>
+        <span>客户编号</span>
+        <input type="text" style="width:34%" #forminput name="customerCode" required [(ngModel)]="customerExemptionCondition.CustomerCode" #customerCode="ngModel" notblank [ngClass]="{'m-input-warn': !customerCode.valid && (customerCode.touched || isSubmit)}"   readonly>
+        <button type="button" class="m-btn-default" style="margin-left:20px;height: 30px;  min-width: 70px;  line-height: 24px;" (click)="searchCus()">查询</button>
+      </li>
+      <li>
+        <span>
+          <i class="addApp-form-tips">*</i>客户名称</span>
+        <input type="text" name="customerName" required [(ngModel)]="customerExemptionCondition.CustomerName" #customerName="ngModel" notblank [ngClass]="{'m-input-warn': !customerName.valid && (customerName.touched || isSubmit)}" readonly>
+      </li>
+      <li>
+        <span>
+          <i class="addApp-form-tips">*</i>开始时间</span>
+        <div class="inline-block">
+          <my-datepicker PlaceHolder="-请选择日期" required [(ngModel)]="customerExemptionCondition.StartTime" [EndDate]="customerExemptionCondition.EndTime"></my-datepicker>
+        </div>
+      </li>
+      <li>
+        <span>
+          <i class="addApp-form-tips">*</i>结束时间</span>
+        <div class="inline-block">
+          <my-datepicker PlaceHolder="-请选择日期" required [(ngModel)]="customerExemptionCondition.EndTime" [StartDate]="customerExemptionCondition.StartTime"></my-datepicker>
+        </div>
+      </li>
+      <li>
+        <span>&nbsp;&nbsp;备注</span>
+        <textarea textarea rows="3" class="m-textarea" maxlength="300" [(ngModel)]="customerExemptionCondition.Remark" ></textarea>
+      </li>
+      </ul>
+      <div class="addApp-base-infor" > 
+          <div style="width: 98%;padding-left: 25px;padding-top:10px">
+              <table class="m-info-table" style="width: 98%;">
+                  <thead>
+                      <tr>
+                          <th style="text-align:center">业务范围</th>
+                          <th style="text-align:center">欠款金额</th>
+                          <th *ngIf="!isEdit" width="5%" class="m-text-center"><i class="iqon-add" style="cursor: pointer;color:#57b9f8;" title="增加一行" (click)="addRow()"></i></th>
+                      </tr>
+                  </thead>
+                  <tbody>    
+                      <tr *ngFor="let item of customerExemptionConditions;let i=index">
+                          <td style="text-align:center"><input class="m-infor-input" type="text" name="ticketNum" [(ngModel)]="item.YWFWDM"></td>
+                          <td style="text-align:center"><input class="m-infor-input" type="text" name="ticketNum" [(ngModel)]="item.ArrearsAmount"></td>
+                          <td *ngIf="!isEdit" style="text-align:center"><i class="iqon-minimize" style="cursor: pointer;color:#57b9f8" title="删除一行" (click)="deleteRow(i)"></i></td>
+                      </tr>
+                  </tbody>    
+              </table>
+      </div>
+  </div>
+  </div>
+  <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+
+<div class="modal-footer">
+  <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+  <button class="m-btn-cancel" type="button"  (click)="hide()">取消</button>
+</div>
+</div>

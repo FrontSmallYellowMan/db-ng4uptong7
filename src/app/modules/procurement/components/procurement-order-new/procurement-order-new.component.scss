@@ -1,0 +1,29 @@
+.type-box {
+    padding: 30px 50px;
+    box-sizing: border-box;
+    .type-line {
+        width: 100%;
+        p {
+            display: inline-block;
+            border: 1px solid #e1e3eb;
+            border-radius: 4px;
+            width: 18.9%;
+            height: 30px;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        p:not(:last-child) {
+            margin-right:1%;
+        }
+    }
+    .type-line:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+.addApp-sub-btn1{
+    width: 170px!important;
+}

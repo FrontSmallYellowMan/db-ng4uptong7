@@ -1,0 +1,374 @@
+<form #form="ngForm">
+
+  <div class="m-edit-supplier-ncs">
+
+    <h4>{{pageTitle}}</h4>
+
+    <!-- 基本信息 -->
+    <div class="m-edit-supplier-ncs-content1 clearfix">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">申请人</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <div class="m-user-info-small">
+            <div user-image [hasClose]="false" [user]="userInfo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>联系方式</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写联系方式" name="phone" #Phone="ngModel" [(ngModel)]="supplierTrackData.TelephoneNumber" maxlength="12"
+            pattern="[0-9-_]*" required trim>
+        </div>
+        <p class="m-p-warn" style="line-height:20px;" *ngIf="!supplierTrackData.TelephoneNumber && (Phone.touched||isSubmit)">请填写联系方式</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>本部</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+            <iq-select class="iqSelect" [required]="!supplierTrackData.BBMC&&isSubmit" name="BBMC" [(ngModel)]="supplierTrackData.BBMC"
+            [modalShow]="true" [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}" listApi="vendor/getbbandsyb"
+            (onSelect)="getBBMC($event)" placeHolder="-请选择" [queryParams]="{queryStr:'SearchTxt'}" #BBMC="ngModel"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="(!supplierTrackData.BBMC||!supplierTrackData.SYBMC) && isSubmit">请选择本部</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" style="line-height:30px;">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>事业部</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          {{supplierTrackData.SYBMC}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+    </div>
+
+
+    <!--供应商信息-->
+    <div class="m-edit-supplier-ncs-content1 clearfix">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>供应商信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+
+            <iq-select class="iqSelect" [required]="!VendorNoAndVendor&&isSubmit" name="Vendor" [(ngModel)]="VendorNoAndVendor"
+            showIndex="12" [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','colums']}" listApi="vendortrack/getvendorlist"
+            (onSelect)="getVendor($event)" placeHolder="-请选择" [queryParams]="{queryStr:'SearchTxt'}" #Vendor="ngModel"></iq-select>
+
+        </div>
+        <p class="m-p-warn" *ngIf="!VendorNoAndVendor&& isSubmit">请选择供应商</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商状态</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input icheck type="radio" name="VendorState" #VendorState="ngModel" [(ngModel)]="supplierTrackData.VendorState" value=1 required [disabled]="isVendorStateInvalid" (ngModelChange)="inspectTime()">
+          <span>有效</span>
+          <input icheck type="radio" name="VendorState" #VendorState="ngModel" [(ngModel)]="supplierTrackData.VendorState" value=2 required [disabled]="!isVendorStateInvalid">
+          <span>超期</span>
+          <input icheck type="radio" name="VendorState" #VendorState="ngModel" [(ngModel)]="supplierTrackData.VendorState" value=3 required>
+          <span>无效</span>
+          <span class="m-p-warn" *ngIf="VendorState.invalid && (VendorState.touched||isSubmit)">请选择供应商状态</span>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="Vendor.invalid && (Vendor.touched||isSubmit)">请填写供应商名称，请不要填写特殊字符</p> -->
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商类型</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="VendorType" id="" [(ngModel)]="supplierTrackData.VendorType" required #VendorType="ngModel" [ngClass]="{'m-select-warn':VendorType.invalid&&(VendorType.touched||isSubmit),'selectPlaceHolderColor':supplierTrackData.VendorType===null}">
+            <option value=null selected disabled>-请选择</option>
+            <option value=1>国内</option>
+            <option value=2>海外</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="VendorType.invalid && (VendorType.touched||isSubmit)">请填选择供应商类型</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles m-select-title">
+          <span class="m-form-need">*</span>公司代码</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!supplierTrackData.CompanyCode&&isSubmit" name="Company" [(ngModel)]="supplierTrackData.CompanyCode"
+            [modalShow]="true" showIndex="10" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" listApi="InitData/GetPageDataCompany"
+            (onSelect)="getCompany($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}" #Company="ngModel"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!supplierTrackData.CompanyCode&& (Company.touched||isSubmit)">请选择公司代码</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>品牌</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写品牌" [(ngModel)]="supplierTrackData.Brand" name="Brand" #Brand="ngModel" maxlength="50"
+            [ngClass]="{'m-input-warn':Brand.invalid&&(Brand.touched||isSubmit)}" trim trimReg="/(^\s*)|(\s*$)/g">
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>产品概述</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填产品概述" [(ngModel)]="supplierTrackData.ProductSummarize" name="ProductSummarize" #ProductSummarize="ngModel"
+            maxlength="50" [ngClass]="{'m-input-warn':ProductSummarize.invalid&&(ProductSummarize.touched||isSubmit)}" trim trimReg="/(^\s*)|(\s*$)/g">
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles" style="width:90px">
+          <span class="m-form-need"></span>去年采购规模(参考)</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1" style="top:-9px">
+          <input type="text" placeholder="-请填写去年采购规模" [(ngModel)]="supplierTrackData.LastYearPurchaseScale" name="LastYearPurchaseScale"
+            #LastYearPurchaseScale="ngModel" maxlength="50" [ngClass]="{'m-input-warn':LastYearPurchaseScale.invalid&&(LastYearPurchaseScale.touched||isSubmit)}" trim trimReg="/(^\s*)|(\s*$)/g">
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>供应商引入时间</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <my-datepicker [(ngModel)]="supplierTrackData.SettledTime" format="YYYY-MM-DD" PlaceHolder="-请选择日期" name="SettledTime"></my-datepicker>
+        </div>
+        
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles" style="top:-12px">
+          <span class="m-form-need">*</span>协议有效期</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <div class="m-date-width" [ngClass]="{'m-date-width-input-warn':!supplierTrackData.ValidityOfAgreement&&isSubmit}">
+            <my-datepicker [(ngModel)]="supplierTrackData.ValidityOfAgreement" format="YYYY-MM-DD" PlaceHolder="-请选择日期" name="ValidityOfAgreement" [Required]="!supplierTrackData.ValidityOfAgreement&&isSubmit" (ngModelChange)="getAgreementValid($event)"></my-datepicker>
+          </div>
+          <div class="m-date-select-width">
+            <input type="radio" icheck name="AutoRenewal" [(ngModel)]="supplierTrackData.AutoRenewal" value=1 (ngModelChange)="lockAgreementValid()">
+            <span>自动续签</span>
+          </div>
+        </div>
+        <p class="m-p-warn" *ngIf="!supplierTrackData.ValidityOfAgreement && isSubmit" style="width:81%">请选择协议有效期</p>
+        
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>付款类型</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="PayType" id="" [(ngModel)]="supplierTrackData.PayType" required #PayType="ngModel" [ngClass]="{'m-select-warn':PayType.invalid&&(PayType.touched||isSubmit),'selectPlaceHolderColor':supplierTrackData.PayType===null}">
+            <option value=null selected disabled>-请选择</option>
+            <option value=1>应付</option>
+            <option value=2>预付</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="PayType.invalid && (PayType.touched||isSubmit)">请选择付款类型</p>
+        
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>账期起算点</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <div class="m-select" [ngClass]="{'m-select-auto-width':supplierTrackData.PaymentTermBeginning==6}">
+            <i class="iqon-xia"></i>
+            <select name="PaymentTermBeginning" id="" [(ngModel)]="supplierTrackData.PaymentTermBeginning" required #PaymentTermBeginning="ngModel"
+              [ngClass]="{'m-select-warn':PaymentTermBeginning.invalid&&(PaymentTermBeginning.touched||isSubmit),'selectPlaceHolderColor':supplierTrackData.PaymentTermBeginning===null}" (ngModelChange)="resetPTBText(supplierTrackData.PaymentTermBeginning)">
+              <option value=null selected disabled>-请选择</option>
+              <option value=1>发票</option>
+              <option value=2>收货</option>
+              <option value=3>收货收发票</option>
+              <option value=4>下单</option>
+              <option value=5>背靠背付款</option>
+              <option value=6>其他</option>
+            </select>
+          </div>
+          <div class="m-input-display" [ngClass]="{'hidden':supplierTrackData.PaymentTermBeginning!=6}">
+            <input type="text" name="PTBText" #PTBText="ngModel" [(ngModel)]="supplierTrackData.PTBText" [required]="supplierTrackData.PaymentTermBeginning==6" maxlength="10" placeholder="-请填写其他类型" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+        <p class="m-p-warn" *ngIf="PaymentTermBeginning.invalid && (PaymentTermBeginning.touched||isSubmit)">请选择账期起算点</p>
+        <p class="m-p-warn" *ngIf="supplierTrackData.PaymentTermBeginning==6&&PTBText.invalid && (PTBText.touched||isSubmit)">请填写其他类型</p>
+
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>账期</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <div class="m-select" [ngClass]="{'m-select-auto-width':supplierTrackData.PaymentTerm==9}">
+            <i class="iqon-xia"></i>
+            <select name="PaymentTerm" id="" [(ngModel)]="supplierTrackData.PaymentTerm" required #PaymentTerm="ngModel" [ngClass]="{'m-select-warn':PaymentTerm.invalid&&(PaymentTerm.touched||isSubmit),'selectPlaceHolderColor':supplierTrackData.PaymentTerm===null}" (ngModelChange)="resetPTText(supplierTrackData.PaymentTerm)">
+              <option value=null selected disabled>-请选择</option>
+              <option value=1>0</option>
+              <option value=2>15</option>
+              <option value=3>30</option>
+              <option value=4>45</option>
+              <option value=5>60</option>
+              <option value=6>90</option>
+              <option value=7>银承</option>
+              <option value=8>LC</option>
+              <option value=9>其他</option>
+            </select>
+          </div>
+          <div class="m-input-display" [ngClass]="{'hidden':supplierTrackData.PaymentTerm!=9}">
+            <input type="text" name="PTText" #PTText="ngModel" [(ngModel)]="supplierTrackData.PTText" [required]="supplierTrackData.PaymentTerm==9" maxlength="10" placeholder="-请填写其他类型" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+
+        <!-- 错误提示 -->
+          <p class="m-p-warn" *ngIf="PaymentTerm.invalid && (PaymentTerm.touched||isSubmit)">请选择账期</p>
+          <p class="m-p-warn" *ngIf="supplierTrackData.PaymentTerm==9&&PTText.invalid && (PTText.touched||isSubmit)">请填写其他类型</p>
+
+
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>财年</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="FiscalYear" id="" [(ngModel)]="supplierTrackData.FiscalYear" #FiscalYear="ngModel" [ngClass]="{'selectPlaceHolderColor':supplierTrackData.FiscalYear===null}">
+            <option value=null selected disabled>-请选择</option>
+            <option value=1>1月</option>
+            <option value=2>2月</option>
+            <option value=3>3月</option>
+            <option value=4>4月</option>
+            <option value=5>5月</option>
+            <option value=6>6月</option>
+            <option value=7>7月</option>
+            <option value=8>8月</option>
+            <option value=9>9月</option>
+            <option value=10>10月</option>
+            <option value=11>11月</option>
+            <option value=12>12月</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>竞争对手</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写竞争对手" [(ngModel)]="supplierTrackData.Opponent" name="Opponent" #Opponent="ngModel" maxlength="50"
+            [ngClass]="{'m-input-warn':Opponent.invalid&&(Opponent.touched||isSubmit)}" trim trimReg="/(^\s*)|(\s*$)/g">
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>年度任务要求</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写任务要求" [(ngModel)]="supplierTrackData.AnnualTaskRequirment" name="AnnualTaskRequirment" #AnnualTaskRequirment="ngModel" maxlength="50"
+            [ngClass]="{'m-input-warn':AnnualTaskRequirment.invalid&&(AnnualTaskRequirment.touched||isSubmit)}" trim trimReg="/(^\s*)|(\s*$)/g">
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>下单方式</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+            <i class="iqon-xia"></i>
+            <select name="HowToOrder" id="" [(ngModel)]="supplierTrackData.HowToOrder" #HowToOrder="ngModel" [ngClass]="{'selectPlaceHolderColor':supplierTrackData.HowToOrder===null}">
+              <option value=null selected disabled>-请选择</option>
+              <option value=1>厂商系统下单</option>
+              <option value=2>双方盖章</option>
+              <option value=3>双方签字</option>
+              <option value=4>我司单章</option>
+              <option value=5>PO下单</option>
+              <option value=6>邮件下单</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>是否有回佣</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="radio" icheck [(ngModel)]="supplierTrackData.IsRebates" name="IsRebates" value=1><span>是</span>
+          <input type="radio" icheck [(ngModel)]="supplierTrackData.IsRebates" name="IsRebates" value=2 (ngModelChange)="resetRebatesType()"><span>否</span>
+        </div>
+      </div>
+      
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>回佣方式</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+            <i class="iqon-xia"></i>
+            <select name="RebatesType" id="" [(ngModel)]="supplierTrackData.RebatesType" #RebatesType="ngModel" [disabled]="supplierTrackData.IsRebates==2" [ngClass]="{'m-disabled-select-backgroundColor':supplierTrackData.IsRebates==2,'selectPlaceHolderColor':supplierTrackData.RebatesType===null}">
+              <option value=null selected disabled>-请选择</option>
+              <option value=1>抵货款</option>
+              <option value=2>现金返还</option>
+              <option value=2>开销售</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>退换货条款</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+            <input type="radio" icheck [(ngModel)]="supplierTrackData.IsReturnGoodsClause" name="IsReturnGoodsClause" value=1><span>是</span>
+            <input type="radio" icheck [(ngModel)]="supplierTrackData.IsReturnGoodsClause" name="IsReturnGoodsClause" value=2><span>否</span>
+          </div>
+        </div>
+        
+        <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>询价接口人</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+              <input type="text" name="AskPriceInterfacePerson" [(ngModel)]="supplierTrackData.AskPriceInterfacePerson" maxlength="50" placeholder="-请填写询价接口人" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+
+        <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" style="clear:both">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>签字权限(合同单)</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+            <input type="text" name="SignAuthorityContractOrder" [(ngModel)]="supplierTrackData.SignAuthorityContractOrder" maxlength="50"
+              placeholder="-请填写签字权限(合同单)" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+
+        <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" style="clear:both">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>签字权限(预下单)</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+            <input type="text" name="SignAuthorityPreviousOrder" [(ngModel)]="supplierTrackData.SignAuthorityPreviousOrder" maxlength="50"
+              placeholder="-请填写签字权限(预下单)" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+  
+        <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" style="clear:both">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>签字权限(备货)</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+            <input type="text" name="SignAuthorityPendingStock" [(ngModel)]="supplierTrackData.SignAuthorityPendingStock" maxlength="50"
+              placeholder="-请填写签字权限(备货)" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+        </div>
+
+    </div>
+
+    <div class="m-commonly-btn">
+      <button class="m-btn-confirm m-btn-margin" (click)="save()" type="button">保存</button>
+      <button class="m-btn-cancel2 m-btn-width" (click)="cancle()" type="button">取消</button>
+    </div>
+
+  </div>
+
+</form>

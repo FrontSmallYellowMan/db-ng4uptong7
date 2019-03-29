@@ -1,0 +1,20 @@
+ <div class="tab-box">
+  <ul class="flow-tab">
+    <li *ngFor="let one of tabList;index as i" (click)="switchTab(one.id)" 
+        class="tab-item cur-point" [ngClass]="{'tab-active':one.id==active}">
+      <span class="error-tip" *ngIf="one.invalid" >!</span>  
+      <span>{{ one.text }}</span>
+      <div class="delete" (click)="delTab(i)" stopParentClick *ngIf="canDelete && one.id==active" >
+        <p class="closes">X</p>
+        <div class="popovers">
+            <p>删除该合同</p>
+        </div>
+      </div>
+    </li>
+    <div class="slider"></div>
+  </ul>
+  <i (click)="addTab()" *ngIf="canAdd" class="iqon-add-circle adds"></i>
+  <!-- <div class="m-tab-con">
+    <h2>{{ item }}</h2>
+  </div> -->
+</div>

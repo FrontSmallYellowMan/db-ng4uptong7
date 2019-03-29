@@ -1,0 +1,163 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+
+// 边框颜色
+$borderColor: #eeeff4;
+$inputBorderColor: #e1e3eb;
+// 白色背景
+$backColor: #fff;
+//蓝色
+$colorBlue: #76baf2;
+// 布局
+.form-container{
+    width: 75%;
+    margin: 14px auto 0px;
+    .form-required{
+        color: red;
+        font-size: 13px;
+    }
+    // 下拉选框
+    select{
+        padding: 0 15px;
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid $inputBorderColor;
+        border-radius: 3px;
+        background-color: transparent;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+    .iqon-xia{
+        position: absolute;
+        top: 12px;
+        right: 8px;
+        color: #a8b1bd;
+        z-index: 1;
+    }
+    // 上传附件
+    #uploadAttachment{
+        display: inline;
+        visibility: hidden;
+        width: 20px;
+    }
+    .upload-copy:hover{
+        color: $colorBlue;
+        cursor: pointer;
+    }
+    // 各部分标题
+    [class$='-area']{
+        background-color: $backColor;
+        margin-bottom: 10px;
+    }
+    .button-group{
+        text-align: center;
+        .m-btn-confirm{
+            width: 78px;
+        }
+    }
+    .area-title{
+        padding: 15px 0 15px 20px;
+        margin: 0;
+        color: $colorBlue;
+        border-bottom: 1px solid $borderColor;
+    }
+    // 各部分内容
+    .area-content{
+        width: 100%;
+        padding: 15px 30px;
+        .area-row{
+            width: 100%;
+            overflow: hidden;
+            .item{
+                float: left;
+                width: 50%;
+                text-align: center;
+                height: 60px;
+                line-height: 45px;
+                padding-bottom: 15px;
+                position: relative;
+                .title{
+                    float: left;
+                    width: 25%;
+                    text-align: right;
+                    padding-right: 12px;
+                }
+                .inputs{
+                    float: left;
+                    width: 75%;
+                }
+                input{
+                    padding: 0 15px;
+                    width: 100%;
+                    height: 35px;
+                    border: 1px solid $inputBorderColor;
+                    border-radius: 3px;
+                }
+                .m-p-warn{
+                    position: absolute;
+                    bottom: 0px;
+                    right: 0px;
+                    height: 20px;
+                    line-height: 20px;
+                }
+            }
+            .item-filled{
+                width: 100%;
+                .title{
+                    width: 12.5%;
+                }
+                .inputs{
+                    width: 87.5%;
+                }            
+            }
+            .item-textarea{
+                height: auto;
+                line-height: 20px;
+            }
+        }
+        .area-row-visible{
+            overflow: visible;
+        }
+    }
+}
+// 弹窗
+.modal-header-copy{
+    span:first-child{
+        display:inline-block;
+        font-size:16px;
+        height:30px;
+        line-height:30px;
+    }
+    span:last-child{
+        font-size:25px;
+        width:18px;
+        cursor:pointer;
+        margin-right:4px;
+    }
+}
+.search-row{
+    padding:15px 0 10px 15px;
+    position:relative;
+    .form-control{
+        width:82%;
+    }
+    .btn-info{
+        position:absolute;
+        right:15px;
+        top:15px;
+        width:80px;
+    }
+    .valid-message{
+        color:#ea6269;
+        line-height:18px;
+        text-align:left;
+    }
+}
+.modal-table-row{
+    cursor: pointer;
+}

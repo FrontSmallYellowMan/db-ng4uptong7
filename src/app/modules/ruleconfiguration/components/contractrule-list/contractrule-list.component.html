@@ -1,0 +1,65 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+  <button type="button" class="m-btn-success g-fr" (click)="addContractConfig()" style="margin-top: 7px;"><i class="iqon-add"></i>新建销售合同规则</button>
+</div>
+
+<div class="m-overclass">
+  <!--缺省页开始-->
+  <div class="m-apply" (click)="addContractConfig()" [ngClass]="{'hide': isSearch || contractConfigList.length > 0}">
+    <loading [show]="loading"></loading>
+    <div class="m-apply-circle">
+      <i class="iqon-plus-circle"></i>
+      <span>新建销售合同规则</span>
+    </div>
+  </div>
+  <!--缺省页结束-->
+  <!--内容页开始-->
+  <div class="m-contclass" [ngClass]="{'hide': !isSearch && contractConfigList.length == 0}">
+    <div class="m-search-form">
+      <div class="m-search-input">
+        <label>事业部</label><input type="text" placeholder="-请填写事业部名称" [(ngModel)]="query.BusinessCode">&nbsp;&nbsp; <label>规则名称</label><input type="text" placeholder="-请填写规则名称" [(ngModel)]="query.RoleName">
+      </div>
+      <div class="m-search-btn">
+        <button class="m-btn-confirm" (click)="search()">搜索</button>
+        <button class="m-btn-default" (click)="reset()">重置</button>
+      </div>
+    </div>
+    <!--搜索结果缺省页开始-->
+    <div class="m-noresult" [ngClass]="{'hide': !isSearch || contractConfigList.length > 0}">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">
+          很抱歉，没有找到与“<span>{{searchWord}}</span>”有关的信息
+        </p>
+        <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--搜索结果缺省页结束-->
+
+<div class="m-table-right" [ngClass]="{'hide': contractConfigList.length ==0}" style="margin-top: 0;">
+  <loading [show]="loading"></loading>
+  <table class="table table-hover table-list">
+    <thead>
+      <tr>
+          <th class="wp10">序号</th>
+          <th class="wp25">规则名称</th>
+          <th class="wp20">事业部名称</th>
+          <th class="wp20">创建日期</th>
+          <th class="wp25">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of contractConfigList;index as i">
+        <td class="wp10" (click)="GoToEdit(item.RoleID)">{{(pagerData.pageNo-1)*pagerData.pageSize + i + 1}}</td>
+        <td class="wp25" (click)="GoToEdit(item.RoleID)">{{item.RoleName}}</td>
+        <td class="wp20" (click)="GoToEdit(item.RoleID)">{{item.BusinessCode}}</td>
+        <td class="wp20" (click)="GoToEdit(item.RoleID)">{{item.Createtime|iqDate:"YYYY-MM-DD"}}</td>
+        <td class="wp25"><a href="javascript:void(0)" (click)="deleteContractRule(item.RoleID)">删除</a>&nbsp;&nbsp;&nbsp;<a *ngIf="!item.RoleStatus" href="javascript:void(0)" (click)="updateStart(item)">启用</a><a *ngIf="item.RoleStatus" href ="javascript:return false;" onclick="return false;" style="cursor: default;"><i style="color:darkgray">启用</i></a>&nbsp;&nbsp;&nbsp;<a *ngIf="item.RoleStatus" href="javascript:void(0)" (click)="updateStop(item)">停用</a><a *ngIf="!item.RoleStatus" href ="javascript:return false;" onclick="return false;" style="cursor: default;"><i style="color:darkgray">停用</i></a></td>
+      </tr>
+    </tbody>
+  </table>
+  <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  <!--内容页结束-->
+</div>

@@ -1,0 +1,145 @@
+@import '../../../../../../sass/base/variables';
+
+  .m-list-menu{
+    /*margin:15px 0;*/
+
+    .m-search-open{
+      position: relative;
+      float: right;
+      padding: 18px 25px;
+      background-color: $def-color3;
+      color: $def-main-color;
+      box-shadow: 0 -2px 3px rgba( 0, 0, 0, .15);
+      cursor: pointer;
+    }
+    .m-search-more{
+      float: left;
+      width: 100%;
+      background-color: $def-color3;
+      box-shadow: 0 0 5px rgba( 0, 0, 0, .15);
+
+      form{
+        padding: 15px 25px;
+      }
+
+      .m-search-item{
+        float: left;
+        margin-bottom: 10px;
+        width: 33%;
+
+        label{
+          display: inline-block;
+          width: 75px;
+          margin-right: 7px;
+          text-align: right;
+        }
+        >input[type=text],.m-select-search{
+          display: inline-block;
+          width: 70%;
+        }
+      }
+
+      .m-search-btn{
+        float: left;
+        width: 100%;
+        text-align: center;
+        .research{
+          width: 78px;
+        }
+        .resets{
+            width: 78px;
+            margin-left: 15px;
+        }
+      }
+    }
+    .m-search-high{
+      text-align: center;
+    }
+  }
+
+ 
+.m-search-items{
+  display: flex;
+  width: 37%!important;
+  line-height: 35px;
+  .m-datepicker-comb{
+    margin-left: 5px;
+  }
+}
+.hideStyle{
+  display: none;
+}
+
+.list-edit{
+  width: 100%!important;
+}
+
+.table-list td{
+    overflow: hidden!important;  /*溢出隐藏*/
+    text-overflow: ellipsis; /*以省略号...显示*/
+    white-space: nowrap;  /*强制不换行*/
+}
+.m-datepicker-comb{
+  display: inline-block;
+  width: 300px;
+  display: flex;
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+  }
+}
+.g-hdp{
+  width: 100%;
+  min-width: 1200px;
+  height: calc(100vh - 61.5px);
+  position: absolute;
+  top: 61.5px;
+  bottom: 0;
+}
+.m-btn-2 {
+   text-align: center;
+    height: 35px;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    transition: all .7s;
+    font-size: 14px;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0 70px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    }
+    .iqon-add{
+    color: #fff!important;
+}
+.m-home-default{
+    margin: 20px 0;
+}
+
+.m-scan-body .m-scan-default .m-scan-logo {
+    background-color: #57b9f8;
+    margin-bottom: 30px;
+    color: #ffffff;
+    
+    
+}
+
+.m-scan{ 
+    margin-bottom: 30px;
+    color: #ffffff;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.m-scan-logo i{
+    display: inline-block;
+    margin-top: 35px;
+    font-size: 30px;
+}
+.m-scan .m-scan-body .m-scan-default {
+    margin-top: 125px;
+    margin-bottom: 125px;
+    text-align: center;
+}
+

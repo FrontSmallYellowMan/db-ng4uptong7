@@ -1,0 +1,170 @@
+.sc-contract-approval{
+    width: 100%;
+    .sc-contract-approval-item{
+        margin-bottom: 15px;
+        padding: 20px 20px 24px;
+        background-color: #FFF;
+        .sc-contract-approval-item-title{
+            padding-bottom: 5px;
+        }
+        .approval-dropdown .m-dropdown-option {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #e1e3eb;
+            opacity: 0;
+            transform-origin: 50% 0;
+            transition: all .5s ease-out;
+            transform: rotateX(-90deg);
+        }
+    }
+    .sc-contract-approval-buttons{
+        float: left;
+        position:relative;
+        left:50%;
+        padding-bottom: 135px;
+        .contract-approval-btnCanel{
+            text-align: center;
+            width: 86px;
+            height: 45px;
+            line-height: 45px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .approval-dropdown {
+            button>i {
+                margin-left: 5px;
+                font-size: 12px;
+                color: #d2d8e0;
+            }
+            .m-dropdown-option {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                border: 1px solid #e1e3eb;
+                opacity: 0;
+                transform-origin: 50% 0;
+                transition: all .5s ease-out;
+                transform: rotateX(-90deg);
+                li {
+                    padding: 0 20px;
+                    height: 40px;
+                    line-height: 40px;
+                    font-size: 14px;
+                    color: #4a4a4a;
+                    cursor: pointer;
+                }
+                li.active,li:hover {
+                    background-color: #f5f7fa;
+                }
+            }
+        }
+        .approval-dropdown:hover .m-dropdown-option {
+            transition: all 0.5s;
+            -webkit-transform: perspective(500px) rotateX(0deg);
+            transform: perspective(500px) rotateX(0deg);
+            opacity: 1;
+        }
+    }
+    .sc-contract-approval-buttons div{
+        float: left;
+        position:relative;
+        left:-50%;
+        margin: 0 8px;
+    }
+}
+.header{
+    height: 50px;
+    font-size: 18px;
+    line-height: 50px;
+    span{
+        display: inline-block;
+        color:red;
+    }
+    button{
+        float: right;
+        font-size: 25px;
+    }
+    .close {
+        margin-top: 12px;
+    }
+}
+.body-item{
+    margin-top: 20px;
+    font-size: 14px;
+    .i-red{
+        color: red;
+    }
+    .select-title{
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        margin-top: 12px;
+        color: #a94442;
+    }
+    .select-user{
+        height: 30px;
+        float: left;
+        margin-left: 12px;
+        padding: 0 6px;
+        border-radius: 2px;
+        border: 1px solid #e1e3eb;
+    }
+    .select-user:hover{
+        border-radius: 2px;
+        border: 1px solid #66afe9;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+    }
+    .select-user span{
+        height: 100%;
+        line-height: 30px;
+    }
+    .del-select-user{
+        display: inline-block;
+        cursor:pointer;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: .2;
+        padding: 0 3px;
+    }
+    .del-select-user:hover{
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        filter: alpha(opacity=50);
+        opacity: .5;
+    }
+}
+.ui-select-match > .btn {
+    text-align: left !important;
+    width: 100%;
+}
+.modal-header .close {
+    margin-top: 15px;
+    font-size: 16px;
+}
+.flex_margin{
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.marginright15{
+        margin-right: 15px;
+}
+.marginright10{
+        margin-right: 10px;
+}
+.width190{
+    width: 190px;
+}
+.m-textarea-flex{
+    flex:1;
+}
+.height30{
+    height: 30px;
+}

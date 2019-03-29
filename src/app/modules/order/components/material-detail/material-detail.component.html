@@ -1,0 +1,194 @@
+<div class="content-auto">
+  <loading [show]="loading"></loading>
+  <div class="addApply-container" style="padding-top: 62px">
+    <!--标题-->
+    <nav class="nav">合同物料明细</nav>
+    <div class="addApply-base">
+      <div class="m-list-head">
+        <span class="m-dialog-head-change">基本信息</span>
+      </div>
+      <div class="addApp-base-infor">
+        <ul class="addApp-base-list">
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">销售员</label>
+            <div class="m-user-info" #sale user-image [hasClose]="false"></div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">产品岗</label>
+            <div class="m-user-info" #product user-image [hasClose]="false"></div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">合同编号</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.MainContractCode}}
+            </div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">项目名称</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.ProjectName}}
+            </div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">客户名称</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.BuyerName}}
+            </div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">最终用户名称</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.BuyerName}}
+            </div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">合同金额</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.ContractMoney}}
+            </div>
+          </li>
+          <li class="addApp-form-item">
+            <label class="addApp-form-label">合同币种</label>
+            <div class="addApp-form-div">
+              {{formData.SaleContractInfo.Currency}}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="addApply-base">
+      <div class="m-list-head">
+        <span class="m-dialog-head-change ">物料信息</span>
+        <iq-file-upload upType="0" [url]="fileUploadApi" [showModel]='false' [allowedFileType]="['xls']" [text]="'上传物料信息'" (onSuccess)="onFileCallBack($event)" class="float-r" style="height: 30px;margin-top: 6px;display: inline-block;"></iq-file-upload>
+        <span class="m-dialog-head-change float-r" style="margin-right:20px;" (click)="loadFile()">下载物料模版</span>
+        <div class="m-search">
+          <input name="searchMessage" placeholder="搜索商品编号,商品名称..." type="text" [(ngModel)]="searchMessage" autocomplete='off' (keyup.enter)="searchMaterial()">
+          <button class="m-btn-confirm research" type="button" (click)="searchMaterial()">搜索</button>
+          <button class="m-btn-default resets" type="button" style='width: 90px;' (click)="resetMaterial()">查看全部</button>
+          <button class="m-btn-confirm empty-btn" type="button" (click)="emptyMaterial()">清空物料</button>
+        </div>
+      </div>
+      <div class="addApp-base-infor">
+        <div class="addApp-base-list">
+          <div class="m-info-table-m m-info-table">
+            <div class="table-ulbox">
+              <ul class="table-head">
+                <li><input type="checkbox" icheck [(ngModel)]="fullChecked" allcheck="demoall" [indeterminate]="fullCheckedIndeterminate" (onIndeterminate)="CheckIndeterminate($event)"></li>
+                <li>序号</li>
+                <li><i class="addApp-form-tips">*</i>ERP商品编码</li>
+                <li><i class="addApp-form-tips">*</i>商品名称</li>
+                <li><i class="addApp-form-tips">*</i>采购数量</li>
+                <li><i class="addApp-form-tips">*</i>可用数量</li>
+                <li><i class="addApp-form-tips"></i>库存地</li>
+                <li><i class="addApp-form-tips">*</i>工厂</li>
+                <li>批次</li>
+                <li>备注</li>
+                <li>销售单位</li>
+                <li class="m-info-btn" (click)="addMaterial()">+</li>
+              </ul>
+              <div class="table-body" [style.overflow-y]="displayMaterialList?.length===0?'visible':'auto'">
+                <ul class="clearfix" *ngFor="let item of displayMaterialList;index as i;" [ngClass]="{'m-ul-warn': hasNoCor==i && !isSearch, 'exist':!item.isEdit}">
+                  <li><input type="checkbox" icheck allcheckChild="demoall" [(ngModel)]="item.checked" [disabled]="item.isEdit || !item.originalAvailableCount || originalAvailableCount === item.AvailableCount"></li>
+                  <li>{{i+1}}</li>
+                  <ng-container *ngIf="!item.isEdit">
+                    <li (click)="clickEdit(item)" [title]="item.MaterialNumber">{{item.MaterialNumber}}</li>
+                    <li (click)="clickEdit(item)" [title]="item.MaterialDescription">{{item.MaterialDescription}}</li>
+                    <li (click)="clickEdit(item)">{{item.Count}}</li>
+                    <li>
+                      <input class="m-infor-input can-use-input" (blur)='formatNumber(item,"AvailableCount",i)' type="text" min="1" [(ngModel)]="item.AvailableCount" [ngClass]="{'m-input-warn': isSubmit && item.AvailableCount === ''}">
+                    </li>
+                    <li (click)="clickEdit(item)">{{item.StorageLocation}}</li>
+                    <li (click)="clickEdit(item)">{{item.FactoryCode}}</li>
+                    <li (click)="clickEdit(item)">{{item.Batch}}</li>
+                    <ng-container *ngIf="!item.partEdit">
+                      <li (click)="clickEdit(item,'Remark')">{{item.Remark}}</li>
+                      <li (click)="clickEdit(item,'SalesUnit')" [title]="item.SalesUnit">{{item.SalesUnit}}</li>
+                    </ng-container>
+                    <ng-container *ngIf="item.partEdit">
+                      <li>
+                        <input class="m-infor-input" type="text" [(ngModel)]="item.Remark">
+                      </li>
+                      <li>
+                        <input class="m-infor-input" type="text" [(ngModel)]="item.SalesUnit">
+                      </li>
+                    </ng-container>
+                    <li class="m-info-btn"></li>
+                  </ng-container>
+
+                  <ng-container *ngIf="item.isEdit">
+                    <li *ngIf="item.isEditMaterialNumber">
+                      <input maxlength="18" (blur)='erpCodePattern(item,i)' class="m-infor-input" type="text" [(ngModel)]="item.MaterialNumber" [ngClass]="{'m-input-warn': isSubmit && !item.MaterialNumber}">
+                    </li>
+                    <li *ngIf="!item.isEditMaterialNumber">
+                       {{item.MaterialNumber}}
+                      </li>
+                    <li>
+                      <input class="m-infor-input" type="text" [(ngModel)]="item.MaterialDescription" [ngClass]="{'m-input-warn': isSubmit && !item.MaterialDescription}">
+                    </li>
+                    <li>
+                      <!-- {{item.Count}} -->
+                      <input class="m-infor-input can-use-input" (blur)='formatNumber(item,"Count",i)' min="0" type="text" [(ngModel)]="item.Count" [ngClass]="{'m-input-warn': isSubmit && (item.Count < 1 || !item.Count)}">
+                    </li>
+                    <li>
+                      <input class="m-infor-input can-use-input" (blur)='formatNumber(item,"AvailableCount",i)' type="text" min="1" [(ngModel)]="item.AvailableCount" [ngClass]="{'m-input-warn': isSubmit && !item.AvailableCount}">
+                    </li>
+                    <li>
+                      <input maxlength="4" class="m-infor-input" type="text" [(ngModel)]="item.StorageLocation" [ngClass]="{'m-input-warn': isSubmit || item.StorageLocationInvalid}" (blur)="testStorageLocationAndFactoryCode(i,'StorageLocation')">
+                    </li>
+                    <li>
+                      <input maxlength="4" class="m-infor-input" type="text" required conversionCase [(ngModel)]="item.FactoryCode" [ngClass]="{'m-input-warn': isSubmit && !item.FactoryCode||item.FactoryCodeInvalid}" (blur)="testStorageLocationAndFactoryCode(i,'FactoryCode')">
+                    </li>
+                    <li>
+                      <input class="m-infor-input" type="text" [(ngModel)]="item.Batch" conversionCase>
+                    </li>
+                    <li>
+                      <input class="m-infor-input" type="text" [(ngModel)]="item.Remark">
+                    </li>
+                    <li>
+                      <input class="m-infor-input" type="text" [(ngModel)]="item.SalesUnit">
+                    </li>
+                    <li class="m-info-btn" (click)="delMaterial(displayMaterialList,i,item)">-</li>
+                  </ng-container>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addApply-base">
+      <div class="m-list-head">
+        <span class="m-dialog-head-change">物料变更记录</span>
+      </div>
+      <div class="addApp-base-infor">
+        <div class="addApp-base-list history-change">
+          <div class="m-info-table-m m-info-table">
+            <div class="table-ulbox">
+              <ul class="table-head">
+                <li>申请编号</li>
+                <li>申请人</li>
+                <li>申请时间</li>
+                <li class="aplyState">审批状态</li>
+              </ul>
+              <div class="table-body">
+                <ul class="clearfix" *ngFor="let item of materialInfoHisChange;index as i;" (click)='sawHistory(item.LinkUrl)'>
+                  <li>{{item.ChangeNo}}</li>
+                  <li>{{item.ApplyName}}</li>
+                  <li>{{item.ApplyTime|iqDate:'YYYY-MM-DD'}}</li>
+                  <li class="aplyState">{{item.ApplicationStateName}}审批</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addApp-submit-btn">
+      <div class="addApp-sub-btns">
+        <button class="m-btn-confirm" type="button" (click)="submit()">保存</button>
+        <button class="m-btn-sketch" type="button" (click)="changeMaterial()">物料变更</button>
+        <button class="m-btn-addAppback" type="button" (click)='back()'>取消</button>
+      </div>
+    </div>
+  </div>
+</div>

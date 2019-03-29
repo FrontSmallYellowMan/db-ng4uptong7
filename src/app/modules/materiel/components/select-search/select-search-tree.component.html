@@ -1,0 +1,22 @@
+
+
+
+<div class="m-cover"></div>
+  <div class="tree">
+    <div class="modal-header m-dialog-head">
+      <span>请选择</span>
+      <i class="iqon-close" (click)="hide()"></i>
+    </div> 
+    <div class="m-search">
+      <i class="iqon-query" (click)="search()"></i>
+      <input [(ngModel)]="query.queryStr"  (keyup.enter)="search()" name="QueryStr" type="text" placeholder="-请输入搜索条件">
+    </div>
+    <div class="m-option-list">
+      <loading [show]="loading"></loading>
+
+      <div class="tree-component">
+        <searchTree [treelists]="menu" (onChoose)="hide($event)"></searchTree>
+      </div>
+     
+    </div>
+  </div>

@@ -1,0 +1,64 @@
+<!--审批意见 -->
+<div class="apply-opinion">
+    <div class="m-exm-item">
+        <p class="m-exm-advice">审批意见</p>
+        <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="opinions"></textarea>
+    </div>
+</div>
+
+<!--审批相关按钮 -->
+<div class="approval-buttons">
+    <div *ngIf="isShowAgreetbutton">
+        <button class="m-btn-agree apply-agree" (click)="onApproval('Agree+')">同意并加签风险总监</button>
+    </div>
+    <div>
+        <button class="m-btn-agree apply-agree" (click)="onApproval('Approval')">同意</button>
+    </div>
+    <div>
+        <button *ngIf="isRed" class="m-btn-agree apply-agree" (click)="onApproval('RedApproval')">批准并办理红字通知单</button>
+    </div>
+    <div>
+        <button class="m-btn-refuse apply-refuse" (click)="onApproval('Reject')">驳回</button>
+    </div>
+    <div class="approval-dropdown">
+        <button class="m-btn-more-big">
+            更多
+            <i class="iqon-xia"> </i>
+        </button>
+        <ul class="m-dropdown-option">
+            <li (click)="onOpenModal('Sign')">加签</li>
+            <li (click)="onOpenModal('Transfer')">转办</li>
+        </ul>
+    </div>
+    <div class="approval-btnCanel" (click)="goBack()">
+        返回
+    </div>
+</div>
+<!--加签转办审批窗口-->
+<modal #approvalModal style="z-index:7000; margin-top:90px;">
+    <modal-header class="header">
+        <span>{{appTypeName}}</span>
+        <button aria-label="Close" class="close" type="button" (click)="onCancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <div class="body-item flex_margin">
+            <div class="marginright15">
+                <label>{{appTypeName}}人</label>
+                <i class="i-red">*</i>
+            </div>
+            <iq-person-select #person name="person" [(ngModel)]="person.info" [max]="1" (ngModelChange)="changePerson(person.info)" ngDefaultControl></iq-person-select>
+        </div>
+        <div class="apply-opinion body-item flex_margin">
+            <label class="marginright10">审批意见</label>
+            <div class="m-exm-item m-textarea-flex">
+                <textarea class="m-textarea " placeholder="请填写审批意见" [(ngModel)]="opinions"></textarea>
+            </div>
+        </div>
+    </modal-body>
+    <modal-footer class="footer">
+        <button type="button" class="m-btn-confirm" (click)="onApproval(approverType)">确定</button>
+        <button type="button" class="m-btn-cancel" (click)="onCancel()">取消</button>
+    </modal-footer>
+</modal>

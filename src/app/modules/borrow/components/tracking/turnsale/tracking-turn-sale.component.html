@@ -1,0 +1,139 @@
+<div class="m-boardtop clearfix">
+    <div class="m-crumb">
+        <ul>我的位置：
+            <li><a>DCG业务管理平台</a></li>
+            <li><a>借用管理</a></li>
+            <li><a>借用跟踪</a></li>
+            <li><a>借用转销售查询</a></li>
+        </ul>
+    </div>
+    <!--iq-breadcrumb></iq-breadcrumb>
+    <button type="button" class="m-btn-success g-fr" [routerLink]="['/borrow/apply/turn-sale',{flag:'n'}]" style="margin-top: 8px;"><i class="iqon-add"></i>新建申请</button-->
+    <button class="m-btn-2 g-fr" style="margin-top: 7px;background-color: #57b9f8;" (click)="export()">Excel导出</button>
+</div>
+<div class="m-overclass">
+    <div class="m-list-menu" style="background-color: #f5f7fa;">
+        <div class="m-table m-table1" >
+            <table cellpadding="0" cellspacing="0" width="100%" style="line-height: 45px;text-align: center;">
+                <tr>
+                    <td width="10%">申请单号</td>
+                    <td width="20%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.mainApplyNo" name="mainApplyNo">
+                    </td>
+                    <td width="10%">销售单号</td>
+                    <td width="20%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.deliveryNo" name="deliveryNo">
+                    </td>
+                    <td width="10%">预留号</td>
+                    <td width="30%"><input type="text" placeholder="-请填写" [(ngModel)]="queryParam.reservationNo" name="reservationNo">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%">业务范围</td>
+                    <td width="20%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.businessScope" name="businessScope">
+                    </td>
+                    <td width="10%">本部</td>
+                    <td width="20%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.baseDeptName" name="baseDeptName">
+                    </td>
+                    <td width="10%">事业部</td>
+                    <td width="30%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.subDeptName" name="subDeptName">
+                    </td>
+                </tr>
+                <tr>
+                 <td width="10%">申请日期</td>
+                    <td width="30%">
+
+                        <table width="100%">
+                            <tr>
+                                <td width="45%">
+                                    <my-datepicker [(ngModel)]="queryParam.startDate" format="YYYY-MM-DD" PlaceHolder="-请选择日期" name="startDate"></my-datepicker>
+                                </td>
+                                <td>~</td>
+                                <td width="45%">
+                                    <my-datepicker [(ngModel)]="queryParam.endDate" format="YYYY-MM-DD" PlaceHolder="-请选择日期" name="endDate"></my-datepicker>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="10%">申请人</td>
+                    <td width="20%">
+                        <input type="text" placeholder="-请填写" [(ngModel)]="queryParam.applyItCode" name="applyItCode">
+                    </td>
+                    <td width="10%">审批状态</td>
+                    <td width="20%" align="left">
+                        <select [(ngModel)]="queryParam.flowStatus" name="flowStatus" style="width: 100%;" class="form-control borrowSelect">
+                    <option value="0">草稿</option>
+                    <option value="1">审批中</option>
+                    <option value="3">已完成</option>
+                    <option value="" selected>全部</option>
+                </select>
+                    </td>
+
+                   
+                </tr>
+            </table>
+
+       
+        
+         </div>
+         <div class="m-scan-item btn-right">
+            <button class="m-btn-cancel btn-blue" (click)="search(0)">搜索</button>
+            <button class="m-btn-cancel" (click)="clearSearch()">重置</button>
+        </div>
+    </div>
+   
+    <!--div class="m-scan-body"-->
+        <div class="m-scan-result">
+            <!--搜索结果缺省页开始-->
+            <div class="m-noresult" [ngClass]="{'hide':turnSaleList && turnSaleList.length > 0}">
+                <!--loading [show]="loading"></loading-->
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">
+                        暂无相关数据
+                    </p>
+                </div>
+            </div>
+            <!--搜索结果缺省页结束-->
+            <div class="m-card-cont" [ngClass]="{'hide':turnSaleList && turnSaleList.length == 0}">
+                <!--loading [show]="loading"></loading-->
+                <table class="table table-hover table-list" style="table-layout: fixed;">
+                    <thead>
+                        <tr>
+
+                            <th>申请单号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='approvalSort()'></i></th>
+                            <th>业务范围编号</th>
+                            <th>预留号</th>
+                            <th>销售单号</th>
+                            <th>本部</th>
+                            <th>事业部</th>
+                            <th>平台</th>
+                            <th>申请人</th>
+                            <th>申请日期<i class="iqon-order" (click)='approvalSort()'></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of turnSaleList">
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.mainApplyNo}}"><span>{{item.mainApplyNo}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.businessScope}}"><span>{{item.businessScope}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.reservationNo}}"><span>{{item.reservationNo}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.deliveryNo}}"><span>{{item.deliveryNo}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.baseDeptName}}"><span>{{item.baseDeptName}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.subDeptName}}"><span>{{item.subDeptName}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)" title="{{item.platformName}}"><span>{{item.platformName}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)"><span>{{item.applyUserName+"/"+item.applyItCode}}</span></td>
+                            <td (click)="goDetail(item.turnSalesId)"><span>{{item.applyDate|iqDate:'YYYY-MM-DD'}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="page">
+                    <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+                </div>
+            </div>
+
+        </div>
+   
+</div>

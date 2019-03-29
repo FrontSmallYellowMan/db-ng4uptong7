@@ -1,0 +1,31 @@
+<div class="approver-result-modal">
+  <div class="approver-result-modal-title">
+    <label>请选择审批人</label>
+  </div>
+  <div class="approver-result-modal-content">
+    <table class="m-info-table">
+      <thead>
+        <tr>
+          <th>
+            <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+          </th>
+          <th>姓名</th>
+          <th>ItCode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of resultData; index as i;">
+          <td>
+            <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked" (ngModelChange)="onCheckedChange(item)" [name]="'checkbox'+i">
+          </td>
+          <td (click)="onClickTd(item, i)">{{ item.UserName }}</td>
+          <td (click)="onClickTd(item, i)">{{ item.ITCode }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="m-at-btn">
+    <button class="m-btn-confirm" (click)="sure()">确定</button>
+    <button class="m-btn-cancel" (click)="cancel()">取消</button>
+  </div>
+</div>

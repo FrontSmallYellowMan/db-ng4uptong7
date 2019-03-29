@@ -1,0 +1,90 @@
+    <div class="modal" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <div class="modal-header m-dialog-head">
+      <span>采购订单</span>
+      <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+      <!--<div class="message">
+            <p class="message-item">
+                <span>供应商</span>
+                 {{ modalData.vendor}} 
+            </p>
+            <p class="message-item">
+                <span>工厂</span>
+                 {{modalData.factory}} 
+            </p>
+            <p class="message-item">
+                <span>采购金额</span>
+                 {{modalData.untaxAmount}} 
+            </p>
+        </div>   -->
+      <div class="m-order-table addApp-ch-before">
+        <table class="m-info-table">
+          <thead>
+            <tr>
+              <td style="width:40px"></td>
+              <td style="width:100px"></td>
+              <td style="width:260px"></td>
+              <td style="width:80px"></td>
+              <td style="width:100px"></td>
+              <td style="width:100px"></td>
+              <td style="width:80px"></td>
+              <td style="width:102px" class="mix"></td>
+            </tr>
+            <tr class="m-infor-tr">
+                <th colspan="9" class="m-text-center change">
+                    <span class="col-md-4">供应商&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;{{modalData.vendor}}</span>
+                    <span class="col-md-4">工厂&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;{{modalData.factory}}</span>
+                    <span class="col-md-4">采购金额&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;{{modalData.untaxAmount | number:"1.2"}}</span>
+                </th>
+            </tr>
+            <tr class="m-center">
+              <th>序号</th>
+              <th>物料编号</th>
+              <th>物料描述</th>
+              <th>数量</th>
+              <th>未税单价</th>
+              <th>未税总价</th>
+              <th>库存地</th>
+              <th>批次</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of procurementList;index as i" >
+            <td style="width:40px">{{ i+1 }}</td>
+            <td style="width:100px">
+                {{item.MaterialNumber}}
+            </td>
+            <td style="width:260px">
+                {{ item.MaterialDescription }}
+            </td>
+            <td style="width:80px">
+                
+              {{item.Count}}
+            </td>
+            <td style="width:100px">
+                
+              {{item.Price | number:"1.2"}}
+            </td>
+            <td style="width:100px">
+                {{ item.Amount | number:"1.2"}}
+            </td>
+            <td style="width:80px">
+                {{ item.StorageLocation}}
+            </td>
+            <td style="width:100px;" class="w100">
+            {{item.Batch}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="m-btn-confirm" (click)="hide()">关闭</button>
+    </div>
+        </div>
+    </div>
+</div>   

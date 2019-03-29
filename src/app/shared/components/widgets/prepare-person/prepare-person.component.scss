@@ -1,0 +1,24 @@
+.repare-list{
+    li {
+        display: flex;
+        p {
+            display:inline-block;
+            text-align: right;
+            width: 8%;
+            line-height: 40px;
+            font-weight:bold;
+        }
+        iq-person-select {
+            margin-left: 15px;
+            display: inline-block;
+        }
+    }
+}
+/deep/ .m-user-info{
+    float: left;
+    min-width:180px;
+    margin-right:40px;
+}
+/deep/ .m-user-info .m-user-noimg{
+    line-height: 28px;
+}

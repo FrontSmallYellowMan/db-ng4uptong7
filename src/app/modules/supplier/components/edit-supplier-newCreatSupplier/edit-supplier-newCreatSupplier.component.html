@@ -1,0 +1,294 @@
+<form #form="ngForm">
+
+  <div class="m-edit-supplier-ncs">
+
+    <h4>{{pageTitle}}</h4>
+
+    <!-- 基本信息 -->
+    <div class="m-edit-supplier-ncs-content1">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">申请人</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <div class="m-user-info-small">
+            <div user-image [hasClose]="false" [user]="userInfo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>联系方式</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写联系方式" name="phone" #Phone="ngModel" [(ngModel)]="supplierData.phone" maxlength="12" pattern="(^1\d{10}$)|(^0\d{2,3}-?\d{7,8}$)"
+            required>
+        </div>
+        <p class="m-p-warn" style="line-height:20px;" *ngIf="Phone.invalid && (Phone.touched||isSubmit)">请填写联系方式，不要输入特殊字符</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>本部</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          {{supplierData.BBMC}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need"></span>事业部</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [itemValue]="1" [itemIndex]="1" [required]="!supplierData.SYBMC&&isSubmit" name="SYBMC" ngModel
+            [(ngModel)]="supplierData.SYBMC" [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}"
+            [noSearch]="true" listApi="vendor/getbbandsyb" placeHolder="-请选择" [queryParams]="{SearchTxt:supplierData.BBMC}"
+            (onSelect)="getSYBMC($event)" [disabled]="isChangeSupplier"></iq-select>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+    </div>
+
+
+    <!--供应商信息-->
+    <div class="m-edit-supplier-ncs-content1">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>供应商信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商类别</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="Vendorcountry" id="" [(ngModel)]="supplierData.vendorcountry" required #Vendorcountry="ngModel" [ngClass]="{'m-select-warn':Vendorcountry.invalid&&(Vendorcountry.touched||isSubmit)}"
+            (ngModelChange)="getVendorcountry(supplierData.vendorcountry)">
+            <option value=null selected disabled>请选择</option>
+            <option value="0">集团外-国内</option>
+            <option value="1">集团外-国外</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="Vendorcountry.invalid&& (Vendorcountry.touched||isSubmit)">请选择供应商类别</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles m-select-title">
+          <span class="m-form-need">*</span>公司代码</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!companyAndCode&&isSubmit" name="Company" [(ngModel)]="companyAndCode" [modalShow]="true"
+            [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" listApi="InitData/GetPageDataCompany"
+            (onSelect)="getCompany($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}" #Company="ngModel"
+            [disabled]="isChangeSupplier"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!companyAndCode&& (Company.touched||isSubmit)">请选择公司代码</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商名称</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写供应商名称" [(ngModel)]="supplierData.vendor" name="Vendor" #Vendor="ngModel" maxlength="70"
+            required [ngClass]="{'m-input-warn':Vendor.invalid&&(Vendor.touched||isSubmit)}" (blur)="getIndexesPinYin(supplierData.vendor)"
+            pattern="[\s\w\u4e00-\u9fa5（）()-.]*">
+        </div>
+        <p class="m-p-warn" *ngIf="Vendor.invalid && (Vendor.touched||isSubmit)">请填写供应商名称，请不要填写特殊字符</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles" style="width: 110px;">
+          <span class="m-form-need" *ngIf="supplierData.vendorcountry==0">*</span>增值税号或统一社会信用代码</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1" style="top:-10px;">
+          <input type="text" placeholder="-请填写增值税号或统一社会信用代码" [(ngModel)]="supplierData.valueaddedtaxno" name="Valueaddedtaxno" #Valueaddedtaxno="ngModel"
+            maxlength="18" [required]="supplierData.vendorcountry==0" [ngClass]="{'m-input-warn':Valueaddedtaxno.invalid&&(Valueaddedtaxno.touched||isSubmit)}"
+            pattern="[\d]{15,18}">
+        </div>
+        <p class="m-p-warn" *ngIf="Valueaddedtaxno.invalid&&(Valueaddedtaxno.touched||isSubmit)" style="margin:-10px 0 0 0;">增值税号或统一社会信用代码必须大于15位，请不要填写特殊字符</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>注册地址</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="text" placeholder="-请填写注册地址" [(ngModel)]="supplierData.registeredaddress" name="Registeredaddress" #Registeredaddress="ngModel"
+            maxlength="256" required [ngClass]="{'m-input-warn':Registeredaddress.invalid&&(Registeredaddress.touched||isSubmit)}">
+        </div>
+        <p class="m-p-warn" *ngIf="Registeredaddress.invalid&&(Registeredaddress.touched||isSubmit)">请填写注册地址</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" *ngIf="supplierData.vendorno">
+          <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+            <span class="m-form-need"></span>供应商编号</p>
+          <div class="m-select m-edit-supplier-ncs-select-style1">
+          {{supplierData.vendorno}}
+          </div>
+        </div>
+
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" *ngIf="false">
+        <p class="m-edit-supplier-ncs-form-title m-edit-supplier-ncs-form-titles">
+          <span class="m-form-need">*</span>供应商分类</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=1>
+          <span>核心</span>
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=2>
+          <span>非核心</span>
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=3>
+          <span>新产品</span>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!--付款信息-->
+    <div class="m-edit-supplier-ncs-content1">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>付款信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>银行国别</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!bankcountryAndCode&&isSubmit" name="BankcountryAndCode" ngModel [(ngModel)]="bankcountryAndCode"
+            [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}" listApi="material/basedata/get"
+            placeHolder="-请选择" [queryParams]="{tabName:'14'}" (onSelect)="getBankcountry($event)" [itemValue]="1" [itemIndex]="1"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!bankcountryAndCode&&isSubmit">请选择银行国别</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <!-- 占位用 -->
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>银行账户</p>
+        <div class="m-edit-supplier-ncs-input m-edit-supplier-ncs-yuan">
+          <input type="text" placeholder="-请填写银行账户" [(ngModel)]="supplierData.bankaccount" name="Bankaccount" #Bankaccount="ngModel"
+            required maxlength="23" [ngClass]="{'m-input-warn':Bankaccount.invalid&&(Bankaccount.touched||isSubmit)}" pattern="^[\d- ]*$">
+        </div>
+        <p class="m-p-warn" *ngIf="Bankaccount.invalid&&(Bankaccount.touched||isSubmit)">请填写银行账户，银行账户只能输入数字，可用空格或“-”隔开</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>付款条款</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!paymenttermsAndCode&&isSubmit" name="PaymenttermsAndCode" ngModel [(ngModel)]="paymenttermsAndCode"
+            [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}" listApi="vendor/paymentclause"
+            placeHolder="-请选择" [queryParams]="{queryStr:'SearchTxt'}" (onSelect)="getPaymenttermsAndCode($event)" [itemValue]="1"
+            [itemIndex]="1"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!paymenttermsAndCode&&isSubmit">请选择付款条款</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>银行名称</p>
+        <div class="m-edit-supplier-ncs-input m-edit-supplier-ncs-yuan">
+          <input type="text" placeholder="-请填写银行名称" [(ngModel)]="supplierData.bankname" name="Bankname" #Bankname="ngModel" required
+            maxlength="60" [ngClass]="{'m-input-warn':Bankname.invalid&&(Bankname.touched||isSubmit)}">
+        </div>
+        <p class="m-p-warn" *ngIf="Bankname.invalid&&(Bankname.touched||isSubmit)">请填写银行名称</p>
+      </div>
+
+    </div>
+
+    <!--其他信息-->
+    <div class="m-edit-supplier-ncs-content1">
+
+      <div class="m-edit-supplier-ncs-title">
+        <h5>其他信息</h5>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" *ngIf="supplierData.vendorcountry==1">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>国际贸易条件</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!supplierData.internationaltradeterms&&isSubmit" name="Internationaltradeterms" ngModel
+            [(ngModel)]="supplierData.internationaltradeterms" [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}"
+            listApi="material/basedata/get" placeHolder="-请选择" [queryParams]="{tabName:'15',applyType:'1'}" (onSelect)="getInternationaltradeterms($event)"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!supplierData.internationaltradeterms&&isSubmit">请选择国际贸易条件</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>币种</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="Currency" #Currency="ngModel" [(ngModel)]="currencyAndCode" id="" (ngModelChange)="getCurrencySelect(currencyAndCode)"
+            [ngClass]="{'m-select-warn':Currency.invalid&&(Currency.touched||isSubmit)}" required>
+            <option value="" selected disabled>-请选择</option>
+            <option [ngValue]="list.CurrencyCode+list.CurrencyName" *ngFor="let list of currencyAndCodeList;let i=index">{{list.CurrencyCode}} {{list.CurrencyName}}</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="Currency.invalid&&isSubmit">请选择币种</p>
+      </div>
+
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips" *ngIf="supplierData.vendorcountry==1">
+        <p class="m-edit-supplier-ncs-form-title">
+          <span class="m-form-need">*</span>国际贸易地点</p>
+        <div class="m-select m-edit-supplier-ncs-select-style1">
+          <iq-select class="iqSelect" [required]="!supplierData.internationaltradelocation&&isSubmit" name="Internationaltradelocation"
+            ngModel [(ngModel)]="supplierData.internationaltradelocation" [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}"
+            listApi="material/basedata/get" placeHolder="-请选择" [queryParams]="{tabName:'15',applyType:'2'}"></iq-select>
+        </div>
+        <p class="m-p-warn" *ngIf="!supplierData.internationaltradelocation&&isSubmit">请选择国际贸易地点</p>
+      </div>
+
+      <div class="m-edit-supplier-ncs-form m-edit-supplier-ncs-tips">
+        <!-- 占位用 -->
+      </div>
+
+      <div class="m-edit-supplier-ncs-fileUpLoad">
+        <p class="m-edit-supplier-ncs-fileUpLoad-title">
+          <span class="m-form-need">*</span>参考资料</p>
+        <div class="m-edit-supplier-ncs-fileUpLoad-list">
+          <iq-file-upload upType="1" [url]="upFileApiLink" (onSuccess)="fileUploadSuccess($event)" [hasUploaded]="alreadyfilelUpLoadList"
+            (onDeleteItem)="deleteUploadFile($event)"></iq-file-upload>
+        </div>
+      </div>
+
+    </div>
+
+    <!--审批历史记录-->
+    <div class="m-div-margin" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <!--审批历史记录 end-->
+
+    <!-- 审批人信息 -->
+    <div class="m-edit-supplier-ncs-content1">
+      <div class="m-edit-supplier-ncs-title">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="m-supplier-approvalPerson">
+        <span>供应商主数据审批岗</span>
+        <div class="m-user-info" *ngFor="let list of supplierApprovalPerson;index as i">
+          <div user-image [hasClose]="false" [user]="list"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 审批人信息 end-->
+
+
+    <div class="m-commonly-btn">
+      <button class="m-btn-confirm m-btn-margin" (click)="save('1')" type="button">提交</button>
+      <button class="m-btn-default m-btn-tempsave" (click)="save('0')" type="button">暂存</button>
+      <button class="m-btn-cancel2 m-btn-width" (click)="cancle()" type="button">取消</button>
+    </div>
+
+  </div>
+
+
+</form>

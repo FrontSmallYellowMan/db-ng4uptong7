@@ -1,0 +1,46 @@
+<div *ngIf="Data && Data.BusinessType === 'SalesContract'">
+  <!--item.FieldName == 'ProjectName'  item.FieldShowType === 'checkbox'-->
+  <!--项目名称字段显示时需要独占一行  复选框类型的字段也需要独占一行显示-->
+  <form #customform="ngForm" novalidate *ngIf="Data && !readonly">
+    <div class="c-form-item" *ngFor="let item of Data.FieldMsg;" [ngClass]="{'c-form-item-custom':item['FieldShowType'] === 'checkbox' && item['Data'] && item['Data'].length>5 || item.FieldName == 'ProjectName'}">
+      <div class="c-input-title" [ngClass]="{'c-input-title-custom':item['FieldShowType'] === 'checkbox' && item['Data'] && item['Data'].length>5 || item.FieldName == 'ProjectName'}">
+        <span class="c-form-need" *ngIf="item.IfRequired">*</span>
+        <label>{{ item.FieldShowName }}</label>
+      </div>
+      <div class="c-input-wrap" [ngClass]="{'c-input-wrap-custom':item['FieldShowType'] === 'checkbox' && item['Data'] && item['Data'].length>5 || item.FieldName == 'ProjectName'}">
+        <!--文本框-->
+        <span *ngIf="item.FieldShowType === 'text'">
+          <input type="text" [name]="item.FieldName" [(ngModel)]="item.FieldValue" [ngClass]="{'m-input-warn':customform.controls[item.FieldName]?.invalid && customform.controls[item.FieldName]?.touched}" [pattern]="item.Rex" [maxlength] ="item.MaxLength" [required]="item.IfRequired">
+        </span>
+        <!--下拉框-->
+        <div class="m-select" *ngIf="item.FieldShowType === 'select'">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="item.FieldValue" [name]="item.FieldName" [required]="item.IfRequired" [ngClass]="{'m-select-warn':customform.controls[item.FieldName]?.invalid && customform.controls[item.FieldName]?.touched}">
+            <option value="">-请选择</option>
+            <option *ngFor="let option of item.Data" [ngValue]="option.value">{{ option.text }}</option>
+          </select>
+        </div>
+        <!--单选框-->
+        <div class="lh-40" *ngIf="item.FieldShowType === 'radio'">
+          <span *ngFor="let radioItem of item.Data; index as i;">
+            <input icheck type="radio" [id]="'radio' + i" [name]="item.FieldName" [attr.name]="item.FieldName" [value]="radioItem.value" [attr.value]="radioItem.value" [(ngModel)]="item.FieldValue">
+            <label>{{ radioItem.text }}</label>
+          </span>
+        </div>
+        <!--复选框-->
+        <div class="lh-40" *ngIf="item.FieldShowType === 'checkbox'">
+          <span *ngFor="let checkboxItem of item.Data; index as i;">
+            <input icheck type="checkbox" [id]="'checkbox' + i" [name]="item.FieldName + i" [attr.name]="item.FieldName + i" [value]="checkboxItem.value" [attr.value]="checkboxItem.value" [(ngModel)]="checkboxItem.ischecked">
+            <label>{{ checkboxItem.text }}</label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="Data && readonly">
+      <div [class.wp100]="item.FieldShowType === 'checkbox' || item.FieldName == 'ProjectName'" class="c-form-item-view" *ngFor="let item of Data.FieldMsg;">
+        <div class="c-input-title" [class.wp12]="item.FieldShowType === 'checkbox' || item.FieldName == 'ProjectName'"><label>{{ item.FieldShowName }}</label></div>
+        <div class="c-input-wrap" [title]="item.FieldValue">{{ item.FieldValue }}</div>
+      </div>
+  </div>
+</div>

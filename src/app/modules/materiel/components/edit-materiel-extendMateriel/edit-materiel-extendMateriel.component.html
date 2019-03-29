@@ -1,0 +1,112 @@
+<div class="m-wrap">
+  <loading [show]="loading"></loading>
+  <h3>{{title}}扩展物料申请</h3>
+  <div class="m-extend">
+    <label>扩展方式</label>
+    <div class="m-extend-radio">
+      <input [disabled]="hasSubmited" [(ngModel)]="extendType" type="radio" icheck name="extend" value="0">
+      <span>扩展工厂</span>
+    </div>
+    <div class="m-extend-radio">
+      <input [disabled]="hasSubmited" [(ngModel)]="extendType" type="radio" icheck name="extend" value="1">
+      <span>扩展批次</span>
+    </div>
+    <div class="m-extend-radio">
+      <input [disabled]="hasSubmited" [(ngModel)]="extendType" type="radio" icheck name="extend" value="2">
+      <span>扩展库存地</span>
+    </div>
+    <div class="m-extend-radio">
+      <span style="color:red">返款服务类物料不能自动扩展平台，如果需要请联系采购员处理</span>
+    </div>
+  </div>
+  <div class="m-nodata" *ngIf="!extendType">
+    <div class="m-nodata-center">
+      <i class="iqon-close"></i>
+      <p class="line1">暂无相关数据</p>
+      <p class="line2">请选择“扩展方式”吧~</p>
+    </div>
+  </div>
+  <div class="m-table" *ngIf="extendType">
+    <div class="m-table-btn" *ngIf="isShowbutton">
+      <button type="button" class="m-btn-text" (click)="download(extendType)">下载{{extendType | extendType}}模板</button>
+      <iq-file-upload upType="0" [url]="fileUploadApi" [text]="'导入'+(extendType | extendType)+'信息'" (onSuccess)="fileUpSuccess($event)" [allowedFileType]="['xls']" [showModel]="false"></iq-file-upload>
+    </div>
+    <form #form="ngForm" style="margin-top:10px;">
+      <div class="m-materiel-code" *ngIf="isSeeDetail&&unSubmit">
+        <label>物料编号</label>
+        <div class="m-input-wrap">
+          <!-- <input [(ngModel)]="materileList" [ngClass]="{'m-input-warn': codeError}" (ngModelChange)="codeError = ''" type="text" name="materielCode" placeholder="-请输入物料编号">
+          <p class="m-p-warn">{{codeError}}</p> -->
+          <input [(ngModel)]="materileList" type="text" [ngClass]="{'m-input-warn':MaterielCode.invalid}" name="materielCode" #MaterielCode="ngModel" placeholder="-请输入物料编号" pattern="[a-zA-Z\d,-]*" trim>
+          <p class="m-p-warn" *ngIf="MaterielCode.invalid">请不要输入特殊字符</p>  
+        </div>
+        <button type="button" class="m-btn-confirm" (click)="addMateriel()">添加</button>
+        <span class="m-tips-font">如果要输入多个物料号，请以英文逗号隔开</span>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>物料编号</th>
+            <th *ngIf="extendType == '0'">参考工厂</th>
+            <th *ngIf="extendType == '0'">参考销售组织</th>
+            <th *ngIf="extendType == '1'||extendType == '2'">目标工厂</th>
+            <th *ngIf="extendType == '0'">参考库存地</th>
+            <th *ngIf="extendType == '0'">扩展工厂</th>
+            <th *ngIf="extendType == '1'">扩展批次</th>
+            <th *ngIf="extendType == '2'">扩展库存地</th>
+            <th class="operate">操作</th>
+            <th>失败原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of extendList;index as i;">
+            <td>{{item.MaterialCode}}</td>
+            <td><input *ngIf="item.editAble" type="text" #ReferFactory="ngModel" [(ngModel)]="item.ReferFactory" [name]="i+'ReferFactory'+'-'+item.materialID" [attr.name]="i+'ReferFactory'+'-'+item.materialID" maxlength="4" pattern="[a-zA-Z\d]{4}" required [ngClass]="{'m-input-warn':ReferFactory.invalid && (ReferFactory.touched || hasSubmited)}" (blur)="formatInput(i,item.ReferFactory,'referFactory')">
+              <span *ngIf="!item.editAble">{{item.ReferFactory}}</span>
+            </td>
+            <td *ngIf="extendType == '0'"><input *ngIf="item.editAble" type="text" #ReferSalesOrganization="ngModel" [(ngModel)]="item.ReferSalesOrganization" [name]="i+'ReferSalesOrganization'+'-'+item.materialID" [attr.name]="i+'ReferSalesOrganization'+'-'+item.materialID" maxlength="4" pattern="[a-zA-Z\d]{4}" required [ngClass]="{'m-input-warn':ReferSalesOrganization.invalid && (ReferSalesOrganization.touched || hasSubmited)}" (blur)="formatInput(i,item.ReferFactory)">
+              <span *ngIf="!item.editAble">{{item.ReferSalesOrganization}}</span>
+            </td>
+            <td *ngIf="extendType == '0'">
+              <input *ngIf="item.editAble" #ReferLocation="ngModel" [ngClass]="{'m-input-warn': ReferLocation.invalid && (ReferLocation.touched || hasSubmited) }" [(ngModel)]="item.ReferLocation" required maxlength="4" pattern="[0-9a-zA-Z]{4}" type="text" [attr.name]="i+'ReferLocation' +'-'+ item.materialID" [name]="i+'ReferLocation' +'-'+ item.materialID" (blur)="formatInput(i,item.ReferFactory)">
+              <span *ngIf="!item.editAble">{{item.ReferLocation}}</span>
+            </td>
+            <td *ngIf="extendType == '0'">
+              <input *ngIf="item.editAble" #ExtendFactory="ngModel" [ngClass]="{'m-input-warn': ExtendFactory.invalid && (ExtendFactory.touched || hasSubmited) }" [(ngModel)]="item.ExtendFactory" required maxlength="4" pattern="[0-9a-zA-Z]{4}" type="text" [attr.name]="i+'ExtendFactory' +'-'+item.materialID" [name]="i+'ExtendFactory'+'-' +item.materialID" (blur)="formatInput(i,item.ReferFactory)">
+              <span *ngIf="!item.editAble">{{item.ExtendFactory}}</span>
+            </td>
+            <td *ngIf="extendType == '1'">
+              <input *ngIf="item.editAble" #ExtendBatch="ngModel" [(ngModel)]="item.ExtendBatch" type="text" [attr.name]="i+'ExtendBatch' +'-'+ item.materialID" [name]="i+'ExtendBatch' +'-'+ item.materialID" (blur)="formatInput(i,item.ReferFactory)">
+              <span *ngIf="!item.editAble">{{item.ExtendBatch}}</span>
+            </td>
+            <td *ngIf="extendType == '2'">
+              <input *ngIf="item.editAble" #ExtendLocation="ngModel" [(ngModel)]="item.ExtendLocation" type="text" [attr.name]="i+'ExtendLocation'+'-'+item.materialID" [name]="i+'ExtendLocation'+'-'+item.materialID" (blur)="formatInput(i,item.ReferFactory)" maxlength="4">
+              <span *ngIf="!item.editAble">{{item.ExtendLocation}}</span>
+            </td>
+            <td class="operate"><span [ngClass]="{'disabled':item.isSucceed}" (click)="removeExtend(i,item?.materialID)">删除</span></td>
+            <td style="color: red;">{{item.isSucceed?'':item.errorMsg}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </form>
+  </div>
+
+  <!--审批历史记录-->
+  <div class="m-edit-materile-history" *ngIf="wfHistory.length>0">
+    <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+  </div>
+  <!--审批历史记录 end-->
+
+  <div class="m-btn" *ngIf="isSeeDetail&&isRejectList">
+    <button type="button" class="m-btn-confirm" [disabled]="form?.invalid && extendType != '2'||isReject" (click)="save()">提交</button>
+    <!-- <button type="button" class="m-btn-confirm" [disabled]="extendType != '2'" (click)="save()">提交</button> -->
+    
+    <button type="button" class="m-btn-default" *ngIf="!unSubmit&&(hasError && extendList.length != 0)" (click)="modify()">修改</button>
+    <button type="button" class="m-btn-default" (click)="cancel()">取消</button>
+  </div>
+
+  <div class="m-btn" *ngIf="!isSeeDetail||!isRejectList">
+      <button type="button" class="m-btn-default" (click)="cancel()">关闭</button>
+  </div>
+</div>

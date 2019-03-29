@@ -1,0 +1,103 @@
+/* 用户树形菜单 */
+
+.m-usertree{
+  padding: 15px 0 60px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  a{
+    display: block;
+    padding: 0 25px;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    text-decoration: none;
+    color: $def-font1-color;
+    @extend %text-ellipsis;
+
+    &:hover, &:active{
+      text-decoration: none;
+    }
+
+    &:visited{
+      color: $def-font1-color;
+    }
+  }
+
+  >li{
+    position: relative;
+
+    .big-icon {
+      margin: 0 5px 0 -10px;
+      vertical-align: middle;
+      font-size: 25px;
+      color: $def-main-color;
+    }
+    
+    .m-tree>li{
+      height: 0;
+      overflow: hidden;
+      transition: all .4s;
+    }
+
+    .m-num{
+      top: 13px;
+      right: 30px;
+    }
+
+    .iqon-angle-right{
+      position: absolute;
+      top: 0;
+      right: 12px;
+      line-height: 45px;
+      color: #bfbfbf;
+      font-size: 12px;
+    }
+  }
+
+  %before{
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 45px;
+    background-color: $def-main-color;
+  }
+  >.active{
+    &::before{
+      @extend %before;
+    }
+
+    >a{
+      background-color: $def-assist2-color;
+    }
+  }
+  .open{
+    position: relative;
+    background-color: $def-color3;
+
+    .iqon-angle-right{
+      transform: rotate(90deg);
+    }
+
+    .m-tree{
+
+      >li{
+        padding-left: 20px;
+        height: 45px;
+      }
+
+      .active{
+        position: relative;
+        background-color: $def-assist2-color;
+
+        &::before{
+          @extend %before;
+        }
+      }
+    }
+  }
+}

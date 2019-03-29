@@ -1,0 +1,31 @@
+<div class="modal" style="display: block;z-index:7000; margin-top:90px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header m-dialog-head">
+        <span>{{appTypeName}}</span>
+        <button aria-label="Close" class="close" type="button" (click)="onCancel()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body clearfix">
+        <div class="body-item flex_margin">
+          <div class="marginright15">
+            <label>{{appTypeName}}人</label>
+            <i class="i-red">*</i>
+          </div>
+          <iq-person-select name="person" [(ngModel)]="person.info" [max]="1" (ngModelChange)="changePerson(person.info)" ngDefaultControl></iq-person-select>
+        </div>
+        <div class="apply-opinion body-item flex_margin">
+          <label class="marginright10">审批意见</label>
+          <div class="m-exm-item m-textarea-flex">
+            <textarea class="m-textarea " placeholder="请填写审批意见" [(ngModel)]="opinions"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer footer">
+        <button type="button" class="m-btn-confirm" (click)="onApproval()">确定</button>
+        <button type="button" class="m-btn-cancel" (click)="onCancel()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

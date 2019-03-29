@@ -1,0 +1,204 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">新建借用转移申请</h1>
+            <!--基本信息-->
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息{{apply.brwTrsfApply.currApprAuthorsItcode}} </span>
+                </div>
+
+                <div class="addApp-base-infor">
+                    <ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 申请人</label>
+                                <!--<div class="m-user-info-small">
+                                        <div class="m-user-noimg">{{apply.brwTrsfApply.oPersonItCode}}</div>
+                                        <span class="m-user-name">{{apply.brwTrsfApply.oPersonName}}</span>
+                                        <span class="m-user-ename">{{apply.brwTrsfApply.oPersonItCode}}</span>
+                                    </div>-->
+
+                                <!--<div style="float: left;" *ngIf="baseUserIsShow==true">
+                            <span class="m-user-mark"></span>
+                            <span>{{apply.brwTrsfApply.oPersonName}}</span> 
+                            <span class="m-ft-col">{{apply.brwTrsfApply.oPersonItCode}}</span>
+                          </div>-->
+                                <div class="m-user-members" style="float: left;">
+                                    <iq-person-select required [(ngModel)]="appPerson" [max]="1" (ngModelChange)="changeAppPerson(appPerson)" ngDefaultControl></iq-person-select>
+                                </div>
+                                <div style="float: right;margin-left: 5%;">
+                                    <button type="button" class="m-btn-confirm" (click)="popupReservation()">查询未清项</button>
+                                </div>
+                                <!--<span class="refer"  (click)="openUnClearItems()">查询未清项</span>-->
+
+                                <!--<button *ngIf="pageFlag==='n'" class="m-btn-confirm" (click)="popupReservation()">查询未清项</button>-->
+
+
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 申请时间 </label>
+                                <span class="span-text">{{apply.brwTrsfApply.applyDate|iqDate:'YYYY-MM-DD'}}</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 员工编号 </label>
+                                <span class="span-text">{{apply.brwTrsfApply.applyUserNo}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 联系方式 </label>
+                                <span class="span-text">{{apply.brwTrsfApply.contactPhone}}</span>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 本部 </label>
+                                <span class="span-text">{{apply.brwTrsfApply.baseDeptName}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 事业部 </label>
+                                <span class="span-text">{{apply.brwTrsfApply.subDeptName}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 平台</label>
+                                <span class="span-text">{{apply.brwTrsfApply.platformName}}</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <!--<div class="addApp-submit-btn">
+                        <div class="addApp-sub-btns">
+                            <button *ngIf="pageFlag==='n'" class="m-btn-confirm" (click)="popupReservation()">查询未清项</button>
+                         
+                        </div>
+                    </div>-->
+            </div>
+            <!--<div class="m-material-info1">
+                        <h2>转移后信息</h2>
+                        <div class="m-table m-table1">
+                            <table class="m-info-table">
+                                    <tbody>
+                                        <tr>
+                                            <div style="float: left;" *ngIf="baseUserIsShow">
+                                                <span class="m-user-mark"></span>
+                                                <span>{{persion.userName}}</span> 
+                                                <span class="m-ft-col">{{persion.userItCode}}</span>
+                                            </div>
+                                           <iq-person-select required [(ngModel)]="person" [max]="1" (ngModelChange)="changePerson(person)" ngDefaultControl></iq-person-select>
+                                        </tr>
+                                </tbody>
+                             </table>
+                        </div> 
+                </div> -->
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">转移后信息 </span>
+                </div>
+                <div class="addApp-base-infor">
+                    <ul class="addApp-base-list">
+                        <li>
+
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"> 接收人</label>
+                                <div class="m-user-members" style="float: left;">
+                                    <!--span class="m-user-mark"></span>
+                                                <span>{{persion.userName}}</span> 
+                                                <span class="m-ft-col">{{persion.userItCode}}</span-->
+
+                                    <span class="span-text"><iq-person-select required [(ngModel)]="persion" [max]="1" (ngModelChange)="changePerson(persion)" ngDefaultControl></iq-person-select></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <nav class="nav1 nav"><span>物料与运输信息</span></nav>
+            <!--物料与运输信息1-->
+            <div class="m-material-info1" *ngFor="let key of itemKeys;index as i">
+                <h2>物料与运输信息{{i+1}}</h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="6%">原预留号</th>
+                            <td width="27%">{{apply.trsfMtrMap[key].mItemInfo.oreservationNo}}</td>
+                            <th width="6%">原凭证号1</th>
+                            <td width="27%">
+                                {{apply.trsfMtrMap[key].mItemInfo.ovoucherNo1}}
+                            </td>
+                            <th width="6%">原凭证号2</th>
+                            <td width="28%">
+                                {{apply.trsfMtrMap[key].mItemInfo.ovoucherNo2}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">借用日期</th>
+                            <td width="27%">
+                                {{apply.trsfMtrMap[key].mItemInfo.borrowDate|iqDate:'YYYY-MM-DD'}}
+                            </td>
+                            <th width="6%">预计归还日期</th>
+                            <td width="27%">
+                                {{apply.trsfMtrMap[key].mItemInfo.giveBackDay|iqDate:'YYYY-MM-DD'}}
+                            </td>
+                            <th width="6%"></th>
+                            <td width="28%">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tables">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="30%">物料描述</th>
+                                <th width="5%">批次</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>单位</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>数量</th>
+                                <th *ngIf="saleRole" width="10%">金额</th>
+                                <th width="10%">工厂</th>
+                                <th width="22%">借用在途库</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item1 of apply.trsfMtrMap[key].mItemDetail;index as j">
+                                <td class="m-text-center add-w-b60">{{j+1}}</td>
+                                <td>{{item1.meterialNo}}</td>
+                                <td>{{item1.meterialMemo}}</td>
+                                <td>{{item1.batch}}</td>
+                                <td>{{item1.unit}}</td>
+                                <td>{{item1.count}}</td>
+                                <td *ngIf="saleRole">{{item1.totalAmount}}</td>
+                                <td>{{item1.factory}}</td>
+                                <td>{{item1.onwayStore}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns">
+                    <button type="button" class="m-btn-confirm" (click)="submitApply()" *ngIf="currAppFlag">提交</button>
+                    <button type="button" class="m-btn-sketch" (click)="saveTransfer()" *ngIf="currAppFlag">暂存</button>
+                    <button type="button" class="m-btn-addAppback" (click)="goBack()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

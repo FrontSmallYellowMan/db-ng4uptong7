@@ -1,0 +1,51 @@
+<loading [show]="loading"></loading>
+<div class="fp-comment">
+  <div class="fp-comment-followup clearfix">
+    <div class="m-user-info" user-image [user]="personSales"></div>
+    <div class="fp-comment-followupinfo">
+      <div class="fp-comment-followupinfo-sales">
+        {{arrearsInfo.AFModel.CreateName}}于{{arrearsInfo.AFModel.CreateTime}}对欠款进行跟进
+      </div>
+      <div class="followupinfo-title clearfix">
+        <div class="followupinfo-title-title">
+          标题：
+        </div>
+        <div class="followupinfo-title-content">
+          {{arrearsInfo.AFModel.Title}}
+        </div>
+      </div>
+      <div class="followupinfo-content clearfix">
+        <div class="followupinfo-content-title">
+          内容：
+        </div>
+        <div class="followupinfo-content-content">
+          {{arrearsInfo.AFModel.ArrearsContent}}
+        </div>
+      </div>
+      <div class="followupinfo-access clearfix">
+        <div class="followupinfo-access-title">附件：</div>
+        <div class="followupinfo-access-content">
+          <ul>
+            <li *ngFor="let item of arrearsInfo.Accessory" (click)="onClickFile(item.AccessoryURL)">{{item.AccessoryName}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fp-comment-content">
+    <div class="fp-comment-content-item clearfix" *ngFor="let item of reviewList">
+      <div class="fp-comment-content-item-user">
+        <div class="m-user-info" user-image [user]="item.person"></div>
+      </div>
+      <div class="fp-comment-content-item-message">
+        <i class="sanjiao"></i>
+        <span class="fp-comment-content-item-message-moment">{{item.ReviewContent}}</span>
+        <span>{{item.ReviewTime}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="fp-comment-review">
+    <textarea rows="5" class="m-textarea" name="review" placeholder="-请输入评论信息" [(ngModel)]="reviewcontent" maxlength="2000"></textarea>
+    <a *ngIf="reviewcontent" (click)="sendReview()">发送</a>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow" style="width:850px;margin:20 auto">
+  <div class="modal-header m-dialog-head">
+    <span>欠款金额选择</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+          <div  style="width:833px;">
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <thead>
+                <tr> 
+                  <th title="合同编号" style="text-align:center;width:150px;">合同编号</th>
+                  <th title="客户名称" style="text-align:center;width:180px;">客户名称</th>
+                  <th title="收款人" style="text-align:center;width:150px;">收款人</th>
+                  <th title="事业部" style="text-align:center;width:110px;">事业部</th>
+                  <th title="欠款金额" style="text-align:center;width:65px;">欠款金额</th>
+                  <th title="还款日期" style="text-align:center;width:90px;">还款日期</th>
+                  <th title="超期天数" style="text-align:center;width:80px;">超期天数</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div  id='scroll' style=" overflow:scroll; width:850px; height:300px;">
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <tbody>
+                <tr *ngFor = 'let item of debtList;let i=index' (click)="changeCheck(i)"> 
+                  <td title="{{item.contractNum}}" style="width:150px;">{{item.contractNum}}</td>
+                  <td title="{{item.customName}}" style="width:180px;">{{item.customName}}</td>
+                  <td title="{{item.payeeName}}" style="width:150px;">{{item.payeeName}}</td>
+                  <td title="{{item.department}}" style="width:110px;">{{item.department}}</td>
+                  <td title="{{item.DMSHB==null?0:item.DMSHB.toFixed(2)}}" style="width:65px;">{{item.DMSHB==null?0:item.DMSHB.toFixed(2)}}</td>
+                  <td title="{{item.FAEDT}}" style="width:90px;">{{item.FAEDT}}</td>
+                  <td title="{{item.outdays.toFixed(0)}}" style="width:80px;">{{item.outdays.toFixed(0)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>              
+</div>      
+

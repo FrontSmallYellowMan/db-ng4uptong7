@@ -1,0 +1,113 @@
+<div class="m-apply-exm2 m-srs" name="top" id="top">
+              <h3>查看返款服务申请</h3>
+
+              <div class="m-exm">
+                <div class="m-exm-item">
+                  <ul>                  
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">申请人</div>
+                      <div class="m-exm-cont m-srs-titleWidth">
+                        <div class="m-user-info-small">
+                          <img alt="纪永凤" class="m-user-img" src="assets/default-user.png">
+                          <span class="m-user-name">{{reqData.ApplyName}}</span>
+                          <span class="m-user-ename">{{reqData.ApplyItCode}}</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">申请日期</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.ApplyTime|iqDate:"YYYY-MM-DD"}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">物料模版名称</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.TemplateID}}&nbsp;&nbsp;{{reqData.TemplateName}}</div>
+                    </li>
+                    <li class="m-exm-half" style="margin-top: -18px;">
+                      <div class="m-exm-label">物料编号</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.MaterialERPCode}}</div>
+                    </li>
+                    
+                  </ul>
+                </div>
+                <div class="m-exm-item">
+                  
+                <div class="m-cnm-title">
+                    <h5>物料模版</h5>
+                </div>
+
+                  <ul class="uls">
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">工厂</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.Factory}}&nbsp;&nbsp;{{reqData.FactoryName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">序列号参数</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.SerialNumParameter}}&nbsp;&nbsp;{{reqData.SerialNumParameterName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">物料类型</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.MaterialType}}&nbsp;&nbsp;{{reqData.MaterialTypeName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">税收分类</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.TaxTypeID}}&nbsp;&nbsp;{{reqData.TaxTypeName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">物料组</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.MaterialGroup}}&nbsp;&nbsp;{{reqData.MaterialGroupName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">基本计量单位</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.BaseUnitOfMeasure}}&nbsp;&nbsp;{{reqData.BaseUnitOfMeasureName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">品牌</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.Brand}}&nbsp;&nbsp;{{reqData.BrandName}}</div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="m-exm-item">
+                   
+                    <div class="m-cnm-title">
+                        <h5>必填字段</h5>
+                    </div>
+                  
+                  <ul class="uls">
+                    <li class="m-exm-half">
+                      <div class="m-exm-label m-srs-titleStyle">物料描述(中文)</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.MaterialDescription}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">税分类</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.TaxClassifications}}&nbsp;&nbsp;{{reqData.TaxClassificationsName}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">科目设置组</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.SubjectSettingGroup}}&nbsp;&nbsp;{{reqData.SubjectSettingGroupName}}</div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="m-exm-item">
+                   
+                    <div class="m-cnm-title">
+                        <h5>选填字段</h5>
+                    </div>
+                  
+                  <ul class="uls">
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">合同编号</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.ContractCode}}</div>
+                    </li>
+                    <li class="m-exm-half">
+                      <div class="m-exm-label">PO号</div>
+                      <div class="m-exm-cont m-srs-titleWidth">{{reqData.PO}}</div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="m-exm-btn">
+                <button class="m-btn-default m-btn-tempsave" (click)="cancel()">关闭</button>              
+              </div>
+            </div>
+          

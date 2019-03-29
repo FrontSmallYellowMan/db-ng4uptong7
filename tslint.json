@@ -1,0 +1,37 @@
+{
+  "rulesDirectory": [
+    "node_modules/codelyzer"
+  ],
+  "rules": {
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "max-file-line-count": [true, 5],
+    "directive-selector": [true, "attribute", "iq", "camelCase"],
+    "component-selector": [true, "element", "iq", "kebab-case"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-whitespace",
+      "check-else"
+    ],
+    "angular-whitespace": [true, "check-interpolation", "check-semicolon"],
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-attribute-parameter-decorator": true,
+    "no-input-rename": true,
+    "no-output-on-prefix": true,
+    "no-output-rename": true,
+    "no-forward-ref": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "no-output-named-after-standard-event": true,
+    // [ENABLED, "SUFFIX"]
+    // Where "SUFFIX" is your custom suffix, for instance "Page" for Ionic 2 components.
+    "component-class-suffix": [true, "Component", "View"],
+    "directive-class-suffix": [true, "Directive"]
+  }
+}

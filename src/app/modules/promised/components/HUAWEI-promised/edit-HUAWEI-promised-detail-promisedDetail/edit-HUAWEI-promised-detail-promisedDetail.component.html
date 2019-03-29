@@ -1,0 +1,73 @@
+<div class="m-edit-approvalDetail-content1 clearfix">
+
+  <div class="m-edit-approvalDetail-title">
+    <h5>承诺信息</h5>
+  </div>
+
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips">
+    <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>承诺类型</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{keyPromised}}
+    </div>
+  </div>
+
+  <!-- 根据选择的承诺类型显示对应的字段 -->
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" *ngIf="status!='t'&&promisedTypeList.length>0">
+    <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-promised-p"></p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+
+        <ul class="m-ul-promised" >
+          <li *ngFor="let item of promisedTypeList;index as i;">{{item.CommitTypeDetailedName}}</li>
+        </ul>
+
+    </div>
+  </div>
+
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" *ngIf="status==='t'&&promisedTypeList.length>0">
+    <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-promised-p"></p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+
+        <ul class="m-ul-promised" >
+          <li *ngFor="let item of promisedTypeList;index as i;"><div style="width:150px;display:inline-block">{{item.CommitTypeDetailedName}}{{commitmentData.ReachStatus}}</div> 
+            <!-- <input type="checkbox" [(ngModel)]="item.isChecked" [name]="'t'+i" [attr.name]="'t'+i" icheck [disabled]="item.IsDacheng==='是'" *ngIf="commitmentData.ReachStatus=='未达成'"> -->
+            <input type="checkbox" [(ngModel)]="item.isChecked" [name]="'t'+i" [attr.name]="'t'+i" icheck [disabled]="item.IsDacheng==='是'">
+            
+          </li>
+        </ul>
+
+    </div>
+  </div>
+  
+
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" >
+    <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title m-promised-p">
+      <span class="m-form-need"></span>承诺兑现时间</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+     {{commitmentData.CommitDate|iqDate:"YYYY-MM-DD"}}
+        <!-- <my-datepicker [(ngModel)]="startDate" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>      -->
+    </div>
+  </div>
+
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" style="width:100%">
+    <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title m-promised-p" style="vertical-align:top">
+      <span class="m-form-need"></span>承诺原因</p>
+    <div class="m-select m-edit-approvalDetail-select-style1" style="padding-right:20px;width:88%">
+     {{commitmentData.CommitMatters}}
+        <!-- <my-datepicker [(ngModel)]="startDate" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>      -->
+    </div>
+  </div>
+
+  <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" *ngIf="status==='t'">
+      <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title m-promised-p">
+        <span class="m-form-need"></span>承诺达成时间</p>
+      <div class="m-select m-edit-approvalDetail-select-style1"  *ngIf="commitmentData.ReachStatus==='未达成'||commitmentData.ReachStatus==='部分达成'">
+          <my-datepicker format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="ReachDate" [(ngModel)]="commitmentData.ReachDate"></my-datepicker>     
+      </div>
+      <div class="m-select m-edit-approvalDetail-select-style1" *ngIf="commitmentData.ReachStatus==='已达成'||commitmentData.ReachStatus==='特批达成'||commitmentData.ReachStatus==='冻结'">
+        {{commitmentData.ReachDate | iqDate:"YYYY-MM-DD"}}
+      </div>
+    </div>
+
+
+</div>

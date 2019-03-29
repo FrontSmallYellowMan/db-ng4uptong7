@@ -1,0 +1,57 @@
+    <div class="modal" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <div class="modal-header m-dialog-head">
+      <span>ND单行项目校验结果</span>
+      <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+      <div class="m-order-table addApp-ch-before">
+        <table class="m-info-table">
+          <thead>
+            <tr>
+              <td style="width:40px"></td>
+              <td style="width:100px"></td>
+              <td style="width:100px"></td>
+              <td style="width:100px"></td>
+              <td style="width:100px"></td>
+              <td style="width:100px" class="mix"></td>
+            </tr>
+            <tr class="m-center">
+              <th></th>
+              <th>物料编号</th>
+              <th>成本价</th>
+              <th>批次</th>
+              <th>对应NA单号</th>
+              <th>比对结果</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of procurementList;index as i" >
+            <td style="width:64px">第{{ i+1 }}行</td>
+            <td style="width:160px">
+                {{item.MaterialNumber}}
+            </td>
+            <td style="width:160px">
+              {{item.CostPrice}}
+            </td>
+            <td style="width:160px;">
+              {{item.Batch}}
+            </td>
+            <td style="width:160px;">
+              {{item.NA_ERPOrderNumber}}
+            </td>
+            <td style="width:160px;" class="w100">
+              {{ ( onlyCheckNAOrder && item.CheckResult!='ERP中找不到对应的NA单号' )? '√': item.CheckResult}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="m-btn-confirm" (click)="hide()">关闭</button>
+    </div>
+        </div>
+    </div>
+</div>   

@@ -1,0 +1,28 @@
+.g-hd{
+  background: url("../../../../assets/topBg.png") right center no-repeat;
+  background-color: #57b9f8;
+  .m-logoimg{
+    width:113px;
+    height:23px;
+    margin-top: 5px;
+    background: url("../../../../assets/DBomLogo.png") no-repeat;
+    background-size:113px 23px;
+  }
+}
+.m-search {
+  .m-search-2 {
+    float: right;
+    margin-right: 40px;
+    width: 250px;
+    position: relative;
+    padding-top: 15px;
+    .iqon-query {
+      top: 17px !important;
+      line-height: 25px;
+    }
+    input {
+      height: 30px;
+    }
+
+  }
+}

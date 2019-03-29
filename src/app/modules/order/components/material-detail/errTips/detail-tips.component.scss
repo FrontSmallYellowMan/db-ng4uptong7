@@ -1,0 +1,56 @@
+.m-contract-tips {
+  width: 830px;
+  position: absolute;
+  z-index: 1045;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+  .tips-table-head {
+    font-weight: 700;
+  }
+
+  .modal-body {
+    background: #fff;
+
+    .tips-table-head,
+    ul {
+      width: 100%;
+    }
+
+    ul {
+      border-bottom: 1px solid #d2d8e0;
+    }
+
+    li {
+      width: 50%;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 20px;
+      text-align: left;
+      float: left;
+      border-right: 1px solid #d2d8e0;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+
+    .tips-table-body {
+      max-height: 300px;
+      overflow-y: auto;
+
+      ul {
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+
+      li {
+        &:last-child {
+          width: 47%;
+        }
+      }
+    }
+  }
+}

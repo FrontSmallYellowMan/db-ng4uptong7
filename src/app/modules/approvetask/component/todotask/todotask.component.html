@@ -1,0 +1,52 @@
+<div class="g-hdp">
+  <loading [show]="loading"></loading>
+  <div class="g-list">
+
+    <div class="m-user-nav">
+      <ul class="m-usertree">
+        <li [ngClass]="{'active':query.TaskType == '1'}" (click)="search('1')">
+          <a><i class="iqon-paste"></i>待我审批</a>
+        </li>
+        <li [ngClass]="{'active':query.TaskType == '2'}" (click)="search('2')">
+          <a><i class="iqon-advertise-o"></i>我已审批</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="g-right">
+    <div class="m-search clearfix">
+      <div>关键字搜索：</div>
+      <div class="m-search-2">
+        <i class="iqon-query" (click)="search()"></i>
+        <input type="text" name="searchkey" [(ngModel)]="query.SearchKey">
+      </div>
+    </div>
+    <div class="table-auto-content">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th>任务描述</th>
+            <th style="width:130px;">流程类型</th>
+            <th style="width:100px;" *ngIf="query.TaskType == '2'">审批状态</th>
+            <th style="width:150px;"><span *ngIf="query.TaskType == '1'">创建时间</span><span *ngIf="query.TaskType == '2'">审批时间</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of toDoTaskList.ListTaskPage">
+            <td (click)="routerPage(item.taskTableURL)" [title]="item.taskTitle">{{item.taskTitle}}</td>
+            <td (click)="routerPage(item.taskTableURL)" [title]="item.temp_item_name">{{item.temp_item_name}}</td>
+            <td *ngIf="query.TaskType == '2'" (click)="routerPage(item.taskTableURL)" [title]="item.taskApproveResult">{{item.taskApproveResult}}</td>
+            <td (click)="routerPage(item.taskTableURL)">{{item.createdTime}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="search()"></iq-pager>
+    </div>
+  </div>
+
+
+</div>

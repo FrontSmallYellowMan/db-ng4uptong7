@@ -1,0 +1,44 @@
+<div class="loading-container" [ngStyle]="style" [ngClass]="{'hide': !show}">
+	<!--<svg class="loading-svg" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<g id="circle" class="g-circles">
+			<circle id="12" cx="35" cy="16.6987298" r="10"></circle>
+			<circle id="11" cx="16.6987298" cy="35" r="10"></circle>
+			<circle id="10" cx="10" cy="60" r="10"></circle>
+			<circle id="9" cx="16.6987298" cy="85" r="10"></circle>
+			<circle id="8" cx="35" cy="103.30127" r="10"></circle>
+			<circle id="7" cx="60" cy="110" r="10"></circle>
+			<circle id="6" cx="85" cy="103.30127" r="10"></circle>
+			<circle id="5" cx="103.30127" cy="85" r="10"></circle>
+			<circle id="4" cx="110" cy="60" r="10"></circle>
+			<circle id="3" cx="103.30127" cy="35" r="10"></circle>
+			<circle id="2" cx="85" cy="16.6987298" r="10"></circle>
+			<circle id="1" cx="60" cy="10" r="10"></circle>
+		</g>
+		<use xlink:href="#circle" class="use"></use>
+	</svg>-->
+
+	<div class="loading">
+		<div class="spinner-container container1">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+		<div class="spinner-container container2">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+		<div class="spinner-container container3">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+		<div class="loading-text" *ngIf="showText">{{showText}}</div>
+	</div>
+	<div class="loading-backdrop">
+
+	</div>
+</div>

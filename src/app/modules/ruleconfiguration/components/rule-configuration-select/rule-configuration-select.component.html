@@ -1,0 +1,6 @@
+<div class="config-select">
+  <button type="button" class="m-btn-confirm research" (click)="search()" [disabled]="isNotClick" [ngClass]="{'m-btn-disabled':isNotClick}">查询</button>
+  <div class="config-select-data" style="word-break:break-all;white-space:normal">
+   <span *ngFor="let item of selectValueList;index as i;">{{item}}<i class="iqon-close2" (click)="remove(i)"></i></span>
+  </div>
+</div>

@@ -1,0 +1,429 @@
+<div class="m-overclass">
+  <div class="m-list-menu">
+    <ul class="m-state">
+      <li [ngClass]="{'active' : query.WfStatus=='审批'}" (click)="onTab('审批')">审批中</li>
+      <li [ngClass]="{'active' : query.WfStatus=='完成'}" (click)="onTab('完成')">已完成</li>
+      <li [ngClass]="{'active' : query.WfStatus==''}" (click)="onTab('')">全部</li>
+      <li [ngClass]="{'active' : query.WfStatus=='草稿'}" (click)="onTab('草稿')">草稿</li>
+    </ul>
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="highSearchShow=true">
+        <i class="iqon-highsearch"></i> 高级搜索
+      </div>
+    </div>
+
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="highSearchShow = false">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <div class="form">
+        <div class="m-search-item">
+          <label>需求跟踪号</label>
+          <input [(ngModel)]="query.TrackingNumber" type="text">
+        </div>
+        <div class="m-search-item">
+          <label>采购申请类型</label>
+          <div class="m-select">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="query.PurchaseRequisitionType">
+              <option value="">全部</option>
+              <option value="合同单采购">合同单采购</option>
+              <option value="预下单采购">预下单采购</option>
+              <option value="备货单采购">备货单采购</option>
+            </select>
+          </div>
+        </div>
+        <div class="m-search-item">
+          <label>申请单号</label>
+          <input [(ngModel)]="query.ApplicantOrderNumber" type="text">
+        </div>
+        <div class="m-search-item">
+          <label>供应商名称</label>
+          <input [(ngModel)]="query.Vendor" type="text">
+        </div>
+        <div class="m-search-item">
+          <label>销售合同号</label>
+          <input [(ngModel)]="query.MainContractCode" type="text">
+        </div>
+        <div class="m-search-item">
+          <label>厂商PO号</label>
+          <input [(ngModel)]="query.PO" type="text">
+        </div>
+        <div class="m-search-item">
+          <label>项目名称</label>
+            <input [(ngModel)]="query.ProjectName" type="text">            
+        </div>
+        <div class="m-search-item m-search-items">
+          <label>申请日期</label>
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start">
+              <my-datepicker [(ngModel)]="query.BeginTime" [EndDate]="query.EndTime" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>
+            </div> ~
+            <div class="m-datepicker-end">
+              <my-datepicker [(ngModel)]="query.EndTime" [StartDate]="query.BeginTime" format="YYYY-MM-DD" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="m-search-item">
+          <label>申请是否修改</label>
+          <div class="search-child">
+            <label class="label-first">
+              <input type="radio" name="amend" [(ngModel)]="query.IsModify" value="true" icheck (onClick)="addClass()"> 是
+            </label>
+            <label>
+              <input type="radio" name="amend" [(ngModel)]="query.IsModify" value="false" icheck> 否
+            </label>
+          </div>
+        </div>
+        
+        <div class="m-search-btn">
+          <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont">
+    <div class="m-noresult" [ngClass]="{'hide':searchList && searchList.length > 0}">
+      <loading [show]="loading"></loading>
+      <!-- 数据缺省 -->
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+        <p class="m-p-notice">点击“新建”新建数据吧~</p>
+      </div>
+    </div>
+    <div [ngClass]="{'hide':searchList && searchList.length == 0}">
+      <!-- 1、审批中列表 -->
+      <div *ngIf="query.WfStatus=='审批'" style="overflow-x:auto">
+        <table class="table table-hover table-list" style="table-layout:auto">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" allcheck="demoall_appr" icheck [(ngModel)]="fullChecked_appr" [indeterminate]="fullCheckedIndeterminate_appr"
+                  (onCount)="checkedNum_appr = $event" (onIndeterminate)="CheckIndeterminate_appr($event)">
+              </th>
+              <ng-container *ngIf="!fullChecked_appr && !fullCheckedIndeterminate_appr">
+                <th (click)="rankSet('requisitionnum')">
+                  申请单号
+                  <i class="iqon-order" *ngIf="this.rank.requisitionnum=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.requisitionnum=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.requisitionnum=='desc'"></i>
+                </th>
+                <th>需求跟踪号</th>
+                <th>销售合同号</th>
+                <th>项目名称</th>
+                <th>采购申请类型</th>
+                <th>供应商</th>
+                <th>采购金额</th>
+                <th>当前环节</th>
+                <th>当前处理人</th>
+                <th>厂商PO号</th>
+                <th (click)="rankSet('addtime')">
+                  申请日期
+                  <i class="iqon-order" *ngIf="this.rank.addtime=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.addtime=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.addtime=='desc'"></i>
+                </th>
+              </ng-container>
+              <ng-container *ngIf="fullChecked_appr || fullCheckedIndeterminate_appr">
+                <th class="list-edit" colspan="9">已选{{checkedNum_appr}}项
+                  <button type="button" (click)="supplyContractNum(searchList)">补充销售合同号</button>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let list of searchList;let i=index" style="cursor: auto;">
+              <td stopParentClick>
+                <input type="checkbox" allcheckChild="demoall_appr" icheck [(ngModel)]="list.checked" [disabled]="list.disabled">
+              </td>
+              <td title="{{ list.RequisitionNum }}">
+                <span (click)="routerJump(list.Wfstatus,list.ID,list.PurchaseType)" class="list-first-td">{{ list.RequisitionNum }}</span>
+              </td>
+              <td title={{list.TrackingNumber}}>
+                {{ list.TrackingNumber }}
+              </td>
+              <td title={{list.MainContractCode}}>
+                {{ list.MainContractCode }}
+              </td>
+              <td>
+                {{list.ProjectName}}
+              </td>
+              <td title={{list.PurchaseType}}>
+                {{ list.PurchaseType }}
+              </td>
+              <td title={{list.Vendor}}>
+                {{ list.Vendor }}
+              </td>
+              <td title={{list.Amount}}>
+                {{ list.Amount | number:"1.2"}}
+              </td>
+              <td>
+                {{ list.CurrentApprovalNode[0].nodename }}
+              </td>
+              <td title={{list.CurrentApprovalNode[0].approver}}>
+                {{ list.CurrentApprovalNode[0].approver }}
+              </td>
+              <td>
+                {{list.PO}}
+              </td>
+              <td>
+                {{ list.AddTime | iqDate:'YYYY-MM-DD'}}
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <!-- 2、已完成列表 -->
+      <div *ngIf="query.WfStatus=='完成'" style="overflow-x:auto">
+        <table class="table table-hover table-list" style="table-layout:auto">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" allcheck="demoall_comp" icheck [(ngModel)]="fullChecked_comp" [indeterminate]="fullCheckedIndeterminate_comp"
+                  (onCount)="checkedNum_comp = $event" (onIndeterminate)="CheckIndeterminate_comp($event)">
+              </th>
+              <ng-container *ngIf="!fullChecked_comp && !fullCheckedIndeterminate_comp">
+                <th (click)="rankSet('requisitionnum')">
+                  申请单号
+                  <i class="iqon-order" *ngIf="this.rank.requisitionnum=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.requisitionnum=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.requisitionnum=='desc'"></i>
+                </th>
+                <th>需求跟踪号</th>
+                <th>销售合同号</th>
+                <th>项目名称</th>
+                <th>采购申请类型</th>
+                <th>采购订单号</th>
+                <th>供应商</th>
+                <th>采购金额</th>
+                <th>厂商PO号</th>
+                <th (click)="rankSet('addtime')">
+                  申请日期
+                  <i class="iqon-order" *ngIf="this.rank.addtime=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.addtime=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.addtime=='desc'"></i>
+                </th>
+                <th class="operate">操作</th>
+              </ng-container>
+              <ng-container *ngIf="fullChecked_comp || fullCheckedIndeterminate_comp">
+                <th class="list-edit" colspan="9">已选{{checkedNum_comp}}项
+                  <button type="button" (click)="supplyContractNum(searchList)">补充销售合同号</button>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of searchList;let i=index" style="cursor:pointer;">
+              <td class="wp5" stopParentClick>
+                <input type="checkbox" allcheckChild="demoall_comp" icheck [(ngModel)]="list.checked" [disabled]="list.disabled">
+              </td>
+              <td title="{{ list.RequisitionNum }}">
+                <span (click)="routerJump(list.Wfstatus,list.ID,list.PurchaseType)" class="list-first-td">{{ list.RequisitionNum }}</span>
+              </td>
+              <td title={{list.TrackingNumber}}>
+                {{ list.TrackingNumber }}
+              </td>
+              <td title={{list.MainContractCode}}>
+                {{ list.MainContractCode }}
+              </td>
+              <td>
+                {{list.ProjectName}}
+              </td>
+              <td title={{list.PurchaseType}}>
+                {{ list.PurchaseType }}
+              </td>
+              <td title={{list.orderno}}>
+                {{ list.orderno }}
+              </td>
+              <td title={{list.Vendor}}>
+                {{ list.Vendor }}
+              </td>
+              <td title={{list.Amount}}>
+                {{ list.Amount | number:"1.2"}}
+              </td>
+              <td>
+                {{list.PO}}
+              </td>
+              <td>
+                {{ list.AddTime | iqDate:'YYYY-MM-DD'}}
+              </td>
+              <td class="operate" stopParentClick>
+                <span style="width:auto" (click)="toPurchaseOrder(list.ID,list.PurchaseType,list.IsRelieve,list.MainContractCode,list.RequisitionNum)" *ngIf="!list.Is2ERP && !list.IsUse && list.IsAvailable!=false" title="提交采购订单" class='linkHover'>提交订单</span>
+                <span (click)="toUpdateApply(list.ID,list.PurchaseType,list.IsRelieve,list.MainContractCode)" *ngIf="!list.Is2ERP && !list.IsUse && list.IsAvailable!=false" class="linkHover">修改</span>
+                <span style="width:auto;color:#a8b1bd;cursor: not-allowed;" *ngIf="list.Is2ERP || list.IsUse || list.IsAvailable==false" title="提交采购订单" >提交订单</span>
+                <span style="color:#a8b1bd;cursor: not-allowed;" *ngIf="list.Is2ERP || list.IsUse || list.IsAvailable==false">修改</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 3、全部列表 -->
+      <div *ngIf="query.WfStatus==''" style="overflow-x:auto">
+        <table class="table table-hover table-list" style="table-layout:auto">
+          <thead>
+            <tr>
+              <th>
+                <input type="checkbox" allcheck="demoall_whol" icheck [(ngModel)]="fullChecked_whol" [indeterminate]="fullCheckedIndeterminate_whol"
+                  (onCount)="checkedNum_whol = $event" (onIndeterminate)="CheckIndeterminate_whol($event)">
+              </th>
+              <ng-container *ngIf="!fullChecked_whol && !fullCheckedIndeterminate_whol">
+                <th (click)="rankSet('requisitionnum')">
+                  申请单号
+                  <i class="iqon-order" *ngIf="this.rank.requisitionnum=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.requisitionnum=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.requisitionnum=='desc'"></i>
+                </th>
+                <th>需求跟踪号</th>
+                <th>销售合同号</th>
+                <th>项目名称</th>
+                <th>采购申请类型</th>
+                <th>供应商</th>
+                <th>采购金额</th>
+                <th>当前环节</th>
+                <th>当前处理人</th>
+                <th>厂商PO号</th>
+                <th (click)="rankSet('addtime')">
+                  申请日期
+                  <i class="iqon-order" *ngIf="this.rank.addtime=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.addtime=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.addtime=='desc'"></i>
+                </th>
+                <th class="operate" style="text-align:center;" width="11%">操作</th>
+              </ng-container>
+              <ng-container *ngIf="fullChecked_whol || fullCheckedIndeterminate_whol">
+                <th class="list-edit" colspan="10">已选{{checkedNum_whol}}项
+                  <button type="button" (click)="supplyContractNum(searchList)">补充销售合同号</button>
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of searchList;let i=index" style="cursor:pointer;">
+              <td stopParentClick>
+                <input type="checkbox" allcheckChild="demoall_whol" icheck [(ngModel)]="list.checked" [disabled]="list.disabled">
+              </td>
+              <td title="{{ list.RequisitionNum }}">
+                <span (click)="routerJump(list.Wfstatus,list.ID,list.PurchaseType)" class="list-first-td">{{ list.RequisitionNum }}</span>
+              </td>
+              <td title={{list.TrackingNumber}}>
+                {{ list.TrackingNumber }}
+              </td>
+              <td title={{list.MainContractCode}}>
+                {{ list.MainContractCode }}
+              </td>
+              <td>
+                {{list.ProjectName}}
+              </td>
+              <td title={{list.PurchaseType}}>
+                {{ list.PurchaseType }}
+              </td>
+              <td title={{list.Vendor}}>
+                {{ list.Vendor }}
+              </td>
+              <td title={{list.Amount}}>
+                {{ list.Amount | number:"1.2"}}
+              </td>
+              <td>
+                {{ list.CurrentApprovalNode[0].nodename }}
+              </td>
+              <td title={{list.CurrentApprovalNode[0].approver}}>
+                {{ list.CurrentApprovalNode[0].approver }}
+              </td>
+              <td>
+                {{list.PO}}
+              </td>
+              <td>
+                {{ list.AddTime | iqDate:'YYYY-MM-DD'}}
+              </td>
+              <td class="operate" style="text-align:center;" stopParentClick>
+                <span *ngIf="list.Wfstatus=='完成'">
+                  <span style="width:auto" (click)="toPurchaseOrder(list.ID,list.PurchaseType,list.IsRelieve,list.MainContractCode,list.RequisitionNum)" *ngIf="!list.Is2ERP && !list.IsUse && list.IsAvailable!=false" title="提交采购订单" class='linkHover'>提交订单</span>
+                  <span (click)="toUpdateApply(list.ID,list.PurchaseType,list.IsRelieve,list.MainContractCode)" *ngIf="!list.Is2ERP && !list.IsUse && list.IsAvailable!=false" class='linkHover'>修改</span>
+                  <span style="width:auto;color:#a8b1bd;cursor: not-allowed;" *ngIf="list.Is2ERP || list.IsUse || list.IsAvailable==false" title="提交采购订单">提交订单</span>
+                  <span style="color:#a8b1bd;cursor: not-allowed;" *ngIf="list.Is2ERP || list.IsUse || list.IsAvailable==false">修改</span>
+                </span>
+                <span (click)="deleteDraft(list.ID)" *ngIf="list.Wfstatus=='驳回'||list.Wfstatus=='草稿'" class='linkHover'>删除</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 4、草稿列表 -->
+      <div *ngIf="query.WfStatus=='草稿'" style="overflow-x:auto">
+        <table class="table table-hover table-list" style="table-layout:auto">
+          <thead>
+            <tr>
+              <th (click)="rankSet('requisitionnum')">
+                申请单号
+                <i class="iqon-order" *ngIf="this.rank.requisitionnum=='none'"></i>
+                <i class="iqon-orderup" *ngIf="this.rank.requisitionnum=='asc'"></i>
+                <i class="iqon-orderdown" *ngIf="this.rank.requisitionnum=='desc'"></i>
+              </th>
+              <th>需求跟踪号</th>
+              <th>销售合同号</th>
+              <th>项目名称</th>
+              <th>采购申请类型</th>
+              <th>供应商</th>
+              <th>采购金额</th>
+              <th>申请状态</th>
+              <th>厂商PO号</th>
+              <th (click)="rankSet('addtime')">
+                申请日期
+                <i class="iqon-order" *ngIf="this.rank.addtime=='none'"></i>
+                <i class="iqon-orderup" *ngIf="this.rank.addtime=='asc'"></i>
+                <i class="iqon-orderdown" *ngIf="this.rank.addtime=='desc'"></i>
+              </th>
+              <th class="operate"  width="10%">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of searchList;let i=index" style="cursor:pointer;">
+              <td title="{{ list.RequisitionNum }}">
+                <span (click)="toUpdateApply(list.ID,list.PurchaseType)" class="list-first-td">{{ list.RequisitionNum }}</span>
+              </td>
+              <td title={{list.TrackingNumber}}>
+                {{ list.TrackingNumber }}
+              </td>
+              <td title={{list.MainContractCode}}>
+                {{ list.MainContractCode }}
+              </td>
+              <td>
+                {{list.ProjectName}}
+              </td>
+              <td title={{list.PurchaseType}}>
+                {{ list.PurchaseType }}
+              </td>
+              <td title={{list.Vendor}}>
+                {{ list.Vendor }}
+              </td>
+              <td title={{list.Amount}}>
+                {{ list.Amount | number:"1.2"}}
+              </td>
+              <td>
+                {{ list.Wfstatus }}
+              </td>
+              <td>
+                {{list.PO}}
+              </td>
+              <td>
+                {{ list.AddTime | iqDate:'YYYY-MM-DD'}}
+              </td>
+              <td class="operate" stopParentClick>
+                <span (click)="deleteDraft(list.ID)" class='linkHover'>删除</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

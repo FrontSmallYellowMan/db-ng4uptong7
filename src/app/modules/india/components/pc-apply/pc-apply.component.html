@@ -1,0 +1,256 @@
+<div class="contract">
+  <loading [show]="loading"></loading>
+  <div class="contract-title">
+    <h5>采购合同</h5>
+  </div>
+  <form #form="ngForm" novalidate>
+    <div class="c-content">
+      <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+      <div class="c-content-title">
+        <h5>基本信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <!--代办人-->
+        <!--<div class="c-form-item" style="width: 100%;">
+          <div class="c-input-title" style="width: 11.5%;"><label>代办人</label></div>
+          <div class="c-input-wrap" style="line-height: 40px;">{{ formData.PUBaseData.AgentITcode}}-{{formData.PUBaseData.AgentName}}</div>
+        </div>-->
+        <div class="c-form-item">
+          <div class="c-input-title"><label>申请人</label></div>
+          <div class="c-input-wrap">
+            <iq-person-select #applyperson name="person" [(ngModel)]="applyperson.info" [max]="1" (ngModelChange)="changeApplyPerson(applyperson.info)" ngDefaultControl></iq-person-select>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>电话</label></div>
+          <div class="c-input-wrap">
+            <input type="text" #domElement placeholder="-请输入电话" [(ngModel)]="formData.PUBaseData.ApplyTel" name="ApplyTel" #ApplyTel="ngModel" [ngClass]="{'m-input-warn':(ApplyTel.touched || form.submitted) && ApplyTel.invalid}" required>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>本部</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="Headquarter" #domElement [(ngModel)]="formData.PUBaseData.Headquarter" #Headquarter="ngModel" [ngClass]="{'m-select-warn':Headquarter.invalid && (Headquarter.touched||form.submitted)}" required>
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.HeadquarterList" [ngValue]="item.HeadquarterID">{{item.HeadquarterName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>事业部</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="BusinessUnit" #domElement [(ngModel)]="formData.PUBaseData.BusinessUnit" #BusinessUnit="ngModel" [ngClass]="{'m-select-warn':BusinessUnit.invalid && (BusinessUnit.touched||form.submitted)}" required (ngModelChange)="onBusinessUnitChange()">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.BusinessUnitList" [ngValue]="item.BusinessUnitName">{{item.BusinessUnitName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>信控平台</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="Platform" #domElement [(ngModel)]="formData.PUBaseData.PlatformID" #Platform="ngModel" [ngClass]="{'m-select-warn':Platform.invalid && (Platform.touched||form.submitted)}" required (ngModelChange)="onPlatformChange($event)">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.PlatForm" [ngValue]="item.FlatCode">{{item.FlatName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>用印平台</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="indiaPlatform" #domElement [(ngModel)]="formData.PUBaseData.PlatformID_C" #indiaPlatform="ngModel" [ngClass]="{'m-select-warn':indiaPlatform.invalid && (indiaPlatform.touched||form.submitted)}" required (ngModelChange)="onPlatformChange_C($event)">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.PlatForm" [ngValue]="item.FlatCode">{{item.FlatName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="c-content">
+
+      <div class="c-content-title" style="position:relative;">
+        <h5>合同主信息</h5>
+        <span style="position: absolute; left: 160px; top: 25px;">{{ formData.PUBaseData.MainContractCode }}</span>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>我方主体</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="SellerCompany" #domElement [(ngModel)]="formData.PUBaseData.SellerCompanyCode" #SellerCompany="ngModel" [ngClass]="{'m-select-warn':SellerCompany.invalid && (SellerCompany.touched||form.submitted)}" required (ngModelChange)="onCompanyChange($event)">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.SellerCompanys" [ngValue]="item.companycode">{{item.company}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>对方主体</label></div>
+          <div class="c-input-wrap">
+            <input type="text" #domElement (click)="open()" placeholder="请选择对方主体" name="BuyerName" [(ngModel)]="formData.PUBaseData.BuyerName" #BuyerName="ngModel" [ngClass]="{'m-input-warn':BuyerName.invalid && (BuyerName.touched||form.submitted)}" required>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>币种</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select #domElement [(ngModel)]="formData.PUBaseData.Currency" name="Currency" #Currency="ngModel" [ngClass]="{'m-select-warn':Currency.invalid && (Currency.touched||form.submitted)}" required>
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.CurryList" [ngValue]="item.CurrencyID">{{item.CurrencyName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>合同金额</label></div>
+          <div class="c-input-wrap">
+            <input type="text" #domElement only-number placeholder="请输入合同金额" [(ngModel)]="formData.PUBaseData.ContractMoney" name="ContractMoney" #ContractMoney="ngModel" [ngClass]="{'m-input-warn':ContractMoney.invalid && (ContractMoney.touched||form.submitted)}" required>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>合同名称</label></div>
+          <div class="c-input-wrap">
+            <input type="text" #domElement [(ngModel)]="formData.PUBaseData.ContractName" placeholder="请输入合同名称" name="ProjectName" #ProjectName="ngModel" [ngClass]="{'m-input-warn':ProjectName.invalid && (ProjectName.touched||form.submitted)}" required>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>采购类型</label></div>
+          <div class="c-input-wrap c-wrap-out">
+            <input icheck type="radio" id="radio1" disabled="disabled" name="PurchaseType" [(ngModel)]="formData.PUBaseData.PurchaseType" value="0">
+            <label for="radio1">核心</label>
+            <input icheck type="radio" id="radio2" disabled="disabled" name="PurchaseType" [(ngModel)]="formData.PUBaseData.PurchaseType" value="2">
+            <label for="radio2">新产品</label>
+            <input icheck type="radio" id="radio3" disabled="disabled" name="PurchaseType" [(ngModel)]="formData.PUBaseData.PurchaseType" value="1">
+            <label for="radio3">非核心</label>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>对方当事人</label></div>
+          <div class="c-input-wrap">
+            <input type="text" name="litigantName" [(ngModel)]="formData.PUBaseData.litigantName">
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>对方当事人电话</label></div>
+          <div class="c-input-wrap">
+            <input type="text" name="litigantTel" maxlength="50" [(ngModel)]="formData.PUBaseData.litigantTel">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>合同内容摘要</label></div>
+          <div class="c-input-wrap">
+            <textarea rows="5" class="m-textarea" placeholder="请填写合同内容摘要……" name="ContractContent" [(ngModel)]="formData.PUBaseData.ContractContent" #ContractContent="ngModel" [ngClass]="{'m-textarea-warn':ContractContent.invalid && (ContractContent.touched||form.submitted)}" required maxlength="300"></textarea>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><label>备注</label></div>
+          <div class="c-input-wrap">
+            <textarea rows="3" class="m-textarea" name="remark" [(ngModel)]="formData.PUBaseData.Remark" maxlength="300"></textarea>
+          </div>
+        </div>
+        <db-customerform [Data] = "customerFormData"></db-customerform>
+      </div>
+      <div class="c-content-title">
+        <h5>合同附件</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item-file">
+          <div class="c-file-title" style="line-height: 45px;width:8%;"><label>用印文件</label></div>
+          <div class="c-file-wrap" style="width:37.5%;">
+            <iq-file-upload upType="1" [maxFileNum]=100 [url]="careerFileApi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles.AccessorySeal"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event, 21)" (onDeleteItem)="onDeleteFileItem($event, 21)" (onClickFile)="onClickFile($event, 21)"></iq-file-upload>
+          </div>
+        </div>
+        <div class="c-form-item-file" style="width:50%;">
+          <div class="c-file-title" style="width:16%;"><label>上传附件<br/>(事业部可见)</label></div>
+          <div class="c-file-wrap">
+            <iq-file-upload upType="1" [url]="careerFileApi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles.AccessoryBus"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event, 3)" (onDeleteItem)="onDeleteFileItem($event, 1)" (onClickFile)="onClickFile($event, 1)"></iq-file-upload>
+          </div>
+        </div>
+        <div class="c-form-item-file" style="width:50%;">
+          <div class="c-file-title" style="width:16%;"><label>上传附件<br/>(事业部及风险可见)</label></div>
+          <div class="c-file-wrap">
+            <iq-file-upload upType="1" [url]="riskFileApi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles.AccessorySub"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event, 1)" (onDeleteItem)="onDeleteFileItem($event, 3)" (onClickFile)="onClickFile($event, 3)"></iq-file-upload>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addApply-container" style="margin: 0;">
+      <db-sc-seals #seals [sealsInfo] = "sealInfo" [platfromid] = "formData.PUBaseData.PlatformID_C" [isEdit] = "true" (scSeals)="scSeals($event)"></db-sc-seals>
+      <!--<db-sc-approver #approvers [isEdit] = "true" (scApprover)="scApprover($event)"></db-sc-approver>-->
+    </div>
+    <!--审批人信息-->
+    <div class="c-content" style="margin-top: 15px;">
+      <div class="c-content-title">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <db-sc-approver-redo [WFApproverData]="WFApproverDataComponent"></db-sc-approver-redo>
+      </div>
+    </div>
+    <!--审批历史-->
+    <div class="contract-history" *ngIf="wfHistory && wfHistory.length > 0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <div class="c-content-footer">
+      <button class="m-btn-agree" (click) = "onSubmit()">提交</button>
+      <button class="m-btn-refuse m-btn-common" (click) = "onSave('save')">暂存</button>
+      <button class="m-btn-cancel" (click) = "onCancel()">取消</button>
+    </div>
+  </form>
+</div>
+
+<modal #modal>
+    <modal-header>
+      <span style="display:inline-block; font-size:16px;height:30px;line-height:30px;">对方主体查询</span>
+      <span class="pull-right" (click)="modal.close()" style="font-size:25px; width:18px; cursor:pointer; margin-right:4px;">&times;</span>
+    </modal-header>
+    <modal-body>
+        <div style="padding:15px 0 10px 15px; position:relative;">
+            <input type="text" class="form-control" (input)="onBuyerNameInput(formData.PUBaseData.BuyerName)" placeholder="请输入供应商名称" [(ngModel)]="formData.PUBaseData.BuyerName" style="width:82%;">
+            <button class="btn btn-info" (click)="getBuyerList()" style="position:absolute;right:15px;top:15px; width:80px;">查询</button>
+            <div *ngIf="validMessage" style="color:#ea6269;line-height:18px;text-align:left;">
+              {{validMessage}}
+            </div>
+        </div>
+        <div style="padding:0 2%;">
+          <table class="table table-bordered table-hover">
+            <tbody>
+              <tr>
+                <td style="width:45%;">客户名称</td>
+                <td>客户编号</td>
+                <!--<td>客户类型</td>-->
+              </tr>
+              <tr *ngFor="let item of currentPageItems" (click)="onSelectedBuyer(item)">
+                <td class="td-serchUser-1">{{ item.vendor }}</td>
+                <td class="td-serchUser-2"> {{ item.vendorno }}</td>
+                <!--<td class="td-serchUser-3">{{ item.KTOKD }}</td>-->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <div class="page">
+            <iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+        </div>
+    </modal-footer>
+</modal>
+
+

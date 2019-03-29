@@ -1,0 +1,81 @@
+.login {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	min-height: 580px;
+	background-color: #bdecf9;
+
+	.login-logo {
+		width: 150px;
+		height: 36px;
+		margin: 25px 0 0 45px;
+		background: url("../../../../../assets/login-logo.png") no-repeat center center;
+		background-size: contain;
+	}
+
+	.login-main {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 1200px;
+		height: 580px;
+		margin-top: -290px;
+		margin-left: -600px;
+	}
+	.login-bg {
+		float: left;
+		width: 500px;
+		height: 400px;
+		margin: 100px 150px;
+		background: url("../../../../../assets/login-bg.png") no-repeat center center;
+		background-size: contain;
+	}
+	.login-form {
+		float: left;
+		width: 313px;
+		height: 315px;
+		margin: 133px 0;
+		padding: 68.5px 54.5px;
+		background-color: #fff;
+		box-shadow: 4.3px 7.4px 13.5px 0 rgba(44, 109, 151, 0.34);
+		border-radius: 5px;
+		font-size: 13px;
+		text-align: center;
+
+		p {
+			margin-bottom: 15px;
+			font-size: 15px;
+		}
+		input[type=text],input[type=password] {
+			border-width: 0 0 1px 0;
+			border-color: #ded9cf;
+			&::-webkit-input-placeholder {
+				color: #ded9cf;
+			}
+		}
+		.btn {
+			width: 192.5px;
+			height: 30px;
+			margin-top: 15px;
+			padding: 0;
+			background-color: #57b9f8;
+			border-color: #57b9f8;
+			border-radius: 15px;
+			line-height: 30px;
+		}
+	}
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio:1.5){
+ .login{
+ 	.login-logo {
+     	background-image:  url(../../../../../assets/login-logo@2x.png);
+ 	}
+ 	.login-bg {
+     	background-image:  url(../../../../../assets/login-bg@2x.png);
+ 	}
+ }
+}

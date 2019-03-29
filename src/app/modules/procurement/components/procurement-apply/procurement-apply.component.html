@@ -1,0 +1,8 @@
+<div class="m-boardtop clearfix">
+  <div class="m-boardmenu">
+    <a routerLinkActive="active" routerLink="/procurement/procurement-apply/my-apply">我的申请<span class="m-nums hide">5</span></a>
+    <a routerLinkActive="active" routerLink="/procurement/procurement-apply/my-approval">我的审批<span class="m-nums" *ngIf="approvaTtotalNum" >{{approvaTtotalNum}}</span></a>
+  </div>
+  <!-- <iq-newcreat [dataCreat]=dataCreat></iq-newcreat> -->
+</div>
+<router-outlet></router-outlet>

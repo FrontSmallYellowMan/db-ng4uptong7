@@ -1,0 +1,41 @@
+.m-clearfix:after{
+     content:".";        
+     display:block;        
+     height:0;        
+     clear:both;        
+     visibility:hidden;        
+
+}
+.m-info-table > thead > tr > th {
+    height: 30px;
+    border: 1px solid #ddd;
+    padding: 0 8px;
+    text-align: center;
+}
+.m-exm-item ul > li .m-exm-label {
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+ul>li.addApp-form-item{
+    height: 40px;
+    width: 50%;
+}
+ .addApp-form-label {
+    font-size: 12px;
+    line-height: 40px;
+    width:100px;
+    text-align: left;
+    display: inline-table;
+}
+input[type=text] {
+    padding: 0 15px;
+    width: 30%;
+    height: 35px;
+    border: 1px solid #e1e3eb;
+    border-radius: 3px;
+}
+.m-text-weight{
+    font-weight: bold;
+    text-align: right;
+}

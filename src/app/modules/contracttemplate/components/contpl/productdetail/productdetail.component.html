@@ -1,0 +1,183 @@
+<span id="ruler" #ruler style="visibility: hidden; white-space: nowrap; font-size: 14px; position:absolute; top:-43px; left: 115px; "></span>
+<div class="tab-parent" *ngIf="!isView">
+  <div class="productDetail">
+    1．产品明细（<input ngModel name="Brand" type="text" id="product" [(ngModel)]="ProductRelated.Brand" (input)="onSelectMaxLen($event,60)">
+    <i>*</i>品牌<input ngModel name="Product" type="text" id="brand" [(ngModel)]="ProductRelated.Product" (input)="onSelectMaxLen($event,125)" >
+    <i>*</i>产品，发票内容以卖方开具内容为准，实际交货以产品详细配置为准）
+  </div>
+  <table class="table">
+    <tr>
+      <td>序号</td>
+      <td><i>* </i>货物名称</td>
+      <td><i>* </i>型号</td>
+      <td><i>* </i>数量</td>
+      <td><i>* </i>单价</td>
+      <td><i>* </i>金额<br/>(单位：元)</td>
+      <td>备注</td>
+      <td><span (click)="onAdd($event)" class="glyphicon glyphicon-plus"></span></td>
+    </tr>
+    <tr *ngIf="isViewTpl">
+      <td>{{ ProductDetail.index }}</td>
+      <td>
+        <textarea wrap="physical" rows="1" [(ngModel)]="ProductDetail.ProductName" (input)="onTextareaInput(ProductDetail.ProductName, ruler, $event, '275')"></textarea>
+      </td>
+      <td>
+        <textarea ngModel name="Modeltpl" rows="1" [(ngModel)]="ProductDetail.Model" (input)="onTextareaInput(ProductDetail.Model, ruler, $event, '124')"></textarea>
+      </td>
+      <td><input ngModel name="Qtypl" type="text" [(ngModel)]="ProductDetail.Qty"  (input) = "onCalItemTotalMoney(ProductDetail)"></td>
+      <td><input ngModel name="Pricetpl" type="text" [(ngModel)]="ProductDetail.Price"  (input) = "onCalItemTotalMoney(ProductDetail)" placeholder=""></td>
+      <td><input ngModel name="TotalPricetpl" type="text" [(ngModel)]="ProductDetail.TotalPrice" readonly placeholder=""></td>
+      <td>
+        <textarea ngModel name="Remarktpl" rows="1" [(ngModel)]="ProductDetail.Remark" (input)="onTextareaInput(ProductDetail.Remark, ruler, $event, '124')"></textarea>
+      </td>
+      <td>
+        <span (click)="onAddSave(ProductDetail)" class="glyphicon glyphicon-ok-circle"></span>
+        <span (click)="onCancelSave()" class="glyphicon glyphicon-remove-circle"></span>
+      </td>
+    </tr>
+    <tr *ngFor="let item of products">
+      <td (click)="onClickEdit(item)">{{ item.index }}</td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.ProductName }}</span>
+        <span *ngIf="item.showEditTpl">
+          <textarea ngModel name="ProductName" rows="1" [(ngModel)] = "item.ProductName" [rows]="productNameRows" (input)="onTextareaInput(item.ProductName, ruler, $event, '275')"></textarea>
+        </span>
+      </td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.Model }}</span>
+        <span *ngIf="item.showEditTpl">
+          <textarea ngModel name="Model" rows="1" [(ngModel)] = "item.Model" [rows]="modelRows" (input)="onTextareaInput(item.Model, ruler, $event, '124')"></textarea>
+        </span>
+      </td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.Qty }}</span>
+        <span *ngIf="item.showEditTpl"><input ngModel name="Qty" type="text" [(ngModel)] = "item.Qty" (keyup) = "onCalItemTotalMoney(item)"></span>
+      </td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.Price }}</span>
+        <span *ngIf="item.showEditTpl"><input ngModel name="Price" type="text" [(ngModel)] = "item.Price" (keyup) = "onCalItemTotalMoney(item)" placeholder=""></span>
+      </td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.TotalPrice }}</span>
+        <span *ngIf="item.showEditTpl"><input ngModel name="TotalPrice" type="text" [(ngModel)] = "item.TotalPrice" readonly placeholder=""></span>
+      </td>
+      <td (click)="onClickEdit(item)">
+        <span *ngIf="!item.showEditTpl">{{ item.Remark }}</span>
+        <span *ngIf="item.showEditTpl">
+          <textarea ngModel name="Remark" rows="1" [(ngModel)]="item.Remark" (input)="onTextareaInput(item.Remark, ruler, $event, '124')"></textarea>
+        </span>
+      </td>
+      <td>
+        <span *ngIf="!item.showEditTpl" class="operate" (click)="onDel(item)" class="glyphicon glyphicon-remove"></span>
+        <span *ngIf="item.showEditTpl">
+          <span (click) = "onEditSave(item)"  class="glyphicon glyphicon-ok-circle"></span>
+          <!--<span (click) = "onCancelEditSave(item)" class="glyphicon glyphicon-remove-circle"></span>-->
+        </span>
+      </td>
+    </tr>
+    <tr class="return">
+      <td colspan="6">
+        <span class="floatLeft">折扣返点：</span>
+        <span class="floatRight">
+        返款比例：<input  name="DiscountRatio" type="text" id="discountRatio" [(ngModel)] = "ProductRelated.DiscountRatio" (input) = "onInputToggle($event)"   >
+        /具体金额：<input  name="DiscountMoney" type="text" id="discountMoney" [(ngModel)] = "ProductRelated.DiscountMoney" (input) = "onInputToggle($event)"  >
+      </span>
+      </td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <span class="floatLeft">总计：</span>
+      </td>
+      <td colspan="3"><span class="floatLeft">{{ ProductRelated.TotalMoney }}</span></td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <span class="floatLeft">人民币实际结算总价款（大写）{{ ProductRelated.TotalMoneyUpper }}</span>
+      </td>
+      <td colspan="2"></td>
+    </tr>
+  </table>
+</div>
+<div class="tab-parent" *ngIf="isView">
+  <div class="productDetail">
+    1．产品明细（<label>{{ ProductRelated.Brand }}</label> 品牌
+    <label>{{ ProductRelated.Product }}</label> 产品，发票内容以卖方开具内容为准，实际交货以产品详细配置为准）
+  </div>
+  <table class="table">
+    <tr>
+      <td>序号</td>
+      <td>货物名称</td>
+      <td>型号</td>
+      <td>数量</td>
+      <td>单价</td>
+      <td>金额<br/>(单位：元)</td>
+      <td>备注</td>
+    </tr>
+    <tr *ngFor="let item of products">
+      <td>{{ item.index }}</td>
+      <td>
+        <span>{{ item.ProductName }}</span>
+      </td>
+      <td>
+        <span>{{ item.Model }}</span>
+      </td>
+      <td>
+        <span>{{ item.Qty }}</span>
+      </td>
+      <td>
+        <span>{{ item.Price }}</span>
+      </td>
+      <td>
+        <span>{{ item.TotalPrice }}</span>
+      </td>
+      <td>
+        <span>{{ item.Remark }}</span>
+      </td>
+    </tr>
+    <tr class="return">
+      <td colspan="6">
+        <span class="floatLeft">折扣返点：</span>
+        <span class="floatRight">
+        返款比例：<label>{{ ProductRelated.DiscountRatio }}</label>
+        /具体金额：<label>{{ ProductRelated.DiscountMoney }}</label>
+      </span>
+      </td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <span class="floatLeft">总计：</span>
+      </td>
+      <td colspan="3"><span class="floatLeft">{{ ProductRelated.TotalMoney }}</span></td>
+      <td colspan="2"></td>
+    </tr>
+    <tr>
+      <td colspan="6">
+        <span class="floatLeft">人民币实际结算总价款（大写）{{ ProductRelated.TotalMoneyUpper }}</span>
+      </td>
+      <td colspan="2"></td>
+    </tr>
+  </table>
+</div>
+<div class="totalAmount">
+  <p>注：如无抵扣返点，抵扣返点处请不要填写。</p>
+</div>
+
+
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+                提示信息
+                <button type="button" class="close pull-right" aria-label="Close" (click)="smModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+      <div class="modal-body" style="padding:15px 0; text-align:center; font-size:18px;">
+        {{message}}
+      </div>
+    </div>
+  </div>
+</div>

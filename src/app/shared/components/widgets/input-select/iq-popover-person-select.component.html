@@ -1,0 +1,19 @@
+<div class="select-container" [ngClass]="{hide:!_show}">
+  <div class="select-box"
+  [ngStyle]="{'top': position == 'up'?'auto':'40px','bottom':position == 'up'?0:'auto'}"
+   (click)="stopClick($event)">
+    <ul *ngIf="position == 'up'" class="select-list m-user-list">
+      <li class="select-item m-user-info" (click)="choose(item)" user-image [user]="item" *ngFor="let item of queryObservable | async">
+      </li>
+    </ul>
+    <div class="m-user-search select-search">
+      <input class="m-search-input" #term (focus)="focus()" (keyup)="search(term.value)" placeholder="姓名/itcode/员工编号" type="text">
+      <i class="iqon-list" *ngIf="hasButton" (click)="clickBtn(term.value)"></i>
+    </div>
+    <ul *ngIf="position == 'down'" class="select-list m-user-list">
+      <li class="select-item m-user-info" (click)="choose(item)" user-image [user]="item" *ngFor="let item of queryObservable | async">
+      </li>
+    </ul>
+
+  </div>
+</div>

@@ -1,0 +1,237 @@
+<!--新建物料申请模版-->
+                     
+          <div class="m-at-newTemplate-tips" *ngIf="isShowMaterielApplyTemplate" [ngClass]="{'restZindex':isApplication}">
+            
+            <form #form="ngForm">
+
+            <div class="m-at-title">
+              <h5>
+                物料申请模版
+              </h5>
+              <i class="iqon-close" (click)="cancel()"></i>
+            </div>
+          
+        
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need">*</span>物料模版名称</p>
+              <div class="m-input-wrap">
+                <input type="text" name="TemplateName" required [ngClass]="{'m-input-warn':TemplateName.invalid && (TemplateName.touched||isSubmit)}" [(ngModel)]="reqData.TemplateName" #TemplateName="ngModel" placeholder="请输入物料模版名称" maxlength="12">
+                  <p class="m-p-warn" *ngIf="TemplateName.invalid && (TemplateName.touched||isSubmit)">请填写物料模版名称</p>  
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>工厂</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+                  <my-select [(ngModel)]="allFactory" tabName="1"  name="Factory" #Factory="ngModel" [placeHolder]="'-请选择工厂'"></my-select>             
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>供应商SAP编号</p>
+              <div class="m-input-wrap">
+                <div class="m-select">   
+                <!-- <input type="text" required  name="SupplierCodeSAP" [(ngModel)]="reqData.SupplierCodeSAP" #SupplierCodeSAP="ngModel" placeholder="请输入物料模版名称" maxlength="18"> -->
+                   <!-- <my-select [(ngModel)]="reqData.SupplierCodeSAP" tabName="6" required [ngClass]="{'m-input-warn':SupplierCodeSAP.invalid && (SupplierCodeSAP.touched||isSubmit)}" name="SupplierCodeSAP" #SupplierCodeSAP="ngModel" [placeHolder]="'-请选择供应商SAP编号'"></my-select>  -->
+                   <!-- <my-select [(ngModel)]="allSupplierCodeSAP" tabName="6" name="SupplierCodeSAP" #SupplierCodeSAP="ngModel"
+                   [placeHolder]="'-请选择供应商编号'" required></my-select>  -->
+                   <iq-select name="SupplierCodeSAP" #SupplierCodeSAP="ngModel" [(ngModel)]="allSupplierCodeSAP" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                      [enterShowList]="false" (onSelect)="SupplierCodeSAPVerify($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择"
+                      [queryParams]="{queryStr:'querycontent'}" showIndex='10'></iq-select>
+                  </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>物料类型</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+                  <my-select [(ngModel)]="allMaterialType" tabName="2" name="MaterialType" #MaterialType="ngModel" [placeHolder]="'-请选择物料类型'"></my-select>             
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>序列号参数</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allSerialNumParameter" tabName="7" name="SerialNumParameter" #SerialNumParameter="ngModel" [placeHolder]="'-请选择序列号参数'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>物料组</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allMaterialGroup" tabName="3" name="MaterialGroup" #MaterialGroup="ngModel" [placeHolder]="'-请选择物料组'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>税收分类</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allTaxType" tabName="8" name="TaxTypeID" #TaxTypeID="ngModel" [placeHolder]="'-请选择税收分类'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>品牌</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allBrand" tabName="4" name="Brand" #Brand="ngModel" [placeHolder]="'-请选择品牌'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>基本计量单位</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allBaseUnitOfMeasure" tabName="9" name="BaseUnitOfMeasure" #BaseUnitOfMeasure="ngModel" [placeHolder]="'-请选择基本计量单位'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-form-item m-at-form">
+              <p class="m-form-label m-edit-materiel-label-width"><span class="m-form-need"></span>产品层次</p>
+              <div class="m-input-wrap">
+                <div class="m-select">
+
+                  <my-select [(ngModel)]="allProductLevel" tabName="12" name="ProductLevel" #ProductLevel="ngModel" [placeHolder]="'-请选择产品层次'"></my-select>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="m-at-btn">
+              
+               <button class="m-btn-confirm" (click)="saveApplyTemplate()">确定</button>
+               <button class="m-btn-cancel" (click)="cancel()">取消</button>
+
+            </div>
+
+            </form>
+
+          </div>
+
+
+
+          <!--查看物料模版-->
+          <div class="seeMaterielTemplate-tips" *ngIf="!isShowMaterielApplyTemplate">
+            
+               <div class="m-at-title">
+                 <h5>物料申请模版</h5>
+                 <i class="iqon-close" (click)="cancel()"></i>
+               </div>
+               
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">申请人：</div>
+                <div class="m-user-info-small">
+                  <img alt="纪永凤" class="m-user-img" src="assets/default-user.png">
+                  <span class="m-user-name">{{reqData.ApplyName}}</span>
+                  <span class="m-user-ename">{{reqData.ApplyItCode}}</span>
+                </div>
+              </div>
+              
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">申请时间：</div>
+                <div class="m-form-inline">
+                  {{reqData.ApplyTime|iqDate:"YYYY-MM-DD"}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">物料模版名称：</div>
+                <div class="m-form-inline">
+                  {{reqData.TemplateName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">工厂：</div>
+                <div class="m-form-inline">
+                  {{reqData.Factory}}&nbsp;&nbsp;{{reqData.FactoryName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">供应商SAP编号：</div>
+                <div class="m-form-inline">
+                  {{reqData.SupplierCodeSAP}}&nbsp;&nbsp;{{reqData.SupplierName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">物料类型：</div>
+                <div class="m-form-inline">
+                  {{reqData.MaterialType}}&nbsp;&nbsp;{{reqData.MaterialTypeName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">序列号参数：</div>
+                <div class="m-form-inline">
+                  {{reqData.SerialNumParameter}}&nbsp;&nbsp;{{reqData.SerialNumParameterName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">物料组：</div>
+                <div class="m-form-inline">
+                  {{reqData.MaterialGroup}}&nbsp;&nbsp;{{reqData.MaterialGroupName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">税收分类：</div>
+                <div class="m-form-inline">
+                  {{reqData.TaxTypeID}}&nbsp;&nbsp;{{reqData.TaxTypeName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">品牌：</div>
+                <div class="m-form-inline">
+                  {{reqData.Brand}}&nbsp;&nbsp;{{reqData.BrandName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">基本计量单位：</div>
+                <div class="m-form-inline">
+                  {{reqData.BaseUnitOfMeasure}}&nbsp;&nbsp;{{reqData.BaseUnitOfMeasureName}}
+                </div>
+              </div>
+
+              <div class="m-form-item m-at-form">
+                <div class="m-form-titleStyle">产品层次：</div>
+                <div class="m-form-inline">
+                  {{reqData.ProductLevel}}&nbsp;&nbsp;{{reqData.ProductLevelName}}
+                </div>
+              </div>
+
+              
+              <div class="m-form-btn">
+                <button class="m-btn-confirm" (click)="editClick()">编辑</button>
+                <button class="m-btn-default m-btn-tempsave" (click)="cancel()">返回</button>
+              </div>
+
+
+          </div>
+

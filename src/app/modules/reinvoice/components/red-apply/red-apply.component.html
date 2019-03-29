@@ -1,0 +1,476 @@
+<div class="ri-red-apply">
+  <div class="red-apply-title">
+    <h5>冲红申请</h5>
+  </div>
+  <form #redApplyForm="ngForm">
+    <loading [show]="loading"></loading>
+    <!--基础信息-->
+    <div class="red-apply-content">
+
+      <div class="apply-content-title">
+        <h5>基础信息</h5>
+      </div>
+      <div class="apply-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>电话</label></div>
+          <div class="c-input-wrap">
+            <input type="text" placeholder="-请输入联系电话" required name="phone" [(ngModel)]="applyData.apply.phone" #phone="ngModel" [ngClass]="{'m-input-warn':(phone.touched || redApplyForm.submitted) && phone.invalid}">
+          </div>
+          <div class="c-input-msg" *ngIf="(phone.touched || redApplyForm.submitted) && phone.invalid">
+            <span *ngIf="phone.errors?.required">-请输入联系电话</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>成本中心</label></div>
+          <div class="c-input-wrap" style="padding: 0 10px;">
+            {{ applyData.apply.costcenter }}
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>公司</label></div>
+          <div class="c-input-wrap">
+            <select-search-company name="company" [(ngModel)]="selectedCompany" [optionList]="baseDataSource.companys" (onSelecte)="onSelecteCompany(selectedCompany)"></select-search-company>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>业务范围</label></div>
+          <div class="c-input-wrap">
+            <select-search-biz name="biz" [(ngModel)]="selectedBiz" [optionList]="baseDataSource.businesses" (onSelecte)="onSelecteBiz(selectedBiz)"></select-search-biz>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>发票类型</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="invoicetype" [(ngModel)]="applyData.apply.invoicetypecode" #invoicetype="ngModel" (ngModelChange)="onInvoiceTypeChange($event)"
+                [ngClass]="{'m-select-warn':(invoicetype.touched || redApplyForm.submitted) && invoicetype.invalid}">
+              <option value="">-请选择</option>
+              <option *ngFor="let item of baseDataSource.invoicetypes" [ngValue]="item.invoicetypecode">{{item.invoicetype}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(invoicetype.touched || redApplyForm.submitted) && invoicetype.invalid">
+            <span *ngIf="invoicetype.errors?.required">-请选择发票类型</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>所属平台</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="platform" [(ngModel)]="applyData.apply.platformcode" #platform="ngModel" (ngModelChange)="onPlatFormChange($event)"
+                [ngClass]="{'m-select-warn':(platform.touched || redApplyForm.submitted) && platform.invalid}">
+              <option value="">-请选择</option>
+              <option *ngFor="let item of baseDataSource.platforms" [ngValue]="item.platformcode">{{item.platform}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(platform.touched || redApplyForm.submitted) && platform.invalid">
+            <span *ngIf="platform.errors?.required">-请选择所属平台</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>冲红类型</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="revisetype" [(ngModel)]="applyData.apply.revisetypecode" (ngModelChange)="onRevisetypeChange(applyData.apply.revisetypecode)"
+                #revisetype="ngModel" [ngClass]="{'m-select-warn':(revisetype.touched || redApplyForm.submitted) && revisetype.invalid}">
+              <option value="">-请选择</option>
+              <option *ngFor="let item of baseDataSource.redtypes" [ngValue]="item.revisetypecode">{{item.revisetype}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(revisetype.touched || redApplyForm.submitted) && revisetype.invalid">
+            <span *ngIf="revisetype.errors?.required">-请选择冲红类型</span>
+          </div>
+        </div>
+        <!--只有选择了冲红大类并且选择的不是其他冲红情况（600）大类，才显示冲红小类-->
+        <div class="c-form-item-small clearfix" *ngIf="applyData.apply.revisetypecode && applyData.apply.revisetypecode != 600">
+          <div class="small-item" *ngFor="let item of childrenRedtypes;">
+            <!--发票票面信息更改（100） 小类多选-->
+            <div *ngIf="applyData.apply.revisetypecode == 100">
+              <input type="checkbox" [name]="item.revisetype" [(ngModel)]="item.checked" (ngModelChange)="onChildrenRevisetypeChange($event,item)"
+                icheck>
+              <label>{{ item.revisetype }}</label>
+            </div>
+            <!--其他大类 小类单选-->
+            <div *ngIf="applyData.apply.revisetypecode != 100">
+              <input type="radio" [id]="'radio'+item.revisetypecode" name="childrenrevisetype" [(ngModel)]="item.checked" (ngModelChange)="onChildrenRevisetypeChange($event,item)"
+                icheck>
+              <label>{{ item.revisetype }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><label>说明原因</label></div>
+          <div class="c-input-wrap">
+            <textarea rows="1" class="m-textarea" name="reason" [(ngModel)]="applyData.apply.reason"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--财务信息-->
+    <div class="red-apply-content">
+
+      <div class="apply-content-title">
+        <h5>财务信息</h5>
+      </div>
+      <div class="apply-content-main mater-detail-content clearfix">
+        <!--查询条件-->
+        <div class="invoice-search clearfix">
+          <div class="apply-invoice-search clearfix">
+            <div class="search-title"><label>外部发票号</label></div>
+            <div class="search-content m-search">
+              <div class="m-search-2">
+                <i class="iqon-query i-search" (click)="getInvoiceByExternalNo(externalno.value)"></i>
+                <input type="text" name="externalno" #externalno placeholder="-请输入外部发票号">
+              </div>
+            </div>
+          </div>
+          <div class="apply-invoice-search clearfix">
+            <div class="search-title"><label>订单号</label></div>
+            <div class="search-content m-search">
+              <div class="m-search-2">
+                <i class="iqon-query i-search" (click)="getInvoiceByOrderNo(orderno.value)"></i>
+                <input type="text" name="orderno" #orderno placeholder="-请输入订单号">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--冲红前-->
+        <div class="invoice-before">
+          <div class="invoice-before-total">
+            共{{ applyData.invoice.length }}条
+          </div>
+          <table class="m-info-table">
+            <thead>
+              <tr class="m-infor-tr table-head-tr1">
+                <th colspan="11" class="m-text-center change">冲红前</th>
+              </tr>
+              <tr>
+                <th class='m-text-center' style="width:30px;">序号</th>
+                <th class="m-text-center">客户编号</th>
+                <th class="m-text-center">客户名称</th>
+                <th class="m-text-center">原订单号</th>
+                <th class="m-text-center">系统发票号</th>
+                <th class="m-text-center">外部发票号</th>
+                <th class="m-text-center">原发票日期</th>
+                <th class="m-text-center" style="width: 110px;">金额/元</th>
+                <th class="m-text-center">原始收付基准日</th>
+                <th class="m-text-center">原清账号</th>
+                <th class="m-text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="applyData.invoice.length == 0">
+                <td colspan="11" style="text-align: left;padding-left: 10px!important;">无记录</td>
+              </tr>
+              <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                <td class="m-text-center">{{ i + 1 }}</td>
+                <td class="m-text-center">{{ item.originalcustomercode }}</td>
+                <td class="m-text-center">{{ item.originalcustomer }}</td>
+                <td class="m-text-center">{{ item.orderno }}</td>
+                <td class="m-text-center">{{ item.internalinvoiceno }}</td>
+                <td class="m-text-center">{{ item.externalinvoiceno }}</td>
+                <td class="m-text-center">{{ getDataYYYYMMDD(item.invoicedate) }}</td>
+                <td class="m-text-center">{{ myToFixed(item.originalmoney) }}</td>
+                <td class="m-text-center">{{ getDataYYYYMMDD(item.originalreceiptdate) }}</td>
+                <td class="m-text-center">{{ item.originalcomplexaccount }}</td>
+                <td style="vertical-align: middle;">
+                  <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="deleteInvoiceItem(item, i)">-</a>
+                  <div class="bubble-tips">
+                    <span class="triangle-style"></span>
+                    <div class="bubble-content">
+                      删除该行
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--冲红后-->
+        <div class="invoice-after">
+          <div class="invoice-after-total">
+            共{{ applyData.invoice.length }}条
+          </div>
+          <table class="m-info-table">
+            <thead>
+              <tr class="m-infor-tr table-head-tr1">
+                <th colspan="4" class="m-text-center change">冲红后</th>
+                <th class="m-text-center change">特殊说明</th>
+                <th class="m-text-center change">财务</th>
+              </tr>
+              <tr>
+                <th class="m-text-center" style="width:30px;">序号</th>
+                <th class="m-text-center">客户编号<br>(冲名称时填写)</th>
+                <th class="m-text-center">客户名称</th>
+                <th class="m-text-center">金额/元<br>(冲金额时填写)</th>
+                <th class="m-text-center">付款账期<br>(延过账期时填写)</th>
+                <th class="m-text-center">清账号</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="applyData.invoice.length == 0">
+                <td colspan="6" style="text-align: left;padding-left: 10px!important;">无记录</td>
+              </tr>
+              <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                <td class="m-text-center">{{ i + 1 }}</td>
+                <td class="m-text-center">
+                  <input *ngIf="isAllowEditCustomerCode" type="text" [name]="'customerCode' + i" [(ngModel)]="item.customercode" placeholder="-请输入客户编号"
+                    (blur)="getCustomerName(item, i)">
+                </td>
+                <td class="m-text-center"><span *ngIf="isAllowEditCustomerCode">{{ item.customer }}</span></td>
+                <td class="m-text-center">
+                  <span *ngIf="materialType == 0">{{ myToFixed(materialList[i]?.moneyTotalAmount - materialList[i]?.backMoneyTotalAmount) }}</span>
+                </td>
+                <td class="m-text-center"></td>
+                <td class="m-text-center"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!--冲退明细-->
+    <div class="red-apply-content" *ngIf="materialType != 3">
+      <div class="apply-content-title">
+        <h5>冲退明细</h5>
+      </div>
+      <div class="apply-content-main" *ngIf="materialList.length == 0">
+        无记录
+      </div>
+      <div class="apply-content-main" *ngIf="materialList.length > 0">
+        <!--冲退明细组件-->
+        <!--<db-apply-material-detail [materialType]="materialType" [(materialList)]="materialList"></db-apply-material-detail>-->
+        <div class="material-detail-tab">
+
+          <div class="material-detail-tabtitle">
+            <ul class="clearfix">
+              <li *ngFor="let item of materialList; index as i;" [ngClass]="{'active':item?.active}" (click)="clickTab(i)">{{ item?.internalinvoiceno }}</li>
+            </ul>
+          </div>
+          <div class="material-detail-tabcontent">
+            <div *ngFor="let tabitem of materialList; index as tabitemi;">
+              <!--价格更改类型-->
+              <div *ngIf="materialType === 0 && tabitem.active">
+                <div class="material-table-title">
+                  新销售总额、新返款金额为新出发票的内容，必填填写
+                </div>
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th class='m-text-center' style="width: 60px; vertical-align: middle;">行项目号</th>
+                      <th class="m-text-center" style="width: 70px;">物料号</th>
+                      <th class="m-text-center" style="width: 210px;">物料描述</th>
+                      <th class="m-text-center" style="width: 50px;">数量</th>
+                      <th class="m-text-center" style="width: 60px;">工厂</th>
+                      <th class="m-text-center" style="width: 60px;">库存地</th>
+                      <th class="m-text-center" style="width: 70px;">批次</th>
+                      <th class="m-text-center" style="width: 85px;">原销售总额</th>
+                      <th class="m-text-center" style="width: 90px;"><span class="material-col-need">*</span>新销售总额<br>(返款前)</th>
+                      <th class="m-text-center" style="width: 85px;">原返款金额</th>
+                      <th class="m-text-center" style="width: 90px;"><span class="material-col-need">*</span>新返款金额</th>
+                      <th class="m-text-center" style="width: 85px;">新销售净额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="tabitem.tableList == 0">
+                      <td colspan="12" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                    </tr>
+                    <tr *ngFor="let item of tabitem.tableList; index as i;">
+                      <td class='m-text-center'>{{ item.projcode }}</td>
+                      <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                      <td class="m-text-left">{{ item.originaldescription }}</td>
+                      <td class="m-text-center">{{ item.num }}</td>
+                      <td class="m-text-center">{{ item.factory }}</td>
+                      <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                      <td class="m-text-center">{{ item.originalbatchno }}</td>
+                      <td class="m-text-center">{{ item.originalmoney }}</td>
+                      <td class="m-text-center"><input type="text" only-number [name]="'money' + item.projcode" [(ngModel)]="item.money" #money="ngModel" pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':money.invalid}" (blur)="calculationTotal(tabitemi, item, i)"></td>
+                      <td class="m-text-center">{{ item.originalbackmoney }}</td>
+                      <td class="m-text-center"><input type="text" only-number [name]="'backmoney' + item.projcode" [(ngModel)]="item.backmoney" #backmoney="ngModel" pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':backmoney.invalid}" (blur)="calculationTotal(tabitemi, item, i)"></td>
+                      <td class="m-text-center">{{ myToFixed(item.money-item.backmoney) }}</td>
+                    </tr>
+                    <tr *ngIf="tabitem.tableList && tabitem.tableList.length > 0">
+                      <td class='m-text-right' colspan="7">总计：</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.originalMoneyTotalAmount) }}</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.moneyTotalAmount) }}</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.originalBackMoneyTotalAmount) }}</td>
+                      <td class="m-text-center" [ngClass]="{'material-backmoney-tip': tabitem.isBeyond}">{{ myToFixed(tabitem.backMoneyTotalAmount) }}</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.moneyTotalAmount - tabitem.backMoneyTotalAmount) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!--物料号类型-->
+              <div *ngIf="materialType === 1 && tabitem.active">
+                <div class="material-table-title">
+                  请填写新出发票的所有产品明细（包括物料号未变更项）
+                </div>
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th class='m-text-center' style="width: 55px;">行项目号</th>
+                      <th class="m-text-center" style="width: 95px;">物料号</th>
+                      <th class="m-text-center" style="width: 305px;">物料描述</th>
+                      <th class="m-text-center" style="width: 60px;">数量</th>
+                      <th class="m-text-center" style="width: 60px;">工厂</th>
+                      <th class="m-text-center" style="width: 60px;">库存地</th>
+                      <th class="m-text-center" style="width: 110px;">批次</th>
+                      <th class="m-text-center" style="width: 86px;">销售总额</th>
+                      <th class="m-text-center" style="width: 86px;">返款金额</th>
+                      <th class="m-text-center" style="width: 86px;">销售净额</th>
+                      <th class="m-text-center" style="width: 40px; vertical-align: middle;">
+                        <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="addLineForMaterialCodeType(tabitem, tabitemi)">+</a>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of tabitem.tableList; index as i;">
+                      <td class='m-text-center'>{{ item.projcode }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'materialcode' + item.projcode" [(ngModel)]="item.materialcode" (keyup)="getMaterialDesc(item, tabitemi, i)"></td>
+                      <td class="m-text-left">{{ item.description }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'num' + item.projcode" [(ngModel)]="item.num" #num="ngModel" pattern="^[1-9]\d*$" [ngClass]="{'m-input-warn':num.invalid}"></td>
+                      <td class="m-text-center"><input type="text" [name]="'factory' + item.projcode" [(ngModel)]="item.factory" maxlength="4" #factory="ngModel" pattern="[0-9a-zA-Z]{4}" [ngClass]="{'m-input-warn':factory.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center"><input type="text" [name]="'storagelocation' + item.projcode" [(ngModel)]="item.storagelocation" maxlength="4" #storagelocation="ngModel" [ngClass]="{'m-input-warn':storagelocation.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center"><input type="text" [name]="'batchno' + item.projcode" [(ngModel)]="item.batchno" #batchno="ngModel" pattern="^[A-Za-z0-9]+$" [ngClass]="{'m-input-warn':batchno.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-left"><input type="text" only-number [name]="'money' + item.projcode" [(ngModel)]="item.money" #money="ngModel" pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':money.invalid}" (blur)="calculationTotal(tabitemi, item, i)"></td>
+                      <td class="m-text-left"><input type="text" only-number [name]="'backmoney' + item.projcode" [(ngModel)]="item.backmoney" #backmoney="ngModel" pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':backmoney.invalid}" (blur)="calculationTotal(tabitemi, item, i)"></td>
+                      <td class="m-text-center">{{ myToFixed(item.money-item.backmoney) }}</td>
+                      <td class="m-text-center" style="vertical-align: middle;">
+                        <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="deleteMaterial(tabitemi, item, i)">-</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class='m-text-right' colspan="7">总计：</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.moneyTotalAmount) }}</td>
+                      <td class="m-text-center" [ngClass]="{'material-backmoney-tip': tabitem.isBeyond}">{{ myToFixed(tabitem.backMoneyTotalAmount) }}</td>
+                      <td class="m-text-center">{{ myToFixed(tabitem.moneyTotalAmount - tabitem.backMoneyTotalAmount) }}</td>
+                      <td class="m-text-center"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!--冲成本-->
+              <div *ngIf="materialType === 2 && tabitem.active">
+                <div class="material-table-title">
+                  新出发票的物料号，不可以为空，与原单数据相同时请填写原单数据。
+                </div>
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th class='m-text-center' style="width: 55px;">行项目号</th>
+                      <th class="m-text-center" style="width: 85px;">物料号</th>
+                      <th class="m-text-center" style="width: 113px;">物料描述</th>
+                      <th class="m-text-center" style="width: 95px;"><span class="material-col-need">*</span>新物料号</th>
+                      <th class="m-text-center" style="width: 113px;">新物料描述</th>
+                      <th class="m-text-center" style="width: 45px;">数量</th>
+                      <th class="m-text-center" style="width: 45px;">工厂</th>
+                      <th class="m-text-center" style="width: 55px;">库存地</th>
+                      <th class="m-text-center" style="width: 65px;">新库存地</th>
+                      <th class="m-text-center" style="width: 50px;">批次</th>
+                      <th class="m-text-center" style="width: 100px;">新批次</th>
+                      <th class="m-text-center" style="width: 55px;">销售额</th>
+                      <th class="m-text-center" style="width: 65px;">返款金额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="tabitem.tableList == 0">
+                      <td colspan="13" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                    </tr>
+                    <tr *ngFor="let item of tabitem.tableList; index as i;">
+                      <td class='m-text-center'>{{ item.projcode }}</td>
+                      <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                      <td class="m-text-left">{{ item.originaldescription }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'materialcode' + item.projcode" [(ngModel)]="item.materialcode" (keyup)="getMaterialDesc(item, tabitemi, i)"></td>
+                      <td class="m-text-left" [ngClass]="{'material-description-tip': item.isDiffMaterialDescription}">{{ item.description }}</td>
+                      <td class="m-text-center">{{ item.num }}</td>
+                      <td class="m-text-center">{{ item.factory }}</td>
+                      <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'storagelocation' + item.projcode" [(ngModel)]="item.storagelocation" maxlength="4" #storagelocation="ngModel" pattern="[0-9a-zA-Z]{4}" [ngClass]="{'m-input-warn':storagelocation.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-left">{{ item.originalbatchno }}</td>
+                      <td class="m-text-left"><input type="text" name="batchno" [(ngModel)]="item.batchno" #batchno="ngModel" pattern="^[A-Za-z0-9]+$" [ngClass]="{'m-input-warn':batchno.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-left">{{ item.originalmoney }}</td>
+                      <td class="m-text-left">{{ item.originalbackmoney }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--附件信息-->
+    <div class="red-apply-content">
+      <div class="apply-content-title">
+        <h5>附件信息</h5>
+      </div>
+      <div class="apply-content-main">
+        <div class="apply-content-title-message">我承诺上传的附件与原件一致，并将原件提交给财务留存</div>
+        <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+          text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+      </div>
+    </div>
+
+    <!--审批人信息-->
+    <div class="red-apply-content">
+      <div class="apply-content-title">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="apply-content-main">
+        <ul class="approver-node-list">
+          <li class="approver-node clearfix">
+            <div class="approver-node-title">
+              <label>事业部一级</label><i style="color: #ff4d4d">*</i>
+            </div>
+            <div class="approver-node-content">
+              <div *ngIf="isrezty" style="display:inline-block">
+                <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of applyData.apply.ApproveUsers['bizDivisionFirst']"
+                  user-image [user]="item" [hasClose]="true" (onClose)="removeOne('first',item,i)"></div>
+              </div>
+              <div *ngIf="!isrezty" style="display:inline-block">
+                <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of applyData.apply.ApproveUsers['bizDivision']"
+                  user-image [user]="item" [hasClose]="true" (onClose)="removeOne('first',item,i)"></div>
+              </div>
+              <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow('first')"><i class="iqon-add"></i>添加</div>
+            </div>
+          </li>
+          <li class="approver-node clearfix" *ngIf="isrezty">
+              <div class="approver-node-title">
+                <label>事业部二级</label><i style="color: #ff4d4d">*</i>
+              </div>
+              <div class="approver-node-content">
+                <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of applyData.apply.ApproveUsers['bizDivisionSecond']"
+                  user-image [user]="item" [hasClose]="true" (onClose)="removeOne('second',item,i)"></div>
+                <div class="m-user-change" style="min-width: 190px;padding-left: 9px;" (click)="onApproverSelectModalShow('second')"><i class="iqon-add"></i>添加</div>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--审批历史记录-->
+    <div class="red-app-history">
+      <db-wfhistory [wfHistoryData]="wfHistory" *ngIf="wfHistory"></db-wfhistory>
+    </div>
+
+    <!--按钮-->
+    <div class="red-apply-footer">
+      <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+      <button class="m-btn-agree" type="button" name="applysubmit" [disabled]="isSubmited" (click)="onSubmit($event)">提交</button>
+      <button class="m-btn-refuse m-btn-common" type="button" name="applysave" [disabled]="isSaving" (click)="onSaveApplyData()">保存草稿</button>
+      <button class="m-btn-cancel" type="button" (click)="cancle()">返回</button>
+    </div>
+  </form>
+</div>

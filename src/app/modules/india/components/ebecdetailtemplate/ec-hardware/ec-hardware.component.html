@@ -1,0 +1,128 @@
+<div class="detail-modal">
+  <loading [show]="loading"></loading>
+  <div class="detail-modal-head">
+    <span>电子合同摘要信息</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <ul class="detail-modal-content">
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="flot-left wp50 lh20">卖方：{{ data.ContractAbstract?.SellerName }}</li>
+          <li class="flot-left wp50 lh20">合同编号：{{ data.ContractAbstract?.EBContractID }}</li>
+          <li class="flot-left wp50 lh20">买方：{{ data.ContractAbstract?.CustomerName }}</li>
+          <li class="flot-left wp50 lh20">品牌：{{ data.ContractAbstract?.Brand }} 产品：{{ data.ContractAbstract?.Product }}</li>
+        </ul>
+        <table style="width:100%; border:1px solid #4c4c4c">
+          <tbody>
+            <tr class="lh20">
+              <th>货物名称</th>
+              <th>型号</th>
+              <th>数量</th>
+              <th>单价</th>
+              <th>总价</th>
+              <th>备注</th>
+            </tr>
+            <tr class="lh20" *ngFor="let item of data.ProductInfo">
+              <td>{{ item.GoodsName }}</td>
+              <td>{{ item.Model }}</td>
+              <td>{{ item.Count }}</td>
+              <td>{{ item.Price }}</td>
+              <td>{{ item.SumPrice }}</td>
+              <td>{{ item.Memo }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul>
+          <li class="lh20">折扣点：{{ data.ContractAbstract?.DiscountRebate }}</li>
+          <li class="lh20">总计：{{ data.ContractAbstract?.Total }}</li>
+          <li class="lh20">人民币实际结算总价款（大写）：{{ data.ContractAbstract?.TotalCapital }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">最终用户信息</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">最终用名称：{{ data.ContractAbstract?.EndUser }}</li>
+          <li class="lh20">最终用户英文名称：{{ data.ContractAbstract?.EndUserEN }}</li>
+          <li class="lh20">最终用户联系人：{{ data.ContractAbstract?.finalContact }}</li>
+          <li class="lh20">最终用户中文地址：{{ data.ContractAbstract?.finalAddressCn }}</li>
+          <li class="lh20">最终用户英文地址：{{ data.ContractAbstract?.finalAddressEn }}</li>
+          <li class="lh20">最终用户联系电话：{{ data.ContractAbstract?.finalPhoneNo }}</li>
+          <li class="lh20">最终用户传真号：{{ data.ContractAbstract?.finalFaxNo }}</li>
+          <li class="lh20">最终用户邮件地址：{{ data.ContractAbstract?.finalMail }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">质量与技术标准和产品包装</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">{{ data.ContractAbstract?.QAProductDesc }}</li>
+          <li class="lh20">2．产品包装：(1)有原厂商包装的，按原厂商标准；(2)没有原厂商包装的，按卖方包装标准进行包装。</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">收货事项</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">（1）买方指定本合同项下产品的收货单位（人）全称为：{{ data.ContractAbstract?.ReceivingUnit }}</li>
+          <li class="lh20">（2）买方指定本合同项下产品的完整收货地址为：{{ data.ContractAbstract?.ReceivingAddress }}</li>
+          <li class="lh20">（3）买方指定的联系人的姓名及联系电话为：{{ data.ContractAbstract?.LinkMan }}</li>
+          <li class="lh20">（4）买方指定的产品签收方式为：{{ data.ContractAbstract?.SignInMode }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">交货的时间、方式和运输方式及费用</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">发/交货时间为：{{ data.ContractAbstract?.DeliveryTime }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">付款条款</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">付款方式：{{ data.ContractAbstract?.PaymentMethod }}</li>
+          <li class="lh20">付款标題：{{ data.ContractAbstract?.PaymentTH }}</li>
+          <li class="lh20">付款内容：{{ data.ContractAbstract?.PaymentTC }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">争议解决方式</div>
+      <div class="dmc-fragment-content">
+        <ul>
+          <li class="lh20">{{ data.ContractAbstract?.DisputeResolution }}</li>
+        </ul>
+      </div>
+    </li>
+    <li class="dmc-fragment">
+      <div class="dmc-fragment-title">附件</div>
+      <div class="dmc-fragment-content">
+        <table style="width:100%; border:1px solid #4c4c4c">
+          <tbody>
+            <tr class="lh20">
+              <th>产品型号</th>
+              <th>产品描述</th>
+              <th>数量</th>
+              <th>单价</th>
+              <th>总价</th>
+            </tr>
+            <tr class="lh20" *ngFor="let item of data.ProductList">
+              <td>{{ item.Product }}</td>
+              <td>{{ item.Description }}</td>
+              <td>{{ item.Count }}</td>
+              <td>{{ item.Price }}</td>
+              <td>{{ item.SumPrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,45 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    <span>印章信息</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-search-all">
+      <div class="m-search">
+        <i class="iqon-query" (click)="search()"></i>
+        <input name="state" [(ngModel)]="query.name" placeholder="请输入印章名称查询" type="text">
+      </div>
+    </div>
+    <div class="m-order-table">
+      <loading [show]="loading"></loading>
+      <table class="table table-hover">
+        <thead>
+          <tr style="font-size:12px;">
+            <th style="width:38px;" class="checkbox">
+              <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+            </th>
+            <th style="width:75px;border-left: 1px solid #d2d8e0;">印章编号</th>
+            <th style="width:335px;border-left: 1px solid #d2d8e0;">印章名称</th>
+            <th style="width:110px;border-left: 1px solid #d2d8e0;">所在平台</th>
+            <th style="width:130px;border-left: 1px solid #d2d8e0;">保管人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of sealsList;index as i">
+            <td class="checkbox" style="width:38px;">
+              <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked">
+            </td>
+            <td style="width:75px;">{{item.SealCode}}</td>
+            <td style="width:335px;" [title]="item.Name">{{item.Name}}</td>
+            <td style="width:110px;">{{item.platform}}</td>
+            <td style="width:130px;" [title]="item.ManagerNames">{{item.ManagerNames}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+  </div>
+  <div class="modal-footer" style="margin-top:0;">
+    <button class="m-btn-confirm" (click)="save()">确定</button>
+  </div>
+</div>

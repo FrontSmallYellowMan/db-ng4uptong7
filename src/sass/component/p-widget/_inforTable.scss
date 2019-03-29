@@ -1,0 +1,72 @@
+.m-info-table {     
+    background: #f5f7fa;
+    max-width: 100%;
+    >thead>tr>th {
+        height: 30px;
+        border: 1px solid #ddd;
+        padding: 0 8px;
+        text-align: left;
+    }
+    .m-infor-tr {
+        font-size: 14px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        vertical-align: top;
+        th{
+            text-align: left;
+            padding: 0 5px;
+            font-size: 12px;
+        }  
+    }
+    >tbody>tr>td{
+        height: 30px;
+        line-height: 30px;
+        vertical-align: top;
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 0 5px;
+        >input{
+            height:25px;
+            padding:0 8px;
+        }
+    }
+    thead,tbody tr td:nth-child(1),th:nth-child(1){
+        padding: 0!important;
+        text-align: center;
+    }
+    >tbody>tr>td + td {
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
+        // overflow: hidden;
+    }
+    tbody tr:nth-child(even){
+        background:#fbfbfb;
+    }
+    tbody tr:nth-child(odd){
+        background:#fff;
+    }
+    thead .change1{
+        line-height:25px;
+    }
+    .m-infor-input {
+        border: 1px solid #ddd;
+        height: 24px;
+        line-height:22px;
+    }
+    .m-infor-td{
+        width:165px;
+    }
+}
+.m-text-center{
+    text-align: center !important;
+}
+.m-text-right{
+    text-align: right !important;
+}
+
+.change{
+    font-size: 14px;
+    font-weight: normal;
+}
+

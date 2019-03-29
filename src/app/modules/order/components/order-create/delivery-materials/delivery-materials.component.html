@@ -1,0 +1,28 @@
+<loading [show]="loading"></loading>
+<ng-container *ngIf="formData.Type !== 2">
+  <oc-shipTo-party *ngFor="let party of formData.DeliveryData;index as i;" [partyInfo]="party" [contractSubjectCode]="formData.SalesOrderData.ContractSubjectCode" [currentIndex]="i" [num]="formData.DeliveryData.length" [provinceCityInfo]="provinceCityInfo"
+    [rebateAmount]="rebateAmountVal" [deliveryTypeList]="deliveryTypeList" [YWFWDM]="formData.SalesOrderData.YWFWDM" [rebateAmountID]="formData.SalesOrderData.RebatePercentageID" [allMaterialsCount]="allMaterialsCount" [contractCode]="formData.SalesOrderData.ContractCode"
+    [customerName]="formData.SalesOrderData.CustomerName" [orderTypeId]="formData.SalesOrderData.OrderTypeId" [paymentTermsCode]="formData.SalesOrderData.PaymentTermsCode" [salesOrderID]="formData.SalesOrderData.SalesOrderID" [channel]="formData.SalesOrderData.ChannelOfDistributionID" [customerERPCode]="formData.SalesOrderData.CustomerERPCode"
+    [departmentProductGroupID]="formData.SalesOrderData.DepartmentProductGroupID" [isSubmit]="isSubmit" (checkReMoyCallBack)="checkReMoyCallBack($event,i)" (shipToCallBack)="shipToCallBack($event,i)" (selectAdvanceCallBack)="selectAdvanceCallBack($event,i)" [isDisabledButtonState]="isDisabledButtonState"></oc-shipTo-party>
+</ng-container>
+<ng-container *ngIf="formData.Type === 2">
+  <noC-shipTo-party *ngFor="let party of formData.DeliveryData;index as i;" [YWFWDM]="formData.SalesOrderData.YWFWDM" [paymentTermsCode]="formData.SalesOrderData.PaymentTermsCode" [partyInfo]="party" [contractSubjectCode]="formData.SalesOrderData.ContractSubjectCode" [currentIndex]="i" [num]="formData.DeliveryData.length" [provinceCityInfo]="provinceCityInfo"
+    [rebateAmount]="rebateAmountVal" [deliveryTypeList]="deliveryTypeList" [contractCode]="formData.SalesOrderData.ContractCode" [rebateAmountID]="formData.SalesOrderData.RebatePercentageID" [customerName]="formData.SalesOrderData.CustomerName" [orderTypeId]="formData.SalesOrderData.OrderTypeId" [salesOrderID]="formData.SalesOrderData.SalesOrderID"
+    [channel]="formData.SalesOrderData.ChannelOfDistributionID" [customerERPCode]="formData.SalesOrderData.CustomerERPCode" [departmentProductGroupID]="formData.SalesOrderData.DepartmentProductGroupID" [isSubmit]="isSubmit" [isValidMaterial]="isValidMaterial" (shipToCallBack)="unCShipToCallBack($event,i)"
+    (selectAdvanceCallBack)="selectAdvanceCallBack($event,i)"></noC-shipTo-party>
+</ng-container>
+
+<div class="addApply-base addApply-base-background">
+  <div class="m-add-shipTo">
+    <span class="m-dialog-head-change m-order-batchUpload" (click)="addShipTo()" [style.top]="isClickBatchButton?'-19px':'0'" *ngIf="!isDisabledButtonState"><i class="iqon-add"></i>增加送达方及物料</span>
+    <span class="m-dialog-head-change m-order-batchUpload" (click)="downLoadTemplate()" style="top: -19px;" *ngIf="isClickBatchButton"><i class="iqon-download"></i>下载批量上传送达方及物料模板</span>
+    
+    <span class="m-dialog-head-change" *ngIf="isClickBatchButton"><i class="iqon-share-folder"></i>
+      <iq-file-upload upType="0" [url]="formData.Type !== 2?batchUploadShipToPartyAPI:batchUploadNoContractShipToPartyAPI" text="批量上传送达方及物料" [allowedFileType]="['xls']" (onSuccess)="fileUploadSuccess($event)"
+                [showModel]="false" (onStartUpload)="isLoading($event)" [upLoadData]="salesOrderIDPostData"></iq-file-upload>
+    </span>
+  </div>
+</div>
+<div class="oc-clear-div"></div>
+<!-- 原始借用的物料信息 -->
+<oc-return-borrow *ngIf="isReturnBorrow" [saleITCode]="formData.SalesOrderData.SalesITCode" [materialList]="returnMaterialList" [reservationNo]="reservationNo" (returnCallBack)="returnCallBack($event)"></oc-return-borrow>

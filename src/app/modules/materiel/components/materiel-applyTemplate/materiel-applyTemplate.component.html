@@ -1,0 +1,95 @@
+<!--<div class="m-home-pageR clearfix">-->
+            <!--菜单-->
+            <div class="m-boardtop clearfix">
+              <!--面包屑组件-->
+              <iq-breadcrumb></iq-breadcrumb>
+
+              <div class="m-dropdown g-fr">
+                <button class="m-btn-success" (click)="addClick()"><i class="iqon-add"></i>新建物料申请模版</button>
+              </div>
+            </div>
+            
+            <!--搜索-->
+            <div class="m-overclass">
+              <div class="m-at-search">
+              <form #form="ngForm">
+      
+                <div class="m-search">
+                  <div class="m-search-2">
+                    <i class="iqon-query i-search" (click)="search()"></i>
+                    <input type="text"  name="Keyword" #Keyword="ngModel" placeholder="模版名称／申请人" [(ngModel)]="reqSearchData.Keyword">
+                    <!-- <p class="m-p-warn" *ngIf="Keyword.invalid && (Keyword.touched||isSearch)">请填写模板名称或者申请人</p> -->
+                  </div>
+                </div>
+
+                </form>
+
+              </div>
+              <!--默认缺省页面-->
+              <div class="m-noresult m-template-noresult" [ngClass]="{'search-result-show':isHide}">
+                <div class="m-noresult-msg">
+                  <i class="iqon-query"></i>
+                  <p class="m-noresult-notice">暂无相关数据</p>
+                  <p class="m-p-notice">点击“新建物料申请模版”建立相关数据吧~</p>
+                </div>
+              </div>
+            <!--搜索结果-->
+            
+              <div class="m-card-cont m-at-searchResult" [ngClass]="{'search-result-show':!isHide}">
+                <div class="table-auto-content">
+                  <table class="table table-hover table-list">
+                    <thead>
+                      <tr>
+                        <th>
+                          <input allcheck="demoall" [(ngModel)]="fullChecked" (onClick)="changeWidth()" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox" name="">
+                        </th>
+
+                        <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                          <th>序号</th>
+                          <th>模版名称</th>
+                          <th>工厂</th>
+                          <th>供应商SAP编号</th>
+                          <th>物料类型</th>
+                          <th>序列号参数</th>
+                          <th>物料组</th>
+                          <!-- <th style="width:12%" class="operate">操作</th> -->
+                        </ng-container>
+                        
+                        <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                          <th class="list-edit" colspan="4">已选{{checkedNum}}项<button type="button" (click)="deleteTemplate(searchList)">删除</button></th>
+                        </ng-container>
+
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let list of searchList; let i=index" >
+                        <td stopParentClick>
+                          <input [(ngModel)]="list.checked" allcheckChild="demoall" icheck type="checkbox" name="">
+                        </td>
+                        <td>{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+                        <td title={{list.TemplateName}}><span (click)="showMaterielTemplate(list.TemplateID,$event)" class="clickText">{{list.TemplateName}}</span></td>
+                        <td title={{list.FactoryName}}>{{list.Factory}} {{list.FactoryName}}</td>
+                        <td>{{list.SupplierCodeSAP}}</td>
+                        <td title={{list.MaterialTypeName}}>{{list.MaterialTypeName}}</td>
+                        <td title={{list.SerialNumParameterName}}>{{list.SerialNumParameterName}}</td>
+                        <td title={{list.MaterialGroupName}}>{{list.MaterialGroupName}}</td>
+
+                        <!-- <td stopParentClick class="operate"><span (click)="editClick(list.TemplateID)">编辑</span> <span (click)="deleteTemplate(list.TemplateID)">删除</span></td> -->
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+                <div class="page">
+                  <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+                </div>
+              </div>
+            </div>  
+        <!--</div>-->
+
+
+        
+
+        <!--遮罩层-->
+        <!-- <div class="m-at-mask"></div> -->

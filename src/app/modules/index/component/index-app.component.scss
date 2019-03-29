@@ -1,0 +1,168 @@
+.sales-main{
+  .index-list{
+    padding: 0 10px;
+    overflow: auto;
+    .m-user-info{
+      width: 100%;
+      height: 60px;
+      margin-top: 20px;
+      padding: 0 10px;
+
+      &:hover{
+        background: none;
+      }
+      
+      .m-user-img{
+        position: absolute;
+        top: 0;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        overflow: hidden;
+
+        /deep/ .m-user-img, /deep/ .m-user-noimg{
+          width: 60px;
+          height: auto;
+          min-height: 100%;
+          line-height: 60px;
+          vertical-align: top;
+          border-radius: 0;
+        }
+      }
+      .m-user-names{
+        display: inline-block;
+        width: 120px;
+        margin-left: 70px;
+        >div{
+          line-height: 20px;
+          margin-top: 5px;
+          .m-user-ename{
+            float: right;
+          }
+          .m-user-change{
+            line-height: auto;
+            float: right;
+          }
+        }
+        .m-select{
+          height: 25px;
+          >i.iqon-xia{
+            top: 7px;
+            right: 7px;
+          }
+          select{
+            padding: 0 5px;
+            height: 25px;
+          }
+        }
+      }
+    }
+    .m-usertree-approve {
+      margin-top: 25px;
+      padding: 0;
+      background-color: #f5f7fa;
+      > li{
+        height: 42px;
+        padding: 0 15px;
+        line-height: 42px;
+        cursor: pointer;
+
+        &:hover{
+          color: orange;
+        }
+        .m-num{
+          right: 15px;
+        }
+        .m-num-green{
+          background-color: #7acc7f;
+        }
+      }
+    }
+    .m-usertree-apply{
+      overflow: visible;
+
+      .my-collection{
+        border-bottom: 1px solid #eeeeee;
+
+        .collection-sort{
+          position: absolute;
+          right: 50px;
+          top: 0;
+          line-height: 45px;
+          cursor: pointer;
+          color: #57b9f8;
+        }
+      }
+      
+      .open{
+        background-color: #fff;
+
+        .iqon-add-circle{
+          width: 30px;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+      >li>a{
+        font-size: 13px;
+        color: #c6c6c6;
+      }
+      .icon-text-right{
+        position: absolute;
+        top: 0;
+        right: 12px;
+        line-height: 45px;
+        color: #57b9f8;
+      }
+      .m-tree{
+        li{
+          position: relative;
+          padding-left: 25px;
+
+          &:hover{
+            background-color: rgba(87, 185, 248, 0.1);
+
+            &::before{
+              content: "";
+              display: block;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 4px;
+              height: 45px;
+              background-color: #57b9f8;
+            }
+          }
+          
+          >a{
+            cursor: pointer;
+          }
+
+          .icon-text-left{
+            position: absolute;
+            top: 0;
+            left: 25px;
+            line-height: 45px;
+            color:  #ffd05b;
+          }
+        }
+
+        i{
+          color: #ff514d;
+        }
+      }
+      .index-tree{
+        position: relative;
+        >li{
+          position: absolute;
+          width: 100%;
+          transition: all .5s;
+        }
+      }
+    }
+  }
+  .g-right{
+    background-color: #f3f3f3;
+    padding: 15px 15px 15px 255px;
+  }
+}

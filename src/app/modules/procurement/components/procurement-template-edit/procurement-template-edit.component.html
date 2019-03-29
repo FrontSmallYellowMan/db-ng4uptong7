@@ -1,0 +1,68 @@
+<div class="content-auto">
+    <div class="addApply-container">
+        <div class="addApply-base">
+            <div class="m-dialog-head">
+                <span class="m-dialog-head-change progress-txt">采购申请模板</span>
+            </div>
+            <div class="addApp-base-infor">
+                <form #applyTplForm="ngForm">
+                    <ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>模板名称：</label>
+                                <input class="addApp-form-input" type="text" name="tplName" ngModel [(ngModel)]="applyTplObj.Name" required maxlength="18" (blur)="testTemplateName()" trim trimReg="/(^\s*)|(\s*$)/g">
+                            </div> 
+                        </li>
+                    </ul>
+                    <ul class="addApp-base-list" style="margin-top:0;">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">我方主体：</label>
+                                <iq-select class="iqSelect" name="company" ngModel [(ngModel)]="applyTplObj.CompanyName" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                                    listApi="InitData/GetPageDataCompany" (onSelect)="CompanyChange($event)" placeHolder="-请选择"
+                                    [queryParams]="{queryStr:'querycontent'}"></iq-select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">工厂：</label>
+                                <input class="addApp-form-input" name="factory" ngModel type="text" [(ngModel)]="applyTplObj.FactoryCode" (blur)="sendDataFour(applyTplObj.FactoryCode)">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">供应商：</label>
+
+                                
+
+                                <iq-select class="iqSelect DataVendor" name="vendor" ngModel [(ngModel)]="applyTplObj.Vendor" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                                    (onSelect)="VendorChange($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择"
+                                    [queryParams]="{queryStr:'querycontent'}" [enterShowList]="false"></iq-select>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">税率：</label>
+                                <ng-select class="addApp-form-input m-select-box" name="taxrate" ngModel [items]="selectInfo.taxrate" placeholder="-请选择"
+                                    (selected)="getTaxrate($event)" [(ngModel)]="activeTax"></ng-select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">币种：</label>
+                                <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.currency" name="currency" ngModel (selected)="getCurrency($event)"
+                                    placeholder="-请选择" [(ngModel)]=avtiveCur></ng-select>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+                <div class="addApp-sub-btns btns" style="padding-bottom:10px">
+                    <button class="m-btn-confirm" type="button" (click)="addTplObj()">保存</button>
+                    <button class="m-btn-sketch" type="button" (click)="cancel()">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

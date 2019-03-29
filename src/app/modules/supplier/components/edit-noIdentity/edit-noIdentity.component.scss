@@ -1,0 +1,13 @@
+.noIdentity{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 30px;
+  width: 600px;
+  height: 150px;
+  border: 3px dotted #ccc;
+  background-color: #fff;
+  line-height: 150px;
+  text-align: center;
+}

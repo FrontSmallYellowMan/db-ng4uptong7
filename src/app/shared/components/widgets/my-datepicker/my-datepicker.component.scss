@@ -1,0 +1,103 @@
+%clearfix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+.my-datepicker{
+  position: relative;
+
+  input{
+    &::-webkit-input-placeholder{color:#888;}   //Chrome,Safari
+        &::-moz-placeholder{color:#888;}        //Firefox
+        &:-ms-input-placeholder{color:#888;}    //IE10
+  }
+  
+  .picker-main{
+    position: absolute;
+    padding: 10px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    z-index: 999;
+    cursor: default;
+
+    .p-ym{
+      text-align: center;
+      font-size: 14px;
+
+      >i{
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      select{
+        font-size: 12px;
+        margin-right: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+    }
+    
+    .p-day,.p-date{
+      @extend %clearfix;
+      width: 211px;
+
+      li{
+        float: left;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+      }
+    }
+
+    .p-date{
+      background: #fff;
+      border-top: 1px solid #999;
+      border-right: 1px solid #999;
+
+      li{
+        border-bottom: 1px solid #999;
+        border-left: 1px solid #999;
+        cursor: pointer;
+
+        &.currentday{
+          background: lightblue;
+        }
+        
+        &.color-gray{
+          color: #ccc;
+        }
+      }
+    }
+  }
+
+  .iqon-calendar-2{
+    width: 20px;
+    height: 35px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 14px;
+    line-height: 35px;
+    color: #d2d8e0;
+  }
+}
+.my-today-button{
+  line-height: 25px;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ccc;
+  border: 1px solid #999;
+  border-top: none;
+  cursor: pointer;
+  transition: all .3s linear;
+  &:hover{
+    background-color: rgb(228, 228, 228);
+    transition: all .3s linear;
+  }
+}

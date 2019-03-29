@@ -1,0 +1,110 @@
+.m-overclass {
+  padding: 10px 15px;
+
+  .m-contclass{
+    height: 100%;
+  }
+  .m-list-menu {
+    position: relative;
+    .m-search,.m-search-big {
+      float: none !important;
+      left: 0;
+      width: 300px;
+    }
+    .m-search-big-multi {
+      float:left;
+      margin-right: 30px;
+      span {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      input {
+        width: 200px;
+      }
+    }
+    .btn-right {
+      position: absolute;
+      right: 0;
+      button {
+        margin-left: 10px;
+      }
+    }
+    .m-select{
+      display: inline-block;
+      width: 300px;
+
+      >select{
+        height: 30px;
+      }
+
+      >i{
+        top: 10px;
+      }
+    }
+
+    .m-btn-default{
+      height: 30px;
+    }
+  }
+
+  .m-apply{
+    min-height: calc(100vh - 135px);
+  }
+
+  .m-noresult{
+    min-height: calc(100vh - 180px)
+  }
+
+  .m-card-cont {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 15px 20px;
+    height: 100%;
+    min-height: calc(100vh - 175px);
+    background: #fff;
+
+    .table>thead>tr:after{
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 49px;
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+  .m-noresult{
+    margin-top: 10px;
+  }
+}
+
+.m-user-info{
+  height: inherit;
+  line-height: inherit;
+
+  &:hover{
+    background:none;
+  }
+}
+
+.m-form-item-w100 .m-p-warn{
+  position: absolute;
+}
+.btn-blue {
+  background-color: #57b9f8;
+  color:#fff;
+}
+.dialog-borrow {
+  position:absolute;
+  z-index: 1045;
+  top:0px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.m-add-form {
+  height: 450px;
+  overflow-y: auto;
+}
+.float-right {
+  float:right;
+}

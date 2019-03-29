@@ -1,0 +1,46 @@
+// 添加合同 模态框
+.m-order-number {
+    width: 70%;
+    height: 100%;
+    overflow: auto;
+    position: fixed;
+    top: 0%;
+    left: 15%;
+    padding-top: 60px;
+}
+.closes{
+    position: absolute;
+    display: inline-block;
+    right: 20px;
+    top: 68px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.margin-top-forclose {
+    margin-top:25px;
+}
+  .relation-item{
+      width: 45%;
+  }
+  .btns{
+      width: 300px;
+  }
+  .btns1{
+      width:170px;
+  }
+  iq-person-select{
+      display: inline-block;
+  }
+  .addApp-form-label{
+      width: 25%;
+  }
+  .addApp-form-input{
+      width: 75%;
+  }
+  .m-dialog-head{
+      padding: 0;
+  }
+  .addApp-base-list{
+      padding: 0!important;
+  }

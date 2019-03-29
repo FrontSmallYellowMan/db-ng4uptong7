@@ -1,0 +1,236 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">新建支票撤票申请</h1>
+            <!--基本信息-->
+            <div class="m-basic-info addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="m-table m-table1">
+                    <table width="100%">
+                        <tr>
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>申请人
+                            </th>
+                            <td width="38%">
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="sqr"
+                                    (ngModelChange)="changePerson(sqr)"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </td>
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>联系电话
+                            </th>
+                            <td width="38%">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    maxlength="11"
+                                    minlength="6"
+                                    name="revokedPhone"
+                                    required
+                                    [(ngModel)]="revokedPhone"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr colspan="4">
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>部门
+                            </th>
+                            <td width="38%" colspan="3">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    [(ngModel)]="revokedDeptName"
+                                    disabled
+                                />
+                            </td>
+                        </tr>
+
+                        <tr colspan="4">
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>撤票原因
+                            </th>
+                            <td width="78%" colspan="3">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    placeholder="撤票原因"
+                                    [(ngModel)]="revokedRemark"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--延期支票信息-->
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">撤票支票信息</span>
+                    <div class="ufile">
+                        <button
+                            type="button"
+                            class="m-btn-text mr10 float-right"
+                            style="color: #57b9f8;"
+                            (click)="loadChange()"
+                        >
+                            撤票模板下载
+                        </button>
+                        <iq-file-upload
+                            upType="0"
+                            [url]="fileUploadApi"
+                            [allowedFileType]="['xls']"
+                            [text]="'导入撤票'"
+                            (onSuccess)="onFileCallBack($event)"
+                            class="float-right"
+                            style="margin: 8px 10px 0 0;"
+                        ></iq-file-upload>
+                    </div>
+                </div>
+                <div class="addApp-base-infor">
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="gridtable">
+                            <tr>
+                                <th>序号</th>
+                                <th>支票号</th>
+                                <th>支票金额</th>
+                                <th>客户名称</th>
+                                <th>出票日期（支票到期日）</th>
+                                <th>合同编码</th>
+                                <th>
+                                    <i
+                                        class="iqon-add"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="选择支票信息"
+                                        (click)="searchInvoice()"
+                                    ></i>
+                                    <!--    &nbsp;&nbsp;
+                                   <font class="iqon-add" style="cursor: pointer;" title="增加支票项" (click)="instr()"></font>
+                               -->
+                                </th>
+                            </tr>
+                            <tr
+                                *ngFor="
+                                    let item of invoicelist;
+                                    let idx = index
+                                "
+                            >
+                                <!-- -->
+                                <td>{{ idx + 1 }}</td>
+                                <td>
+                                    <div>{{ item.ticketNum }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.ticketAmount }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.customName }}</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{
+                                            item.checkoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>{{ item.contractNum }}</div>
+                                </td>
+                                <td>
+                                    <i
+                                        class="iqon-minimize"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="删除支票"
+                                        (click)="deltr(idx)"
+                                    ></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addApply-base">
+                <div class="m-list-head">
+                    <span class="m-dialog-head-change">审批人信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div class="addApp-base-list">
+                        <li class="addApp-form-item w-full" style="margin:0;">
+                            <label class="addApp-form-label"
+                                >事业部审批人</label
+                            >
+                            <div class="addApp-form-right">
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="person"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </div>
+                        </li>
+
+                        <li class="addApp-form-item w-full" style="margin:0;">
+                            <label class="addApp-form-label"
+                                >风险岗审批人</label
+                            >
+                            <div class="addApp-form-right">
+                                <div
+                                    class="m-user-info"
+                                    user-image
+                                    [hasClose]="false"
+                                    [user]="person0"
+                                    *ngFor="let person0 of person1; index as i"
+                                ></div>
+                            </div>
+                        </li>
+
+                        <li class="addApp-form-item w-full" style="margin:0;">
+                            <label class="addApp-form-label"
+                                >财务岗审批人</label
+                            >
+                            <div class="addApp-form-right">
+                                <div
+                                    class="m-user-info"
+                                    user-image
+                                    [hasClose]="false"
+                                    [user]="person0"
+                                    *ngFor="let person0 of person2; index as i"
+                                ></div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns" style="text-align: center">
+                    <!-- <ng-container *ngIf="showbtn"> -->
+                    <button
+                        class="m-btn-confirm"
+                        type="button"
+                        (click)="save()"
+                    >
+                        提交
+                    </button>
+                    <!-- </ng-container> -->
+                    <button
+                        class="m-btn-sketch"
+                        [disabled]="!isClick"
+                        type="button"
+                        (click)="close()"
+                    >
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

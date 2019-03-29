@@ -1,0 +1,77 @@
+<div class="g-hdp g-hdp1">
+    <div class="g-content">
+        <p class="txt-title">{{name}}</p>
+        <div class="m-top">
+             <!--[class.active]="isInland"-->
+            <div [class.active]="domain == 'inland'" (click) = "isInlandTab('inland')"><a href="javascript:void(0)">国内销售合同</a></div>
+            <div [class.active]="domain == 'outsea'" (click) = "isInlandTab('outsea')"><a href="javascript:void(0)">海外销售合同</a></div>
+        </div>
+        <div class="m-nav">
+            <ul>
+                <li [class.active]="category == 'hard'" (click) = "onTab('hard')">硬件合同</li>
+                <li [class.active]="category == 'soft'" (click) = "onTab('soft')">软件合同</li>
+                <li [class.active]="category == 'server'" (click) = "onTab('server')">服务合同</li>
+                <!--<div class="slider"></div>-->
+            </ul>
+        </div>
+        <div class="m-uls">
+            <ul class="aside-uls">
+
+                <li class="customer-uploadefile" (click)="onClickRouter(item)" *ngFor="let item of ectplList;index as i">
+                    <input *ngIf="item.TemplateID.indexOf('_Customized') > 0" type="file" ng2FileSelect [uploader]="upLoadECFile" (change)="onUploadFiles(upLoadECFile, item)" />
+                    <h3>{{item.TemplateName}}</h3>
+                    <ul>
+                        <li>{{item.Domain}}</li>
+                    </ul>
+                </li>
+                <!--<li class="customer-uploadefile">
+                    
+                    <h3>自定义模板</h3>
+                    <ul>
+                        <li>销售合同</li>
+                    </ul>
+                </li>-->
+
+            </ul>
+        </div>
+        <!-- <div class="on-off">
+            <i class="iqon-angle-up ups"></i>
+        </div> -->
+        <div class="private-coll">
+            <div class="coll-serch">
+                <p class="txt-title txt-title1">我的私藏</p>
+                <div class="m-search seachs">
+                    <i class="iqon-query querys" (click)="selectTpl()"></i>
+                    <input type="text" name="" (keyup.enter)="selectTpl()" [(ngModel)]="owntplParams.Name" placeholder="搜索模板名称...">
+                </div>
+            </div>
+
+            <!--搜索结果集-->
+            <ul class="squre" [ngClass]="{'hide': !isSearch && ownList.length == 0}">
+              <li (click)="onClickPrivateRouter(item)" *ngFor="let item of ownList;index as i">
+                <div stopParentClick (click)="delTpl(item.Name)" class="close-btn">
+                    <i class="iqon-close2 close"></i>
+                    <div class="popover">
+                        <div class="arrow"></div>
+                        <p>删除</p>
+                    </div>
+                </div>
+                <p>{{item.Name}}</p>
+              </li>
+            </ul>
+
+            <!--搜索结果缺省页开始-->
+            <div class="m-noresult" [ngClass]="{'hide': !isSearch || ownList.length > 0}">
+              <div class="m-noresult-msg">
+                <i class="iqon-query"></i>
+                <p class="m-noresult-notice">
+                  很抱歉，没有找到与“<span>{{searchWord}}</span>”有关的信息
+                </p>
+                <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+              </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

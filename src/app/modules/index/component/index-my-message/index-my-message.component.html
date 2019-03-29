@@ -1,0 +1,43 @@
+<div class="m-wrap">
+  <div class="m-list-menu">
+    <ul class="m-state">
+      <li [class.active]="query.MessageState === 0" (click)="toggle(0)">未读</li>
+      <li [class.active]="query.MessageState === 1" (click)="toggle(1)">已读</li>
+    </ul>
+    <div class="m-search-all">
+      <div class="m-search">
+        <i class="iqon-query" (click)="search()"></i>
+        <input [(ngModel)]="query.Content" (keyup.enter)="search()" name="content" placeholder="-请输入任务描述关键字" type="text">
+      </div>
+    </div>
+  </div>
+  <div class="m-card-cont">
+    <loading [show]="loading"></loading>
+    <div class="m-noresult" *ngIf="messageList.length == 0">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+        <p class="m-p-notice">请输入新的搜索条件，重新搜索~</p>
+      </div>
+    </div>
+    <div *ngIf="messageList.length > 0">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th width="80%">任务描述</th>
+            <th>申请类型</th>
+            <th>申请日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of messageList;index as i" style="cursor: default;">
+            <td [title]="item.content" (click)="changeMessageState(item)" width="80%">{{item.content}}</td>
+            <td (click)="changeMessageState(item)">{{item.messageType}}</td>
+            <td (click)="changeMessageState(item)">{{item.createTime}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

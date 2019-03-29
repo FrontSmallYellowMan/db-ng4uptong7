@@ -1,0 +1,63 @@
+   <div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                 <table class="table table-hover table-list" style="table-layout: fixed;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">序号</th>
+                                <th *ngFor="let item of modalData.headDataList;index as k" 
+                                    [class.error]="modalData.headFlagList.indexOf(k+'')==-1" style="text-align: center;">{{ item }}</th>
+                            </tr>
+                        </thead>
+                         <tbody>
+                            <tr *ngFor="let trItem of modalData.checkDataList;index as i" > 
+                                <td>
+                                    {{ i+1 }} 
+                                </td>
+                                <td [class.error]="trItem['00'].flag==0">
+                                   <span  title="{{trItem['00'].errormessage}}">{{ trItem["00"].value}}</span>
+                                   
+                                </td>
+                                <td [class.error]="trItem['01'].flag==0">
+                                      <!--{{ trItem["01"].value }}  
+                                      <i class="error-tip" *ngIf="trItem['01'].flag==0">{{ trItem["01"].errormessage }}</i>-->
+                                       <span  title="{{trItem['01'].errormessage}}">{{ trItem["01"].value}}</span>
+                                </td>
+                                <td [class.error]="trItem['02'].flag==0">
+                                      <!--{{ trItem["02"].value }}  --{{ trItem["02"].errormessage }}-->
+                                      
+                                       <span  title="{{trItem['02'].errormessage}}">{{ trItem["02"].value }}</span>
+                                      <!--<i class="error-tip" *ngIf="trItem['02'].flag==0">{{ trItem["02"].errormessage }}</i>-->
+                                </td>
+                                <td [class.error]="trItem['03'].flag==0">
+                                      <!--{{ trItem["03"].value }}  
+                                      <i class="error-tip" *ngIf="trItem['03'].flag==0">{{ trItem["03"].errormessage }}</i>-->
+                                       <span  title="{{trItem['03'].errormessage}}">{{ trItem["03"].value }}</span>
+                                </td>
+                                <td [class.error]="trItem['04'].flag==0">
+                                      <!--{{ trItem["04"].value }}  
+                                      <i class="error-tip" *ngIf="trItem['04'].flag==0">{{ trItem["04"].errormessage }}</i>-->
+                                       <span  title="{{trItem['04'].errormessage}}">{{ trItem["04"].value }}</span>
+                                </td>
+                                <td [class.error]="trItem['05'].flag==0">
+                                      <!--{{ trItem["05"].value }}  
+                                      <i class="error-tip" *ngIf="trItem['05'].flag==0">{{ trItem["05"].errormessage }}</i>-->
+                                       <span  title="{{trItem['05'].errormessage}}">{{ trItem["05"].value }}</span>
+                                </td>
+                                <td [class.error]="trItem['06'].flag==0">
+                                      <!--{{ trItem["06"].value }}  
+                                      <i class="error-tip" *ngIf="trItem['06'].flag==0">{{ trItem["06"].errormessage }}</i>-->
+                                      <span  title="{{trItem['06'].errormessage}}">{{ trItem["06"].value }}</span>
+                                </td>                            
+                            </tr>
+                        </tbody> 
+                </table> 
+            </div>
+            <div class="modal-footer">
+                <button class="m-btn-cancel btn-blue" *ngIf="overallIdentical" (click)="saveModalData()">保存</button>
+                <button class="m-btn-cancel" (click)="hide(true)">取消</button>
+            </div>            
+        </div>
+    </div>
+</div>  

@@ -1,0 +1,75 @@
+<loading [show]="loading"></loading>
+<div class="rp-list">
+  <div class="rp-distype-title">
+    <button class="m-btn-new" (click)="routerNewdis('/india/new-dis')"><i class="iqon-add"></i>新建</button>
+  </div>
+  <div class="rp-list-search clearfix">
+    <div class="search-item">
+      <div class="search-title"><label>平台:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.FlatCode">
+            <option value="">-请选择平台</option>
+            <option *ngFor="let item of platformData" [ngValue]="item.FlatCode">{{item.FlatName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>卖方主体:</label></div>
+      <div class="search-input">
+        <select-search-company id="selectsearchseller" name="seller" [(ngModel)]="selectedSeller" [optionList]="companyData" (onSelecte)="onSelecteCompany(selectedSeller)"></select-search-company>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>买方名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入买方名称" [(ngModel)]="query.BuyerName">
+      </div>
+    </div>
+    <div class="search-item list-search-button">
+      <button (click)="search(query,'clickSearchBtn')">查询</button>
+      <button (click)="reset()">重置</button>
+    </div>
+  </div>
+  <div class="rp-list-content">
+    <div class="rp-list-content-table" *ngIf="listData?.ECDisList.length > 0">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th>平台</th>
+            <th style="width: 250px;">卖方主体</th>
+            <th style="width: 330px;">买方名称</th>
+            <th>争议解决方式类型</th>
+            <th>城市</th>
+            <th>区县</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData?.ECDisList">
+            <td>{{ item.platform }}</td>
+            <td>{{ item.company }}</td>
+            <td>{{ item.BuyerName }}</td>
+            <td>
+              <span *ngIf="item.DisputeDealtType == '001'">本合同签订地</span>
+              <span *ngIf="item.DisputeDealtType == '01'">卖方所在地</span>
+            </td>
+            <td>{{ item.SignedCityName }}</td>
+            <td>{{ item.SignedCounty }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="search(query)"></iq-pager>
+    </div>
+    <div class="rp-list-content-null" *ngIf="!listData || listData?.ECDisList.length == 0">
+      <div class="m-noresult" style="margin-top:10px">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">输入新的查询条件试试吧~</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

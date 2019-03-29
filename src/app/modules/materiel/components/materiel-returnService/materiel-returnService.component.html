@@ -1,0 +1,122 @@
+
+            <!--菜单-->
+            <div class="m-boardtop clearfix">
+                
+
+                <!--面包屑组件-->
+                <iq-breadcrumb></iq-breadcrumb>
+
+                <div class="m-dropdown g-fr">
+                    <button class="m-btn-success" (click)="goToNewReturnService()"><i class="iqon-add"></i>新建返款服务</button>
+                </div>
+            </div>
+            
+            
+            
+            <!--功能区-->
+            <div class="m-overclass">
+              <div class="m-contclass">
+                <form #form="ngForm" class="m-list-menu">
+                  
+              <div class="m-returnService">
+
+              <div class="m-returnService-head">
+               
+                <div class="m-returnService-item">
+                  <h6>物料ERP编号</h6>
+                  <input type="text" placeholder="-请填写物料ERP编号" [(ngModel)]="reqSearchData.MaterialERPCode" name="MaterialERPCode">
+                  <!-- <p class="m-p-warn m-returnService-err" *ngIf="MaterialERPCode.invalid && (MaterialERPCode.touched||isOnSearch)">请填写物料编号</p> -->
+                </div>
+               
+                <div class="m-returnService-item">
+                  <h6>申请人</h6>
+                  <input type="text" placeholder="-请填写申请人" [(ngModel)]="reqSearchData.ApplyName" name="ApplyName">
+                  <!-- <p class="m-p-warn m-returnService-err" *ngIf="ApplyName.invalid && (ApplyName.touched||isOnSearch)">请填写申请人</p> -->
+                </div>
+                <div class="m-returnService-data">
+                  <h6 class="m-returnService-fontStyle">时间范围</h6>
+                  <div class="data-input-style">
+                    <my-datepicker [(ngModel)]="reqSearchData.BeginDate" format="YYYY-MM-DD" [EndDate]="reqSearchData.EndDate"  PlaceHolder="-请选择日期" name="mDateStart"></my-datepicker>
+                  </div>
+                  <div class="m-returnService-fontStyle-line">~</div>
+                  <div class="data-input-style">
+                    <my-datepicker [(ngModel)]="reqSearchData.EndDate" format="YYYY-MM-DD" [StartDate]="reqSearchData.BeginDate" PlaceHolder="-请选择日期" name="mDateEnd"></my-datepicker>
+                  </div>
+                  <!-- <p class="m-p-warn m-returnService-err" *ngIf="isDateErr">{{dateErrMag}}</p> -->
+                  <!-- <p class="m-p-warn m-returnService-err" *ngIf="mDateStart.invalid&&(mDateStart.touched||isOnSearch)">请选择开始日期</p>
+                  <p class="m-p-warn m-returnService-err" *ngIf="mDateEnd.invalid&&(mDateEnd.touched||isOnSearch)">请选择结束日期</p>   -->
+                </div>
+              </div>
+              <div class="m-returnService-btns" style="text-align:right; width:20%">
+                  <button class="m-btn-confirm research" (click)="search()">搜索</button>
+                  <button class="m-btn-default resets" (click)="reset()">重置</button>
+                </div>
+            </div>
+            
+             </form>
+            
+
+            <!--缺省页面-->
+            <div class="m-noresult m-returnService-defult m-apply" [ngClass]="{'searchResult':isHide}">
+              <div class="m-noresult-msg">
+                <i class="iqon-query"></i>
+                <p class="m-noresult-notice">暂无相关数据</p>
+                <p class="m-p-notice">点击“新建申请”建立相关数据吧~</p>
+              </div>
+            </div>
+
+
+            <!--表格-->
+            <div class="m-card-cont  m-commonly-list m-returnService-table" [ngClass]="{'searchResult':!isHide}">
+                <div class="table-auto-content">
+                    
+                  <table class="table table-hover table-list">
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" name="" allcheck="demoall" [(ngModel)]="fullChecked" (onClick)="changeWidth()" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox">
+                      </th>
+                      <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                        <th>序号</th>
+                        <th>物料编号</th>
+                        <th>物料描述(中文)</th>
+                        <th>物料类型</th>
+                        <th>申请人</th>
+                        <th>申请日期</th>
+                        <th>申请状态</th>
+                        <th>扩展状态</th>
+                      </ng-container>
+
+                      <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                         <th class="list-edit" colspan="8">已选{{checkedNum}}项<button type="button" (click)="deleteList(searchList)">删除</button></th>
+                      </ng-container>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let list of searchList;let i=index">
+                      <td stopParentClick>
+                        <input allcheckChild="demoall" icheck type="checkbox" name="" [(ngModel)]="list.checked" [disabled]="list.InfoStatus==1">
+                      </td>
+                      <td>{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+                      <td><span (click)="editMateriel(list.MaterialRecordID,list.InfoStatus)" class="clickText">{{list.MaterialERPCode?list.MaterialERPCode:'点击查看'}}</span></td>
+                      <td>{{list.MaterialDescription}}</td>
+                      <td>{{list.MaterialTypeName}}</td>
+                      <td>{{list.ApplyName}}</td>
+                      <td>{{list.ApplyTime|iqDate:"YYYY-MM-DD"}}</td>
+                      <td>{{list.InfoStatus|applyStatus}}</td>
+                      <td>{{list.ExtensionState|applyStatus:"extend"}}</td>
+                      <!-- <td width="10%" stopParentClick class="operate"><span data-edit="edit" (click)="editMateriel(list.MaterialRecordID,list.InfoStatus)">编辑</span><span (click)="deleteList(list.MaterialRecordID)">删除</span></td> -->
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
+                </div>
+                
+                <div class="page">
+                    <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+                </div>
+            </div>
+            
+        </div>

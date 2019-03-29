@@ -1,0 +1,69 @@
+<div class="m-home-pageR clearfix">
+
+    <!--搜索-->
+    <div class="m-list-menu">
+        <div class="m-search-all">
+            <div class="m-search">
+                <i class="iqon-query" id="searchChange" (click)="queryInvoiceList(1)" style="cursor:pointer"></i>
+                <input name="state" id="queryList" placeholder="申请人/支票号/客户名称" [(ngModel)]="param" type="text" (keyup.enter)="queryInvoiceList()">
+            </div>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="m-table-right">
+        <table class="table table-hover table-list" style="table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="text-align:center" width="11%">申请人</th>
+                    <th style="text-align:center" width="9%">出票日期</th>
+                    <th style="text-align:center" width="8%">支票号</th>
+                    <th style="text-align:center" width="10%">支票金额</th>
+                    <th style="text-align:center" width="11%">出票人账号</th>
+                    <th style="text-align:center" width="9%">出票人银行</th>
+                    <th style="text-align:center" width="6%">收款人</th>
+                    <th style="text-align:center" width="13%">支票状态</th>
+                    <th style="text-align:center" width="9%">客户代码</th>
+                    <th style="text-align:center" width="19%">客户名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let item of invoiceList'>
+                    <td style="text-align:center">
+                        {{item.applyItcode}}/{{item.applyUserName}}
+                    </td>
+                    <td style="text-align:center">{{item.createDate | iqDate:'YYYY-MM-DD'}}</td>
+                    <td style="text-align:center">{{item.ticketNum}}</td>
+                    <td style="text-align:center">{{item.ticketAmount}}</td>
+                    <td style="text-align:center">{{item.checkoutAccount}}</td>
+                    <td style="text-align:center">{{item.checkoutBank}}</td>
+                    <td style="text-align:center">{{item.payee}}</td>
+                    <td style="text-align:center">                       
+                        <span title="开始" *ngIf="item.invoiceStatus=='0'">开始</span>
+                        <span title="商务已接受" *ngIf="item.invoiceStatus=='1'">商务已接受</span>
+                        <span title="已上传财务" *ngIf="item.invoiceStatus=='2'">已上传财务</span>
+                        <span title="财务已接受" *ngIf="item.invoiceStatus=='3'">财务已接受</span>
+                        <span title="银行已取走" *ngIf="item.invoiceStatus=='4'">银行已取走</span>
+                        <span title="银行未取走" *ngIf="item.invoiceStatus=='3'">银行未取走</span>
+                        <span title="银行已取走" *ngIf="item.invoiceStatus=='4'">银行已取走</span>
+                        <span title="银行拒收" *ngIf="item.invoiceStatus=='5'">银行拒收</span>
+                        <span title="拒收后商务取走" *ngIf="item.invoiceStatus=='6'">拒收后商务取走</span>
+                        <span title="拒收后申请人取走" *ngIf="item.invoiceStatus=='7'">拒收后申请人取走</span>
+                        <span title="银行退票" *ngIf="item.invoiceStatus=='8'">银行退票</span>
+                        <span title="退票后商务取走" *ngIf="item.invoiceStatus=='9'">退票后商务取走</span>
+                        <span title="退票后申请人取走" *ngIf="item.invoiceStatus=='10'">退票后申请人取走</span>
+                        <span title="" *ngIf="item.invoiceStatus=='11'">完成</span>
+                        <span title="" *ngIf="item.invoiceStatus=='12'">失败</span>
+                        <span title="" *ngIf="item.invoiceStatus=='13'">草稿</span>
+                        <span title="" *ngIf="item.invoiceStatus=='14'">已取回</span>
+                        <span title="" *ngIf="item.invoiceStatus=='15'">已换票</span>
+                    </td>
+                    <td style="text-align:center">{{item.customCode}}</td>
+                    <td style="text-align:center">{{item.customName}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div class="page" [ngClass]="{'hide':invoiceList ==null || invoiceList.length ==0}">
+            <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+        </div>
+    </div>

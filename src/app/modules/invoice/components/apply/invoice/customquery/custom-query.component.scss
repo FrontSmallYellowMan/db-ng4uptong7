@@ -1,0 +1,26 @@
+//  table tbody {  
+//     display:block;  
+//     height:300px;  
+//     overflow-y:scroll;  
+// }  
+  
+  
+// table thead, tbody tr {  
+//     display:table;  
+//     width:100%;  
+//     table-layout:fixed;
+// }  
+  
+  
+// table thead {  
+//     width: calc( 100% - 1em )  
+// }  
+table {
+    width:580px;table-layout: fixed;
+}
+table td,table th {
+    white-space: nowrap;text-overflow: ellipsis;overflow: hidden; 
+}
+#scroll::-webkit-scrollbar{
+            width:17px; 
+}  

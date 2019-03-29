@@ -1,0 +1,166 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <form #myApplyForm="ngForm">
+            <div class="addApply-container">
+                <h1 class="addApply-tit-h1">新建借用转销售申请</h1>
+                <!--基本信息-->
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">基础信息</span>
+                    </div>
+
+                    <div class="addApp-base-infor">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"><span class="addApp-form-tips">*</span>预留号</label>
+                                    <input type="text" class="addApp-form-input" name="reservationNo" required [(ngModel)]="apply.reservationNo" #reservationNo="ngModel"
+                                    />
+                                    <button class="m-btn-confirm" (click)="queryReservation()">查询</button>
+                                    <p class="m-warn-tip" *ngIf="(reservationNo.touched || myApplyForm.submitted) && reservationNo.invalid">
+                                        <span *ngIf="deliveryNo.errors?.required">预留号必填</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 申请人 </label>
+                                    <div class="m-user-info-small">
+                                        <div class="m-user-members" style="float: left;margin-left:10px">
+                                            <div user-image [hasClose]="false" [user]="userInfo" *ngIf="notChange"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 联系方式 </label>
+                                    <span class="span-text">{{apply.contactPhone}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 员工编号 </label>
+                                    <span class="span-text">{{apply.applyUserNo}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 业务范围编号</label>
+                                    <span class="span-text">{{apply.businessScope}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 本部 </label>
+                                    <span class="span-text">{{apply.baseDeptName}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 事业部 </label>
+                                    <span class="span-text">{{apply.subDeptName}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 平台 </label>
+                                    <span class="span-text">{{apply.platformName}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 工厂 </label>
+                                    <span class="span-text">{{apply.factory}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 借用客户 </label>
+                                    <input type="text" class="addApp-form-input" name="borrowCustomerName" [(ngModel)]="apply.borrowCustomerName" required>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> <span class="addApp-form-tips">*</span>交货单号 </label>
+                                    <input type="text" class="addApp-form-input" name="deliveryNo" required [(ngModel)]="apply.deliveryNo" #deliveryNo="ngModel"
+                                        maxlength=10 #forminput>
+                                    <p class="m-warn-tip" *ngIf="(deliveryNo.touched || myApplyForm.submitted) && deliveryNo.invalid">
+                                        <span *ngIf="deliveryNo.errors?.required">交货单号必填</span>
+                                        <span *ngIf="deliveryNo.errors?.maxlength">交货单号不能超过10个字</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li *ngIf="!salerFlag">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 总金额 </label>
+                                    <input type="text" class="addApp-form-input" name="totalAmount" [(ngModel)]="apply.totalAmount">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 销售说明 </label>
+                                    <input type="text" class="addApp-form-input" name="salesMemo" maxlength=100 [(ngModel)]="apply.salesMemo">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--物料信息-->
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">物料信息</span>
+                    </div>
+
+                    <div class="apply-p-infor  m-clearfix">
+                        <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                            <table class="m-info-table" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th colspan="9" align="center">申请转销售物料</th>
+                                    </tr>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>物料编号</th>
+                                        <th>物料描述</th>
+                                        <th>批次</th>
+                                        <th>单位</th>
+                                        <th>数量</th>
+                                        <th *ngIf="!salerFlag">金额(元)</th>
+                                        <th>借用在途库</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of unclearMaterialItemList;index as i">
+                                        <td width="5%">{{i+1}}</td>
+                                        <td width="10%">{{item.meterialNo}}</td>
+                                        <td width="15%">{{item.meterialMemo}}</td>
+                                        <td width="10%">{{item.batch}}</td>
+                                        <td width="10%">{{item.unit}}</td>
+                                        <td width="10%"><input type="text" [(ngModel)]="item.count" name="count{{i}}" (change)="changeCount(item)"
+                                            /></td>
+                                        <td width="10%" *ngIf="!salerFlag">{{item.totalAmount}}</td>
+                                        <td width="10%">{{item.onwayStore}}</td>
+                                        <td width="8%" align="center">
+                                            <i class="iqon-jian" style="cursor: pointer;" title="删除" (click)="delMaterial(item.unclearMaterialId)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="addApp-submit-btn">
+                    <div class="addApp-sub-btns">
+                        <button class="m-btn-confirm" *ngIf="(pageFlag=='n'||(currAppFlag && pageFlag=='e'))" (click)="submitApply()" >提交</button>
+                        <button class="m-btn-sketch" *ngIf="(pageFlag=='n'||(currAppFlag && pageFlag=='e'))" (click)="saveDraft()" >暂存</button>
+                        <!--button *ngIf="pageFlag==='e'" class="m-btn-confirm" (click)="submitDraft()" [disabled]="disabled">确定</button-->
+                        <button class="m-btn-addAppback" (click)="goBack()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

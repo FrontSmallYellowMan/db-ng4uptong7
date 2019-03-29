@@ -1,0 +1,203 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left">
+            <h1 class="apply-tit-h1">支票延期申请明细</h1>
+            <!--基本信息-->
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >基础信息</span
+                    >
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="apply-p-infor m-clearfix">
+                    <div class="m-exm-item" style="float:none">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">表单号</div>
+                                <div class="m-exm-cont">
+                                    {{ delayApply.applyId }}
+                                </div>
+                            </li>
+
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请时间</div>
+                                <div class="m-exm-cont">
+                                    {{
+                                        delayApply.createDate
+                                            | iqDate: "YYYY-MM-DD HH:mm:ss"
+                                    }}
+                                </div>
+                            </li>
+
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <div class="m-user-info-small">
+                                        <div
+                                            class="m-user-info"
+                                            #sqr
+                                            user-image
+                                            [hasClose]="false"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">联系电话</div>
+                                <div class="m-exm-cont">
+                                    {{ delayApply.applyPhone }}
+                                </div>
+                            </li>
+
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">部门</div>
+                                <div class="m-exm-cont">
+                                    {{ delayApply.applyDept }}
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">延期原因</div>
+                                <div
+                                    class="m-exm-cont"
+                                    title="{{ delayApply.delayReason }}"
+                                    style="width:350px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+                                >
+                                    {{ delayApply.delayReason }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--延期支票信息-->
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >延期支票信息</span
+                    >
+                </div>
+                <div class="apply-finance-l">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr>
+                                <!--<th>序号</th>-->
+                                <th>支票号</th>
+                                <th>支票金额</th>
+                                <th>客户代码</th>
+                                <th>客户名称</th>
+                                <th style="width:130px">
+                                    出票日期(支票到期日)
+                                </th>
+                                <th>延期入账时间</th>
+                                <th>延期天数</th>
+                                <th>合同编号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let item of invoiceList;
+                                    let idx = index
+                                "
+                            >
+                                <!--<td>{{idx+1}}</td>-->
+                                <td>
+                                    <div>{{ item.invoiceNum }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.invoiceAmount }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.customCode }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.customName }}</div>
+                                </td>
+                                <td style="width:130px">
+                                    <div>
+                                        {{
+                                            item.checkoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{
+                                            item.delayEnterDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.delayDays >= 10">
+                                        <div>
+                                            <b
+                                                ><font style="color:red">{{
+                                                    item.delayDays
+                                                }}</font></b
+                                            >
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.delayDays < 10">
+                                        <div>{{ item.delayDays }}</div>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <div
+                                        style="word-break:break-all;word-wrap:break-word"
+                                    >
+                                        {{ item.contractNum }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--附件信息-->
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">附件信息</span>&nbsp;
+                    <span *ngFor="let item of attachList">
+                        <a [href]="item.filePath" target="_blank">{{
+                            item.fileName
+                        }}</a>
+                    </span>
+                </div>
+            </div>
+            <!--流程记录-->
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+            <ng-container *ngIf="isShowApproverBtn">
+                <wfapproval
+                    [saveId6Flag]="saveId6Flag"
+                    [appParms]="appParms"
+                    (onSave)="saveBill($event)"
+                ></wfapproval>
+            </ng-container>
+            <db-wfadp
+                [adpAppParms]="adpAppParms"
+                *ngIf="!isView && isADP"
+            ></db-wfadp>
+            <ng-container *ngIf="!isShowApproverBtn">
+                <div class="addApp-submit-btn">
+                    <div class="addApp-sub-btns" style="text-align: center">
+                        <button
+                            class="m-btn-sketch"
+                            type="button"
+                            (click)="goBack()"
+                        >
+                            返回
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!--审批图-->
+        <div class="apply-p-right">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

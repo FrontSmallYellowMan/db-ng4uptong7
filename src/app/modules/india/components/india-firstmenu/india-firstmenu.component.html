@@ -1,0 +1,12 @@
+<div class="india-list-menu-right">
+  <button class="m-btn-success" (mouseover)="showIndiaList()">+ 新建申请</button>
+  <div class="newIndia">
+    <ul *ngFor="let item of indiaMenuConfig">
+      <li>{{ item.menuTiele }}</li>
+      <li *ngFor="let subitem of item.menuInfo" (click)=addApply(subitem.url)>
+        <!--<i *ngIf="subitem.active" class="iqon-direct-right iqon-direct-right1"></i>-->
+        {{ subitem.text }}
+      </li>
+    </ul>
+  </div>
+</div>

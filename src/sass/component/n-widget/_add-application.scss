@@ -1,0 +1,193 @@
+/* 求职申请新建申请 */
+.m-add-application{
+  height: 100%;
+  .m-set-close {
+    width: 35px;
+    height: 35px;
+    background: #f5f7fa;
+    border: none;
+    margin-left: 15px;
+  }
+  .m-home-pageR {
+    width: 100%;
+    float: right;
+    .table-list th, .table-list tr, .table-list td, .table-list thead{
+      text-align: center;
+    }
+    .m-boardtop {
+      button.m-btn-success {
+        margin-top: 7px;
+        border-radius: 3px;
+      }
+      .m-dropdown {
+        width: auto;
+        .m-dropdown-option {
+          width: 180px;
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.6);
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+          padding: 10px 0;
+          li {
+            padding-left: 0;
+            position: relative;
+            text-align: center;
+            color: #ffffff;
+            &:hover {
+              background-color: transparent;
+            }
+            i {
+              position: absolute;
+              left: 20px;
+              top: 15px;
+              color: $def-avatar7-color;
+              font-size: 12px;
+            }
+          }
+
+        }
+      }
+    }
+    .m-list-menu {
+      margin: 12px 20px;
+      .m-search-all {
+        .m-select {
+          display: inline-block;
+          width: 230px;
+          margin-right: 10px;
+          select {
+            height: 30px;
+          }
+          .iqon-xia {
+            top: 10px;
+          }
+        }
+      }
+    }
+    .m-table-right {
+      margin-left: 20px;
+      padding: 0 15px;
+      background: #fff;
+      min-height: calc(100vh - 150px);
+      table {
+        position: relative;
+        margin-bottom: 6px;
+        thead {
+          &::before {
+            content: '';
+            width: 15px;
+            border-bottom: 1px solid #ddd;
+            display: inline-block;
+            position: absolute;
+            left: -15px;
+            top: 49px;
+          }
+          &::after {
+            content: '';
+            width: 15px;
+            border-bottom: 1px solid #ddd;
+            display: inline-block;
+            position: absolute;
+            right: -15px;
+            top: 49px;
+          }
+        }
+        tbody > tr > td {
+          border-bottom: 1px solid #ddd;
+          border-top: none;
+          padding: 0 10px;
+        }
+        .m-add-information {
+          display: inline-block;
+          width: 68px;
+          height: 22px;
+          line-height: 22px;
+          border-radius: 2.5px;
+          border: solid 1px $def-main-color;
+          color: $def-main-color;
+          text-align: center;
+        }
+        .m-add-infoactive {
+          background-color: $def-main-color;
+          color: #ffffff;
+        }
+        .m-user-info {
+          padding: 0;
+        }
+      }
+      .page{
+        padding:20px 0 30px;
+      }
+    }
+  }
+  >.m-home-pageL>ul>li>a {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .m-table-right{
+    margin: 15px 20px;
+  }
+  .m-r-completed{
+    .m-list-menu{
+      margin: 0 20px;
+      padding: 15px 0;
+      .m-state>.m-search{
+        display: inline-block;
+      }
+      .m-search-all{
+        .m-btn-default{
+          height: 30px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+  .m-r-newHR{
+    .m-btn-main-1{
+      //float: right;
+      height: 35px;
+      line-height: 35px;
+    }
+  }
+}
+.m-application-alert{
+  width: 670px;
+  height: 420px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  margin-top: 20vh;
+  .modal-body{
+    min-height: 310px;
+    .m-set-item{
+      float: left;
+      padding: 15px 10px;
+      .m-set-comb-item{
+        float: left;
+      }
+      input{
+        width: 230px;
+        margin-left: 10px;
+      }
+      .iqon-close-white{
+        color: #fff;
+      }
+    }
+  }
+  .modal-footer{
+    border: none;
+    padding: 0 0 25px 0;
+    text-align: center;
+    .m-btn-confirm{
+      width: 168px;
+    }
+    .m-confirm-gry{
+      background-color: #d2d8df;
+      color: #fff;
+    }
+    .m-btn-cancel{
+      width: 87px;
+      margin-left: 15px;
+    }
+  }
+
+}

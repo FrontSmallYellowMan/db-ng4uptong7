@@ -1,0 +1,26 @@
+<loading [show]="loading"></loading>
+<div class="fp-list clearfix">
+  <div class="fp-list-left">
+    <div class="fp-list-left-arrears-title">欠款信息</div>
+    <div class="fp-list-left-arrears-info">
+      <ul>
+        <li>销售员：{{arrearsInfo.ZWMC}}</li>
+        <li>合同编号：{{arrearsInfo.ContractCode}}</li>
+        <li>客户名称：{{arrearsInfo.KHMC}}</li>
+        <li>我方法人体：{{arrearsInfo.GSName}}</li>
+        <li>本部：{{arrearsInfo.SYBMC}}</li>
+        <li>事业部：{{arrearsInfo.YWFL}}</li>
+        <li>应还款日期：{{arrearsInfo.CREDITDATE}}</li>
+        <li>超期天数：{{arrearsInfo.CQTS}}</li>
+        <li>最终用户：{{arrearsInfo.EndUserName}}</li>
+        <li>付款条款：<a (click)="showPayItem(arrearsInfo.PayItem)">查看条款</a></li>
+      </ul>
+    </div>
+    <div class="fp-list-left-arrears-btm" *ngIf="router.url.indexOf('followup-comment') > 0">
+      <a (click)="routerFollowup('/receivepayment/followup',query)">查看历史跟进信息</a>
+    </div>
+  </div>
+  <div class="fp-list-right">
+    <router-outlet></router-outlet>
+  </div>
+</div>

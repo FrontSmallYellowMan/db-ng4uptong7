@@ -1,0 +1,186 @@
+
+<form #form="ngForm">  
+<div class="m-cnm">
+              <h4>
+                {{editTitle}}
+              </h4>
+               
+               <div class="m-cnm-content">
+
+                  <div class="m-cnm-form">     
+                      <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need"></span>物料模版名称</p>
+                      <div class="m-select  m-cnm-select-style1" style="width: 78%;">
+                          
+                        <my-select [(ngModel)]="allTemplate" tabName="13" name="TemplateID" #TemplateID="ngModel" [placeHolder]="'-快速选择物料模板'" (ngModelChange)="selectTemplate(allTemplate[0])"></my-select>   
+                    
+                      </div>                     
+                  </div>
+                  
+                  <div class="m-cnm-form">
+                    <!-- <div *ngIf="isMcodeShow" style="margin:10px 0 0 0">
+                      物料编号：{{mCode}}                   
+                     </div> -->
+                  </div>
+
+                </div>
+
+              <!--物料模版-->
+              <div class="m-cnm-content1">
+
+                <div class="m-cnm-title">
+                  <h5>物料模版</h5>
+                </div>
+
+                <!-- 工厂 -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>工厂</p>
+                  <div class="m-select m-cnm-select-style1">
+                    <my-select [(ngModel)]="allFactory" tabName="1" name="Factory" #Factory="ngModel" [required]="isSubmit" [placeHolder]="'-请选择工厂'"
+                      required></my-select>
+                  </div>                   
+                  <p class="m-p-warn" *ngIf="Factory.invalid && (Factory.touched||isSubmit)">请选择工厂</p>
+                </div>
+
+                <!-- 序列号参数 -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need"></span>序列号参数</p>                
+                    <div class="m-select m-cnm-select-style1">
+                      <my-select [(ngModel)]="allSerialNumParameter" tabName="7" name="SerialNumParameter" #SerialNumParameter="ngModel"
+                        [placeHolder]="'-请选择序列号参数'"></my-select>
+                    </div>
+                    <!-- <p class="m-p-warn" *ngIf="SerialNumParameter.invalid && (SerialNumParameter.touched||isSubmit)">请选择序列号参数</p>                -->
+                  </div>
+
+                <!-- 物料类型 -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>物料类型</p>
+                    <div class="m-select m-cnm-select-style1">
+                      <my-select [(ngModel)]="allMaterialType" tabName="2" applyName="2" [required]="isSubmit" name="MaterialType" #MaterialType="ngModel" [placeHolder]="'-请选择物料类型'"></my-select>
+                    </div>
+                    <p class="m-p-warn" *ngIf="MaterialType.invalid && (MaterialType.touched||isSubmit)">请选择物料类型</p>
+                </div>  
+
+                <!-- 税收分类 -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>税收分类</p>     
+                    <div class="m-select m-cnm-select-style1">
+                      <my-select [(ngModel)]="allTaxType" tabName="8" [required]="isSubmit" name="TaxTypeID" #TaxTypeID="ngModel" [placeHolder]="'-请选择税收分类'"></my-select>
+                    </div>
+                    <p class="m-p-warn" *ngIf="TaxTypeID.invalid && (TaxTypeID.touched||isSubmit)">请选择税收分类</p>           
+                </div>
+
+                <!-- 物料组 -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>物料组</p>
+                  <div class="m-select m-cnm-select-style1">
+                    <my-select [(ngModel)]="allMaterialGroup" tabName="3" [required]="isSubmit" name="MaterialGroup" #MaterialGroup="ngModel"
+                      [placeHolder]="'-请选择物料组'"></my-select>
+                  </div>
+                  <p class="m-p-warn" *ngIf="MaterialGroup.invalid && (MaterialGroup.touched||isSubmit)">请选择物料组</p>
+                </div>
+
+                <!-- 基本计量单位 -->
+                <div class="m-cnm-form m-cnm-tips" >
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>基本计量单位</p>
+                  <div class="m-select m-cnm-select-style1">
+                    <my-select [(ngModel)]="allBaseUnitOfMeasure" tabName="9" [required]="isSubmit" name="BaseUnitOfMeasure" #BaseUnitOfMeasure="ngModel"
+                      [placeHolder]="'-请选择基本计量单位'"></my-select>
+                  </div>
+                  <p class="m-p-warn" *ngIf="BaseUnitOfMeasure.invalid && (BaseUnitOfMeasure.touched||isSubmit)">请选择基本计量单位</p>
+                </div>
+
+                <!-- 品牌 -->
+                <div class="m-cnm-form m-cnm-tips" >
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>品牌</p>
+                  <div class="m-select m-cnm-select-style1">
+                    <my-select [(ngModel)]="allBrand" tabName="4" [required]="isSubmit" name="Brand" #Brand="ngModel" [placeHolder]="'-请选择品牌'"></my-select>
+                  </div>
+                  <p class="m-p-warn" *ngIf="Brand.invalid && (Brand.touched||isSubmit)">请选择品牌</p>
+                </div>
+
+              </div>
+
+
+
+              <!--必填字段-->
+              <div class="m-cnm-content1">
+
+                <div class="m-cnm-title">
+                  <h5>必填字段</h5>
+                </div>
+
+                <!-- 物料描述(中文) -->
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title"><span class="m-form-need">*</span>物料描述(中文)</p>
+                  <div class="m-cnm-input">
+                      <input [(ngModel)]="reqData.MaterialDescription"  required type="text" name="MaterialDescription" #MaterialDescription="ngModel" placeholder="请填写物料描述（中文），不超过40个字符" maxlength="40" pattern="[\w\u4E00-\u9FFF-_—()（）/ ]*[\u4E00-\u9FFF]+[\w\u4E00-\u9FFF-_—()（）/ ]*" trim trimReg="/(^\s*)|([?><@#$%^&*]*$)/g">
+                    </div>
+                    <p class="m-p-warn" *ngIf="MaterialDescription.invalid && (MaterialDescription.touched||isSubmit)">描述必须包含中文，不能包含特殊字符</p>
+                </div>
+
+
+
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>税分类</p>
+                  
+                  <div class="m-select m-cnm-select-style1">
+                    <my-select [(ngModel)]="allTaxClassifications" tabName="10" [required]="isSubmit" name="TaxClassifications" #TaxClassifications="ngModel"
+                      [placeHolder]="'-请选择税分类'" (onSelectData)="getTaxClass($event)"></my-select>
+                  </div>
+                  <p class="m-p-warn" *ngIf="TaxClassifications.invalid && (TaxClassifications.touched||isSubmit)">请选择税分类</p>
+                
+                  </div>
+
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title m-cnm-form-titles"><span class="m-form-need">*</span>科目设置组</p>
+                    
+                    <div class="m-select m-cnm-select-style1">
+                      <my-select [(ngModel)]="allSubjectSettingGroup" tabName="11" applyName="2" [filterPromis]="taxClass" [required]="isSubmit" name="SubjectSettingGroup" #SubjectSettingGroup="ngModel" [placeHolder]="'-请选择科目设置组'"></my-select>
+                    </div>
+                    <p class="m-p-warn" *ngIf="SubjectSettingGroup.invalid && (SubjectSettingGroup.touched||isSubmit)">请选择科目设置组</p>
+                    <!-- <p class="m-p-tip" *ngIf="reqData.TaxClassifications==='B'">税分类为“B”，科目设置组可选择“33”，“36”，“37”，“38”，“39”</p> -->
+               
+                  </div>
+
+              </div>
+
+
+
+              <!--选填字段-->
+              <div class="m-cnm-content1">
+                 
+                 <div class="m-cnm-title">
+                  <h5>选填字段</h5>
+                </div>
+                 
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title">合同编号</p>
+                  <div class="m-cnm-input">
+                    <input type="text" name="ContractCode" placeholder="仅限新能源与企业客户事业部填写" [(ngModel)]="reqData.ContractCode" maxlength="18">
+                  </div>
+                </div>
+
+
+                <div class="m-cnm-form m-cnm-tips">
+                  <p class="m-cnm-form-title">PO号</p>
+                  <div class="m-cnm-input">
+                    <input type="text" name="PO" placeholder="请填写PO号,长度不超过18个字符" maxlength="18" [(ngModel)]="reqData.PO">
+                  </div>
+                </div>
+                             
+            </div>
+          
+            <div class="m-commonly-btn" *ngIf="isShow">
+                <button class="m-btn-confirm" (click)="save(1)" type="button">生成物料编号</button>
+                <button class="m-btn-default m-btn-tempsave" (click)="save(0)" type="button">暂存</button>
+                <button class="m-btn-cancel2" (click)="cancel()" type="button">取消</button>
+            </div>
+
+            <div class="m-commonly-btn" *ngIf="!isShow">
+                <button class="m-btn-default m-btn-tempsave" (click)="cancel()">关闭</button>              
+              </div>
+
+
+</div>
+
+   </form> 

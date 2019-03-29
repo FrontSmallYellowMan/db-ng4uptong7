@@ -1,0 +1,29 @@
+<div class="modal" style="display: block;z-index:7000; margin-top:90px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header m-dialog-head">
+        <button aria-label="Close" class="close" type="button" (click)="onCancel()">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body clearfix">
+        <div class="apply-opinion body-item flex_margin">
+          <form #contractAddInputForm="ngForm" style="width:100%">
+            <label class="marginright10">合同号：</label>
+            <div class="m-exm-item m-textarea-flex" style="display: inline-block; width:80%">
+              <input class="addApp-form-input" type="text" name="contract" placeHolder="请输入合同号"
+               required pattern="^[\w]*$" [(ngModel)]="content" maxlength="24">
+            </div>
+            <div style="color:red;margin-top: 10px;text-align: right; padding-right: 13px;">
+              补充合同号后不能解除关联，请谨慎补充！
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer footer">
+        <button type="button" class="m-btn-confirm" (click)="onAdd()">确定</button>
+        <button type="button" class="m-btn-cancel" (click)="onCancel()">取消</button>
+      </div>
+    </div>
+  </div>
+</div>

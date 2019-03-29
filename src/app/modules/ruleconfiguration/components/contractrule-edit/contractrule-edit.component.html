@@ -1,0 +1,129 @@
+<!-- <loading [show]="loading"></loading> -->
+<div class="m-apply-exm2 m-srs">
+    <h3>&nbsp;</h3>
+    <form #form="ngForm">
+  
+      <div class="m-exm">
+  
+       <div class="m-exm-item">
+        <div class="m-cnm-title">
+         <div>
+          <h5>维护信息：</h5>
+         </div>
+        </div>
+          <ul>
+           <li class="m-exm-half">
+            <div class="m-exm-label"><span class="m-form-need">*</span>规则名称：</div>
+             <div class="m-enmc-cont">
+              <input type="text" name="RuleConfigName" placeholder="-请填写规则名称" #RuleConfigName="ngModel" [(ngModel)]="contractRuleConfigForm.BaseRole.RoleName" [ngClass]="{'m-input-warn': !RuleConfigName.valid && (RuleConfigName.touched || isSubmit)}" required>
+             </div>
+            </li>
+          </ul>
+  
+          <ul *ngIf="IsEdit">
+            <li class="m-exm-half">
+            <div class="m-exm-label">创建人：</div>
+              <div class="m-enmc-cont">
+                <div class="m-user-info-small">
+                  <span class="m-user-name">{{contractRuleConfigForm.BaseRole.Creater}}</span>
+                  <span class="m-user-ename">{{contractRuleConfigForm.BaseRole.CreaterItcode}}</span>
+                </div>
+              </div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">创建日期：</div>
+              <div class="m-enmc-cont">{{contractRuleConfigForm.BaseRole.Createtime|iqDate:"YYYY-MM-DD"}}</div><!--{{materielChangeData.ApplyTime|iqDate:"YYYY-MM-DD"}}-->
+            </li>
+           </ul>
+           <ul>
+            <li style="width: 100%">
+              <div class="e-label"><span class="m-form-need">*</span>事业部：</div>
+              <div style="width: 90%;">
+                  <rule-configuration-select listAPI='InitData/GetPageDataYWFWDM' saveParameterIndex='2' [(ngModel)]="contractRuleConfigForm.YWFWDMList" name="DepartmentList" [alreadyChosenData]='contractRuleConfigForm.YWFWDMList' (onSelectValue)="getDepartmentList($event)" required></rule-configuration-select>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li style="width: 100%">
+              <div class="e-label">
+                <span class="m-form-need">*</span>我方法人体：</div>
+                
+              <div style="width: 90%;">
+                <rule-configuration-select listAPI='InitData/GetPageDataCompany' saveParameterIndex='0' [(ngModel)]="contractRuleConfigForm.CompanyCodeList" name="CompanyList" [alreadyChosenData]='contractRuleConfigForm.CompanyCodeList' (onSelectValue)="getCompanyListList($event)" required showIndex='10'></rule-configuration-select>
+              </div>
+            </li>
+          </ul>
+     </div>
+     <div class="m-exm-item">
+          <div class="m-cnm-title">
+           <div>
+            <h5>审批人序列：</h5>
+           </div>
+          </div>
+          <div style="margin: 0 auto;padding-left: 100px;">
+             <!--审批信息-->
+             <table class="m-info-table" style="width:100%; table-layout: fixed" >
+                <tr *ngFor="let item of wfConfigInfoList;index as i">
+                    <td class="wp5"  *ngIf="item.NodeID=='4'||item.NodeID=='5'||item.NodeID=='6'||item.NodeID=='10'||item.NodeID=='11'||item.NodeID=='12'||item.NodeID=='17'"><input icheck type="checkbox" [name]="'wfConfig'+i" [(ngModel)]="item.IsOpened" (ngModelChange)="changeIsOpened(item)" [disabled]="item.ApproverShow.length>0"  /></td>
+                    <td class="wp5"  *ngIf="item.NodeID=='3'||item.NodeID=='9'"><input icheck type="checkbox" [name]="'wfConfig'+i" [(ngModel)]="item.IsOpened" (ngModelChange)="changeIsOpened(item)" [disabled]="true"  /></td>
+                    <td class="wp15">{{item.NodeName}}</td>
+                    <td class="wp15" *ngIf="item.NodeID=='4'||item.NodeID=='5'||item.NodeID=='6'||item.NodeID=='10'||item.NodeID=='11'||item.NodeID=='12'||item.NodeID=='17'">
+                        <input icheck type="radio" #forminput [name]="'isMustValueApprover'+i" [(ngModel)]="item.IfRequired" value="1" [disabled]="item.ApproverShow.length===0">
+                        <label class="iradio_label">必选</label>
+                        <input icheck type="radio" #forminput [name]="'isMustValueApprover'+i" [(ngModel)]="item.IfRequired" value="0" [disabled]="item.ApproverShow.length===0">
+                        <label class="iradio_label">非必选</label> 
+                    </td> 
+                    <td class="wp15" *ngIf="item.NodeID=='3'||item.NodeID=='9'">
+                        <input icheck type="radio" #forminput [name]="'isMustValueApprover'+i" [(ngModel)]="item.IfRequired" value="1" [disabled]="true">
+                        <label class="iradio_label">必选</label>
+                        <input icheck type="radio" #forminput [name]="'isMustValueApprover'+i" [(ngModel)]="item.IfRequired" value="0" [disabled]="true">
+                        <label class="iradio_label">非必选</label> 
+                    </td> 
+                    <td class="wp10">
+                     <span >审批人:</span></td>
+                     <td class="wp60">
+                       <rule-configuration-select-person APIAddress='BaseData/GetUserList' compontentTitle='请选择审批人' [(ngModel)]="item.ApproverShow" [ngModelOptions]="{standalone: true}" (ngModelChange)="getChecked(item)" [required]="item.IfRequired==1" ngModel ></rule-configuration-select-person>   
+                      </td>
+                    <!-- <td class="wp60"><input type="text" width="200px;" [name]="'ApproverList'+i" [(ngModel)]="item.ApproverShow" (ngModelChange)="getChecked(item)" /></td> -->
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div class="m-exm-item">
+            <div class="m-cnm-title">
+           <div>
+            <h5>事业部信息：</h5>
+           </div>
+          </div>
+          <div style="margin: 0 auto;padding-left: 100px;">
+             <!--物料信息-->
+             <table class="m-info-table" style="width:70%;"> 
+                <tr *ngFor="let item of fieldConfigList;index as i">
+                    <td class="wp5"><input type="checkbox" icheck [name]="'checked'+i" [(ngModel)]="item.IsShowField" /></td>  
+                    <td class="wp15">{{item.FieldShowName}}</td>            
+                    <td class="wp20">
+                      <input icheck type="radio" #forminput [name]="'isMustValue'+i" [(ngModel)]="item.IfRequired" value="1">
+                      <label for="radio1" class="iradio_label">必填</label>
+                      <input icheck type="radio" #forminput [name]="'isMustValue'+i" [(ngModel)]="item.IfRequired" value="0">
+                      <label for="radio2" class="iradio_label">非必填</label>
+                    <td class="wp60">
+
+                      <!-- <ng-container *ngIf="item.FieldShowType === 'checkbox'"> -->
+                        <span *ngFor="let entity of item.Data">
+                          <input type="checkbox" value="entity.value" [name]="'checked'+i">{{entity.text}}
+                        </span>
+                      <!-- </ng-container> -->
+
+                    </td>
+                  </tr>
+             </table>
+          </div>
+         </div>
+      </div>
+      <div class="m-exm-btn">
+        <button class="m-btn-confirm" type="button" (click)="save()">保存</button>
+        <button class="m-btn-cancel2" (click)="cancel()" type="button">取消</button>
+      </div>
+    </form>
+  </div>

@@ -1,0 +1,139 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    <span>送达方信息</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <form #myApplyForm="ngForm">
+    <div class="modal-body clearfix">
+      <loading [show]="loading"></loading>
+      <div class="m-search-all">
+        <div class="m-search">
+          <i class="iqon-query" (click)="search()"></i>
+          <input #forminput name="name" (keyup.enter)="search()" [(ngModel)]="customerERPCode" placeholder="搜索客户编号" type="text" only-number onlyNumberSeveralDigits='0'>
+        </div>
+      </div>
+      <div class="m-order-table">
+        <ul class="m-shipTo-head">
+          <li>客户编号</li>
+          <li>客户名称</li>
+          <li>送达方地址</li>
+        </ul>
+        <ul class="m-shipTo-body" *ngIf="!defauls">
+          <li *ngFor="let item of deliveryList;index as i" (click)="selected(item)">
+            <span>{{item.SDFCode}}</span>
+            <span title="{{item.SDFName}}">{{item.SDFName || "&nbsp;"}}</span>
+            <span title="{{item.SDFAddress}}">{{item.SDFAddress || "&nbsp;"}}</span>
+          </li>
+        </ul>
+        <div class="m-noresult" *ngIf="defauls" style="min-height:180px;">
+          <div class="m-noresult-msg" style="height:150px;">
+            <i class="iqon-query"></i>
+            <p class="m-noresult-notice">暂无相关数据</p>
+
+          </div>
+        </div>
+      </div>
+      <div class="m-advance-footer">
+        <ul>
+          <li>
+            <span>送达方编码</span>
+            <input type="text" style="width:34%" #forminput name="SDFCode" required [(ngModel)]="formData.SDFCode" #SDFCode="ngModel"
+              readonly>
+            <button type="button" class="m-btn-default" style="margin-left:20px;height: 30px;  min-width: 70px;  line-height: 24px;"
+              [ngClass]="{'m-btn-disable': !allowReset}" (click)="reSet()">重置</button>
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>送达方名称</span>
+            <input type="text" #forminput name="SDFName" required [(ngModel)]="formData.SDFName" (change)="SDFModify(0)" #SDFName="ngModel"
+              notblank [ngClass]="{'m-input-change': isModifies[0],'m-input-warn': isACustomer && !SDFName.valid && (SDFName.touched || isSubmit)}" placeholder="请填写送达方名称">
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>发货方式</span>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="deliveryType" [(ngModel)]="formData.ConsignmentModeID" #deliveryType="ngModel" #forminput required [ngClass]="{'m-select-warn': isACustomer && !deliveryType.valid && (deliveryType.touched || isSubmit)}">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of deliveryTypeList" [ngValue]="item.ConsignmentModeID">{{item.Name}}</option>
+              </select>
+            </div>
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>签收方式</span>
+            <input type="text" #forminput name="SignatureMethod" required (change)="SDFModify(1)" [(ngModel)]="formData.SignatureMethod"
+              #SignatureMethod="ngModel" notblank [ngClass]="{'m-input-change': isModifies[1],'m-input-warn': isACustomer && !SignatureMethod.valid && (SignatureMethod.touched || isSubmit)}" placeholder="请填写签收方式">
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>联系人手机</span>
+            <input type="text" #forminput name="PhoneNumber" required [(ngModel)]="formData.PhoneNumber" (change)="SDFModify(2)" #PhoneNumber="ngModel"
+              notblank pattern="^[0-9]*$" maxlength="18" [ngClass]="{'m-input-change': isModifies[2],'m-input-warn': isACustomer && !PhoneNumber.valid && (PhoneNumber.touched || isSubmit)}" placeholder="请填写联系人手机">
+          </li>
+          <li>
+            <span>固定联系电话</span>
+            <input type="text" (change)="SDFModify(8)" #forminput maxlength="18" name="TelNumber" [(ngModel)]="formData.TelNumber" #TelNumber="ngModel" placeholder="请填写固定联系电话">
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>联系人</span>
+            <input type="text" #forminput name="SDFLinkMan" required [(ngModel)]="formData.SDFLinkMan" #SDFLinkMan="ngModel" notblank
+              (change)="SDFModify(3)" [ngClass]="{'m-input-change':  isModifies[3],'m-input-warn': isACustomer && !SDFLinkMan.valid && (SDFLinkMan.touched || isSubmit)}" placeholder="请填写联系人">
+          </li>
+          <li>
+            <span>邮政编码</span>
+            <input type="text" (change)="SDFModify(9)" #forminput name="SDFPostCode" maxlength="7" [(ngModel)]="formData.SDFPostCode" #SDFPostCode="ngModel" placeholder="请填写邮政编码">
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>省（市）</span>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select #forminput name="AreaID" required [(ngModel)]="formData.AreaID" #AreaID="ngModel" (change)="changeProvince()" [ngClass]="{'m-select-change': isModifies[4],'m-select-warn': isACustomer && !AreaID.valid && (AreaID.touched || isSubmit)}">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of provinceCityInfo.province" [ngValue]="item.ProvinceCode">{{item.ProvinceName}}</option>
+              </select>
+            </div>
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>城市</span>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select #forminput name="SDåFCity" required [(ngModel)]="formData.SDFCity" #SDFCity="ngModel" (change)="changeCity()" [ngClass]="{'m-select-change': isModifies[5],'m-select-warn': isACustomer && !SDFCity.valid && (SDFCity.touched || isSubmit)}">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of cityList" [ngValue]="item.CityCode">{{item.CityName}}</option>
+              </select>
+            </div>
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>地区</span>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select #forminput name="SDFDistrict" required [(ngModel)]="formData.SDFDistrict" #SDFDistrict="ngModel" (change)="changeCounty()"
+                [ngClass]="{'m-select-change': isModifies[6],'m-select-warn': true&& SDFDistrict.invalid && (SDFDistrict.touched || isSubmit)}">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of districtList" [ngValue]="item.CountyName">{{item.CountyName}}</option>
+              </select>
+              
+            </div>
+          </li>
+          <li>
+            <span>
+              <i class="addApp-form-tips" *ngIf="isACustomer">*</i>送货地址</span>
+            <input type="text" #forminput name="SDFAddress" (change)="SDFModify(7)" required [(ngModel)]="formData.SDFAddress" #SDFAddress="ngModel"
+              notblank [ngClass]="{'m-input-change': isModifies[7],'m-input-warn': isACustomer && !SDFAddress.valid && (SDFAddress.touched || isSubmit)}" placeholder="请填写送货地址">
+          </li>
+        </ul>
+      </div>
+      <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+    </div>
+
+    <div class="modal-footer">
+      <button class="m-btn-confirm" type="button" (click)="submit()">确定</button>
+      <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div>
+  </form>
+</div>

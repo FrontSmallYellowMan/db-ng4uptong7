@@ -1,0 +1,144 @@
+<div class="c-form-item-custom clearfix">
+    <label>温馨提示</label><br>
+    客户为渠道时：客户资金来源、最终用户资金来源、最终客户付款方式、提供项目真实性资料、申请人对客户的评价为必填客户为最终用户时：客户付款流程、付款需要提交文件、项目履行实施安排为必填
+</div>
+<div class="c-form-item clearfix">
+    <div class="c-input-title"><label>客户资信</label></div>
+    <div class="c-input-wrap" style="height:35px;line-height:35px;">
+        <a (click)="onClickGuarantee()">担保</a>
+        <a (click)="onClickGrade()">评级</a>
+    </div>
+</div>
+<div class="c-form-item clearfix">
+    <div class="c-input-title"><span class="c-form-need" *ngIf="riskstatementdata.EditOrView == 'edit'">*</span><label>项目性质</label></div>
+    <div class="c-input-wrap">
+        <div class="m-select" *ngIf="riskstatementdata.EditOrView == 'edit'">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="riskstatementdata.ProjectNature" name="ProjectNature">
+                <option value=null>请选择</option>
+                <option *ngFor="let item of selectdata?.ProjectNature" [ngValue]="item">{{item}}</option>
+            </select>
+        </div>
+        <div *ngIf="riskstatementdata.EditOrView == 'view'" style="line-height: 35px;">{{riskstatementdata.ProjectNature}}</div>
+    </div>
+</div>
+<div class="c-form-item-custom clearfix">
+  <div class="c-input-title"><span class="c-form-need" *ngIf="riskstatementdata.EditOrView == 'edit'">*</span><label>是否直发</label></div>
+  <div class="c-input-wrap c-wrap-out" style="line-height: 35px;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+    <input icheck type="radio" id="IsDirectSend1" name="IsDirectSend" [(ngModel)]="riskstatementdata.IsDirectSend" value="1">
+    <label>是</label>
+    <input icheck type="radio" id="IsDirectSend2" name="IsDirectSend" [(ngModel)]="riskstatementdata.IsDirectSend" value="0">
+    <label>否</label>
+  </div>
+  <div class="c-input-wrap c-wrap-out" style="line-height: 25px;" *ngIf="riskstatementdata.EditOrView == 'view'">
+    <span *ngIf="riskstatementdata.IsDirectSend == '1'">是</span>
+    <span *ngIf="riskstatementdata.IsDirectSend == '0'">否</span>
+  </div>
+</div>
+<div class="c-form-item clearfix">
+    <div class="c-input-title"><label>客户资金来源</label></div>
+    <div class="c-input-wrap">
+        <div class="m-select" *ngIf="riskstatementdata.EditOrView == 'edit'">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="riskstatementdata.CustMoneySource" name="CustMoneySource">
+                <option value=null>请选择</option>
+                <option *ngFor="let item of selectdata?.CustMoneySource" [ngValue]="item">{{item}}</option>
+            </select>
+        </div>
+        <div *ngIf="riskstatementdata.EditOrView == 'view'" style="line-height: 35px;">{{riskstatementdata.CustMoneySource}}</div>
+    </div>
+</div>
+<div class="c-form-item clearfix">
+    <div class="c-input-title"><label>最终用户资金来源</label></div>
+    <div class="c-input-wrap">
+        <div class="m-select" *ngIf="riskstatementdata.EditOrView == 'edit'">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="riskstatementdata.EndUserMoneySource" name="EndUserMoneySource">
+                <option value=null>请选择</option>
+                <option *ngFor="let item of selectdata?.EndUserMoneySource" [ngValue]="item">{{item}}</option>
+            </select>
+        </div>
+        <div *ngIf="riskstatementdata.EditOrView == 'view'" style="line-height: 35px;">{{riskstatementdata.EndUserMoneySource}}</div>
+    </div>
+</div>
+<div class="c-form-item-custom clearfix">
+  <div class="c-input-title"><label>提供项目真实性资料</label></div>
+  <div class="c-input-wrap c-wrap-out" style="line-height: 35px;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+    <input icheck type="radio" id="HasProjectRealityInfo1" name="HasProjectRealityInfo" [(ngModel)]="riskstatementdata.HasProjectRealityInfo" value="1">
+    <label>是</label>
+    <input icheck type="radio" id="HasProjectRealityInfo2" name="HasProjectRealityInfo" [(ngModel)]="riskstatementdata.HasProjectRealityInfo" value="0">
+    <label>否</label>
+    <input icheck type="checkbox" id="ProjectRealityInfoType1" name="ProjectRealityInfoType1" [(ngModel)]="riskstatementdata.ProjectRealityInfoType[0]['ischecked']" value="0">
+    <label>中标链接</label>
+    <input icheck type="checkbox" id="ProjectRealityInfoType2" name="ProjectRealityInfoType2" [(ngModel)]="riskstatementdata.ProjectRealityInfoType[1]['ischecked']" value="1">
+    <label>中标通知书</label>
+    <input icheck type="checkbox" id="ProjectRealityInfoType3" name="ProjectRealityInfoType3" [(ngModel)]="riskstatementdata.ProjectRealityInfoType[2]['ischecked']" value="2">
+    <label>下家合同</label>
+    <input icheck type="checkbox" id="ProjectRealityInfoType4" name="ProjectRealityInfoType4" [(ngModel)]="riskstatementdata.ProjectRealityInfoType[3]['ischecked']" value="3">
+    <label>用户说明</label>
+    <input icheck type="checkbox" id="ProjectRealityInfoType5" name="ProjectRealityInfoType5" [(ngModel)]="riskstatementdata.ProjectRealityInfoType[4]['ischecked']" value="4">
+    <label>其他</label>
+    <input type="text" name="ProjectRealityInfoOther" [(ngModel)]="riskstatementdata.ProjectRealityInfoOther" style="width:230px;">
+  </div>
+  <div class="c-input-wrap c-wrap-out" style="line-height: 25px;" *ngIf="riskstatementdata.EditOrView == 'view'">
+    <span style="padding-right:25px;" *ngIf="riskstatementdata.HasProjectRealityInfo == '1'">是</span>
+    <span style="padding-right:25px;" *ngIf="riskstatementdata.HasProjectRealityInfo == '0'">否</span>
+    <span *ngIf="riskstatementdata.ProjectRealityInfoType[0]['ischecked']">中标链接,</span>
+    <span *ngIf="riskstatementdata.ProjectRealityInfoType[1]['ischecked']">中标通知书,</span>
+    <span *ngIf="riskstatementdata.ProjectRealityInfoType[2]['ischecked']">下家合同,</span>
+    <span *ngIf="riskstatementdata.ProjectRealityInfoType[3]['ischecked']">用户说明,</span>
+    <span *ngIf="riskstatementdata.ProjectRealityInfoType[4]['ischecked']">其他</span>
+    <span style="padding-left:25px;">{{riskstatementdata.ProjectRealityInfoOther}}</span>
+  </div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title"><label>最终客户付款方式</label></div>
+    <div class="c-input-wrap" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <input type="text" name="EndUserPayforType" [(ngModel)]="riskstatementdata.EndUserPayforType">        
+    </div>
+    <div class="c-input-wrap" style="line-height: 25px;" *ngIf="riskstatementdata.EditOrView == 'view'">{{riskstatementdata.EndUserPayforType}}</div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title" style="width:100%;text-align: left;"><span class="c-form-need" *ngIf="riskstatementdata.EditOrView == 'edit'">*</span><label>合同条款中存在的风险隐患和把握、以及事业部对此单回款的把控方式</label></div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <textarea rows="3" class="m-textarea" name="RiskAndControlled" [(ngModel)]="riskstatementdata.RiskAndControlled" maxlength="300"></textarea>
+    </div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'view'">{{riskstatementdata.RiskAndControlled}}</div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title" style="width:100%;text-align: left;"><label>申请人对客户的评价：（客户实力，行业背景，业内口碑、资金情况、前期信用评价）</label></div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <textarea rows="3" class="m-textarea" name="CustomerEvaluation" [(ngModel)]="riskstatementdata.CustomerEvaluation" maxlength="300"></textarea>
+    </div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'view'">{{riskstatementdata.CustomerEvaluation}}</div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title" style="width:100%;text-align: left;"><label>客户付款流程</label></div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <textarea rows="3" class="m-textarea" name="CustPaymentProcess" [(ngModel)]="riskstatementdata.CustPaymentProcess" maxlength="300"></textarea>
+    </div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'view'">{{riskstatementdata.CustPaymentProcess}}</div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title" style="width:100%;text-align: left;"><label>项目履行实施安排、项目实施周期说明、项目竣工时间要求</label></div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <textarea rows="3" class="m-textarea" name="ProjectImplementation" [(ngModel)]="riskstatementdata.ProjectImplementation" maxlength="300"></textarea>
+    </div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'view'">{{riskstatementdata.ProjectImplementation}}</div>
+</div>
+<div class="c-form-item-custom clearfix">
+    <div class="c-input-title" style="width:100%;text-align: left;"><label>付款需要提交文件：</label></div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'edit'">
+        <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileNum]="5" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFilesRisk"
+        text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+    </div>
+    <div class="c-input-wrap" style="width:100%;" *ngIf="riskstatementdata.EditOrView == 'view'">
+        <ul>
+            <li *ngFor="let accessItem of riskstatementdata.AccessoryRisk" style="padding-left: 15px;">
+              <a (click)="onClickFile(accessItem.AccessoryURL)">
+                <i style="margin-right: 10px;" class="iqon-enclosure"></i>{{ accessItem?.AccessoryName }}
+              </a>
+            </li>
+          </ul>
+    </div>
+</div>

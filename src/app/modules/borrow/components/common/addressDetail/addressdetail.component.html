@@ -1,0 +1,56 @@
+<div style="overflow: auto;position: fixed;top: 0; right: 0;bottom: 0;left: 0;z-index: 100;padding-top: 7%;padding-left: 33%;background-color:rgba(0,0,0,0.5)">
+    <div style="width:450px;background-color:#fff;padding:20px">
+        <div class="m-table m-table1">
+            <table cellpadding="0" cellspacing="0" width="98%">
+                <tr>
+                    <td width="20%" class="m-text-weight">客户名称</td>
+                    <td>{{address.customerName}}</td>
+                </tr>
+                <tr>
+                    <td width="20%" class="m-text-weight">收货单位</td>
+                    <td>{{address.deliveryName}}</td>
+                </tr>
+                <tr>
+                    <td width="40%" class="m-text-weight">收货地址</td>
+                    <td>{{address.deliveryAddress}}</td>
+                </tr>
+                <tr>
+                    <td width="40%" class="m-text-weight">省份</td>
+                    <td>{{address.province}}</td>
+                </tr>
+                <tr>
+                    <td width="40%" class="m-text-weight">城市</td>
+                        <td>{{address.city}}</td>
+                </tr>
+                <tr>
+                    <td width="40%" class="m-text-weight">区(县)</td>
+                    <td>{{address.area}}</td>
+                </tr>
+
+                <tr>
+                    <td width="40%" class="m-text-weight">邮政编码</td>
+                    <td>{{address.zipCode}}</td>
+                </tr>
+
+                <tr>
+                    <td width="40%" class="m-text-weight">联系人</td>
+                    <td>{{address.contactName}}</td>
+                </tr>
+                <tr>
+                    <td width="40%" class="m-text-weight">联系电话</td>
+                    <td>{{address.contactTel}}</td>
+                </tr>
+
+                <tr>
+                    <td width="40%" class="m-text-weight">签收标准</td>
+                    <td>{{address.standarSign}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="addApp-submit-btn" style="margin-bottom: 0px;">
+            <div class="addApp-sub-btns">
+                <button class="m-btn-sketch" (click)="hideList()" align="center" style="margin-left:150px">返回</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+// 所有 查看/审批 页面
+.apply-progress .apply-p-left {
+    margin-right: 0px;
+}
+.apply-p-right {
+    position: relative;
+    overflow-x:hidden;
+}
+.apply-progress .apply-p-left .apply-p-infor {
+    min-height: 160px;
+}
+.mh280{
+    min-height: 280px !important;
+}
+.mt15{
+    margin-top: 12px !important;
+}
+.apply-progress .apply-p-left .apply-p-infor .m-exm-item {
+   width: 100%;
+}
+.apply-progress .apply-p-left .apply-p-infor .m-exm-item ul > li .m-exm-cont {
+    padding-left: 50px;
+}
+.clearfix { 
+      *zoom: 1; 
+    } 
+.clearfix:before,.clearfix:after {    
+      display: table;     
+      line-height: 0;     
+      content: "";    
+    } 
+.clearfix:after {        
+      clear: both;      
+    } 
+.m-text-center{
+    span{
+        font-weight: bold;
+        text-align: left;
+    }
+}
+.btn-content{
+    height: 45px;
+    margin:15px 20px;
+    overflow: hidden;
+    .font-small {
+        font-size: 12px!important;
+        margin-top: 1px;
+    }
+    .left {
+        float:left;
+        span {
+            color:#57b9f8;
+        }
+        .label-first {
+            margin:0 30px;
+        }
+    }
+    .right{
+        float:right;
+    }
+    .min-btn {
+        width: 88px;
+        height: 24px;
+        line-height: 24px;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+}
+.tp20{
+    text-align: left;
+    padding-left: 20px;
+    width: 10%;
+}
+.pdf {
+    width: 154.5px;
+    height: 13px;
+    font-family: MicrosoftYaHei;
+    font-size: 12px;
+    line-height: 2.67;
+    text-align: left;
+  }
+  .pdLi{
+      height: 30px;
+      line-height: 30px;
+  }
+  .btP10{
+      padding: 10px 0;
+  }
+  .tpContent{
+    display: inline-block;
+  }
+  .apply-p-left{
+     width: 80%;
+    /deep/ .apply-record {
+        margin: 10px 20px;
+    }
+  }
+  .cur-point{
+    cursor: pointer;  
+  }
+  .queto{
+    white-space:nowrap; 
+    overflow:hidden; 
+    text-overflow:ellipsis;
+  }
+  .warn-blue{
+      color: #4a9dd3;
+  }
+  .w100{
+      width: 100%;
+  }
+  .mt10{
+      margin-bottom: 10px;
+  }
+  .apply-finance-l{
+      padding-bottom: 0!important;
+      margin: 10px 20px 5px!important;
+      table{
+        margin-bottom:0!important;
+        tbody{
+            width: calc(100% + 1px);
+            // padding-bottom: 0!important;
+        }
+    } 
+  }
+
+  .addApply-container{
+    margin-left: 0;
+  }
+  .apply-progress{
+      margin: 0 20px 0 0;
+  }
+  .m-exm-item{
+      padding: 0 25px 15px!important;
+  }
+  .m-exm-half{
+    height: auto!important;
+    margin-top: 18px!important;
+  }
+  .btn-content{
+      height: auto;
+  }
+  .apply-finance-l{
+      padding-bottom: 0!important;
+  }
+  .w146 {
+      width: 146px;
+      width: 157px\0;
+  }
+  .w66 {
+      width: 66px;
+      width: 77px\0;
+  }
+  .w56 {
+    width:56px;
+    width:67px\0;
+  }
+  .margin-15 {
+      margin-right: 15px;
+  }

@@ -1,0 +1,132 @@
+<div>
+    <loading [show]="isLoading"></loading>
+    <div class="list-operate-part">
+        <button class="m-btn-success" (click)="toNewPipeline()">新增项目</button>
+    </div>
+    <div class="list-content-part">
+        <div class="list-search-part">
+            <div class="m-search-all" *ngIf="!highSearchShow">
+                <div class="m-search-high" (click)="highSearchShow=true">
+                    <i class="iqon-highsearch"></i> 高级搜索
+                </div>
+            </div>
+            <div class="m-search-open" *ngIf="highSearchShow" (click)="highSearchShow = false">
+                收起高级搜索
+            </div>
+            <div class="m-search-approval" *ngIf="highSearchShow">
+                <div class="m-search-approval-content">
+                    <div class="m-search-approval-query">
+                        <div class="item">
+                            <div class="title">项目名称</div>
+                            <div class="inputs">
+                                <input type="text" [(ngModel)]="searchData.ProjectName" name="ProjectName">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">客户名称</div>
+                            <div class="inputs">
+                                <input type="text" [(ngModel)]="searchData.CustomName" name="CustomName">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">项目编号</div>
+                            <div class="inputs">
+                                <input type="text" [(ngModel)]="searchData.ProjectNo" name="ProjectNo">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">销售员</div>
+                            <div class="inputs">
+                                <input type="text" [(ngModel)]="searchData.SellerItCode" name="SellerItCode">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="title">项目金额</div>
+                            <div class="inputs">
+                                <input type="text" [(ngModel)]="searchData.ProjectAmount" name="ProjectAmount">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-search-approval-btn">
+                        <button class="m-btn-confirm" (click)="searchNewList()">查询</button>
+                        <button class="m-btn-cancel" (click)="resetSearch()">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-display-part">
+            <div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'hideStyle': isDisplay}">
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">暂无相关数据</p>
+                    <p class="m-p-notice">点击“新建项目”新建数据吧~</p>
+                </div>
+            </div>
+            <div [ngClass]="{'hideStyle': !isDisplay}">
+                <table class="table table-hover table-list">
+                    <thead>
+                        <tr>
+                            <th *ngFor="let item of tableConfig">{{ item.title }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listData" (click)="editOrScan(item.ProjectState, item.ID)">
+                            <td [title]="item.ProjectNo">{{ item.ProjectNo }}</td>
+                            <td [title]="item.ProjectName">{{ item.ProjectName }}</td>
+                            <td [title]="item.CustomName">{{ item.CustomName }}</td>
+                            <td [title]="item.ProjectAmount">{{ item.ProjectAmount }}</td>
+                            <td [title]="item.SellerName">{{ item.SellerName }}</td>
+                            <td [title]="item.PreSignDate">{{ item.PreSignDate }}</td>
+                            <td [title]="item.UpdateTime">{{ item.UpdateTime }}</td>
+                            <td [title]="item.ProjectState">{{ item.ProjectState | pipelinePipe: 'projectProgress' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-footer">
+                    <iq-pager [data]="PageData" (onChange)="pagerChange($event)">
+
+                        <div class="page">
+                            <div class="page-wrap">
+                                <div class="page-size">
+                                    显示：
+                                    <a class="active">10</a>
+                                    <a>20</a>
+                                    <a>50</a>
+                                    条/页
+                                </div>
+                                <div class="page-all">
+                                    共41条
+                                </div>
+                                <div class="page-center">
+                                    <div class="pagination">
+                                        <ul>
+                                            <li>
+                                                <a class="disable">
+                                                    <i class="iqon-angle-left"></i>
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a>1</a>
+                                            </li>
+                                            <li>
+                                                <a class="">
+                                                    <i class="iqon-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="page-go">
+                                        到第
+                                        <input class="ng-pristine ng-valid ng-touched" min="1" type="text" max="1"> 页
+                                        <button class="m-btn-default" type="button">确定</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </iq-pager>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

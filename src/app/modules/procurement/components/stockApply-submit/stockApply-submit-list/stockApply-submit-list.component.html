@@ -1,0 +1,152 @@
+<loading [show]="loading"></loading>
+<div>
+    <div class="btn-content">
+
+        <div class="left m-fontStyle" *ngIf="orderType">
+            您将创建{{orderType}}采购订单！
+        </div>
+
+        <div class="right">
+            <button class="m-btn-confirm min-btn" (click)="deleteList()">批量删除</button>
+            <button class="m-btn-confirm min-btn" (click)="downloadTpl()">excel导入模板</button>
+            <button class="m-btn-confirm min-btn disabled-bag" (click)="doRemind()" *ngIf="!factory">批量上传</button>
+            <iq-file-upload class="min-btn" upType="0" [url]="fileUploadApi" [allowedFileType]="['xls']" [text]="'批量上传'" *ngIf="factory"
+                [showModel]="false" (onStartUpload)="isLoading($event)" (onSuccess)="uploadPurchase($event)"></iq-file-upload>
+            <button class="m-btn-confirm min-btn" (click)="showOrder()">查看采购订单</button>
+        </div>
+    </div>
+    <div class="addApp-ch-before">
+        <form #purchaseListForm="ngForm">
+            <table class="m-info-table">
+                <thead>
+                    <tr>
+                        <td style="width:41px"></td>
+                        <td style="width:60px"></td>
+                        <td class="material-number-w"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="w40"></td>
+                    </tr>
+                    <tr class="m-infor-tr">
+                        <th colspan="17">
+                            <span class="head-cont">物料数量合计 {{ numAmount }}</span>
+                            <span class="head-cont" *ngIf="!IsRMB">外币总金额 {{ _purchaseData.foreignAmount | number:"1.2"}}</span>
+                            <span class="head-cont">未税总金额 {{ _purchaseData.untaxAmount | number:"1.2"}}</span>
+                            <span class="head-cont">含税总金额 {{ _purchaseData.taxAmount | number:"1.2"}}</span>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th class="wp1" rowspan="2">
+                            <input type="checkbox" name="allcheck" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                                (onIndeterminate)="CheckIndeterminate($event)" (onCount)="checkedNum = $event">
+                        </th>
+                        <th class="add-w-b60" rowspan="2">序号</th>
+                        <th rowspan="2">
+                            <i class="addApp-form-tips">*</i>物料编号</th>
+                        <th rowspan="2">物料描述</th>
+                        <th rowspan="2">
+                            <i class="addApp-form-tips">*</i>数量</th>
+                        <th rowspan="2">
+                            <i class="addApp-form-tips">*</i>未税单价</th>
+                        <th rowspan="2">未税总价</th>
+                        <th rowspan="2">库存地</th>
+                        <th rowspan="2">需求跟踪号</th>
+                        <th rowspan="2">批次</th>
+                        <th rowspan="2">在途</th>
+                        <th rowspan="2">在库</th>
+                        <th rowspan="2">
+                            <i class="addApp-form-tips">*</i>积压</th>
+                        <th colspan="3" style="text-align:center;">清理计划</th>
+                        <th rowspan="2">
+                            <a class="m-text-center addApp-reduce plus cursor" [ngClass]="{'disabled-col': !factory}" (click)="addProcurementItem()">+</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips">*</i>当月</th>
+                        <th>
+                            <i class="addApp-form-tips">*</i>下月</th>
+                        <th>
+                            <i class="addApp-form-tips">*</i>下下月</th>
+                    </tr>
+                </thead>
+
+                <ng-template [ngIf]="_purchaseData.procurementList.length>0">
+                    <tbody>
+                        <tr *ngFor="let item of _purchaseData.procurementList;index as i; trackBystockApply">
+                            <td style="width:41px" class="wp1">
+                                <input name="check{{i}}" type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked">
+                            </td>
+                            <td class="m-text-center add-w-b60">{{ i+1 }}</td>
+                            <td class="material-number-w">
+                                <input class="m-infor-input little-input" type="text" name="materialNumber{{i}}" [ngClass]="{'m-input-warn':!item.MaterialNumber&&isSubmit}"
+                                    ngModel [(ngModel)]="item.MaterialNumber" required (blur)="getMaterialData(i,item.MaterialNumber)">
+                                <a class="m-text-center addApp-reduce plus hide">+</a>
+                            </td>
+                            <td>
+                                {{ item.MaterialDescription }}
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="count{{i}}" required [ngClass]="{'m-input-warn':!item.Count&&isSubmit}" ngModel
+                                    [(ngModel)]="item.Count" [onlyNumber]="item.Count" (ngModelChange)="calculateTotal(i)" (blur)="onPriceOrCountChange()">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="price{{i}}" required [ngClass]="{'m-input-warn':!item.Price&&isSubmit}" ngModel
+                                    [(ngModel)]="item.Price" [supplyZeroToTwoDecimal]="item.Price" (ngModelChange)="calculateTotal(i)" (blur)="onPriceOrCountChange()">
+                            </td>
+                            <td>
+                                {{ item.Amount | number:"1.2"}}
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" minlength=4 maxlength=4 name="storageLocation{{i}}" ngModel [(ngModel)]="item.StorageLocation"
+                                    [ngClass]="{'m-input-warn':((item.StorageLocation && item.StorageLocation.length != 4) || (!item.StorageLocation && item.InTransit==null)) && isSubmit}"
+                                    (blur)="getMaterialStockInfo(item.MaterialNumber,item.StorageLocation,item.Batch,i)">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="traceno{{i}}" maxlength=10 pattern="^[A-Za-z0-9]+$" ngModel [(ngModel)]="item.traceno"
+                                    (blur)="materialTraceno(i,item.traceno)">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="batch{{i}}" ngModel [(ngModel)]="item.Batch" [ngClass]="{'m-input-warn':!item.Batch && item.InTransit==null && isSubmit}"
+                                    (blur)="getMaterialStockInfo(item.MaterialNumber,item.StorageLocation,item.Batch,i)" conversionCase>
+                            </td>
+                            <td>{{ item.InTransit }}</td>
+                            <td>{{ item.InStock }}</td>
+                            <td>
+                                <input class="m-infor-input text-red" type="text" name="overStock{{i}}" [ngClass]="{'m-input-warn':!item.OverStock&&isSubmit}"
+                                    ngModel [(ngModel)]="item.OverStock" required [onlyNumber]="item.OverStock">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="currentMonth{{i}}" [ngClass]="{'m-input-warn':!item.CurrentMonth&&isSubmit}"
+                                    ngModel [(ngModel)]="item.CurrentMonth" required [onlyNumber]="item.CurrentMonth">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="nextMonth{{i}}" [ngClass]="{'m-input-warn':!item.NextMonth&&isSubmit}" ngModel
+                                    [(ngModel)]="item.NextMonth" required [onlyNumber]="item.NextMonth">
+                            </td>
+                            <td>
+                                <input class="m-infor-input" type="text" name="afterNextMonth{{i}}" [ngClass]="{'m-input-warn':!item.AfterNextMonth&&isSubmit}"
+                                    ngModel [(ngModel)]="item.AfterNextMonth" required [onlyNumber]="item.AfterNextMonth">
+                            </td>
+                            <td style="width:39.5px">
+                                <a class="m-text-center addApp-reduce cursor" (click)="delProcurementItem(i)">-</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+            </table>
+        </form>
+    </div>
+</div>

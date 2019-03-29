@@ -1,0 +1,56 @@
+.edit-HUAWEI-typeList {
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-height: 500px;
+  z-index: 2100;
+  background-color: #fff;
+  position: absolute;
+
+  table {
+    width: 90%;
+    margin: 10px auto 20px;
+
+    .a_point {
+      cursor: pointer;
+    }
+
+    tbody {
+      display: block;
+      height: 280px;
+      overflow: auto;
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border: none;
+      }
+      
+      td:nth-child(1){
+          width: 10%;
+      }
+
+      td{
+          border-top: none;
+      }
+    }
+
+    thead{
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  .edit-HUAWEI-typeList-title {
+    margin: 10px auto 0;
+    width: 90%;
+    font-size: 16px;
+  }
+
+  .edit-HUAWEI-typeList-button {
+    margin: 20px auto 20px;
+    text-align: center;
+  }
+}

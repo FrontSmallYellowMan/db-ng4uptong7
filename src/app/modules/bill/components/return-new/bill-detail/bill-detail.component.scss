@@ -1,0 +1,38 @@
+.redWarn{
+    color: red;
+}
+.addApp-base-list{
+	.addApp-form-item{
+		.addApp-form-input{
+			width:30%;
+		}
+	}
+}
+.width100{
+    width: 100%;
+}
+.m-centerr{
+	    text-align: center !important;
+	    th{
+	    text-align: center !important;
+	    }
+	    td{
+	    text-align: center !important;
+	        padding: 0;
+		    height: 50px;
+		    line-height: 50px;
+	    }
+}
+.width65{
+	width: 65px;
+}
+.width100{
+	width: 100px;
+}
+.m-infor-tr{
+	background-color: #f5f7fa;
+}
+.table thead > tr > th {
+	border-right: 1px solid #f5f7fa;
+	line-height: 30px;
+}

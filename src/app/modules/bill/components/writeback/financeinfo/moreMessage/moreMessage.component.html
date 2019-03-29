@@ -1,0 +1,54 @@
+
+<!--1.2.2发票号或订单号-->
+<div style="margin: auto; overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100;background-color:rgba(0,0,0,0.5)">
+  <div class="m-order-number" style="width:856px">
+    <div class="modal-header m-dialog-head">
+      <span>外部发票号</span>
+      <i class="iqon-close" (click) = "messageShow()"></i>
+    </div>
+    <div class="modal-body clearfix">
+      <div class="m-order-table">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th class="checkbox">
+              <input indeterminate="" icheck [ngModel]="DBFlag" type="checkbox" (onClick)="DBSelect(modalDataChild)">
+            </th>
+            <th>客户编号</th>
+            <th style="width:200px">客户名称</th>
+            <th>外部发票号</th>
+            <th>系统发票号</th>
+            <th>订单号</th>
+            <th class="text-right">金额</th>
+            <!--<th>销售员</th>-->
+          </tr>
+          </thead>
+          <tbody>           
+          <tr *ngFor="let item of modalDataChild">
+            <td class="checkbox">
+              <input icheck type="checkbox" [(ngModel)] = item.select (onClick)="DBItemSelect(modalDataChild,item)">
+            </td>
+            <td>{{item.originalcustomercode}}</td>
+            <td>{{item.originalcustomer}}</td>
+            <td>{{item.externalinvoiceno}}</td>
+            <td>{{item.internalinvoiceno}}</td>
+            <td>{{item.orderno}}</td>
+            <td class="text-right">{{item.originalmoney}}</td>
+            <!--<td>
+              <div class="m-user-info">
+                <span class="m-user-name">纪永凤</span>
+                <span class="m-user-ename">jiyf</span>
+              </div>
+            </td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="m-btn-confirm" (click)=" messageSend(modalDataChild)">确定</button>
+      <button class="m-btn-cancel" (click) = "messageShow()">取消</button>
+    </div>
+
+  </div>
+</div>

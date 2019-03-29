@@ -1,0 +1,71 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+</div>
+<div class="m-overclass">
+
+  <div class="m-list-menu">
+
+    <div class="m-search-more">
+      <div class="form">
+        <div class="m-search-item">
+          <label>关键字查询</label>
+          <input name="keyword" placeholder="搜索合同编号,客户名称,申请人,订单金额" type="text" [(ngModel)]="reqGetOrderListData.SearchKey" (keyup.enter)="search()">
+
+          <button type="button" class="m-btn-confirm research" style="margin:0 0 0 10px;" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)="reset()">重置</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" [ngClass]="{hide:viewList.length>0}">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <!-- <p class="m-p-notice">快来点击右上角“新建合同物料”按钮，开始新建物料吧</p> -->
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont" [ngClass]="{hide:viewList.length===0}" style="overflow-x:auto">
+    <table class="table table-hover table-list" style="table-layout:auto">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>客户名称</th>
+          <th>PO号</th>
+          <th>合同编号</th>
+          <th>订单类型</th>
+          <th>付款条件</th>
+          <th>订单金额</th>
+          <th>返还金额</th>
+          <th>销售员</th>
+          <th>创建人</th>
+          <th>创建日期</th>
+          <th>验证状态</th>
+          <th>验证预收款</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of viewList;index as i">
+          <td>{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+          <td>{{item.CustomerName}}</td>
+          <td>{{item.POCode}}</td>
+          <td>{{item.ContractCode}}</td>
+          <td>{{item.OrderTypeId | orderType:'orderType'}}</td>
+          <td>{{item.PaymentTerms}}</td>
+          <td>{{item.SalesAmountTotal | number:"1.2"}}</td>
+          <td>{{item.RebateAmountTotal | number:"1.2"}}</td>
+          <td>{{item.SalesName}}</td>
+          <td>{{item.CreateName }}</td>
+          <td>{{item.CreatedTime | iqDate:'YYYY-MM-DD'}}</td>
+          <td>{{item.IsChoosePrePayment?'需要':'不需要'}}</td>
+          <td><span class="m-btn-need" [ngClass]="{'btnDisabled':item.IsChoosePrePayment}" (click)="configIsAdvanceCollectionValidate(i,true)">需要</span><span class="m-btn-need" [ngClass]="{'btnDisabled':!item.IsChoosePrePayment}" (click)="configIsAdvanceCollectionValidate(i,false)">不需要</span></td>        
+        </tr>
+      </tbody>
+    </table>
+    <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  </div>
+</div>

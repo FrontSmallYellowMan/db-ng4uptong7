@@ -1,0 +1,303 @@
+<form #form="ngForm">
+  <div class="apply-p-left">
+
+  <div class="m-apply-exm2 m-srs">
+    <h3>新建物料主数据修改</h3>
+    <div class="m-exm">
+      <div class="m-exm-item">
+        <div><span class="circleStyle">●</span>请只针对需要变更的字段进行修改</div>
+      </div>
+
+      <div class="m-exm-item" *ngIf="isEdit">
+        <ul class="info-uls">
+          <!-- <li class="m-cnm-form" style="width: 100%">
+            <label>申请人</label>
+            <iq-person-select [(ngModel)]="applicantInformation" [max]="1" name="applyName"></iq-person-select>
+          </li> -->
+
+          <li class="m-cnm-form m-cnm-tips">
+            <label><span>*</span>ERP物料号</label>
+            <input type="text" name="MaterialERPCode" required #MaterialERPCode="ngModel"  [(ngModel)]="searchOriginalData.MaterialERPCode" required [ngClass]="{'m-input-warn':MaterialERPCode.invalid && (MaterialERPCode.touched||isSubmit)}" placeholder="-请填写ERP物料号" trim>
+            <p class="m-p-warn errStyle" *ngIf="MaterialERPCode.invalid && (MaterialERPCode.touched||isSubmit)">请填写ERP物料编号</p>                     
+            </li>
+          <li class="m-cnm-form m-cnm-tips">
+            <label><span>*</span>工厂</label>
+            <!-- <div class="m-select"> -->
+              <!-- <my-select [(ngModel)]="allFactory_Old" tabName="1" [required]="isSubmit" [placeHolder]="'-请选择工厂'" name="Factory" #Factory="ngModel" ></my-select>  -->
+              <input type="text" required placeholder="-请填写工厂" #Factory_Old="ngModel" name="Factory_Old" [(ngModel)]="searchOriginalData.Factory_Old" [ngClass]="{'m-input-warn':Factory_Old.invalid && (Factory_Old.touched||isSubmit)}" maxlength="4" (blur)="searchOriginalData.Factory_Old=searchOriginalData.Factory_Old?.toUpperCase()" trim>
+              <!-- </div> -->
+            <p class="m-p-warn errStyle" *ngIf="Factory_Old.invalid && (Factory_Old.touched||isSubmit)">请选择工厂</p>          
+          </li>
+        </ul>
+        <button class="m-btn-assist-1 m-btn-refer" (click)="searchData()" type="button">查询</button>
+      </div>
+
+      <!--当不是新建物料主数据修改时显示  -->
+      <div class="m-dm-unEdit" *ngIf="!isEdit">
+        <ul>
+          <li class="m-cnm-form">
+            <label>申请人：</label>         
+            <span>{{materielData.ApplyName}}</span>
+          </li>
+
+          <li class="m-cnm-form m-cnm-tips">
+            <label>ERP物料号：</label>
+            <span>{{materielData.MaterialERPCode}}</span> 
+          </li>
+          <li class="m-cnm-form m-cnm-tips">
+            <label>工厂：</label>
+              <span>{{materielData.Factory_Old}}&nbsp;&nbsp;&nbsp;{{materielData.FactoryName_Old}}</span>
+            </li>
+        </ul>
+      </div>
+
+      <div class="m-exm-item">
+        <table class="m-info-table">
+          <thead>
+            <tr>
+              <th width="20%">字段</th>
+              <th width="30%">修改前</th>
+              <th width="50%">修改后</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>物料中文名称</td>
+              <td>{{materielData.MaterialDescriptionCN_Old}}</td>
+              <td *ngIf="!unListEdit"> 
+                <input [(ngModel)]="materielData.MaterialDescriptionCN" type="text" name="MaterialDescription" #MaterialDescription="ngModel"
+                  placeholder="请填写物料描述（中文），不超过40个字符" maxlength="40" pattern="[\w\u4E00-\u9FFF（）()-_—\/\s,，]*[\u4E00-\u9FFF\s]+[\w（）()-_\/\s,，]*" trim trimReg="/(^\s*)|([\s?><@#$%^&*]*$)/g"> 
+                  <p class="m-p-warn-style2" *ngIf="MaterialDescription.invalid && (MaterialDescription.touched||isSubmit)">描述中必须包含中文，不能包含特殊字符</p>
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{materielData.MaterialDescriptionCN}}
+              </td>
+            </tr>
+            <tr>
+              <td>物料英文名称</td>
+              <td>{{materielData.MaterialDescriptionEN_Old}}</td>
+              <td *ngIf="!unListEdit">
+                <!-- <input [(ngModel)]="materielData.MaterialDescriptionEN" type="text" name="MaterialDescriptionEN" #MaterialDescriptionEN="ngModel"
+                  placeholder="请填写物料描述（英文），不超过40个字符" maxlength="40" pattern="^([0-9a-zA-Z-_\/()（）]+\s*)*$" trim trimReg="/(^\s*)|(\s*$)/g"> 
+                  <p class="m-p-warn-style2" *ngIf="MaterialDescriptionEN.invalid && (MaterialDescriptionEN.touched||isSubmit)" >描述中不能包含中文和特殊字符</p> -->
+
+                  <input [(ngModel)]="materielData.MaterialDescriptionEN" type="text" name="MaterialDescriptionEN" #MaterialDescriptionEN="ngModel"
+                  placeholder="请填写物料描述（英文），不超过40个字符" maxlength="40" pattern="^([0-9a-zA-Z-_\/()（）]+\s*)*$" trim trimReg="/(^\s*)|([\s?><@#$%^&*]*$)/g"> 
+                  <p class="m-p-warn-style2" *ngIf="MaterialDescriptionEN.invalid && (MaterialDescriptionEN.touched||isSubmit)" >描述中不能包含中文和特殊字符</p>
+                  
+                </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{materielData.MaterialDescriptionEN}}
+              </td>
+            </tr>
+            <tr>
+              <td>品牌</td>
+              <td>{{materielData.MaterBrandName_Old}}</td>
+              <td *ngIf="!unListEdit">
+                  <my-select [(ngModel)]="allBrand" tabName="4" name="Brand" #Brand="ngModel" [placeHolder]="'-请选择品牌'"></my-select> 
+                  <span class="clearButton-style" (click)="clearContent('allBrand')">清除</span>
+                  </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{allBrand[1]}}
+              </td>
+            </tr>
+            <tr>
+              <td>产品层次</td>
+              <td>{{materielData.ProductLevelName_Old}}</td>
+              <td *ngIf="!unListEdit">
+                  <my-select [(ngModel)]="allProductLevel" tabName="12" name="ProductLevel" [placeHolder]="'-请选择产品层次'"></my-select> 
+                  <span class="clearButton-style" (click)="clearContent('allProductLevel')">清除</span>                 
+                  </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{allProductLevel[1]}}
+              </td>
+            </tr>
+            <tr>
+              <td>税收分类</td>
+              <td>{{materielData.TaxTypeID_Old}} {{materielData.TaxTypeName_Old}}</td>
+              <td *ngIf="!unListEdit">
+                  <my-select [(ngModel)]="allTaxType" tabName="8" [required]="isSubmit" name="TaxTypeId" #TaxTypeId="ngModel" [placeHolder]="'-请选择税收分类'" ></my-select>
+                  <!-- <my-select [(ngModel)]="allTaxClassifications" tabName="10" name="TaxClassifications" #TaxClassifications="ngModel"
+                    [placeHolder]="'-请选择税收分类'"></my-select>  -->
+                  <span class="clearButton-style" (click)="clearContent('allTaxType')">清除</span>                 
+                  
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                <!-- {{allTaxType[0]}} {{allTaxType[1]}} -->
+                {{materielData.TaxTypeId}} {{materielData.TaxTypeName}}
+              </td>
+            </tr>
+            <tr>
+              <td>供应商物料编号</td>
+              <td>{{materielData.SupplyMaterialNumber_Old}}</td>
+              <td *ngIf="!unListEdit">
+                  <input [(ngModel)]="materielData.SupplyMaterialNumber" type="text" name="SupplyMaterialNumber" #SupplyMaterialNumber="ngModel"
+                    placeholder="请填写供应商物料编号，长度不超过18个字符" maxlength="18" trim trimReg="/(^\s*)|(\s*$)/g"> 
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{materielData.SupplyMaterialNumber}}
+              </td>
+            </tr>
+            <tr>
+              <td>序列号参数</td>
+              <td>{{materielData.SerialNumParameter_Old}} {{materielData.SerialNumParameterName_Old}}</td>
+              <td *ngIf="!unListEdit">
+                  <my-select [(ngModel)]="allSerialNumParameter" tabName="7"  name="SerialNumParameter" #SerialNumParameter="ngModel"
+                    [placeHolder]="'-请选择序列号参数'"></my-select>
+                    <span class="clearButton-style" (click)="clearContent('allSerialNumParameter')">清除</span>                                   
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{allSerialNumParameter[0]}} {{allSerialNumParameter[1]}}
+              </td>
+            </tr>
+            <tr>
+              <td>可用性检查</td>
+              <td>{{materielData.AvailabilityCheckingName_Old}}</td>
+              <td *ngIf="!unListEdit">             
+                  <my-select [(ngModel)]="allAvailabilityChecking" tabName="5"  name="AvailabilityChecking" #AvailabilityChecking="ngModel"
+                    [placeHolder]="'-请选择可用性检查'"></my-select> 
+                  <span class="clearButton-style" (click)="clearContent('allAvailabilityChecking')">清除</span>                 
+                  
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{allAvailabilityChecking[1]}}
+              </td>
+            </tr>
+            <tr>
+              <td>销售单位</td>
+              <td>{{materielData.SalesUnitName_Old}}</td>
+              <td *ngIf="!unListEdit">
+                <my-select [(ngModel)]="allBaseUnitOfMeasure" tabName="9"  name="SalesUnitName" #SalesUnitName="ngModel" [placeHolder]="'-请选择基本计量单位'" ></my-select>
+                <span class="clearButton-style" (click)="clearContent('allBaseUnitOfMeasure')">清除</span>                 
+                
+                <!-- <input type="text" name="SalesUnit" [ngModel]="materielData.SalesUnitName"> -->
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{allBaseUnitOfMeasure[1]}}
+              </td>
+            </tr>
+            <tr>
+              <td>批次管理</td>
+              <td><input icheck type="checkbox" name="BatchManagement" [(ngModel)]="materielData.BatchManagement" [disabled]="unListEdit"><span class="input-close" >X</span></td>
+              <td *ngIf="!unListEdit">
+                <div class="info-inputs" *ngIf="materielData.BatchManagement">
+                  <p><span>批次：</span><input type="text" name="IsBatchManageName" [required]="isSubmit" #IsBatchManageName="ngModel" [(ngModel)]="materielData.BatchCode" [ngClass]="{'m-input-warn':IsBatchManageName.invalid&&(IsBatchManageName.touched||isSubmit)}" trim conversionCase></p>
+                  <p><span>移动平均价：</span>
+                    <input [(ngModel)]="materielData.MovingAveragePrice" [required]="isSubmit" [ngClass]="{'m-input-warn':MovingAveragePrice.invalid&&(MovingAveragePrice.touched||isSubmit)}" type="text" name="MovingAveragePrice"  #MovingAveragePrice="ngModel" placeholder="请保留两位小数" pattern="^[0-9]\d*[.]{1}\d{2}$" (blur)="addZero()" trim> 元</p>        
+                  <!-- <p class="m-p-warn-style1"  *ngIf="MovingAveragePrice.invalid && (MovingAveragePrice.touched || isSubmit)">请保留两位小数</p> -->
+
+                </div>
+
+              </td>
+              <td *ngIf="unListEdit">
+                <div class="info-inputs" *ngIf="materielData.BatchManagement">
+                  <p><span>批次：</span>{{materielData.BatchCode}}</p>
+                  <p><span>移动平均价：</span>
+                    {{materielData.MovingAveragePrice}}元</p>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>规格型号</td>
+              <td>
+                <input icheck type="radio" name="gender" [(ngModel)]="materielData.IsSpecifications" value="1" [disabled]="unListEdit">
+                <label for="radio1">是</label>
+                <input icheck type="radio" name="gender" [(ngModel)]="materielData.IsSpecifications" value="0" [disabled]="unListEdit">
+                <label for="radio2">否</label>
+              </td>
+              <td *ngIf="!unListEdit">
+                <input type="text" name="Specifications" #Specifications="ngModel" placeholder="请填写规格型号" [(ngModel)]="materielData.Specifications" *ngIf="materielData.IsSpecifications=='1'?true:fasle" maxlength="40" [required]="materielData.IsSpecifications=='1'&&isSubmit" [ngClass]="{'m-input-warn':materielData.IsSpecifications==='1'&&(Specifications.invalid&&(Specifications.touched||isSubmit))}"> 
+                <!-- <p class="m-p-warn-style2" *ngIf="Specifications?.invalid && (Specifications?.touched||isSubmit)" >请填写规格型号</p>                  -->
+              </td>
+              <td *ngIf="unListEdit"><!--当状态为不可编辑时显示-->
+                {{materielData.Specifications}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!--审批人信息-->
+    <div class="personStyle" *ngIf="materielData.ApplicationState=='0'||materielData.ApplicationState==undefined||(materielData.ApplicationState=='3'&&examineState.TaskId==undefined)">
+
+      <div class="m-list-head">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="addApp-base-infor">
+        <ul class="addApp-base-list">
+
+          <li class="addApp-form-item w-full" style="margin:0;">
+            <span>一级预审</span>
+            <iq-person-select [(ngModel)]="firstPerson" [max]="1" (ngModelChange)="getPersonInfor(firstPerson)" name="firstPerson"></iq-person-select>
+            <div *ngIf="firstPerson.length==0" class="m-approval-warn">
+              请选择一级预审人
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+    <!--审批人信息 end-->
+
+    <!--审批记录 -->
+    <div class="examineRecord" *ngIf="showExamine">
+    
+      <div class="m-cnm-title">
+        <h5>审批记录</h5>
+      </div>
+
+      <ul class="examineRecordList">
+        <li *ngFor="let list of history">
+          <div>{{list.nodename}}</div>
+          <div><img alt="纪永凤" class="m-user-img" src="assets/default-user.png">{{list.user}}</div>
+          <div>{{list.auditime}}</div>
+          <div>{{list.approveresult}}&nbsp;&nbsp;&nbsp;&nbsp;{{list.taskopinions}}</div>
+        </li>
+      </ul>
+
+    </div>
+
+    <!--审批意见 -->
+    <div class="examineView" *ngIf="myState=='e'&&(materielData.ApplicationState=='1')">
+    
+      <div class="m-dm-title">
+        <h5>审批意见</h5>
+      </div>
+
+        <textarea rows="" cols="" placeholder="请填写审批意见" class="textareaStyle" name="examineView" [(ngModel)]="examineState.TaskOpinion" required #examineView="ngModel"></textarea> 
+
+    </div>
+    <div class="m-commonly-btn" *ngIf="materielData.ApplicationState=='0'||materielData.ApplicationState==undefined||(materielData.ApplicationState=='3'&&examineState.TaskId==undefined)">
+        <button class="m-btn-confirm" (click)="tempSave(1)" type="button">提交</button>
+        <button class="m-btn-default m-btn-tempsave" (click)="tempSave(0)" type="button">暂存</button>
+        <button class="m-btn-cancel2" (click)="cancel()" type="button">取消</button>
+    </div>
+
+      <div class="m-commonly-btn" *ngIf="materielData.ApplicationState=='1'&&myState=='e'&&(!showCloss)">
+        <button class="m-btn-confirm" (click)="examine(0)" type="button">同意</button>
+        <button class="m-btn-default m-btn-tempsave" (click)="examine(1)" type="button">驳回</button>
+        <button class="m-btn-cancel2" (click)="cancel()" type="button">取消</button>
+      </div>
+
+        
+        <div class="m-commonly-btn" *ngIf="showCloss||materielData.ApplicationState=='2'||(materielData.ApplicationState=='1'&&myState=='a')||(materielData.ApplicationState=='2'&&myState=='a')||(materielData.ApplicationState=='2'&&myState=='e')||(materielData.ApplicationState=='3'&&examineState.TaskId!=undefined)">
+        <button type="button" class="m-btn-default m-btn-tempsave" (click)="cancel()">关闭</button>
+      </div>
+  </div>
+
+  </div>
+  <!--审批过程 -->
+  <div class="apply-p-right" *ngIf="materielData.ApplicationState=='0'||materielData.ApplicationState==undefined||(materielData.ApplicationState=='3'&&examineState.TaskId==undefined)">
+    <iq-apply-modules [applyState]=applyStateCode [approvalPerson]="approvalPerson"></iq-apply-modules>
+  </div>
+  <div class="apply-p-right" *ngIf="showCloss||materielData.ApplicationState=='1'||materielData.ApplicationState=='2'||(materielData.ApplicationState=='1'&&myState=='a')||(materielData.ApplicationState=='2'&&myState=='a')||(materielData.ApplicationState=='2'&&myState=='e')||(materielData.ApplicationState=='3'&&examineState.TaskId!=undefined)">
+    <db-wfview #wfView></db-wfview>
+    </div>
+</form>
+
+
+
+
+

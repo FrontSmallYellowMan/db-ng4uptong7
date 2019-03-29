@@ -1,0 +1,27 @@
+<div class="sc-relieve">
+  <form #form="ngForm">
+    <div class="ud-relieve-content">
+      <ul>
+        <li class="clearfix">
+          <div class="item-title">
+            解除原因<span style="color:red;">*</span>
+          </div>
+          <div class="item-content">
+            <textarea class="m-textarea" name="RelieveReason" rows="3" maxlength="300" [(ngModel)]="relieveContractData.RelieveReason"
+              name="RelieveReason" #RelieveReason="ngModel" placeholder="-解除原因" [ngClass]="{'m-input-warn':(RelieveReason.touched || form.submitted) && RelieveReason.invalid}"
+              required></textarea>
+          </div>
+        </li>
+        <li class="clearfix">
+            <iq-file-upload upType="1" [url]="reAccessoryapi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+            text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+        </li>
+      </ul>
+      <div class="ud-relieve-footer">
+        <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+        <button class="m-btn-refuse m-btn-common" (click)="saveRelieveContract()">保存草稿</button>
+        <button class="m-btn-agree" (click)="sumitRelieveContract()">提交</button>
+      </div>
+    </div>
+  </form>
+</div>

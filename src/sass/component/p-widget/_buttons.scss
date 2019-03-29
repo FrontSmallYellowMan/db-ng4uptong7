@@ -1,0 +1,169 @@
+/*按钮 */
+@mixin m-btn($backgroundColor){
+  text-align: center;
+  height: 35px;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  transition: all .7s;
+  font-size: 14px;
+  overflow: hidden;
+  background-color: $backgroundColor;
+
+  >i{
+    margin-right: 5px;
+    font-size: 12px;
+    font-style: normal;
+  }
+
+  &:hover{
+    background-color: $backgroundColor * 0.85;
+  }
+}
+
+
+.m-btn-default{
+  @include m-btn(#fff);
+  padding: 0 15px;
+  border: 1px solid #e2e2e2;
+  color: $def-font1-color;
+  //background-color: #fff;
+}
+
+.m-btn-success{
+  @include m-btn($def-assist1-color);
+  min-width: 150px;
+  line-height: 35px;
+  //background-color: $def-assist1-color;
+}
+
+.m-btn-warn{
+  @include m-btn($def-warn-color);
+  min-width: 150px;
+  //background-color: $def-warn-color;
+}
+
+.m-btn-disable{
+  @include m-btn($def-color1);
+  min-width: 150px;
+  background-color: $def-color1 !important;
+  cursor: not-allowed;
+
+  &:hover{
+    transform: none;
+  }
+}
+
+.m-btn-text{
+  border: none;
+  color: $def-font1-color;
+  background-color: transparent;
+}
+
+@mixin btn-main($padding, $height, $font-size){
+  @include m-btn($btn-light-green);
+  padding: 0 $padding;
+  height: $height;
+  line-height: $height;
+  font-size: $font-size;
+  //background-color:$btn-light-green;
+}
+
+.m-btn-main-1{
+  @include btn-main(70px, 45px, 14px);
+}
+
+.m-btn-main-2{
+  @include btn-main(70px, 35px, 14px);
+}
+
+.m-btn-main-3{
+  @include btn-main(50px, 30px, 12px);
+}
+
+.m-btn-main-4{
+  @include btn-main(32px, 24px, 12px);
+}
+
+@mixin btn-assist($padding, $height, $font-size){
+  @include m-btn($btn-sky-blue);
+  padding: 0 $padding;
+  height: $height;
+  line-height: $height;
+  font-size: $font-size;
+  //background-color:$btn-sky-blue;
+}
+
+.m-btn-assist-1{
+  @include btn-assist(30px, 45px, 14px);
+}
+
+.m-btn-assist-2{
+  @include btn-assist(30px, 35px, 14px);
+}
+
+.m-btn-assist-3{
+  @include btn-assist(20px, 30px, 12px);
+}
+
+.m-btn-assist-4{
+  @include btn-assist(14px, 24px, 12px);
+}
+
+@mixin btn-operate($width, $height, $bgColor){
+  @include m-btn($bgColor);
+  padding:0;
+  width: $width;
+  height: $height;
+  //background-color: $bgColor;
+}
+.m-btn-prev{
+  @include btn-operate(100px, 45px, $def-main-color);
+}
+
+.m-btn-next{
+  @include btn-operate(180px, 45px, $def-assist1-color);
+}
+
+.m-btn-agree{
+  @include btn-operate(168px, 45px, $def-assist1-color);
+}
+
+.m-btn-refuse{
+  @include btn-operate(86px, 45px, $def-main-color);
+}
+
+.m-btn-confirm{
+  @include btn-operate(148px, 35px, $def-main-color);
+}
+
+.m-btn-cancel{
+  @include btn-operate(78px, 35px, #fff);
+  color: $def-font1-color;
+  border: solid 1px $def-link1-color;
+}
+
+.m-btn-cancel2{
+  @include btn-operate(78px, 35px, transparent);
+  color: $def-font1-color;
+
+  &:hover{
+    transform: none;
+  }
+}
+
+
+.m-btn-choose{
+  display: inline-block;
+  position: relative;
+
+  &:hover .m-item-choose{
+    display: block;
+  }
+
+  .m-item-choose{
+    display: none;
+    width: 100%;
+    min-width: 180px;
+  }
+}

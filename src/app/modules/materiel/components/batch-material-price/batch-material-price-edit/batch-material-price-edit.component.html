@@ -1,0 +1,134 @@
+<loading [show]="loading"></loading>
+<div class="m-main" [ngClass]="{'enterAnimation':isEnter,'overAnimation':!isEnter}">
+
+  <form #form="ngForm">
+    <h4>{{pageTitle}}</h4>
+
+    <div class="m-main-content clearfix">
+
+      <!-- 新建物料批次价格维护 -->
+      <div class="m-form-content">
+
+        <h5 class="m-form-content-title">申请信息</h5>
+
+        <div class="m-form-content-items">
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>申请人</label>
+            <div class="m-form-text">
+              <span>{{userInfo.userCN}}
+                <i>{{userInfo.userEN}}</i>
+              </span>
+            </div>
+          </div>
+
+          <div class="m-form-content-item">
+            <label>
+              <i class="m-requiredMark">*</i>申请日期</label>
+            <div class="m-form-text">
+              <span>{{applyTime|iqDate:'YYYY-MM-DD'}}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 物料列表 -->
+      <div class="m-form-content">
+
+        <h5 class="m-form-content-title">维护物料信息
+          <span>提醒：填写或上传数据不能超过100条，超过100条请联系ERP工程师处理</span>
+        </h5>
+
+        <div class="m-material-button" [class.hideButton]="notEdit">
+          <button class="m-btn-confirm" (click)="getTamplate()">模板下载</button>
+          <iq-file-upload upType="0" [url]="uploadFileAPI" text="excel导入" [allowedFileType]="['xls']" (onSuccess)="fileUploadSuccess($event)"
+                [showModel]="false" (onStartUpload)="isLoading($event)"></iq-file-upload>
+          <button class="m-btn-confirm" (click)="resetMaterialList()">清空信息</button>
+        </div>
+
+        <div class="m-form-table-box">
+
+          <table class="m-form-table">
+            <tr>
+              <th width="5%">序号</th>
+              <th width="10%">
+                <i class="m-required-color">*</i>物料代码</th>
+              <th width="10%">
+                <i class="m-required-color">*</i>工厂</th>
+              <th width="15%">
+                <i class="m-required-color">*</i>批次</th>
+              <th width="10%">
+                <i class="m-required-color">*</i>移动平均价</th>
+              <th width="45%">失败原因</th>
+              <th width="5%" (click)="addMaterial()" *ngIf="!notEdit">
+                <i class="iqon-add"></i>
+              </th>
+              <th width="5%" *ngIf="notEdit">
+                <i class="iqon-add iqon-disabled"></i>
+              </th>
+            </tr>
+            <tr *ngFor="let item of submitData.PriceChangeList; index as i">
+              <td>{{i+1}}</td>
+              <td *ngIf="!notEdit">
+                <input type="text" only-number onlyNumberSeveralDigits='0' [(ngModel)]="item.MaterialCode" [name]="'MaterialCode'+item.signId" [attr.name]="'MaterialCode'+item.signId" required #MaterialCode='ngModel' [ngClass]="{'m-input-warn':MaterialCode.invalid&&(MaterialCode.touched||isSubmit)}" pattern="[0-9]*" (blur)="textMaterialIdentical(i)">
+              </td>
+              <td *ngIf="notEdit">
+               {{item.MaterialCode}}
+              </td>
+              <td *ngIf="!notEdit">
+                <input type="text" maxlength="4" trim trimReg="/[^\w$]/g" conversionCase [(ngModel)]="item.Factory" [name]="'FactoryCode'+item.signId" [attr.name]="'FactoryCode'+item.signId" required #FactoryCode='ngModel' [ngClass]="{'m-input-warn':FactoryCode.invalid&&(FactoryCode.touched||isSubmit)}" pattern="[0-9a-zA-Z]{4}" (blur)="textMaterialIdentical(i)">
+              </td>
+              <td *ngIf="notEdit">
+                {{item.Factory}}
+              </td>
+              <td *ngIf="!notEdit">
+                <input type="text" maxlength="10" trim conversionCase [(ngModel)]="item.Batch" [name]="'Batch'+item.signId" [attr.name]="'Batch'+item.signId" required #Batch='ngModel' [ngClass]="{'m-input-warn':Batch.invalid&&(Batch.touched||isSubmit)}" pattern="[0-9a-zA-Z]{1,10}" (blur)="textMaterialIdentical(i)">
+              </td>
+              <td *ngIf="notEdit">
+               {{item.Batch}}
+              </td>
+              <td *ngIf="!notEdit">
+                <input type="text" only-number [(ngModel)]="item.MovingAveragePrice" [name]="'MovingAveragePrice'+item.signId" [attr.name]="'MovingAveragePrice'+item.signId" required #MovingAveragePrice='ngModel' [ngClass]="{'m-input-warn':MovingAveragePrice.invalid&&(MovingAveragePrice.touched||isSubmit)}" (blur)="textMaterialIdentical(i)">
+              </td>
+              <td *ngIf="notEdit">
+                {{item.MovingAveragePrice}}
+              </td>
+              <td>
+                <span class="m-tips-color">{{item.ErrorMessage}}</span>
+                <!-- 气泡提示文字 -->
+                <div class="m-bubbleText" *ngIf="item.ErrorMessage">
+                  <div class="m-bubbleText-horn"></div>
+                  <div class="m-bubbleText-content">{{item.ErrorMessage}}</div>       
+                </div>
+
+              </td>
+              <td *ngIf="!notEdit" (click)="removeMaterial(i)">
+                <i class="iqon-minimize"></i>
+              </td>
+              <td *ngIf="notEdit">
+                <i class="iqon-minimize iqon-disabled"></i>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- 功能按钮 -->
+      <div class="m-button-box" *ngIf="!notEdit">
+        <button type="button" class="m-btn-confirm" (click)="submit()">提交</button>
+        <button type="button" class="m-btn-default" (click)="cancle()">取消</button>
+      </div>
+      <div class="m-button-box" *ngIf="notEdit">
+        <button type="button" class="m-btn-default" (click)="close()">关闭</button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

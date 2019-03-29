@@ -1,0 +1,54 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">新建退换货申请</h1>
+            <!--基本信息-->
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="addApp-base-infor">
+                    <return-baseinfo [urlFlag]=urlFlag (transitmodes)="transitmodes($event)" (RefundTypeOut)="RefundTypeOut($event)" (changeRedTypeOut)="changeRedTypeOut($event)" (materialSelect)="materialSelect($event)" (redTypeFlagOut)="redTypeFlagOut($event)" (applyDataOut)="applyDataOut($event)" (nameTypeOut)="nameTypeOut($event)"></return-baseinfo>
+                </div>
+            </div>
+            <!--财务信息-->
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">财务信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <return-financeinfo [nameType]=nameType (backtabDataList)="backtabDataList($event)" (ReBackTableData)="ReBackTableData($event)" (returnMaterialData)="returnMaterialData($event)"
+                        (backInvoice)="backInvoice($event)" [applybusz]=applybusz (tabListOut)="tabListOut($event)" [billTypeId]=billTypeId [returnMoney]=returnMoney [materialSelected]=materialSelected [changeRedType]=changeRedType [redTypeFlag]=redTypeFlag></return-financeinfo>
+                </div>
+            </div>
+            <!--冲退明细-->
+            <div class="addApply-base money" *ngIf="billTypeId=='refund'||billTypeId=='exchange'">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">冲退明细</span>
+                </div>
+                <div class="addApply-detail">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <return-detail (transitmodesBack)="transitmodesBack($event)" (returnAddress)="returnAddress($event)" [transitmodesList]=transitmodesList [billTypeId]=billTypeId [returnApply]=billBack.apply [urlFlag]=urlFlag (returnBillMoney)="returnBillMoney($event)"
+                    (returnBillMoney)="returnBillMoney($event)" [tabledata]=materialList [detailaddressData] = detailaddressData [materialMoney]=materialMoney></return-detail>
+            </div>
+            <div class="addApply-base money">
+                <my-file (reAccessory)="reAccessory($event)"></my-file>
+            </div>
+        </div>
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                <button class="m-btn-confirm" (click)="saveBill()">提交</button>
+                <button class="m-btn-sketch" (click)="saveBillDraft()">保存草稿</button>
+                <button class="m-btn-addAppback">返回</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

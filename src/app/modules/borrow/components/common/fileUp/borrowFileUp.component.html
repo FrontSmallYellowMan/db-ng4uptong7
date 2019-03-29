@@ -1,0 +1,11 @@
+<div class="addApp-up-file" style="width: 100%; margin-left: 0px;">
+    <div class="addApp-file-details" style="width: 100%; margin-left: 0px;margin-top: 0px;">
+        <ul>
+            <li *ngFor="let item of accessoryExamine;let i = index;">
+                <i class="iqon-enclosure"></i> {{item.fileName}}
+                <i class="iqon-close2" (click)="removeItem(item, i)"></i>
+            </li>
+            <li><a href="javascript:;" class="addApp-upload-file"><i class="iqon-enclosure"></i>上传附件<input  id="sellerFile" type="file" ng2FileSelect [uploader]="upLoadECFile" (change)="onUploadFiles(upLoadECFile)" multiple /></a></li>
+        </ul>
+    </div>
+</div>

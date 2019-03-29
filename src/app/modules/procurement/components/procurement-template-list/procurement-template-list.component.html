@@ -1,0 +1,71 @@
+<div class="m-boardtop clearfix">
+    <!-- <iq-breadcrumb></iq-breadcrumb> -->
+    <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addProcurementTpl()"><i class="iqon-add"></i>新建采购模板</button>
+  </div>
+  
+  <div class="m-overclass">
+    
+    <!--缺省页开始-->
+    <div class="m-apply" (click)="addProcurementTpl()" [ngClass]="{'hide': procurementTplList.length > 0}">
+      <loading [show]="loading"></loading>
+      <div class="m-apply-circle">
+        <i class="iqon-plus-circle"></i>
+        <span>新建采购模板</span>
+      </div>
+    </div>
+    <!--缺省页结束-->
+  
+    <!--内容页开始-->
+    <div class="m-contclass" [ngClass]="{'hide': procurementTplList.length == 0}">
+      <div class="m-card-cont">
+        <loading [show]="loading"></loading>
+        <table class="table table-hover table-list" style="table-layout:fixed">
+          <thead>
+            <tr>
+              <th class="wp5"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+              <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                <th class="wp5">序号</th>
+                <th class="wp10">模板名称</th>
+                <th class="wp15">我方主体</th>
+                <th class="wp5">工厂</th>
+                <th class="wp15">供应商</th>
+                <th class="wp15">税率</th>
+                <th class="wp10">币种</th>
+                <th class="wp10">添加时间</th>
+                <th class="operate wp10">操作</th>
+              </ng-container>
+              <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                <th class="list-edit" colspan="9" width="100%">已选{{checkedNum}}项<button type="button" (click)="deleteTpl(procurementTplList)">删除</button></th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of procurementTplList;index as i" style="cursor: auto;">
+              <td class="wp5"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td>
+              <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize + i + 1}}</td>
+              <td class="wp10" title={{item.Name}}>
+                <span (click)="editProcurementTpl(item.ID)" class="list-first-td">{{ item.Name }}</span>
+              </td>
+              <td class="wp15" title="{{item.CompanyName}}">
+                  {{ item.CompanyName }}
+              </td>
+              <td class="wp5">{{ item.FactoryCode }}</td>
+              <td class="wp15" title="{{item.Vendor}}">
+                  {{ item.Vendor }}
+              </td>
+              <td class="wp15" title={{item.RateName}}>
+                  {{ item.RateName }}
+              </td>
+              <td class="wp10">{{ item.Currency }}</td>
+              <td class="wp10">{{ item.AddTime | iqDate:'YYYY-MM-DD' }}</td>
+              <td class="operate wp10" stopParentClick>
+                <span (click)="deleteTpl(item.ID)">删除</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+      </div>
+    </div>
+    <!--内容页结束-->
+  </div>

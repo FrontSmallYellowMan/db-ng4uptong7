@@ -1,0 +1,33 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    <span>转移送达方</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix" style="padding-top:10px;">
+    <div class="modal-body-content">
+      <label class="addApp-form-label">将该物料转移</label>
+      <!-- <input class="addApp-form-input" type="text"> -->
+      <div class="m-select addApp-form-right">
+        <i class="iqon-xia"></i>
+        <select name="" [(ngModel)]="newShipTo">
+                    <!-- <option value="">-请选择</option> -->
+                    <option *ngFor = "let item of shipToParty;" [ngValue] = "item">转移送达方{{item+1}}</option>
+                </select>
+      </div>
+    </div>
+    <div class="modal-body-content">
+      <label class="addApp-form-label">数量</label>
+      <input class="addApp-form-input" max="{{count}}" min="0" type="number" (change)="countFormat(changeCount)" [(ngModel)]="changeCount">
+      <!-- <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="" [(ngModel)]="changeCount">
+                    <option *ngFor = "let item of materCountList;" [ngValue] ="item">{{item}}</option>
+                </select>
+            </div> -->
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+    <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+  </div>
+</div>

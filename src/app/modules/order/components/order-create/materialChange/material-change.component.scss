@@ -1,0 +1,26 @@
+.m-order-number{
+    z-index: 1045;
+    left: 33%;
+    width: 480px;
+}
+.modal-body{
+    text-align: left;
+}
+.modal-body-content{
+    padding-top:10px;
+    .addApp-form-label{
+        padding-bottom:8px;
+    }
+}
+.addApp-form-input[type="number"]{
+    padding-left: 15px;
+    width: 100%;
+    padding-right: 7px;
+    height: 35px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 18px;
+    background-color: transparent;
+    border: 1px solid #e1e3eb;
+    border-radius: 3px;
+}

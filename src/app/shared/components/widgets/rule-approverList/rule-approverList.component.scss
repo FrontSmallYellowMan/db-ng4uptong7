@@ -1,0 +1,133 @@
+.m-approverList{
+  width:100%;
+  margin: 0px auto;
+  padding: 20px 0 20px 0;
+
+  .m-approverList-item{
+    width: 90%;
+    display: flex;
+    justify-content:space-between;
+    line-height: 35px;
+    margin: 10px auto;
+    flex-wrap: wrap;
+    transition: all 0.5s linear;
+    .m-approverList-title{
+      width: 8%;
+    }
+
+    .m-approverList-box{
+      width: 92%;
+      display: flex;
+      flex-wrap: wrap;
+      
+      .m-approverList-person{
+        width: 230px;
+      }
+
+      .m-select-box{
+        width: 30%;
+      }
+    }
+
+    //选择列表
+    .m-approver-box{
+      display: flex;
+      flex-wrap: wrap;
+      .approver-add{
+        color:#e1e3eb;
+        cursor: pointer;
+        transition: all 0.3s linear;
+        padding: 0 0 0 5px;
+        &:hover{
+          color: rgb(76, 160, 243);
+          transition: all 0.3s linear;
+        }
+
+        i{
+          border-radius: 50%;
+          border: 1px solid #e1e3eb;
+          padding: 8px;
+          margin-right: 5px;
+          transition: all 0.3s linear;
+          &:hover{
+            border: 1px solid rgb(76, 160, 243);
+            transition: all 0.3s linear;
+          }
+        }
+      }
+
+      .approver-replace{
+        color:#b3b5bd;
+        cursor: pointer;
+        display: inline-block;
+        width: 50px;
+        transition: all 0.3s linear;
+        &:hover{
+          color:rgb(255, 115, 0);
+          transition: all 0.3s linear;
+        }
+        i{
+          padding: 0 10px 0 0;
+        }
+      }
+
+      .approver-delete{
+        color:#b3b5bd;
+        cursor: pointer;
+        display: inline-block;
+        transition: all 0.3s linear;
+        padding: 0 0 0 10px;
+
+        &:hover{
+          color: red;
+          transition: all 0.3s linear;
+          i{
+            transition: all 0.3s linear;
+            font-size: 16px; 
+          }
+        }
+        i{
+          padding: 0 5px 0 0;
+          color:red;
+          transition: all 0.3s linear;
+        }
+      }
+
+    }
+  }
+
+  .isDelete{
+    transition: all 0.5s linear;
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+
+  
+  .m-errMsg{
+    text-align: center;
+    font-size: 16px;
+    i{
+      padding: 0 10px 0 0;
+    }
+  }
+
+/deep/.m-user-info{
+    cursor: text!important;
+    .iqon-close{
+     cursor: pointer;
+    }
+  }
+
+  .ALine{
+    clear: both;
+    display: block;
+  }
+
+  .m-required-state{
+    color:red;
+    padding:0 5px 0 0;
+  }
+
+  
+  
+}

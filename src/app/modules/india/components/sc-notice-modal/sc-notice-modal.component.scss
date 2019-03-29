@@ -1,0 +1,27 @@
+.sc-notice{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 51%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-width: 300px;
+    background: #fff;
+    z-index: 9999;
+    border-radius: 5px;
+    .sc-notice-header{
+        line-height: 35px;
+        padding-left: 15px;
+        font-size: 14px;
+    }
+    .sc-notice-content{
+        margin: 0 15px;
+    }
+    .sc-notice-footer{
+        text-align: center;
+        margin: 15px;
+    }
+}
+textarea.m-input-warn {
+    border-color: #ea6269 !important;
+}

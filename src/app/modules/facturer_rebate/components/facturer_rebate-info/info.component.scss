@@ -1,0 +1,28 @@
+.modal-info{
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 160px);
+    max-width: 320px;
+    border-radius: 6px;
+    padding: 10px;
+    background: #fff;
+    z-index: 1060;
+    .info-header{
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+        .icon-close{
+            font-size: 20px;
+            height: 26px;
+            line-height: 26px;
+            cursor: pointer;
+        }
+    }
+    .info-body{
+        max-height: 350px;
+        p{
+            height: 20px;
+            line-height: 20px;
+        }
+    }
+}

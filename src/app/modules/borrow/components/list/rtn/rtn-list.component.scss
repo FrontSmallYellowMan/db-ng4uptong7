@@ -1,0 +1,68 @@
+.g-hdp{
+  width: 100%;
+  min-width: 1200px;
+  height: calc(100vh - 61.5px);
+  position: absolute;
+  top: 61.5px;
+  bottom: 0;
+}
+.m-btn-2 {
+   text-align: center;
+    height: 35px;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    transition: all .7s;
+    font-size: 14px;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0 70px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    }
+	.m-home-default{
+    margin: 20px 0;
+}
+
+.m-scan-body .m-scan-default .m-scan-logo {
+    background-color: #57b9f8;
+    margin-bottom: 30px;
+    color: #ffffff;
+    
+    
+}
+
+.m-scan{ 
+    margin-bottom: 30px;
+  
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.m-scan-logo i{
+    display: inline-block;
+    margin-top: 35px;
+    font-size: 30px;
+}
+.m-scan .m-scan-body .m-scan-default {
+    margin-top: 125px;
+    margin-bottom: 125px;
+    text-align: center;
+}
+ .table thead {
+  > tr > th {
+  
+
+    i {
+      color: #bdc4cd;
+      display: inline-block;
+      margin-left: 3px;
+      position: absolute;
+      line-height: 45px;
+    }
+
+    .iqon-orderdown-up {
+      transform: rotate(180deg);
+    }
+  }
+}

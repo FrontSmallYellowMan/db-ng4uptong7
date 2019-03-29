@@ -1,0 +1,207 @@
+<div>
+  <loading [show]="submiting"></loading>
+  <div class="apply-progress">
+    <div class="apply-p-left addApply-container">
+      <h1 class="apply-tit-h1">查看UB采购订单</h1>
+      <!-- 基础信息 -->
+      <div class="apply-p-base clearfix apply-p-infor">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">基础信息</span>
+        </div>
+        <div class="m-exm-item">
+          <ul>
+            <li class="m-exm-half">
+              <div class="m-exm-label">申请人</div>
+              <div class="m-exm-cont">
+                <div class="m-user-info-small">
+                  <span class="m-user-name">{{UBOrderData.ApplicantName.value}}</span>
+                  <span class="m-user-ename">{{UBOrderData.ApplicantItCode.value}}</span>
+                </div>
+              </div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">申请日期</div>
+              <div class="m-exm-cont">{{UBOrderData.AddTime.value | iqDate:'YYYY-MM-DD'}}</div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">联系方式</div>
+              <div class="m-exm-cont">{{UBOrderData.Telephone.value}}</div>
+            </li>
+            <li class="m-exm-half" *ngIf="UBOrderData.ERPOrderNumber.value">
+              <div class="m-exm-label">采购订单号</div>
+              <div class="m-exm-cont">{{UBOrderData.ERPOrderNumber.value}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 采购信息 -->
+      <div class="apply-p-base mt15 clearfix">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">采购信息</span>
+          <!-- <span class="m-dialog-head-change progress-txt supplier-tip" *ngIf="UBOrderData.VendorTrace==-1">
+            该采购订单供应商已过期，请事业部及时续签
+          </span> -->
+        </div>
+        <div class="apply-p-infor">
+          <div class="m-exm-item">
+            <ul>
+              <li class="m-exm-half" style="width:100%">
+                <div class="m-exm-label">操作平台</div>
+                <div class="m-exm-cont">{{UBOrderData.Platform.value}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">我方主体</div>
+                <div class="m-exm-cont">{{UBOrderData.CompanyName.value}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label" style="width: 86px;">内部交易维护人</div>
+                <div class="m-exm-cont">
+                  <div class="m-user-info-small">
+                    <span class="m-user-name">{{UBOrderData.InsiderTraderName.value}}</span>
+                    <span class="m-user-ename">{{UBOrderData.InsiderTraderITCode.value}}</span>
+                  </div>
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">供货工厂</div>
+                <div class="m-exm-cont">{{UBOrderData.VendorNo.value}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">需货工厂</div>
+                <div class="m-exm-cont">{{UBOrderData.FactoryCode.value}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">需求跟踪号</div>
+                <div class="m-exm-cont">{{UBOrderData.TrackingNumber.value}}</div>
+              </li>
+              <li class="m-exm-half" *ngIf="isFinal">
+                <form #UBViewForm="ngForm" *ngIf="!isCompleted">
+                  <div class="addApp-form-item">
+                    <label class="addApp-form-label">
+                      <i class="addApp-form-tips">*</i>物料凭证号</label>
+                    <input class="addApp-form-input" required name="MBLNR" type="text" #MBLNR="ngModel" [(ngModel)]="UBOrderData.MBLNR.value"
+                      refuse-input [refuseWhat]="'special-chinese'"
+                      [ngClass]="{'m-input-warn': MBLNR.invalid && (MBLNR.touched || isSubmit)}">
+                  </div>
+                  <p class="m-p-warn procu-warn" *ngIf="MBLNR.invalid && (MBLNR.touched || isSubmit)">请填写物料凭证号</p>
+                </form>
+
+                <div class="m-exm-label" *ngIf="isCompleted">物料凭证号</div>
+                <div class="m-exm-cont" *ngIf="isCompleted">{{ UBOrderData.MBLNR.value }}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--采购清单 -->
+      <div class="apply-finance-infor clearfix" style="margin-top: 10px">
+        <div class="m-dialog-head clearfloat">
+          <span class="m-dialog-head-change progress-txt">采购清单</span>
+          <i class="iqon-fold" (click)="procurementListShow=!procurementListShow"></i>
+        </div>
+        <div *ngIf="procurementListShow">
+          <div class="btn-content">
+            <div class="right">
+              <button class="m-btn-confirm min-btn" (click)="showOrder()">查看采购订单</button>
+            </div>
+          </div>
+          <div class="apply-finance-l">
+           <div class="list-summary">
+              <div class="list-summary-part">
+                <span>物料数量合计：{{procurementListPrice.numAmount}}</span> 
+              </div>
+              <div class="list-summary-part">
+                <span>总金额：{{ UBOrderData.PruchaseAmount.value | number:"1.2" }}</span>
+              </div>
+           </div>
+            <table class="m-info-table" style="width:100%">
+            
+              <thead>
+                <!-- <tr class="m-infor-tr"> -->
+                  <!-- <th [attr.colspan]="clospanNum" class="m-text-center change">
+                    <span class="col-md-3">物料数量合计 {{procurementListPrice.numAmount}}</span> -->
+                    <!-- <span class="col-md-3" *ngIf="!ISRMB">外币总金额 {{UBOrderData.foreigncurrencymoney | number:"1.2"}}</span> -->
+                    <!-- <span class="col-md-3">总金额 {{ UBOrderData.PruchaseAmount.value }}</span>
+                  </th>
+                </tr> -->
+                <tr class="m-center">
+                  <th *ngFor="let item of tableConfig" [width]="item.width">{{ item.title }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of UBOrderData.PurchaseOrderDetails.value;let i = index" class="m-center">
+                  <td *ngFor="let key of tableConfig" [title]="item[key.field]" [width]="key.width">{{ item[key.field] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--支持文件-->
+      <div class="apply-finance-infor">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">支持文件</span>
+        </div>
+        <div class="btP10">
+          <div class="addApp-form-item">
+            <label class="addApp-form-label tp20">附件文件</label>
+            <ul>
+              <li class="pdLi upload-show" *ngFor="let item of AccessorySee_Support;index as i">
+                <i class="iqon-enclosure"></i>
+                <span class="pdf cur-point" (click)="checkSeal(item.AccessoryURL)">{{item.AccessoryName}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--审批记录 -->
+      <db-wfhistory [wfHistoryData]="wfData.wfHistory"></db-wfhistory>
+
+      <!-- 审批意见 -->
+      <div class="apply-opinion" *ngIf="!isView">
+        <div class="m-exm-item">
+          <p class="m-exm-advice">审批意见</p>
+          <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="opinion" name="opinion"></textarea>
+        </div>
+      </div>
+
+      <!-- 1.非-加签审批类 页面 -->
+      <div class="approval-buttons" *ngIf="!isView&&!isSignApprovalPage">
+        <div>
+          <button class="m-btn-agree apply-agree" (click)="doApproval('agree')">同意</button>
+        </div>
+        <div>
+          <button class="m-btn-refuse apply-refuse" (click)="doApproval('reject')">驳回</button>
+        </div>
+        <div class="approval-dropdown">
+          <button class="m-btn-more-big">
+            更多
+            <i class="iqon-xia"> </i>
+          </button>
+          <ul class="m-dropdown-option">
+            <li (click)="doApproval('sign')">加签</li>
+            <li (click)="doApproval('transfer')">转办</li>
+          </ul>
+        </div>
+        <div class="approval-btnCanel" (click)="goback()">
+          返回
+        </div>
+      </div>
+
+      <!-- 2.加签审批类 页面 -->
+      <div class="approval-buttons" *ngIf="!isView&&isSignApprovalPage">
+        <div>
+          <button class="m-btn-agree apply-agree" (click)="doApproval('agree+')">同意</button>
+        </div>
+        <div class="approval-btnCanel" (click)="goback()">
+          返回
+        </div>
+      </div>
+    </div>
+
+    <!--审批过程流程图 -->
+    <div class="apply-p-right">
+      <db-wfview #wfview></db-wfview>
+    </div>
+  </div>
+</div>

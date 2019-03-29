@@ -1,0 +1,61 @@
+<div class="container m-contract-tips">
+  <div class="modal-header m-list-head">
+    <span>上传物料失败信息提示</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-order-table tips-table">
+      <div class="tips-table-head">
+        <ul class="clearfix">
+          <li>数据行号</li>
+          <li>信息内容</li>
+        </ul>
+      </div>
+      <div class="tips-table-body">
+        <ul class="clearfix" *ngFor='let item of errList;index as i;'>
+          <li>{{item.Index}}</li>
+          <li>{{item.Message}}</li>
+        </ul>
+        <!-- <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul>
+                    <ul class="clearfix">
+                        <li>数据行号</li>
+                        <li>数据行号</li>
+                    </ul> -->
+      </div>
+    </div>
+    <div class="modal-footer clearfix">
+      <button type="button" class="m-btn-confirm" (click)="hide()">确认</button>
+    </div>
+  </div>
+</div>

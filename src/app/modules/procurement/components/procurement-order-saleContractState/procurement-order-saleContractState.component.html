@@ -1,0 +1,6 @@
+<div class="changeSaleContract">
+  <p *ngFor="let item of changeSaleContractState">
+    <span *ngIf='item.SCType=="3"'>合同号：<a [href]="'india/contractview?SC_Code='+item.New_Sc_Code+'&operatype=2'" target="blank">{{item.MainContractCode}}_BG</a> 已变更！</span>
+    <span *ngIf='item.SCType=="2"'>合同号：<a [href]="'india/contractview?SC_Code='+item.New_Sc_Code+'&operatype=3'" target="blank">{{item.MainContractCode}}_JC</a> 已解除！</span>
+  </p>
+</div>

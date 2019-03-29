@@ -1,0 +1,45 @@
+<div class="m-wrap">
+  <div class="m-list-menu">
+    <ul class="m-state">
+      <li [class.active]="query.TaskType === 1" (click)="toggle(1)">待我审批</li>
+      <li [class.active]="query.TaskType === 2" (click)="toggle(2)">我已审批</li>
+    </ul>
+    <div class="m-search-all">
+      <div class="m-search">
+        <i class="iqon-query" (click)="search()"></i>
+        <input [(ngModel)]="query.SearchKey" (keyup.enter)="search()" name="SearchKey" placeholder="-请输入任务描述关键字" type="text">
+      </div>
+    </div>
+  </div>
+  <div class="m-card-cont">
+    <loading [show]="loading"></loading>
+    <div class="m-noresult" [hidden]="approvalList.length">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+        <p class="m-p-notice">请输入新的搜索条件，重新搜索~</p>
+      </div>
+    </div>
+    <div [hidden]="!approvalList.length">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th width="80%">任务描述</th>
+            <th>申请类型</th>
+            <th [hidden]="query.TaskType === 1">审批结果</th>
+            <th>{{query.TaskType === 1 ? '申请':'审批'}}日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of approvalList;index as i" (click)="openMyApproval(item.taskTableURL)">
+            <td width="80%" [title]="item.taskTitle">{{item.taskTitle}}</td>
+            <td>{{item.temp_item_name}}</td>
+            <td [hidden]="query.TaskType === 1">{{item.taskApproveResult}}</td>
+            <td>{{item.createdTime}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

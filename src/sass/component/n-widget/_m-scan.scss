@@ -1,0 +1,141 @@
+//搜索页 xuewp
+
+.m-scan {
+  background-color: #FFFFFF;
+  padding: 15px;
+
+  .m-scan-item {
+    float: left;
+    width: 25%;
+    padding-top: 15px;
+    &:last-child {
+      float: right;
+      text-align: right;
+    }
+
+    h6 {
+      float: left;
+      color: #4A4A4A;
+      line-height: 34px;
+      margin-right: 15px;
+      font-size: 12px;
+    }
+    .m-select {
+      float: left;
+      width: 70%;
+
+      .m-select-btn {
+        height: 34px;
+      }
+    }
+    select{
+      height:34px;
+    }
+    input {
+      height: 34px;
+      width: 70%;
+      padding-right: 0;
+    }
+    input.small {
+      width: 57%;
+      font-size: 12px;
+    }
+    input.sm {
+      width: 36%;
+    }
+
+    > button {
+      height: 35px;
+      line-height: 35px;
+    }
+  }
+  .m-scan-item2{
+    width: 35%;
+    button{
+      margin-left: 15px;
+      &.m-btn-prev{
+        width: 78px;
+      }
+      &:last-child{
+        width: 110px;
+      }
+    }
+  }
+
+  .m-scan-head {
+    &:after {
+      content: '.';
+      display: block;
+      clear: both;
+      height: 0;
+      line-height: 0;
+      visibility: hidden;
+    }
+  }
+
+  .m-scan-body {
+    clear: both;
+
+    .m-scan-default {
+      margin-top: 162px;
+      margin-bottom: 162px;
+      text-align: center;
+
+      h3 {
+        font-size: 20px;
+        line-height: 20px;
+        font-weight: normal;
+        color: rgba(74, 74, 74, 0.7);
+        margin-bottom: 19px;
+      }
+      h4 {
+        line-height: 16px;
+        font-size: 16px;
+        color: rgba(164, 164, 164, 0.7);;
+        margin-bottom: 32px;
+      }
+
+      .m-scan-logo {
+        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        background-color: #CCC;
+        text-align: center;
+        border-radius: 50%;
+        text-align: center;
+
+        .iqon-stack {
+          font-size: 42px;
+          color: #FFF;
+          line-height: 100px;
+        }
+      }
+    }
+
+    .m-scan-result {
+      padding: 20px 0;
+
+      .m-scan-table {
+        thead {
+          th {
+            height: 48px;
+            border-bottom: 1px solid #eee;
+          }
+        }
+        tbody {
+          tr {
+            height: 44px;
+
+            td {
+              line-height: 28px;
+              border-top: none;
+              border-bottom: 1px solid #eee;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+}

@@ -1,0 +1,88 @@
+<div class="m-home-pageR clearfix">
+	<div class="m-boardtop clearfix">
+	  <iq-breadcrumb></iq-breadcrumb>
+        <div class="m-dropdown g-fr">
+            <button class="m-btn-success" (click)="addsq()"><i class="iqon-add"></i>新建申请</button> 
+        </div>
+    </div>
+    <!--搜索-->
+    <div class="m-list-menu">
+        <ul class="m-state">
+            <li [ngClass]="{'active':applyPage=='0'}"  (click)="changeapplytype('0')">审批中</li>
+            <li [ngClass]="{'active':applyPage=='1'}" (click)="changeapplytype('1')">已完成</li>
+            <li [ngClass]="{'active':applyPage=='all'}" (click)="changeapplytype('all')">全部</li>
+            <li [ngClass]="{'active':applyPage=='3'}" (click)="changeapplytype('3')">草稿</li>
+            <li [ngClass]="{'active':applyPage=='4'}" (click)="changeapplytype('4')">拒收或退回</li>
+        </ul>
+    </div> 
+    <div class="m-list-menu">  
+         <div class="m-search-all"  style="float:left">
+                <div class="m-search">
+                    <i class="iqon-query" (click)="getTradeTicketList()" id="tradeTicketQuery" style="cursor:pointer"></i>
+                    <input name="state" placeholder="商票号\客户名称..." [(ngModel)]="query.keyWords" type="text">
+                </div>
+                入账日期：
+                <div class="m-search">
+                    <my-datepicker PlaceHolder="请选择日期" (ngModelChange)="getIqDate($event,'start')" [(ngModel)]="query.startDate" [EndDate]="query.endDate" style="cursor: pointer;width: 90px;" ></my-datepicker>
+                </div>
+                <div class="m-search">
+                    <my-datepicker PlaceHolder="请选择日期" (ngModelChange)="getIqDate($event,'end')" [(ngModel)]="query.endDate"  [StartDate]="query.startDate"  style="cursor: pointer;width: 90px;" ></my-datepicker>
+                </div>
+         </div>
+    </div>
+            <!--表格-->
+            <div class="m-table-right">
+                    <loading [show]="loading"></loading>
+                    <div class="m-home-default" [ngClass]="{'hide':tradeTicketList !=null && tradeTicketList.length > 0}">
+                        <div class="m-scan">
+                            <div class="m-scan-body">
+                                <div class="m-scan-default">
+                                    <div class="m-scan-logo">
+                                        <i class="iqon-apply"></i>
+                                    </div>
+                                    <h3>暂无相关数据</h3>
+                                    <h4>点击“新建申请”新建数据吧~</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div [ngClass]="{'hide': tradeTicketList ==null || tradeTicketList.length ==0}">
+                    <table class="table table-hover table-list" style="table-layout: fixed;">
+                        <thead>
+                            <tr>
+                                <th>商票号</th>
+                                <th style="width:90px;">申请日期</th>
+                                <th *ngIf="applyPage=='0' || applyPage=='all'">审批状态</th>
+                                <th *ngIf="applyPage=='0' || applyPage=='all'">审批人</th>
+                                <th style="width:90px;">到期日期</th>
+                                <th>商票金额</th>
+                                <th>客户编号</th>
+                                <th>客户名称</th>
+                                <th>关联欠款金额</th>
+                                <!--<th *ngIf="applyPage=='3'">操作</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor = 'let tradeTicket of tradeTicketList' (click)="goDetail(tradeTicket.id)">
+                              <td title="{{tradeTicket.tradeNumber}}">{{tradeTicket.tradeNumber}}</td>
+                              <td title="{{tradeTicket.createDate | iqDate: 'YYYY-MM-DD'}}">{{tradeTicket.createDate | iqDate: 'YYYY-MM-DD'}}</td>
+                              <td title="{{tradeTicket.statusName}}" *ngIf="applyPage=='0' || applyPage=='all'">{{tradeTicket.statusName}}</td>
+                              <td title="{{tradeTicket.nextApprove}}" *ngIf="applyPage=='0' || applyPage=='all'">{{tradeTicket.nextApprove}}</td>
+                              <td title="{{tradeTicket.checkoutDate | iqDate: 'YYYY-MM-DD'}}">{{tradeTicket.checkoutDate | iqDate: "YYYY-MM-DD"}}</td>
+                              <td title="{{tradeTicket.tradeAmount ==null? 0:tradeTicket.tradeAmount.toFixed(2)}}">{{tradeTicket.tradeAmount ==null? 0:tradeTicket.tradeAmount.toFixed(2)}}</td>
+                              <td title="{{tradeTicket.customCode}}">{{tradeTicket.customCode}}</td>
+                              <td title="{{tradeTicket.customName}}">{{tradeTicket.customName}}</td>
+                              <td title="{{tradeTicket.debtAmount ==null? 0:tradeTicket.debtAmount.toFixed(2)}}">{{tradeTicket.debtAmount ==null? 0:tradeTicket.debtAmount.toFixed(2)}}</td>
+                              <!--<td *ngIf="applyPage=='3'"><a href="/invoice/apply/tradeticket/{{tradeTicket.id}}" target="_blank">重新取回</a></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                     
+                </div>
+
+             <div class="page">
+                    <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+             </div>
+          </div>
+
+</div>

@@ -1,0 +1,72 @@
+<div class="addApply-base">
+  <div class="m-list-head m-dialog-head-change">
+    <span>{{IsRelateCheque==2?"汇票":"支票"}}交存申请</span>
+  </div>
+  <div class="addApp-base-infor">
+    <div class="addApp-base-list">
+      <div class="or-cheque-head">
+        <input icheck type="radio" id="radio1" name="cheque" (onClick)="icheckFun($event)" [(ngModel)]="IsRelateCheque" value="1">
+        <label for="radio1" style="margin-right:135px;">关联支票信息</label>
+        <input icheck type="radio" id="radio2" name="cheque" (onClick)="icheckFun($event)" [(ngModel)]="IsRelateCheque" value="2">
+        <label for="radio2">关联商业承诺汇票</label>
+      </div>
+      <div class="m-dialog-head-change">
+        <span class="m-cheque-btn"><a href="invoice/apply/invoice/-1" target="_blank">新建支票交存申请</a></span><span class="m-cheque-btn"><a href="invoice/apply/tradeticket/-1" target="_blank">新建商票交存申请</a></span>
+      </div>
+      <div class="m-order-table" [ngClass]="{'m-border-botom':chequeList.length>0}">
+        <ul class="m-table-head">
+          <li>申请人</li>
+          <li>支票状态</li>
+          <li>支票号</li>
+          <li>出票日期</li>
+          <li>支票金额</li>
+          <li>本次使用金额</li>
+          <li>可使用金额</li>
+          <li>收款人</li>
+          <li>客户名称</li>
+          <li class="m-info-btn" (click)="getChequeList()">+</li>
+        </ul>
+        <div class="m-table-body">
+          <ul *ngFor="let item of chequeList;index as i">
+            <li>{{item.apply_user_name || "&nbsp;"}}</li>
+            <li>{{item.invoice_status_name || "&nbsp;"}}</li>
+            <li>{{item.ticket_num || "&nbsp;"}}</li>
+            <li>{{item.checkout_date || "&nbsp;"}}</li>
+            <li>{{(item.ticket_amount || "0") | iqNumber:'1.2-2'}}</li>
+            <li><input #forminput class="m-infor-input" type="text" [(ngModel)]="item.amount" (blur)="amountCount(item)"></li>
+            <li>{{(item.Ticket_AvailableAmount || 0) | iqNumber:'1.2-2'}}</li>
+            <li>{{item.payee || "&nbsp;"}}</li>
+            <li>{{item.custom_name || "&nbsp;"}}</li>
+            <li class="m-info-btn" (click)="delcheque(chequeList,i)">-</li>
+          </ul>
+        </div>
+      </div>
+      <!-- <table class="m-info-table">
+                <thead>
+                    <tr>
+                        <th>销售员</th>
+                        <th>支票状态</th>
+                        <th>支票号</th>
+                        <th>出票日期</th>
+                        <th>支票金额</th>
+                        <th>收款人</th>
+                        <th>客户名称</th>
+                        <th class="m-info-btn" (click) = "icheckFun($event)">+</th>
+                    </tr>
+                </thead>
+                <tbody>
+                 <tr *ngFor="let item of chequeList;index as i;">
+                     <td>王琳</td>
+                     <td>商务已接受</td>
+                     <td>1234567</td>
+                     <td>2016-12-01</td>
+                     <td>45000,00</td>
+                     <td>0001</td>
+                     <td>北京康特讯通科技有限公司</td>
+                     <td class="m-info-btn" (click) = "delcheque(chequeList,i)">-<span>删除该行</span></td>
+                  </tr>
+                </tbody>
+            </table> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,265 @@
+<div class="content-auto">
+    <loading [show]="submiting"></loading>
+    <div>
+      <div class="addApply-container">
+        <h1 class="addApply-tit-h1">新建预下单采购申请</h1>
+        <!--基本信息-->
+        <div class="addApply-base">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">基础信息</span>
+          </div>
+          <div class="addApp-base-infor">
+            <ul class="addApp-base-list">
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label">申请人</label>
+                  <div style="margin-left:10px;">
+                    <div class="m-user-info" user-image [hasClose]="false" [user]="userInfo"></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label"><i class="addApp-form-tips">*</i>联系方式</label>
+                  <input class="addApp-form-input" type="text" [(ngModel)]="saveData.phone">
+                </div>
+                <p class="m-p-warn procu-warn" *ngIf="!saveData.phone && isSubmit" >请填写联系方式</p>
+              </li>
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label"><i class="addApp-form-tips">*</i>所属平台</label>
+                  <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.plateInfo" required name="plateform" ngModel 
+                    (selected)="getPlateform($event)" [active]=avtivePlate [(ngModel)]=avtivePlate></ng-select>
+                </div>
+                <p class="m-p-warn procu-warn" *ngIf="!saveData.FlatCode && isSubmit" >请选择所属平台</p>
+              </li>
+              <li *ngIf="!hasContract">
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label"><i class="addApp-form-tips">*</i>销售员</label>
+                  <iq-person-select #salePerson="ngModel" name="salePerson" [(ngModel)]="sale.info" [max]="1" 
+                    (ngModelChange)="selectedPerson(sale.info)" ngDefaultControl></iq-person-select>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--采购信息-->
+        <div class="addApply-base money">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">采购信息</span>
+            <span class="m-dialog-head-change progress-txt supplier-tip" style="color:red;font-size:15px;" *ngIf="saveData.VendorTrace==-1" >
+              该采购申请供应商已过期，请事业部及时续签
+            </span>
+          </div>
+          <div class="addApp-base-infor">
+            <prepareApply-submit-message
+              [prepareApplyData]="saveData" [hasContract]="hasContract" [totalAmountIsFillin]="totalAmountIsFillin"
+              [isSubmit]="isSubmit" [istoerp]="saveData.istoerp"
+              [excludeTaxMoney]="saveData.excludetaxmoney" [taxInclusiveMoney]="saveData.taxinclusivemoney" [foreignCurrencyMoney]="saveData.foreigncurrencymoney"
+              (onPreApplyMessageChange)="onPreApplyMessageChange($event)" (onPrepareApplyMessageValidChange)="onPrepareApplyMessageValidChange($event)"
+              (onFacVendChange)="onFacVendChange($event)" (onIsRMBChange)="onIsRMBChange($event)" (onCompanyCodeChange)="onCompanyCodeChange($event)"
+              (onSupplierTypeChange)="onSupplierTypeChange($event)" (onVendorTraceChange)="onVendorTraceChange($event)" [(IsHaveContractInfo)]="saveData.IsHaveContractInfo" (IsHaveContractInfoChange)="IsHaveContractInfoChange($event)" (onAmountMoney)="onAmountMoney()"
+            ></prepareApply-submit-message>
+          </div>
+        </div>
+        <!--采购清单-->
+        <div class="addApply-base money">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">采购清单</span>
+            <div class="list-explain">
+              <span>是否直接写入ERP</span>
+              <label class="label-first">
+                <input type="radio" name="directly" [(ngModel)]="saveData.istoerp" #directly="ngModel" value="true" icheck (onClick)="directlyChange($event)">
+                是
+              </label>
+              <label>
+                <input type="radio" name="directly" [(ngModel)]="saveData.istoerp" #directly="ngModel" value="false" icheck (onClick)="directlyChange($event)">
+                否
+              </label>
+              <span>（同步维护采购清单后，审批人审批通过将直接写入ERP）</span>
+              <!-- <span *ngIf="orderType" >您将创建 {{ orderType }} 采购订单！</span> -->
+            </div>
+            <i class="iqon-fold" (click)="procurementListShow=!procurementListShow"></i>
+          </div>
+          <div class="addApp-base-infor" [ngClass]="{'hide': !procurementListShow}">
+              <prepareApply-submit-list 
+                [purchaseData]="purchaseData" [istoerp]="saveData.istoerp" [orderType]="orderType" [rate]="saveData.taxrate" [factory]="saveData.factory" [vendor]="saveData.vendor" [IsRMB]="IsRMB"
+                [purchaseRequisitioIid]="saveData.purchaserequisitionid"  [currency]="saveData.currency" [listNumberAmount]="listNumberAmount"
+                [setHasContract]="hasContract" [tempAmountPrice]="tempAmountPrice" [isSubmit]="isSubmit"
+                (onPurchaseDataChange)="onPurchaseDataChange($event)" (onAmountMoney)="onAmountMoney()" (onPurchaseFormValidChange)="onPurchaseFormValidChange($event)"
+              ></prepareApply-submit-list>
+          </div>
+        </div>
+        <!--销售信息-->
+        <div class="addApply-base money" *ngIf="hasContract" >
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">销售信息</span>
+          </div>
+          <div class="addApp-base-infor">
+              <prepareApply-submit-sell
+                [IsRMB]="IsRMB" [currency]="saveData.currency" [rate]="saveData.taxrate"
+                [procurementDetailsList]="saveData.PurchaseRequisitionDetailsList" 
+                [purchaseRequisitioIid]="saveData.purchaserequisitionid" [sellMessageStructureComplete]="sellMessageStructureComplete"
+                (onSellListChange)="onSellListChange($event)"
+              ></prepareApply-submit-sell>
+          </div>
+        </div>
+
+         <!--项目信息-->
+         <div class="addApply-base money" *ngIf="!hasContract">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">项目信息</span>
+          </div>
+          <div class="addApp-base-infor">
+            <procurementApply-projectInfo [isEdit]="true" [(purchaseProjectInfoContent)]="saveData.PurchaseProjectInfo" [detailData]="saveData"></procurementApply-projectInfo>
+          </div>
+        </div>
+        <!--项目信息-->
+
+        <!--支持文件-->
+        <div class="addApply-base money">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">支持文件</span>
+          </div>
+          <div class="addApp-base-infor">
+            <ul class="addApp-base-list accessory-content">
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label">上传附件</label>
+                  <div class="accessory-item">
+                    <iq-file-upload upType="1" [url]="supportDocumentUrl" maxFileSize="5242880000" maxFileNum="10"
+                      (onSuccess)="onUploadBack($event,1)" (onDeleteItem)="onDeleteItem($event,1)" [hasUploaded]="AccessorySee_Support"></iq-file-upload>
+                  </div>
+                </div>
+              </li>
+              <li class="file-tip-box">
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label"></label>
+                  <div class="file-tip">
+                    <span>上传不能超过10个文件，每个文件大小不超过50M</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--采购合同用印文件-->
+        <!-- <div class="addApply-base money">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">采购合同用印文件</span>
+          </div>
+          <div class="addApp-base-infor">
+            <ul class="addApp-base-list">
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label"><i class="addApp-form-tips">*</i>用印金额</label>
+                  <input class="addApp-form-input" type="text" [(ngModel)]="saveData.sealmoney">
+                </div>
+                <p class="m-p-warn procu-warn" *ngIf="saveData.sealmoney==null && isSubmit">请填写用印金额</p>
+              </li>
+            </ul>
+            <ul class="addApp-base-list accessory-content" style="margin-top:0">
+              <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label">上传附件</label>
+                  <div class="accessory-item">
+                     <iq-file-upload upType="1" [url]="contractPrintUrl" 
+                    (onSuccess)="onUploadBack($event,2)" (onDeleteItem)="onDeleteItem($event,2)" [hasUploaded]="AccessorySee_India" upLoadBtnId='twoUploadFiles'></iq-file-upload>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div> -->
+        <div class="addApply-base money" *ngIf="saveData.IsHaveContractInfo">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">采购合同用印文件</span>
+          </div>
+          <div class="addApp-base-infor">
+            <submit-contract-print [editPrintInitialData]="editPrintInitialData" [isSubmit]="isSubmit"
+              [contractMoney]="saveData.PurchaseContractInfo.ContractMoney" [platformDa]="plateStr"
+              (onPrintMessageChange)="onPrintMessageChange($event)" (onContractPrintFormValidChange)="onContractPrintFormValidChange($event)"
+            ></submit-contract-print>
+          </div>
+        </div>
+        <!--修改记录-->
+        <div class="addApply-base money" *ngIf="modifyRecord.length>0">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">修改记录</span>
+          </div>
+          <div class="addApp-base-infor">
+            <div class="fix-table-content">
+                <table class="m-info-table w100 mt10">
+                  <thead>
+                    <tr class="m-infor-tr">
+                      <th>申请单号</th>
+                      <th>申请日期</th>
+                      <th>申请人</th>
+                      <th>我方主体</th>
+                      <th>供应商</th>
+                      <th>含税总金额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of modifyRecord;index as i">
+                      <td class="cursor" (click)="viewApplyDetail(item.ID)">
+                        <a>{{item.RequisitionNum}}</a>
+                      </td>
+                      <td>{{item.AddTime | iqDate:'YYYY-MM-DD'}}</td>
+                      <td>{{item.UserName}}</td>
+                      <td>{{item.Own}}</td>
+                      <td>{{item.Vendor}}</td>
+                      <td>{{item.Amount | number:"1.2"}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="page">
+                  <iq-pager [data]="modifyPagerData" (onChange)="onChangeModifyPage($event)"></iq-pager>
+                </div>
+            </div>
+          </div>
+        </div>
+        <!--审批记录 -->
+        <div class="addApply-base money">
+          <db-wfhistory [wfHistoryData]="wfHistory" *ngIf="saveData.wfstatus=='驳回' && wfHistory" ></db-wfhistory>
+        </div>
+        <!--审批人信息-->
+        <div class="addApply-base money">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">审批人信息</span>
+          </div>
+          <div class="addApp-base-infor">
+            
+            <!-- <ul class="addApp-base-list accessory-content">
+              <li>
+                  <prepare-person min="1" max="4" text="级预审" defaultNum="1" [personList]=preparePersonList></prepare-person>
+                  <ul class="repare-list">
+                    <li *ngFor="let item of departmentApprovalList;index as i" >
+                      <p>{{item.NodeName}}</p>
+                      <div class="uls">
+                        <div *ngFor="let x of item.userData;index as n">
+                          <div class="m-user-info" user-image [hasClose]="false" [user]="x"></div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+              </li>
+            </ul> -->
+
+
+            <!-- 新增获取规则中的审批人列表 -->
+            <rule-approverList [(promiseData)]="approvalListFromRule" [isSelect]="true" [detailData]="saveData" [contractPrintApproverData]="contractPrintApproverList" [errorMessage]="getApproverListErrorMessage"></rule-approverList>
+
+
+          </div> 
+        </div>
+      </div>
+      <div class="addApp-submit-btn">
+        <div class="addApp-sub-btns">
+          <button class="m-btn-confirm" type="button" (click)="VerificatePrepareApply('提交')">提交</button>
+          <button class="m-btn-more-big" type="button" (click)="VerificatePrepareApply('草稿')">暂存</button>
+          <a (click)="closeWindow()"><button class="m-btn-addAppback">取消</button></a>
+        </div>
+      </div>
+    </div>
+  </div>

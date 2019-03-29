@@ -1,0 +1,104 @@
+<div class="m-edit-approvalDetail-content1 clearfix">
+
+  <div class="m-edit-approvalDetail-title">
+    <h5>基本信息</h5>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">申请人</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      <span>{{commitmentData.DaiName}}</span><span class="m-user-ename">{{commitmentData.DaiITCODE}}</span>
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>平台</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+     {{commitmentData.PlatformName}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>承诺销售员</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      <span>{{commitmentData.SalesName}}</span>
+      <span class="m-user-ename">{{commitmentData.SalesITCode}}</span>
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p" style="vertical-align: top;">
+      <span class="m-form-need"></span>承诺销售员所属<br>事业部</p>
+    <div class="m-select m-edit-approvalDetail-select-style1" style="top:10px;">
+      {{commitmentData.SalesDeparment}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>代理商名称</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.AgentName}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>项目名称</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.ContractName}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>{{commitmentData?.CommitTypeCode==='0011'?'希望发货日期':'合同编号'}}</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.ContractID}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>{{commitmentData?.CommitTypeCode==='0019'?'特殊运输金额':'合同金额'}}</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.ContractMoney}}<span *ngIf="commitmentData.ContractMoney">元</span>
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>10Y号</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.Ycode}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>产品线</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.ProductLline}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>账期条件</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      {{commitmentData.Accountterm}}
+    </div>
+  </div>
+
+  <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips" *ngIf="commitmentData.Fksfqrdd">
+    <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+      <span class="m-form-need"></span>付款是否确认订单</p>
+    <div class="m-select m-edit-approvalDetail-select-style1">
+      <input type="radio" icheck name="Fksfqrdd" value="是" [(ngModel)]="commitmentData.Fksfqrdd" [disabled]="status==='a'||status==='t'||approvalStatus==='1'"><span>是</span>
+      <input type="radio" icheck name="Fksfqrdd" value="否" [(ngModel)]="commitmentData.Fksfqrdd" [disabled]="status==='a'||status==='t'||approvalStatus==='1'"><span>否</span>
+    </div>
+  </div>
+
+</div>

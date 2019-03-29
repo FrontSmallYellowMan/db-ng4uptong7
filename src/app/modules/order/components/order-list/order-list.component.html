@@ -1,0 +1,391 @@
+<div class="sc-list my-order-list" (click)="toggleState($event)">
+  <!--一级菜单-->
+  <div class="sc-list-menu clearfix">
+    <div class="sc-list-menu-left">
+      <ul class="clearfix">
+        <li [class.active]="currentMenuType === 'apply'" (click)="tabMenu('apply')">我的申请</li>
+        <li [class.active]="currentMenuType === 'approval'" (click)="tabMenu('approval')">
+          我的审批
+          <span class="m-num">{{unReader}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="sc-list-menu-right">
+      <button class="m-btn-success" type="button" (click)="selectContract()">+ 新建订单</button>
+      <!-- <div class="newIndia" [@newApply]="currentState">
+                <ul>
+                    <li (click) = "selectContract(0)"><i class="iqon-direct-right"></i>标准销售订单</li>
+                    <li (click) = "selectContract(1)"><i class="iqon-direct-right"></i>澳门销售订单</li>
+                    <li><i class="iqon-direct-right"></i>其他销售订单</li>
+                </ul>
+            </div> -->
+    </div>
+  </div>
+  <!--二级菜单-->
+  <!-- <div class="m-list-menu">
+    <div [class.noview]="currentMenuType !== 'apply'">
+      <ul class="m-state">
+        <li [class.active]="currentDataState === 'approval'" (click)="tabData('approval')">审批中</li>
+        <li [class.active]="currentDataState === 'completed'" (click)="tabData('completed')">已完成</li>
+        <li [class.active]="currentDataState === 'all'" (click)="tabData('all')">全部</li>
+        <li [class.active]="currentDataState === 'draft'" (click)="tabData('draft')">草稿</li>
+      </ul>
+      <div class="m-search-all">
+        <div class="m-search" style="margin-right:15px;">
+          <i class="iqon-query" (click)="search()"></i>
+          <input name="name" [(ngModel)]="query.InputCondition" (keyup.enter)="search()" autocomplete='off' placeholder="搜索合同编号,客户名称,申请人..." type="text">
+        </div>
+        <div class="m-inline-block">
+          <label>申请日期</label>
+          <div class="inline-block">
+            <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="query.CreatedTimeStart" [EndDate]="query.CreatedTimeEnd"></my-datepicker>
+          </div>
+          <span>~</span>
+          <div class="inline-block date-right">
+            <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="query.CreatedTimeEnd" [StartDate]="query.CreatedTimeStart"></my-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="m-returnService-btns" style="text-align:right; width:100%">
+        <button class="m-btn-confirm research" type="button" (click)="search()">搜索</button>
+        <button class="m-btn-default resets" type="button" (click)="reset()">重置</button>
+      </div>
+    </div>
+    <div [class.noview]="currentMenuType !== 'approval'">
+      <ul class="m-state">
+        <li [class.active]="currentDataState === 'waitapproval'" (click)="tabData('waitapproval')">待我审批</li>
+        <li [class.active]="currentDataState === 'examinedapproved'" (click)="tabData('examinedapproved')">我已审批</li>
+        <li [class.active]="currentDataState === 'allapproval'" (click)="tabData('allapproval')">全部</li>
+      </ul>
+      <div class="m-search-all">
+        <div class="m-search" style="margin-right:15px;">
+          <i class="iqon-query" (click)="search()"></i>
+          <input name="name" [(ngModel)]="examineQuery.query" (keyup.enter)="search()" placeholder="搜索订单号,客户名称,申请人..." type="text">
+        </div>
+        <div class="m-inline-block">
+          <label>申请日期</label>
+          <div class="inline-block">
+            <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="examineQuery.applydateStart" [EndDate]="examineQuery.applydateEnd"></my-datepicker>
+          </div>
+          <span>~</span>
+          <div class="inline-block date-right">
+            <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="examineQuery.applydateEnd" [StartDate]="examineQuery.applydateStart"></my-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="m-returnService-btns" style="text-align:right; width:100%">
+        <button class="m-btn-confirm research" type="button" (click)="search()">搜索</button>
+        <button class="m-btn-default resets" type="button" (click)="reset()">重置</button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- 2019-1-28 搜索变为高级搜索-->
+
+  <div class="m-list-menu">
+    <div [class.noview]="currentMenuType !== 'apply'">
+      <ul class="m-state">
+        <li [class.active]="currentDataState === 'approval'" (click)="tabData('approval')">审批中</li>
+        <li [class.active]="currentDataState === 'completed'" (click)="tabData('completed')">已完成</li>
+        <li [class.active]="currentDataState === 'all'" (click)="tabData('all')">全部</li>
+        <li [class.active]="currentDataState === 'draft'" (click)="tabData('draft')">草稿</li>
+      </ul>
+      <!-- 我的申请 -->
+      
+      <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+          <div class="m-search-high" (click)="openSearch()">
+            <i class="iqon-highsearch"></i>
+            高级搜索
+          </div>
+        </div>
+    
+        <!-- 高级搜索 -->
+        <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+          收起高级搜索
+        </div>
+        <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+          <form #form = "ngForm" class="form">
+
+            <div class="m-search-item">
+              <label>厂商PO号</label>
+              <input type="text" name="POCode" [(ngModel)]="query.POCode" placeholder="-请填写厂商PO号">
+            </div>
+    
+            <div class="m-search-item">
+                <label>开单金额</label>
+                <input type="text" only-number name="SalesAmountTotal" [(ngModel)]="query.SalesAmountTotal" placeholder="-请填写开单金额">
+            </div>
+
+            <div class="m-search-item">
+                <label>交货单号</label>
+                <input type="text" name="DeliveryOrderCode" [(ngModel)]="query.DeliveryOrderCode" placeholder="-请填写交货单号">
+            </div>
+
+            <div class="m-search-item">
+                <label>ERP销售单号</label>
+                <input type="text" name="ERPOrderCode" [(ngModel)]="query.ERPOrderCode" placeholder="-请填写ERP销售单号">
+            </div>
+
+            <div class="m-search-item">
+                <label>合同号</label>
+                <input type="text" name="MainContractCode" [(ngModel)]="query.MainContractCode" placeholder="-请填写合同号">
+            </div>
+
+            <div class="m-search-item">
+                <label>客户名称</label>
+                <input type="text" name="BuyerName" [(ngModel)]="query.BuyerName" placeholder="-请填写客户名称">
+            </div>
+
+    
+            <div class="m-search-item m-search-items">
+                <label>申请日期</label>
+                <!-- <my-datepicker></my-datepicker> -->
+                <div class="m-datepicker-comb">
+                  <div class="m-datepicker-start">
+                    <my-datepicker [(ngModel)]="query.CreatedTimeStart" format="YYYY-MM-DD" [EndDate]="query.CreatedTimeEnd" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>
+                  </div> <span>~</span> 
+                  <div class="m-datepicker-end">
+                    <my-datepicker [(ngModel)]="query.CreatedTimeEnd" format="YYYY-MM-DD"  [StartDate]="query.CreatedTimeStart" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+                  </div>
+                </div>
+            </div>
+    
+            <div class="m-search-btn">
+              <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+              <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+            </div>
+          </form>
+        </div>
+      
+    </div>
+
+    <!-- 我的审批 -->
+    <div [class.noview]="currentMenuType !== 'approval'">
+      <ul class="m-state">
+        <li [class.active]="currentDataState === 'waitapproval'" (click)="tabData('waitapproval')">待我审批</li>
+        <li [class.active]="currentDataState === 'examinedapproved'" (click)="tabData('examinedapproved')">我已审批</li>
+        <li [class.active]="currentDataState === 'allapproval'" (click)="tabData('allapproval')">全部</li>
+      </ul>
+
+
+      <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+          <div class="m-search-high" (click)="openSearch()">
+            <i class="iqon-highsearch"></i>
+            高级搜索
+          </div>
+        </div>
+    
+        <!-- 高级搜索 -->
+        <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+          收起高级搜索
+        </div>
+        <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+          <form #form = "ngForm" class="form">
+
+            <div class="m-search-item">
+              <label>厂商PO号</label>
+              <input type="text" name="POCode" [(ngModel)]="examineQuery.POCode" placeholder="-请填写厂商PO号">
+            </div>
+    
+            <div class="m-search-item">
+                <label>开单金额</label>
+                <input type="text" only-number name="SalesAmountTotal" [(ngModel)]="examineQuery.SalesAmountTotal" placeholder="-请填写开单金额">
+            </div>
+
+            <div class="m-search-item">
+                <label>ERP销售单号</label>
+                <input type="text" name="ERPOrderCode" [(ngModel)]="examineQuery.ERPOrderCode" placeholder="-请填写ERP销售单号">
+            </div>
+
+            <div class="m-search-item">
+                <label>申请人</label>
+                <input type="text" name="ApplyName" [(ngModel)]="examineQuery.ApplyName" placeholder="-请填写申请人">
+            </div>
+
+            <div class="m-search-item">
+                <label>客户名称</label>
+                <input type="text" name="BuyerName" [(ngModel)]="examineQuery.BuyerName" placeholder="-请填写客户名称">
+            </div>
+
+            <div class="m-search-item">
+             <!-- 占位用 -->
+            </div>
+
+    
+            <div class="m-search-item m-search-items">
+                <label>申请日期</label>
+                <div class="m-datepicker-comb">
+                  <div class="m-datepicker-start">
+                    <my-datepicker [(ngModel)]="examineQuery.applydateStart" format="YYYY-MM-DD" [EndDate]="examineQuery.applydateEnd" PlaceHolder="-请选择开始日期" name="applydateStart"></my-datepicker>
+                  </div> <span>~</span> 
+                  <div class="m-datepicker-end">
+                    <my-datepicker [(ngModel)]="examineQuery.applydateEnd" format="YYYY-MM-DD"  [StartDate]="examineQuery.applydateStart" PlaceHolder="-请选择结束日期" name="applydateEnd"></my-datepicker>
+                  </div>
+                </div>
+            </div>
+    
+            <div class="m-search-btn">
+              <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+              <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+            </div>
+          </form>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+  <loading [show]="loading"></loading>
+  <!--搜索-->
+
+  <div class="m-card-cont" *ngIf="!default">
+    <!--我是申请表格-->
+    <div class="" *ngIf="currentMenuType == 'apply'">
+      <div class="m-order-card" *ngFor="let item of validList;index as i">
+        <!-- <ng-container *ngIf="item.SalesOrderList.length>0"> -->
+        <ng-container>
+          
+        <ul class="m-card-head">
+          <li style="width:20%" title="{{item.MainContractCode}}">合同编号: <span (click)='getContractNub(item.SC_Code)'>{{item.MainContractCode}}</span></li>
+          <li style="width:27.4%" title="{{item.BuyerName}}">客户名称：{{item.BuyerName}}</li>
+          <li title="{{item.ContractMoney}}">合同金额：{{(item.ContractMoney || 0) |iqNumber:'1.2-2'}}</li>
+          <li title="{{item.SalesAmount}}">已开金额：{{(item.SalesAmount||0) |iqNumber:'1.2-2'}}</li>
+          <li title="{{item.RemainingSum}}">未开金额：{{(item.RemainingSum||0) |iqNumber:'1.2-2'}}</li>
+          <!-- <li (click)="openClick(i)"><i class="iqon-fold" [ngClass]="{'iqon-fold-translate':!openList[i]}"></i></li> -->
+          <li (click)="openClick(i)"><i class="iqon-fold" [ngClass]="{'iqon-fold-translate':!item.isOpen}"></i></li>
+          
+        </ul>
+        <div class="table-box">
+          <table class="table table-hover table-list" *ngIf='item.isOpen'>
+            
+            <thead>
+              <tr>
+                <th>订单号</th>
+                <th>客户名称</th>
+                <th class="w90">订单类型</th>
+                <th class="w120  money-right">销售金额</th>
+                <th style="width:10%">销售员</th>
+                <th style="width:10%">申请人</th>
+                <th class="w120">申请时间</th>
+                <th class="w120" [class.hide]="currentDataState === 'draft'">当前环节</th>
+                <!-- <th class="w120">当前环节</th> -->
+                <th style="width:70px;text-align:center;">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let one of item.SalesOrderList;index as m">
+                <ng-container *ngIf='one.ERPOrderCode'>
+                  <td title="{{one.ERPOrderCode}}"><span (click)='goToNewPage(item.SC_Code,one.SalesOrderID,one.Status)' class="clickText">{{one.ERPOrderCode}}</span></td>
+                </ng-container>
+                <ng-container *ngIf='!one.ERPOrderCode'>
+                  <td title="{{one.SalesOrderNum}}"><span (click)='goToNewPage(item.SC_Code,one.SalesOrderID,one.Status)' class="clickText">{{one.SalesOrderNum}}</span></td>
+                </ng-container>
+                <td title="{{one.CustomerName}}">{{one.CustomerName}}</td>
+                <td title="{{one.OrderType}}">{{one.OrderType}}</td>
+                <td title="{{one.SalesAmountTotal}}" class=" money-right">{{(one.SalesAmountTotal || 0) |iqNumber:'1.2-2'}}</td>
+                <td title="{{one.SalesName}}">{{one.SalesName}}</td>
+                <td title="{{one.CreateName}}">{{one.CreateName}}</td>
+                <td>{{one.CreatedTime}}</td>
+                <!-- <ng-container *ngIf="currentDataState === 'draft'">
+                                         <td (click)='goToNewPage(item.SC_Code,one.SalesOrderID,flase)'>{{one.CurrentApproveNode?one.CurrentApproveNode:'草稿'}}</td>
+                                 </ng-container> -->
+                <ng-container *ngIf="currentDataState === 'completed'">
+                  <td title="{{one.CurrentApproveNode?one.CurrentApproveNode:'已完成'}}">{{one.CurrentApproveNode?one.CurrentApproveNode:'已完成'}}</td>
+                </ng-container>
+                <ng-container *ngIf="(currentDataState === 'approval')||(currentDataState === 'all')">
+                  <td title="{{one.CurrentApproveNode}}">{{one.CurrentApproveNode?one.CurrentApproveNode:one.Status==0?'草稿':one.Status==2?'已完成':'驳回'}}</td>
+                </ng-container>
+                <td class="operate" style="width:70px;">
+                  <!-- 所有的都有查看跳转查看页 -->
+                  <!-- <span class="isEdit" (click)='goToNewPage(item.SC_Code,one.SalesOrderID,flase)'>查看</span> -->
+                  <!-- isedit跳转编辑页 -->
+                  <!-- <span class="isEdit"*ngIf='one.IsEdit==true' (click) = "goToNewPage(item.SC_Code,one.SalesOrderID,true)">编辑</span> -->
+                  <!-- 全部的里面草稿跟驳回显示删除 -->
+                  <span *ngIf="currentDataState === 'all'" (click)="deleteSaleOrder(i,m,one.SalesOrderID)">{{(one.Status=='0')||(one.Status=='3')?'删除':''}}</span>
+                  <!-- 草稿显示删除 -->
+                  <span *ngIf="currentDataState === 'draft'" (click)="deleteSaleOrder(i,m,one.SalesOrderID)">删除</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </ng-container>
+
+      </div>
+      <!-- <div class="table-footer">
+              <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+            </div> -->
+    </div>
+    <!--我的审批表格-->
+    <div class="" *ngIf="currentMenuType == 'approval'">
+      <div class="m-order-card  my-approval-table">
+        <table class="table table-hover table-list">
+          <thead>
+            <tr>
+              <th style="width:15%">订单号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='approvalSort()'></i></th>
+              <th style="width:20%">客户名称</th>
+              <th class="money-right" style="width:10%">销售金额</th>
+              <th class="money-right" style="width:10%">合同金额（元）</th>
+              <th style="width:7%">订单类型</th>
+              <th style="width:8%">申请人</th>
+              <th style="width:9%">申请日期<i class="iqon-order" (click)='approvalSort()'></i></th>
+              <th style="width:10%">当前审批环节</th>
+              <!-- <th>操作</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let itemOne of approveTableData'>
+              <td title="{{itemOne.SalesOrderNum}}"><span (click)='goToView(itemOne.taskTableURL,itemOne.taskState,itemOne.SalesOrderId)' class="clickText">{{itemOne.SalesOrderNum}}</span></td>
+              <td title="{{itemOne.CustomerName}}">{{itemOne.CustomerName}}</td>
+              <td class="money-right" title="{{itemOne.SalesAmount}}">{{(itemOne.SalesAmount || 0) |iqNumber:'1.2-2'}}</td>
+              <td class="money-right" title="{{itemOne.ContractMoney}}">{{(itemOne.ContractMoney || 0) |iqNumber:'1.2-2'}}</td>
+              <td title="{{itemOne.OrderType}}" title="{{itemOne.OrderType}}">{{itemOne.OrderType}}</td>
+              <td title="{{itemOne.ApplyName}}">{{itemOne.ApplyName}}</td>
+              <td title="{{itemOne.Applydate}}">{{itemOne.Applydate | iqDate:'YYYY-MM-DD'}}</td>
+              <td title="{{itemOne.currentapprove}}">{{itemOne.currentapprove}}</td>
+              <!-- <td class="edit-blue" >
+                                <span  (click)='goToView(itemOne.taskTableURL)'>查看</span>
+                            </td> -->
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="table-footer">
+              <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+            </div> -->
+    </div>
+    <div class="table-footer">
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+  <!--我的申请-缺省-->
+  <div class="m-home-default" *ngIf="currentMenuType == 'apply' && default">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>销售订单-我的申请-{{ currentDataTypeName }}为空</h3>
+          <h4>快来点击右上角“新建申请”按钮，开始新建申请吧~</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--我的审批-缺省-->
+  <div class="m-home-default" *ngIf="currentMenuType == 'approval' && default">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>销售订单-我的审批-{{ currentDataTypeName }}为空</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

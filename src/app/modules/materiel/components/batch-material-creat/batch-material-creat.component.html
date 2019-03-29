@@ -1,0 +1,76 @@
+<!--菜单-->
+<div class="m-boardtop clearfix">
+  <!--面包屑组件-->
+  <iq-breadcrumb></iq-breadcrumb>
+</div>
+<div class="m-main-content clearfix">
+
+  <!-- 选择物料类型 -->
+  <div class="m-main-content-material-type">
+    <ul class="clearfix">
+      <li>创建物料：</li>
+      <li>
+          <input icheck type="radio" id="radio1" name="materialtype" value="0001" [(ngModel)] = "materialType" (ngModelChange)="materialTypeChange($event)">
+          <label>一般物料</label>
+      </li>
+      <li>
+          <input icheck type="radio" id="radio2" name="materialtype" value="0002" [(ngModel)] = "materialType" (ngModelChange)="materialTypeChange($event)">
+          <label>返款服务物料</label>
+      </li>
+    </ul>
+  </div>
+  <!-- 批量上传物料 -->
+  <div class="m-main-content-material-betch">
+    <ul class="clearfix">
+      <li style="width:520px;">
+        <iq-file-upload upType="1" [url]="batchmaterialuploadapi" [upLoadData]="uploadFileParam" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+          text="附件上传" (onStartUpload)="onStartUpload()" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)"></iq-file-upload>
+      </li>
+    </ul>
+  </div>
+  <!-- 物料模板下载 -->
+  <div class="m-main-content-material-downtpl">
+    <ul class="clearfix">
+      <li><a [href]="materialtype0001" target="_bank">批量创建一般物料模板下载</a></li>
+      <li><a [href]="materialtype0002" target="_bank">批量创建返款服务物料模板下载</a></li>
+      <li><a [href]="materialrelation" target="_bank">物料关系表</a></li>
+    </ul>
+  </div>
+  <div class="m-main-content-material-warn" *ngIf="startUpload">{{startUploadTip}}</div>
+  <!-- 上传成功信息 -->
+  <div class="m-main-content-material-warn" *ngIf="batchmaterialuploadSuccess.length > 0">
+    <button type="button" class="m-btn-default" (click)="downloadSuccessExcelbtn()">下载</button>
+    <table class="table table-hover table-list" style="table-layout:fixed">
+      <thead>
+        <tr>
+          <th style="width:8%;">行数</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of batchmaterialuploadSuccess;index as i">
+          <td>{{item.ID}}</td>
+          <td>{{item.Msge}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- 上传错误信息 -->
+  <div class="m-main-content-material-warn" *ngIf="batchmaterialuploadWarn.length > 0">
+    <button type="button" class="m-btn-default" (click)="downloadErrorExcelbtn()">下载</button>
+    <table class="table table-hover table-list" style="table-layout:fixed">
+      <thead>
+        <tr>
+          <th style="width:8%;">行数</th>
+          <th>异常说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of batchmaterialuploadWarn;index as i">
+          <td>{{item.ID}}</td>
+          <td>{{item.Msge}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

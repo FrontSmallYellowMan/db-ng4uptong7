@@ -1,0 +1,45 @@
+<!-- <loading [show]="loading"></loading> -->
+<div class="popMoreERPList-tips">
+  
+  <!-- 库房冲红审批人列表 -->
+  <div class="m-moreERPList">
+
+    <div class="m-erpMoreList-title">
+      <h5>库房冲红审批人列表</h5>
+      <i class="iqon-close" (click)="cancel()"></i>
+    </div>
+    
+    <div class="m-moreERPList-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th style="width:159px">平台</th>
+            <th>审批人</th>
+          </tr>
+        </thead>
+        </table>
+        <div [ngClass]="{'m-table-scoll':true}">     
+        <table class="table table-hover">
+        <tbody>
+          <tr *ngFor="let item of ApproverList; index as i" (click)="getApprover(i)">
+            <td style="width: 159px;">
+             {{item.FlatName}}{{ApproverList.lenght}}
+            </td>
+            <td>{{item.UserName.slice(1)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+
+    <!-- <div class="m-supplier-button">
+        <button class="m-btn-confirm" (click)="submitSupplierClass()">确定</button>
+        <button class="m-btn-cancel" (click)="cancel()">取消</button>
+      </div> -->
+
+  </div>
+  
+
+</div>
+

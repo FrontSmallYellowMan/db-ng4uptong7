@@ -1,0 +1,72 @@
+<div style="overflow: auto;position: fixed;top: 0; right: 0;bottom: 0;left: 0;z-index: 100;padding-top: 7%;padding-left: 33%;background-color:rgba(0,0,0,0.5)">
+    <div style="width:600px;background-color:#fff;padding:20px">
+        <ul class="addApp-base-list">
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>收货单位</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.SDF_NAME">
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>收货地址</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.detailaddress">
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>省份</label>
+                    <!-- <input class="addApp-form-input" type="text"> -->
+                    <ng-select class="addApp-form-input" name='province' [items]="selectInfo.ReceivingProvinceList" [(ngModel)]="selected.ReceivingProvince"
+                        placeholder="请选择" name="ReceivingCity" (selected)="onSelectReceivingProvince($event)" style="padding: 0;border: 0px;"></ng-select>
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>城市</label>
+                    <!-- <input class="addApp-form-input" type="text"> -->
+                    <ng-select class="addApp-form-input" name='city' [items]="selectInfo.ReceivingCityList" placeholder="请选择" [(ngModel)]="selected.ReceivingCity"
+                        (selected)="onSelectReceivingCity($event)"  style="padding: 0;border: 0px;"></ng-select>
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>区(县)</label>
+                    <!-- <input class="addApp-form-input" type="text"> -->
+                    <ng-select class="addApp-form-input" name='district' [items]="selectInfo.ReceivingDistrictList" placeholder="请选择" [(ngModel)]="selected.ReceivingCounty"
+                         style="padding: 0;border: 0px;"></ng-select>
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>邮政编码</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.zipcode">
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>联系人</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.connecter">
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>联系电话</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.phone">
+                </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>签收标准</label>
+                    <input class="addApp-form-input" type="text" [(ngModel)]="address.signstandard">
+                </div>
+            </li>
+        </ul>
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                <button class="m-btn-confirm" (click)="saveBill()">保存</button>
+                <button class="m-btn-sketch" (click)="hideList()">返回</button>
+            </div>
+        </div>
+    </div>
+</div>

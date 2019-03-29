@@ -1,0 +1,53 @@
+<loading [show]="loading"></loading>
+<div class="ec-distype-maintenance">
+  <div class="ec-distype-maintenance-title">争议解决方式维护</div>
+  <div class="ec-distype-maintenance-content clearfix">
+    <div class="ec-distype-maintenance-content-item clearfix">
+      <div class="maintenance-content-item-title"><span>*</span>卖方主体：</div>
+      <div class="maintenance-content-item-control">
+        <select-search-company id="selectsearchseller" name="seller" [(ngModel)]="selectedSeller" [optionList]="selectDataSource?.CompanyList" (onSelecte)="onSelecteCompany(selectedSeller)"></select-search-company>
+      </div>
+    </div>
+    <div class="ec-distype-maintenance-content-item clearfix">
+      <div class="maintenance-content-item-title"><span>*</span>买方名称：</div>
+      <div class="maintenance-content-item-control">
+        <input type="text" style="width: 80%;" placeholder="-请查询客户名称" name="BuyerName" [(ngModel)]="formData.BuyerName" (click)="showBuyerModal()" readonly>
+        <a (click)="showBuyerModal()">查询</a>
+      </div>
+    </div>
+    <div class="ec-distype-maintenance-content-item-ddt clearfix">
+      <div class="maintenance-content-item-ddt-title"><span style="color:#ff4d4d">*</span>争议解决方式：</div>
+      <div class="maintenance-content-item-ddt-control">
+        <div class="m-select" style="width: 100%;">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="formData.DisputeDealtType">
+            <option value="">-请选择</option>
+            <option *ngFor="let item of DisputeDealtTypeArr" [ngValue]="item.DisputeDealtType">{{item.DisputeDealtName}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="maintenance-content-item-ddt-control" *ngIf="formData.DisputeDealtType == '001'">
+        <select-search-city style="width: 95%;" class="select-search-custom" name="disputedealtcity" [(ngModel)]="selectedCityItem" [optionList]="selectDataSource?.city" (onSelecte)="onSelecteCity(selectedCityItem)"></select-search-city>市
+      </div>
+      <div class="maintenance-content-item-ddt-control" *ngIf="formData.DisputeDealtType == '001'">
+        <select-search-district style="width: 85%;" class="select-search-custom" name="disputedealtdistrict" [(ngModel)]="selectedDistrictItem" [optionList]="selectDataSource?.searchResultByCityCodeDistrict" (onSelecte)="onSelecteProvince(selectedDistrictItem)"></select-search-district>区(县)
+      </div>
+    </div>
+    <div class="ec-distype-maintenance-content-item clearfix">
+      <div class="maintenance-content-item-title"><span>*</span>平台：</div>
+      <div class="maintenance-content-item-control">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="formData.FlatCode">
+            <option value="">-请选择</option>
+            <option *ngFor="let item of selectDataSource?.platformData" [ngValue]="item.FlatCode">{{item.FlatName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ec-distype-maintenance-footer">
+    <a class="m-btn-confirm" (click)="onSave()">保存</a>
+    <a class="m-btn-cancel" (click)="onCancel()" style="width:86px;">取消</a>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.main{
+    height: 100%;
+    .m-home-page .m-home-pageL {
+        width: 250px;
+        .m-user-nav {
+            position: relative;
+            float: left;
+            width: 248px;
+            background-color: #fff;
+            .m-usertab, .m-user-nav .m-userimg {
+                margin: 0 auto;
+                width: 248px;
+            }
+            .m-usertree {
+                padding-top: 10px;
+                a{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+

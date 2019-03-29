@@ -1,0 +1,49 @@
+<!-- <loading [show]="loading"></loading> -->
+<div class="popMoreERPList-tips">
+  
+  <!-- ERP订单列表 -->
+  <div class="m-moreERPList">
+
+    <div class="m-erpMoreList-title">
+      <h5>ERP订单列表</h5>
+      <i class="iqon-close" (click)="cancel()"></i>
+    </div>
+    
+    <div class="m-moreERPList-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="wp20">ERP订单号</th>
+            <th class="wp20">公司编号</th>
+            <th class="wp20">币种</th>
+            <th class="wp20">创建时间</th>
+          </tr>
+        </thead>
+        </table>
+        <div [ngClass]="{'m-table-scoll':erpList?.lenght>8}">     
+        <table class="table table-hover">
+        <tbody>
+          <tr *ngFor="let item of erpList; index as i" (click)="getERPCode(i)">
+            <td class="wp20">
+             {{item.OrderNo}}
+            </td>
+            <td class="wp20">{{item.CompanyCode}}</td>
+            <td class="wp20">{{item.CurrencyCode}}</td>
+            <td class="wp20">{{item.CreateDate|iqDate:"YYYY-MM-DD"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+
+    <!-- <div class="m-supplier-button">
+        <button class="m-btn-confirm" (click)="submitSupplierClass()">确定</button>
+        <button class="m-btn-cancel" (click)="cancel()">取消</button>
+      </div> -->
+
+  </div>
+  
+
+</div>
+

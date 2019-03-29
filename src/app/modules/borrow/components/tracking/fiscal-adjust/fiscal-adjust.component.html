@@ -1,0 +1,114 @@
+<div class="m-boardtop clearfix">
+  <div class="m-crumb">
+        <ul>我的位置：
+            <li><a>DCG业务管理平台</a></li>
+            <li><a>借用管理</a></li>
+            <li><a>借用跟踪</a></li>
+            <li><a>财年调整规则</a></li>
+        </ul>
+    </div>
+  <button type="button" class="m-btn-success float-right" (click)="addFiscal()" style="margin-top: 8px;"><i class="iqon-add"></i>新建财年调整</button>
+  <iq-file-upload upType="0" [url]="fileUploadApi" [allowedFileType]="['xls']" [text]="'导入财年调整规则'"
+  (onSuccess)="onFileCallBack($event)" class="float-right" style="margin: 8px 10px 0 0;"></iq-file-upload>
+  <button type="button" class="m-btn-text mr10 float-right" style="color: #57b9f8;" (click)="loadFiscal()">财年调整模板下载</button>
+</div>
+
+<div class="m-overclass">
+  <!--缺省页开始-->
+  <div class="m-apply"  [ngClass]="{'hide': isSearch || (fiscalList && fiscalList.length > 0)}">
+    <loading [show]="loading"></loading>
+    <div class="m-apply-circle">
+      <i class="iqon-plus-circle" (click)="addFiscal()"></i>
+      <span>新建财年调整</span>
+    </div>
+  </div>
+  <!--缺省页结束-->
+  <!--内容页开始-->
+  <div class="m-contclass" [ngClass]="{'hide': !isSearch && !(fiscalList && fiscalList.length > 0)}">
+    <div class="m-list-menu">
+      <div class="m-search-big-multi">
+        <span>原业务范围</span>
+        <input type="text" placeholder="-请填写" [(ngModel)]="query.srcBusinessScope" (keyup.enter)="search()">
+      </div>
+      <div class="m-search-big-multi">
+        <span>现业务范围</span>
+        <input type="text" placeholder="-请填写" [(ngModel)]="query.descBusinessScope" (keyup.enter)="search()">
+      </div>
+      <div class="btn-right">
+        <button class="m-btn-cancel btn-blue" (click)="search()">搜索</button>
+        <button class="m-btn-cancel" (click)="clearSearch()">重置</button>
+      </div>
+    </div>
+    <!--搜索结果缺省页开始-->
+    <div class="m-noresult" [ngClass]="{'hide': !isSearch || (fiscalList && fiscalList.length > 0)}">
+      <loading [show]="loading"></loading>
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">
+          很抱歉，没有找到与“<span>{{searchWord}}</span>”有关的信息
+        </p>
+        <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+      </div>
+    </div>
+    <!--搜索结果缺省页结束-->
+    <div class="m-card-cont" [ngClass]="{'hide': !fiscalList && fiscalList.length == 0}">
+      <loading [show]="loading"></loading>
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th style="width:5%;" class="wp5"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+              <th style="width:5%;text-align:center">序号</th>
+              <th style="width:10%;text-align:center">原本部名称</th>
+              <th style="width:15%;text-align:center">原事业部名称</th>
+              <th style="width:10%;text-align:center">原业务范围</th>
+              <th style="width:10%;text-align:center">现本部名称</th>
+              <th style="width:15%;text-align:center">现事业部名称</th>
+              <th style="width:10%;text-align:center">现业务范围</th>
+              <th style="width:10%;text-align:center">调整日期</th>
+              <th style="width:15%;text-align:center" class="operate wp10">操作</th>
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+              <th class="list-edit" colspan="4">已选{{checkedNum}}项<button type="button" (click)="deleteFiscal(fiscalList)">删除</button></th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of fiscalList;index as i">
+            <td class="wp5"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td>
+            <td style="text-align:center">
+              {{ (pagerData.pageNo-1)*pagerData.pageSize+i+1 }}
+            </td>
+            <td style="text-align:center" title="{{item.srcBaseDeptName}}">
+              {{ item.srcBaseDeptName }}
+            </td>
+            <td style="text-align:center" title="{{item.srcSubDeptName}}">
+              {{ item.srcSubDeptName }}
+            </td>
+            <td style="text-align:center" title="{{item.srcBusinessScope}}">
+              {{ item.srcBusinessScope }}
+            </td>
+            <td style="text-align:center" title="{{item.descBaseDeptName}}">
+              {{ item.descBaseDeptName }}
+            </td>
+            <td style="text-align:center" title="{{item.descSubDeptName}}">
+              {{ item.descSubDeptName }}
+            </td>
+            <td style="text-align:center" title="{{item.descBusinessScope}}">
+              {{ item.descBusinessScope }}
+            </td>
+            <td style="text-align:center">
+              {{ item.adjustmentDate | iqDate:'YYYY-MM-DD' }}
+            </td>
+            <td class="operate wp10">
+              <span (click)="deleteFiscal(item.id)">删除</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+  <!--内容页结束-->
+</div>

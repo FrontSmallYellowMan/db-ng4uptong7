@@ -1,0 +1,217 @@
+<div class="contract-view">
+  <loading [show]="loading"></loading>
+  <!--左侧内容-->
+  <div class="contract-view-left">
+    <div class="contract">
+      <div class="contract-title">
+        <h5>查看采购合同</h5>
+      </div>
+      <!--基本信息-->
+      <div class="c-content">
+        <div class="c-content-title">
+          <h5>基本信息</h5>
+        </div>
+        <div class="c-content-main clearfix">
+          <div class="c-form-item">
+            <div class="c-input-title"><label>代办人</label></div>
+            <div class="c-input-wrap">{{ formData.PUBaseData.AgentName}} {{formData.PUBaseData.AgentITcode}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>申请人</label></div>
+            <div class="c-input-wrap" style="line-height: 40px;">{{ formData.PUBaseData.ApplyName}} {{formData.PUBaseData.ApplyITcode}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>电话</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.ApplyTel}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>本部</label></div>
+            <div class="c-input-wrap">
+              <div class="m-select">{{formData.PUBaseData.Headquarter}}</div>
+            </div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>事业部</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.BusinessUnit}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>信控平台</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.Platform}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>用印平台</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.Platform_C}}</div>
+          </div>
+        </div>
+      </div>
+      <!--合同主信息-->
+      <div class="c-content">
+        <div class="c-content-title" style="position: relative;">
+          <h5>合同主信息</h5>
+          <span style="position:absolute; left:120px; top:19px;" *ngIf="formData.PUBaseData.MainContractCode">{{ formData.PUBaseData.MainContractCode }}</span>
+        </div>
+        <div class="c-content-main clearfix">
+          <div class="c-form-item">
+            <div class="c-input-title"><label>我方主体</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.SellerCompanyCode}}-{{formData.PUBaseData.SellerName}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>对方主体</label></div>
+            <div class="c-input-wrap" [title]="formData.PUBaseData.BuyerName">{{formData.PUBaseData.BuyerERPCode}}-{{formData.PUBaseData.BuyerName}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>币种</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.Currency | currencyPipe}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>合同金额</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.ContractMoney}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>合同名称</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.ContractName}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>采购类型</label></div>
+            <div class="c-input-wrap c-wrap-out">
+              <span *ngIf="formData.PUBaseData.PurchaseType == '0'">核心</span>
+              <span *ngIf="formData.PUBaseData.PurchaseType == '2'">新产品</span>
+              <span *ngIf="formData.PUBaseData.PurchaseType == '1'">非核心</span>
+            </div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>对方当事人</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.litigantName}}</div>
+          </div>
+          <div class="c-form-item">
+            <div class="c-input-title"><label>对方当事人电话</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.litigantTel}}</div>
+          </div>
+          <div class="c-form-item-custom clearfix">
+            <div class="c-input-title"><label>合同内容摘要</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.ContractContent}}</div>
+          </div>
+          <div class="c-form-item-custom clearfix">
+            <div class="c-input-title"><label>备注</label></div>
+            <div class="c-input-wrap">{{formData.PUBaseData.Remark}}</div>
+          </div>
+          <db-customerform [readonly]=true [Data]="customerFormData"></db-customerform>
+        </div>
+      </div>
+      <!--附件信息-->
+      <div class="c-content">
+        <div class="c-content-title">
+          <h5>附件信息</h5>
+        </div>
+        <div class="c-content-main clearfix">
+          <div class="c-form-item-file">
+            <div class="c-file-title" style="line-height: 30px;"><label>用印文件</label></div>
+            <div class="c-file-wrap">
+              <ul style="padding: 2px 15px;">
+                <li style="cursor: pointer;" *ngFor="let accessItem of formData.AccessList.AccessorySeal" (click)="onClickFile(accessItem)">{{ accessItem.AccessoryName }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="c-form-item-file">
+            <div class="c-file-title" style="line-height: 30px;"><label>相关文件</label></div>
+            <div class="c-file-wrap">
+              <ul style="padding: 2px 15px;">
+                <ul *ngIf="!isRisk && !isSeal">
+                  <li style="cursor: pointer;" *ngFor="let accessItem of formData.AccessList.AccessoryBus" (click)="onClickFile(accessItem)"><i style="margin-right: 10px;" class="iqon-enclosure"></i>{{ accessItem.AccessoryName }}</li>
+                </ul>
+                <li style="cursor: pointer;" *ngFor="let accessItem of formData.AccessList.AccessorySub" (click)="onClickFile(accessItem)"><i style="margin-right: 10px;" class="iqon-enclosure"></i>{{ accessItem.AccessoryName }}</li>
+                <li style="cursor: pointer;" *ngFor="let accessItem of formData.AccessList.AccessoryS" (click)="onClickFile(accessItem)"><i style="margin-right: 10px;" class="iqon-enclosure"></i>{{ accessItem.AccessoryName }}</li>
+              </ul>
+              <iq-file-upload upType="1" [url]="uploadContractApiUrl" [maxFileSize]="52428800" [withCredentials]=false
+                text="附件上传" (onSuccess)="fileUploadSuccess($event, 10)" (onDeleteItem)="onDeleteFileItem($event, 10)" (onClickFile)="onClickFile($event, 10)"></iq-file-upload>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--用印信息-->
+      <div class="addApply-container" style="margin: 0;">
+        <db-sc-seals [sealsInfo]="sealInfo" [platfromid]="formData.PUBaseData.PlatformID" [isEdit]="false"></db-sc-seals>
+      </div>
+      <!--双章扫描件-->
+      <div class="c-content c-content-seal" *ngIf="(formData.PUBaseData.PU_Status == '1' && currentApprovalNodeIsSeal) || formData.PUBaseData.PU_Status == '2'">
+        <div class="c-content-title">
+          <h5>双章扫描件</h5>
+        </div>
+        <div class="c-content-main">
+          <div class="file-upload">
+            <db-sc-upload upType="1" [url]="uploadChapterApiUrl" [allowedFileType]="" [accessoriesInfo]="formData.AccessList['AccessoryD']" [allowDel] = "isAnent && formData.PUBaseData.isUploadDoubleChapter == 0"
+              (onSuccess)="onFileCallBack($event)" [isEdit]="isAnent && formData.PUBaseData.isUploadDoubleChapter == 0"></db-sc-upload>
+          </div>
+          <div class="contract-recovery clearfix">
+              <div *ngIf="isSeal">
+                <label>合同是否回收:</label>
+                <span>
+                  <input icheck type="radio" id="radio1" name="Outsourcing" [(ngModel)]="formData.PUBaseData.IsRecovery" value="1" [disabled]="disabledOutsourcing">
+                  <label for="radio1">是</label>
+                </span>
+                <span>
+                  <input icheck type="radio" id="radio2" name="Outsourcing" [(ngModel)]="formData.PUBaseData.IsRecovery" value="0" [disabled]="disabledOutsourcing">
+                  <label for="radio2">否</label>
+                </span>
+                <span>
+                  <input icheck type="radio" id="radio3" name="Outsourcing" [(ngModel)]="formData.PUBaseData.IsRecovery" value="2" [disabled]="disabledOutsourcing">
+                  <label for="radio2">PO</label>
+                </span>
+              </div>
+            <div *ngIf="!isSeal">
+              <label>合同是否回收:</label>
+              <span>{{formData.PUBaseData.IsRecovery | isRecoveryPipe}}</span>
+            </div>
+            <div *ngIf="formData.PUBaseData.RecoveryTime">
+              <label>回收时间:</label>
+              <span>{{formData.PUBaseData.RecoveryTime}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--审批历史-->
+      <div class="contract-history" *ngIf="wfData.wfHistory && wfData.wfHistory.length > 0">
+        <db-wfhistory [wfHistoryData]="wfData.wfHistory"></db-wfhistory>
+      </div>
+      <!--印章反原岗审批意见-->
+      <div class="c-content" *ngIf="isView && isSeal">
+        <div class="c-content-title">
+          <h5>审批意见</h5>
+        </div>
+        <div class="c-content-business">
+          <textarea rows="2" class="m-textarea" name="taskOpinions" [(ngModel)]="TaskOpinions" maxlength="300"></textarea>
+        </div>
+      </div>
+      <!--通用、风险、印章审批操作-->
+      <div class="contract-approval" *ngIf="!isView && !isADP && !isSealView">
+        <db-sc-wf-approval *ngIf="taskState !== '0'" [valid]="approveBeforeValid" (onSave)="onSave($event)" [viewInitParms]="viewInitParm" [appParms]="appParms"></db-sc-wf-approval>
+        <div *ngIf="taskState === '0'" style="text-align: center;">
+          <button class="m-btn-more-big" (click)="onBack()">返回</button>
+        </div>
+      </div>
+      <!--加签审批-->
+      <div class="contract-adp-approval" *ngIf="isADP">
+        <db-wfadp [adpAppParms]="adpAppParms"></db-wfadp>
+      </div>
+      <!--查看页面按钮组-->
+      <div class="contract-view-buttons" *ngIf="isView">
+        <div *ngIf="isAnent && (formData.PUBaseData.PU_Status == '1' || formData.PUBaseData.PU_Status == '2') && formData.PUBaseData.isUploadDoubleChapter == 0">
+          <button class="m-btn-assist-1" (click)="agentSave('saveChapter')">保存</button>
+        </div>
+        <div *ngIf="isAllowRevoke">
+          <button class="m-btn-assist-1" (click)="revoke()">撤销</button>
+        </div>
+        <div *ngIf="isSeal">
+          <button class="m-btn-assist-1" (click)="onSave()">保存</button>
+        </div>
+        <div>
+          <button class="m-btn-more-big" (click)="onBack()">返回</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--流程全景图-->
+  <div class="contract-view-right">
+    <db-wfview #wfview></db-wfview>
+  </div>
+</div>

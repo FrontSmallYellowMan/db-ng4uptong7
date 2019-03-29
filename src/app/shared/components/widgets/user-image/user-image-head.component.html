@@ -1,0 +1,2 @@
+<img *ngIf="url" src="{{url}}" (error)="url=''" class="m-user-img" alt="{{user?.userCN}}">
+<div class="m-user-noimg" *ngIf="!url" [ngStyle]="{background: color}">{{user?.userCN | slice:-2}}</div>

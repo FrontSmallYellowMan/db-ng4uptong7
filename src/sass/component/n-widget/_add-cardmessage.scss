@@ -1,0 +1,22 @@
+/* 新增名片信息*/
+.m-add-cardmessage {
+  width: 440px;
+  height: auto;
+  background-color: #fff;
+  .m-add-form {
+    padding: 10px;
+    .m-form-item {
+      padding: 0 15px;
+      position: relative;
+      ._m_right-unit{
+        position: absolute;
+        bottom: 10px;
+        right: 25px;
+      }
+    }
+  }
+  .m-add-btn {
+    text-align: center;
+    margin: 20px;
+  }
+}

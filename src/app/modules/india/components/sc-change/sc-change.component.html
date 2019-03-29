@@ -1,0 +1,426 @@
+<div class="contract">
+  <div class="contract-title">
+    <h5>合同变更</h5>
+  </div>
+  <form #form="ngForm" novalidate>
+    <!--基本信息-->
+    <div class="c-content">
+      
+      <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+      <div class="c-content-title">
+        <h5>基本信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><label>销售员</label></div>
+          <div class="c-input-wrap">
+            <span style="display:block; line-height:40px;">{{formData.SCBaseData.AgentName}} {{formData.SCBaseData.AgentITcode}}</span>
+            <!--选人组件功能 销售员不需要编辑暂时注销 需要时取消注销即可-->
+            <!--<iq-person-select #person name="person" [(ngModel)]="person.info" [max]="1" (ngModelChange)="changePerson(person.info)" ngDefaultControl></iq-person-select>-->
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>联系方式</label></div>
+          <div class="c-input-wrap">
+            <input readonly type="text" placeholder="-请输入联系方式" [(ngModel)]="formData.SCBaseData.ApplyTel" name="ApplyTel">
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>本部</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select disabled name="Headquarter" [(ngModel)]="formData.SCBaseData.Headquarter" #Headquarter="ngModel" [ngClass]="{'m-select-warn':Headquarter.invalid && (Headquarter.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.HeadquarterList" [ngValue]="item.HeadquarterID">{{item.HeadquarterName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>事业部</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select disabled name="BusinessUnit" [(ngModel)]="formData.SCBaseData.BusinessUnit" #BusinessUnit="ngModel" [ngClass]="{'m-select-warn':BusinessUnit.invalid && (BusinessUnit.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.BusinessUnitList" [ngValue]="item.BusinessUnitName">{{item.BusinessUnitName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>平台</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select disabled name="Platform" [(ngModel)]="formData.SCBaseData.PlatformID" #Platform="ngModel" [ngClass]="{'m-select-warn':Platform.invalid && (Platform.touched||isSubmit)}" required (ngModelChange)="onPlatformChange($event)">
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.PlatForm" [ngValue]="item.FlatCode">{{item.FlatName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>业务范围</label></div>
+          <div class="c-input-wrap">{{formData.SCBaseData.YWFWDM}}</div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title" style="width:41%;text-align: right;"><span class="c-form-need">*</span><label>原合同是否可继续开单</label></div>
+          <div class="c-input-wrap" style="width:40%; line-height: 40px;">
+            <input icheck type="radio" id="radio3" name="IsStillCanOrder" [(ngModel)]="formData.IsStillCanOrder" value="1">
+            <label>是</label>
+            <input icheck type="radio" id="radio4" name="IsStillCanOrder" [(ngModel)]="formData.IsStillCanOrder" value="0">
+            <label>否</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--合同主信息-->
+    <div class="c-content">
+
+      <div class="c-content-title">
+        <h5>合同主信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>代理商</label></div>
+          <div class="c-input-wrap">
+            <input readonly type="text" name="BuyerName" [(ngModel)]="formData.SCBaseData.BuyerName">
+          </div>
+          <!--代理商不可编辑暂时注销，需要时取消注销即可-->
+          <!--<div class="c-input-wrap">
+            <div class="m-select" *ngIf="isTemplate">
+              <i class="iqon-xia"></i>
+              <select name="Buyer" [(ngModel)]="formData.SCBaseData.BuyerERPCode">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of selectData.Buyer" [ngValue]="item.BuyerERPCode">{{item.BuyerName}}</option>
+              </select>
+            </div>
+            <div *ngIf="!isTemplate" class="c-input-wrap-search">
+              <input style="width: 76%;" type="text" (blur) = "onInputBuyer(formData.SCBaseData.BuyerName)" placeholder="请选择代理商" name="BuyerName" [(ngModel)]="formData.SCBaseData.BuyerName" #BuyerName="ngModel" [ngClass]="{'m-input-warn':BuyerName.invalid && (BuyerName.touched||isSubmit)}" required>
+              <button  (click)="open()">查询</button>
+            </div>
+          </div>-->
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>合同金额</label></div>
+          <div class="c-input-wrap">
+            <input type="text" only-number placeholder="请输入合同金额" name="ContractMoney" [(ngModel)]="formData.SCBaseData.ContractMoney" #ContractMoney="ngModel" [ngClass]="{'m-input-warn':ContractMoney.invalid && (ContractMoney.touched||isSubmit)}" required>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>币种</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select [(ngModel)]="formData.SCBaseData.Currency" name="Currency" #Currency="ngModel" [ngClass]="{'m-select-warn':Currency.invalid && (Currency.touched||isSubmit)}" required>
+              <option value="">-请选择</option>
+              <option *ngFor="let item of selectData.CurryList" [ngValue]="item.CurrencyID">{{item.CurrencyName}}</option>
+            </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>系统账期</label></div>
+          <div class="c-input-wrap clearfix">
+            <div class="c-wrap-account">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="formData.SCBaseData.AccountPeriodType" name="AccountPeriodType" #AccountPeriodType="ngModel" [ngClass]="{'m-select-warn':AccountPeriodType.invalid && (AccountPeriodType.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.AccountPeriodList" [ngValue]="item.AccountPeriodID">{{item.AccountPeriodName}}</option>
+              </select>
+              </div>
+            </div>
+            <div class="c-wrap-account">
+              <input type="text" name="AccountPeriodValue" [(ngModel)]="formData.SCBaseData.AccountPeriodValue">
+            </div>
+
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>项目类型</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select disabled [(ngModel)]="formData.SCBaseData.ProjectType" name="ProjectType" #ProjectType="ngModel" [ngClass]="{'m-select-warn':ProjectType.invalid && (ProjectType.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.ProjectTypeList" [ngValue]="item.ProjectTypeID">{{item.ProjectTypeName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>税率</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select [(ngModel)]="formData.SCBaseData.TaxRateCode" name="TaxRateCode" #TaxRateCode="ngModel" [ngClass]="{'m-select-warn':TaxRateCode.invalid && (TaxRateCode.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.TaxRateList" [ngValue]="item.TaxRateID">{{item.TaxRateName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>付款方式</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select [(ngModel)]="formData.SCBaseData.PaymentMode" name="PaymentMode" #PaymentMode="ngModel" [ngClass]="{'m-select-warn':PaymentMode.invalid && (PaymentMode.touched||isSubmit)}" required>
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.PayMendList" [ngValue]="item.Paymentcode">{{item.PayMentName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="c-form-item">
+          <div class="c-input-title"><label>项目名称</label></div>
+          <div class="c-input-wrap">
+            <input type="text" name="ProjectName" [(ngModel)]="formData.SCBaseData.ProjectName">
+          </div>
+        </div> -->
+        <div class="c-form-item">
+          <div class="c-input-title"><label>自定义合同编号</label></div>
+          <div class="c-input-wrap">
+            <input type="text" name="CustomizedContractNo" [(ngModel)]="formData.SCBaseData.CustomizedContractNo">
+          </div>
+        </div>
+        <div class="c-form-item" *ngIf="formData.SCBaseData.ContractSource =='自定义'">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>我方主体</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="SellerCompany" [(ngModel)]="formData.SCBaseData.SellerCompanyCode" #SellerCompany="ngModel" [ngClass]="{'m-select-warn':SellerCompany.invalid && (SellerCompany.touched||isSubmit)}" required (ngModelChange)="onCompanyChange($event)">
+                <option value=null>-请选择</option>
+                <option *ngFor="let item of selectData.SellerCompanys" [ngValue]="item.companycode">{{item.company}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>是否含外购</label></div>
+          <div class="c-input-wrap c-wrap-out">
+            <input icheck type="radio" id="radio1" name="Outsourcing" [(ngModel)]="formData.SCBaseData.Outsourcing" value="1">
+            <label for="radio1">是</label>
+            <input icheck type="radio" id="radio2" name="Outsourcing" [(ngModel)]="formData.SCBaseData.Outsourcing" value="0">
+            <label for="radio2">否</label>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>付款条款</label></div>
+          <div class="c-input-wrap">
+            <textarea rows="5" class="m-textarea" name="PayItem" [(ngModel)]="formData.SCBaseData.PayItem" #PayItem="ngModel" [ngClass]="{'m-input-warn':PayItem.invalid && (PayItem.touched||isSubmit)}" required maxlength="300"></textarea>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>供应链</label></div>
+          <div class="c-input-wrap">
+            <span class="c-wrap-chain c-wrap-chain-text" *ngIf="formData.SCBaseData.Outsourcing == '1'">
+              <input type="text" name="SupplyChain1" [(ngModel)]="formData.SCBaseData.SupplyChain1" #SupplyChain1="ngModel" [ngClass]="{'m-input-warn':SupplyChain1.invalid && (SupplyChain1.touched||isSubmit)}" required>
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-line" *ngIf="formData.SCBaseData.Outsourcing == '1'">
+              <hr class="c-wrap-line">
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-text">
+              <input readonly type="text" name="SupplyChain2" [(ngModel)]="formData.SCBaseData.SupplyChain2" #SupplyChain2="ngModel" [ngClass]="{'m-input-warn':SupplyChain2.invalid && (SupplyChain2.touched||isSubmit)}" required>
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-line">
+              <hr class="c-wrap-line">
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-text">
+              <input readonly type="text" name="SupplyChain3" [(ngModel)]="formData.SCBaseData.SupplyChain3" #SupplyChain3="ngModel" [ngClass]="{'m-input-warn':SupplyChain3.invalid && (SupplyChain3.touched||isSubmit)}" required>
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-line">
+              <hr class="c-wrap-line">
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-text">
+              <input type="text" name="SupplyChain4" [(ngModel)]="formData.SCBaseData.SupplyChain4">
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-line">
+              <hr class="c-wrap-line">
+            </span>
+            <span class="c-wrap-chain c-wrap-chain-text">
+              <input type="text" #SupplyChain5="ngModel" name="SupplyChain5" [ngClass]="{'m-input-warn':SupplyChain5.invalid && (SupplyChain5.touched||isSubmit)}" [(ngModel)]="formData.SCBaseData.SupplyChain5" required>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="c-content" *ngIf="customerFormData">
+
+      <div class="c-content-title">
+        <h5>项目信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><label>客户应收账款</label>
+          </div>
+          <div class="c-input-wrap c-input-wrap-customerunclertotalinfo">
+            {{CustomerUnClerTotalInfo.Receivable}}
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>客户超期欠款</label>
+          </div>
+          <div class="c-input-wrap c-input-wrap-customerunclertotalinfo">
+            {{CustomerUnClerTotalInfo.Overdue}}
+          </div>
+        </div>
+        <db-customerform [Data] = "customerFormData"></db-customerform>
+      </div>
+    </div>
+    <!--合同附件-->
+    <div class="c-content">
+      <div class="c-content-title">
+        <h5>合同附件</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <div class="c-form-item-file">
+          <div class="c-file-title" style="line-height: 35px;width:8%;"><label>参考文件</label></div>
+          <div class="c-file-wrap" style="width:37.5%;">
+            <!--带出原合同用印文件-->
+            <ul *ngIf="formData.Contract && formData.Contract.length > 0" style="padding-left: 15px;">
+              <li *ngFor="let accessItem of formData.Contract;index as i;">
+                <a (click)="onClickFile(accessItem.AccessoryURL)">
+                  <i style="margin-right: 10px;" class="iqon-enclosure"></i>{{ accessItem?.AccessoryName }}
+                </a>
+                <!--<i class="iqon-close" (click)="onDeleteFileItem(i, 19)" style="color: #d2d8e0;"></i>-->
+              </li>
+            </ul>
+            <div *ngIf="!formData.Contract || (formData.Contract && formData.Contract.length == 0)">
+              无记录
+            </div>
+            <!--<div *ngIf="!formData.Contract || (formData.Contract && formData.Contract.length == 0)">
+                <iq-file-upload upType="1" [url]="uploadCustomeAccesslUrl" [maxFileNum]="1" [maxFileSize]="52428800" [withCredentials]=false
+      (onSuccess)="fileUploadSuccess($event,19)" (onDeleteItem)="onDeleteFileItem($event, 19)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+            </div>-->
+          </div>
+        </div>
+        <div class="c-form-item-file" style="width:50%;">
+          <div class="c-file-title" style="width:16%;"><label>用印文件<br>变更协议</label></div>
+          <div class="c-file-wrap">
+            <iq-file-upload upType="1" [url]="changeAgreementFileApi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles.AccessoryChange"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event, 27)" (onDeleteItem)="onDeleteFileItem($event, 27)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+          </div>
+        </div>
+        <div class="c-form-item-file" style="width:50%;">
+          <div class="c-file-title" style="width:16%;"><label>变更协议相关附件</label></div>
+          <div class="c-file-wrap">
+            <iq-file-upload upType="1" [url]="relevantChangeAgreementFileApi" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles.AccessoryBus"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event, 3)" (onDeleteItem)="onDeleteFileItem($event, 3)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--变更原因-->
+    <div class="c-content">
+      <div class="c-content-title">
+        <h5>变更原因</h5>
+      </div>
+      <div class="c-content-main clearfix">
+            <textarea rows="3" class="m-textarea" name="changere" [(ngModel)]="formData.SCBaseData.ChangeReason" #changere="ngModel" [ngClass]="{'m-input-warn':changere.invalid && (changere.touched||isSubmit)}" required maxlength="300"></textarea>
+      </div>
+    </div>
+    <!--变更记录-->
+    <div class="c-content" *ngIf="formData.ChangeRecorde && formData.ChangeRecorde.length>0">
+      <div class="c-content-title">
+        <h5>变更记录</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <table class="wp100 table">
+          <tr>
+            <th>申请单号</th>
+            <th>合同类型</th>
+            <th>我方主体</th>
+            <th>客户名称</th>
+            <th>合同金额</th>
+            <th>申请日期</th>
+          </tr>
+          <tr *ngFor="let item of formData.ChangeRecorde">
+            <td><a target="_blank" [href]="'india/contractview?SC_Code=' + item.SC_Code">{{item.MainContractCode}}</a></td>
+            <td>{{item.ContractType}}</td>
+            <td>{{item.SellerCompanyCode}}-{{item.SellerName}}</td>
+            <td>{{item.BuyerName}}</td>
+            <td>{{item.ContractMoney}}</td>
+            <td>{{item.SubmitTime}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!--用印信息及审批信息-->
+    <div class="addApply-container" style="margin: 0;">
+      <db-sc-seals #seals [sealsInfo] = "sealInfo" [platfromid] = "formData.SCBaseData.PlatformID" [isEdit] = "true" (scSeals)="scSeals($event)"></db-sc-seals>
+      <!--<db-sc-approver #approvers [isEdit] = "true" (scApprover)="scApprover($event)"></db-sc-approver>-->
+    </div>
+    <!-- 合同金额大于等于200W需要申请人填写风险说明 -->
+    <div class="c-content" *ngIf="formData.SCBaseData.ContractMoney >= 2000000" style="margin-top:15px;">
+
+      <div class="c-content-title">
+        <h5>风险说明</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <sc-riskstatement [riskstatementdata] = "riskstatementdata" [selectdata]="riskstatementcomponentselectdata" [hasUploadedFilesRisk]="hasUploadedFilesRisk"></sc-riskstatement>
+      </div>
+    </div>
+    
+    <!--审批人信息-->
+    <div class="c-content" style="margin-top: 15px;">
+      <div class="c-content-title">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="c-content-main clearfix">
+        <db-sc-approver-redo [WFApproverData]="WFApproverDataComponent"></db-sc-approver-redo>
+      </div>
+    </div>
+    <!--审批历史-->
+    <div class="contract-history" *ngIf="wfHistory && wfHistory.length > 0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <div class="c-content-footer">
+      <button class="m-btn-agree" (click) = "onSubmit(form)">提交</button>
+      <button class="m-btn-refuse m-btn-common" (click) = "onSave()">暂存</button>
+      <button class="m-btn-cancel" (click) = "onCancel()">取消</button>
+    </div>
+  </form>
+</div>
+
+<!--<modal #modal>
+    <modal-header>
+      <span style="display:inline-block; font-size:16px;height:30px;line-height:30px;">买方信息</span>
+      <span class="pull-right" (click)="modal.close()" style="font-size:25px; width:18px; cursor:pointer; margin-right:4px;">&times;</span>
+    </modal-header>
+    <modal-body>
+        <div style="padding:15px 0 10px 15px; position:relative;">
+            <input type="text" class="form-control" placeholder="请输入客户名称" [(ngModel)]="formData.SCBaseData.BuyerName" style="width:82%;">
+            <button class="btn btn-info" (click)="getBuyerList()" style="position:absolute;right:15px;top:15px; width:80px;">查询</button>
+        </div>
+        <div style="padding:0 2%;">
+          <table class="table table-bordered table-hover">
+            <tbody>
+              <tr>
+                <td style="width:45%;">客户名称</td>
+                <td>客户编号</td>
+                <td>客户类型</td>
+              </tr>
+              <tr *ngFor="let item of currentPageItems" (click)="onSelectedBuyer(item)">
+                <td class="td-serchUser-1">{{ item.NAME }}</td>
+                <td class="td-serchUser-2"> {{ item.KUNNR }}</td>
+                <td class="td-serchUser-3">{{ item.KTOKD }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <div class="page">
+            <iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+        </div>
+    </modal-footer>
+</modal>-->
+
+

@@ -1,0 +1,90 @@
+@import '../../../../../sass/base/util';
+.m-overclass{
+  padding: 15px;
+}
+
+.m-search-form{
+  @extend %clearfix;
+
+  .m-search-input{
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    >input[type=text]{
+      width: 300px;
+    }
+    .em-flex{
+      display: flex;
+      width: 30%;
+      label{
+        width: 70px;
+        line-height: 35px;
+        padding-right: 10px;
+      }
+    }
+    .em-flex-down{
+      width: 360px;
+      margin-top: 10px;
+      .m-datepicker-comb{
+        display: flex;
+        line-height: 35px;
+      }
+      label{
+        width: 58px;
+        line-height: 35px;
+      }
+    }
+  }
+  .m-search-btn{
+    float: right;
+    padding-top: 10px;
+    .m-btn-confirm{
+      width: 78px;
+    }
+    .m-btn-default{
+      width: 78px;
+      margin-left: 15px;
+    }
+  }
+}
+
+.m-noresult{
+  margin-top: 10px;
+}
+
+.m-materiel-cont{
+  background: #fff;
+}
+
+.m-select{
+  display: inline-block;
+  width: 300px;
+}
+
+.m-datepicker-comb{
+  display: inline-block;
+  width: 300px;
+
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+  }
+}
+
+.table{
+  table-layout: auto;
+  font-size:12px;
+  >thead>tr>th{
+    border:none;
+  }
+}
+.list-first-td{
+  text-decoration: underline;
+}
+.list-first-td:hover{
+  color: #57b9f8;
+  cursor: pointer;
+}
+    

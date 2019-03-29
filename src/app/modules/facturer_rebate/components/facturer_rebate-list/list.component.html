@@ -1,0 +1,183 @@
+<div>
+    <loading [show]="isLoading"></loading>
+    <div class="list-operate-part">
+        <div class="bread-crumbs"></div>
+        <div class="operates" *ngIf="authority">
+            <button class="m-btn-default" (click)="exportList()">
+                导出
+            </button>
+            <a (click)="downloadTemplate()">下载返款模板</a>
+            <span>
+                <iq-file-upload upType="0" [maxFileNum]=100 [url]="uploadUrl" [showModel]="false" [allowedFileType]="['xls', 'xlsx']" text="导入返款"
+                    (onSuccess)="fileUploadSuccess($event)"></iq-file-upload>
+            </span>
+            <button class="m-btn-success" (click)="toNewRebate()">
+                <i class="iqon-add"></i>
+                新建申请
+            </button>
+        </div>
+    </div>
+    <div class="list-content-part">
+        <div class="list-search-part">
+            <div class="m-search-approval">
+                <div class="m-search-approval-content">
+                    <form #form="ngForm">
+                        <div class="m-search-approval-query">
+                            <div class="row">
+                                <div class="item">
+                                    <div class="title">厂商</div>
+                                    <div class="inputs">
+                                        <input type="text" [(ngModel)]="searchData.FactoryName" name="FactoryName">
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="title">
+                                        <span class="form-required">*</span>
+                                        代理商名称
+                                    </div>
+                                    <div class="inputs">
+                                        <input type="text" [(ngModel)]="searchData.AgentName" name="AgentName" maxlength="30" #AgentName="ngModel"
+                                        [(ngModel)]="searchData.AgentName" [ngClass]="{'m-input-warn': AgentName.invalid && (AgentName.touched || isSearch) }" required
+                                        >
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="title">
+                                        <span class="form-required">*</span>
+                                        销售组织
+                                    </div>
+                                    <div class="inputs">
+                                        <input type="text" [(ngModel)]="searchData.SalesOrganization" name="SalesOrganization" #SalesOrganization="ngModel"
+                                        [(ngModel)]="searchData.SalesOrganization" [ngClass]="{'m-input-warn': SalesOrganization.invalid && (SalesOrganization.touched || isSearch) }" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item">
+                                    <div class="title">激励编号</div>
+                                    <div class="inputs">
+                                        <input type="text" [(ngModel)]="searchData.IncentiveNumber" name="IncentiveNumber" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="title">返款金额</div>
+                                    <div class="inputs">
+                                        <input type="text" only-number compare-number [comparedValue]="searchData.AmountEnd" [comparedType]="'under'" [(ngModel)]="searchData.AmountBegin"
+                                            name="AmountBegin" class="input-part-4">
+                                        <span class="input-part-2">至</span>
+                                        <input type="text" only-number compare-number [comparedValue]="searchData.AmountBegin" [comparedType]="'over'" [(ngModel)]="searchData.AmountEnd"
+                                            name="AmountEnd" class="input-part-4">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="item item-filled">
+                                    <div class="title">占用情况</div>
+                                    <div class="inputs align-left">
+                                        <span *ngFor="let checkboxItem of checkboxes; index as i;">
+                                            <input icheck type="checkbox" [id]="'checkbox' + i" [name]="'checkItem' + i" [(ngModel)]="checkboxItem.isChecked">
+                                            <label [for]="'checkbox' + i">{{ checkboxItem.text }}</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="m-search-approval-btn">
+                        <button class="m-btn-confirm" (click)="searchNewList(true)">查询</button>
+                        <button class="m-btn-cancel" (click)="resetSearch()">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-display-part">
+            <div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'hideStyle': isDisplay}">
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">暂无相关数据</p>
+                    <p class="m-p-notice">点击“新建项目”新建数据吧~</p>
+                </div>
+            </div>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                <div class="list-edit">
+                    <span>已选{{checkedNum}}项</span>
+                    <button type="button" (click)="deleteList(listData)">删除</button>
+                </div>
+            </ng-container>
+            <div [ngClass]="{'hideStyle': !isDisplay}">
+                <table class="table table-hover table-list">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;" *ngIf="authority">
+                                <input allcheck="demoall" [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event"
+                                    (onIndeterminate)="checkIndeterminate($event)" icheck type="checkbox" name="">
+                            </th>
+                            <th *ngFor="let item of tableConfig" [width]="item.width">{{ item.title }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of listData" (click)="editOrScan(item.ID)">
+                            <td stopParentClick *ngIf="authority">
+                                <input [(ngModel)]="item.checked" [disabled]="item.InfoStatus==1" allcheckChild="demoall" icheck type="checkbox" name="">
+                            </td>
+                            <td [title]="item.ProjectNo">{{ item.ProjectNo }}</td>
+                            <td [title]="item.SalesOrganization">{{ item.SalesOrganization }}</td>
+                            <td [title]="item.FactoryName">{{ item.FactoryName }}</td>
+                            <td [title]="item.AgentName">{{ item.AgentName }}</td>
+                            <td [title]="item.IncentiveNumber">{{ item.IncentiveNumber }}</td>
+                            <td [title]="item.RefundAmount">{{ item.RefundAmount }}</td>
+                            <td [title]="item.AfterAmount">{{ item.AfterAmount }}</td>
+                            <td [title]="item.AvailableAmount">{{ item.AvailableAmount }}</td>
+                            <td [title]="item.CreateTime">{{ item.CreateTime | date:'yyyy-MM-dd'}}</td>
+                            <td [title]="item.CreateName">{{ item.CreateName }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-footer">
+                    <iq-pager [data]="PageData" (onChange)="pagerChange($event)">
+
+                        <div class="page">
+                            <div class="page-wrap">
+                                <div class="page-size">
+                                    显示：
+                                    <a class="active">10</a>
+                                    <a>20</a>
+                                    <a>50</a>
+                                    条/页
+                                </div>
+                                <div class="page-all">
+                                    共41条
+                                </div>
+                                <div class="page-center">
+                                    <div class="pagination">
+                                        <ul>
+                                            <li>
+                                                <a class="disable">
+                                                    <i class="iqon-angle-left"></i>
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a>1</a>
+                                            </li>
+                                            <li>
+                                                <a class="">
+                                                    <i class="iqon-angle-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="page-go">
+                                        到第
+                                        <input class="ng-pristine ng-valid ng-touched" min="1" type="text" max="1"> 页
+                                        <button class="m-btn-default" type="button">确定</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </iq-pager>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<loading [show]="loading"></loading>
+<div class="fp-new">
+  <div class="fp-new-title">
+    新建跟进信息
+  </div>
+  <div class="fp-new-content">
+    <div class="fp-new-form-item">
+      <input type="text" name="Title" placeholder="-请输入标题"  [(ngModel)]="afData.AFModel.Title" maxlength="30">
+    </div>
+    <div class="fp-new-form-item">
+      <textarea rows="5" class="m-textarea" name="ArrearsContent" placeholder="-请维护跟进信息" [(ngModel)]="afData.AFModel.ArrearsContent" maxlength="200"></textarea>
+    </div>
+    <div class="fp-new-form-item">
+      <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileNum]="5" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+        text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+    </div>
+  </div>
+  <div class="fp-new-btn">
+    <button class="m-btn-agree" (click)="save()">保存</button>
+    <button class="m-btn-refuse" (click)="routerFollowup()">返回</button>
+  </div>
+</div>

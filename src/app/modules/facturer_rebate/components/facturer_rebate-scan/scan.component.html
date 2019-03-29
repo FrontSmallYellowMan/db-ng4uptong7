@@ -1,0 +1,177 @@
+<loading [show]="isLoading"></loading>
+<div class="form-container">
+    <form id="pipeline-form" #form="ngForm">
+        <div class="common-area">
+            <div class="area-title">
+                <h5>通用信息</h5>
+            </div>
+    
+            <div class="area-content">
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">创建人</div>
+                        <div class="inputs">
+                            {{ formDataConfig.CreateName.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">创建日期</div>
+                        <div class="inputs">
+                            <p>{{ formDataConfig.CreateTime.value | date:'yyyy-MM-dd' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            厂商名称
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.FactoryName.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">代理商名称</div>
+                        <div class="inputs">
+                            {{ formDataConfig.AgentName.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">销售组织</div>
+                        <div class="inputs">
+                            {{ formDataConfig.SalesOrganization.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">激励编号</div>
+                        <div class="inputs">
+                            {{ formDataConfig.IncentiveNumber.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            返款金额
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.RefundAmount.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">返款失效日期</div>
+                        <div class="inputs">
+                            <p>{{ formDataConfig.InvalidTime.value | date:'yyyy-MM-dd'  }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">已占用金额</div>
+                        <div class="inputs">
+                            {{ formDataConfig.AfterAmount.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            剩余金额
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.AvailableAmount.value }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <!-- <div class="spectial-area">
+            <div class="area-title">
+                <h5>个性信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            签约代理类型
+                        </div>
+                        <div class="inputs">
+                           {{ roleFieldConfig.AgencyType.FieldValue }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            渠道分类
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.ChannelType.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            厂商PO号
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.Po.FieldValue }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            项目所属行业
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.ProjectTrade.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            订单类型
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.OrderType.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item item-filled">
+                        <div class="title">
+                            产品类型
+                        </div>
+                        <div class="inputs">
+                            <span *ngFor="let checkboxItem of roleFieldConfig.ProductType?.Data; index as i;">
+                                <input icheck type="checkbox" [id]="'checkbox' + i" [name]="'checkItem' + i" [(ngModel)]="checkboxItem.ischecked" [disabled]="true">
+                                <label [for]="'checkbox' + i">{{ checkboxItem.text }}</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="attachment-area">
+            <div class="area-title">
+                <h5>附件信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <ul>
+                        <li *ngFor="let item of formDataConfig.PipelineAccessories.value">
+                            <a (click)="toFileUrl(item.AccessoryURL)">{{ item.AccessoryName }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="m-btn-cancel" (click)="returnToList()">返回</button>
+        </div> -->
+        <div class="button-group">
+            <button class="m-btn-confirm" (click)="toEditRebate()" *ngIf="canEdit">编辑</button>
+            <button class="m-btn-cancel" (click)="returnToList()">取消</button>
+        </div>
+    </form>
+</div>

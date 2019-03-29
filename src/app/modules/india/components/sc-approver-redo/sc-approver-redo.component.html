@@ -1,0 +1,26 @@
+<div class="sc-approver-redo">
+  <ul class="approver-node-list" *ngIf="WFApproverData">
+    <li class="approver-node clearfix" *ngFor="let nodeitem of WFApproverData;index as i;">
+      <div class="approver-node-title" *ngIf = "nodeitem['IsOpened']==1">
+        <label>{{nodeitem['NodeName']}}</label><i style="color: #ff4d4d" *ngIf="nodeitem['IfRequired'] == 1">*</i>
+      </div>
+      <div class="approver-node-content" *ngIf = "nodeitem['IsOpened']==1 && nodeitem['NodeAttribute']=='Editable'">
+        <!--后台没有给选人范围-->
+        <iq-person-select *ngIf="nodeitem['ApproverList'].length == 0" [(ngModel)]="nodeitem['UserSettings']" [max]="maxApproverNum"></iq-person-select>
+        <!--后台提供选人范围-->
+        <div *ngIf="nodeitem['ApproverList'] && nodeitem['ApproverList'].length>0">
+          <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of nodeitem['UserSettings']" user-image [user]="item" [hasClose]="true" (onClose)="removeOne(item,i)"></div>
+          <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow(nodeitem['ApproverList'],i)"><i class="iqon-add"></i>添加</div>
+        </div>
+      </div>
+      <div class="approver-node-content" *ngIf = "nodeitem['IsOpened']==1 && nodeitem['NodeAttribute']=='Readonly'">
+        <div *ngIf="nodeitem['ApproverList'] && nodeitem['ApproverList'].length>0">
+          <div class="m-user-info" style="min-width: 150px;" *ngFor="let item of nodeitem['ApproverList']" user-image [user]="item"></div>
+        </div>
+        <div *ngIf="nodeitem['UserSettings'] && nodeitem['UserSettings'].length>0">
+          <div class="m-user-info" style="min-width: 150px;" *ngFor="let item of nodeitem['UserSettings']" user-image [user]="item"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

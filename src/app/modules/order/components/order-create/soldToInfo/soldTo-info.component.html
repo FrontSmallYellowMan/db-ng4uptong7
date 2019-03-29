@@ -1,0 +1,37 @@
+<div class="container m-order-number">
+    <div class="modal-header m-list-head">
+        <span>售达方信息</span>
+        <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+        <!-- <loading [show]="loading"></loading> -->
+        <div class="m-search-all">
+            <div class="m-search">
+                <i class="iqon-query" (click) = "search()"></i>
+                <input name="name" (keyup.enter) = "search()" [(ngModel)] = "customerName" placeholder="搜索客户名称..." type="text">
+            </div>
+        </div>
+        <div class="m-order-table">
+            <loading [show]="loading"></loading>
+            <ul class="m-shipTo-head">
+                <li>&nbsp;</li>
+                <li>客户编号</li>
+                <li>客户名称</li>
+                <li>售达方地址</li>
+            </ul>
+            <div class="m-shipTo-body">
+                <ul  *ngFor = "let item of soldToList;index as i">
+                    <li><input type="checkbox" (onChange) = "selected(item)" icheck [(ngModel)]="item.checked"></li>
+                    <li title = "{{item.KUNNR}}">{{item.KUNNR || "&nbsp;"}}</li>
+                    <li title = "{{item.NAME}}">{{item.NAME || "&nbsp;"}}</li>
+                    <li title = "{{item.ORT01}}">{{item.ORT01 || "&nbsp;"}}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+    </div>
+    <div class="modal-footer">
+        <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+        <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<button (click)="addrepare()" *ngIf="!personList.length" >增加</button>
+<ul class="repare-list">
+  <li *ngFor="let item of personList;index as i" >
+    <p>{{ i+1 | iq_chinese_number:0 }}{{ text }}</p>
+    <iq-person-select name="person" #person="ngModel" [(ngModel)]="item.person" required
+      [max]="1" ngDefaultControl (ngModelChange)="selectedPerson($event,i)"></iq-person-select>
+  </li>
+</ul>

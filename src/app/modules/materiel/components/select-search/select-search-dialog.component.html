@@ -1,0 +1,32 @@
+<div class="m-cover"></div>
+<div class="m-option">
+  <div class="modal-header m-dialog-head">
+    <span>请选择</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+  <div class="m-search">
+    <!-- <i class="iqon-query" (click)="search()"></i> -->
+    <input [(ngModel)]="query.queryStr" (keyup.enter)="search()" name="QueryStr" type="text" placeholder="-请输入搜索条件">
+    <button type="button" (click)="search()" class="m-btn-confirm">搜索</button>
+  </div>
+  <div class="m-option-list">
+    <loading [show]="loading"></loading>
+    <table class="table table-hover table-list">
+      <thead>
+        <tr>
+          <th *ngFor="let title of columns;">{{title}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of rows" (click)="choose(item)">
+          <!-- <td *ngFor="let i of item" [title]="i">{{(''+i).length < 20 ? i : i.slice(0,50) + '...'}}</td> -->
+          <td *ngFor="let i of item" [title]="i">{{i}}</td>
+        
+        </tr>
+      </tbody>
+    </table>
+
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)" [simple]="true"></iq-pager>
+
+  </div>
+</div>

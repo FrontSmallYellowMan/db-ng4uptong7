@@ -1,0 +1,58 @@
+/* 供应商管理 */
+.m-add-manage {
+  .m-dialog-head1 {
+    padding: 0 28px 0 19px;
+    height: 55px;
+    line-height: 55px;
+    background-color: #f5f8fb;
+    border: solid 1px #e2e2e2;
+  }
+  .m-card-content{
+
+    margin: 0 152px 0 148px;
+    .m-card-apply1 {
+      padding: 0;
+      .m-form-item {
+        padding: 10px 20px;
+        input {
+          height: 35px;
+        }
+        .m-select > select > .iqon-chose {
+          color: $def-font2-color;
+        }
+        .m-scan-item2>input{
+          width: 140px;
+        }
+      }
+      .m-form-item2{
+        width: 100%;
+        .iqon-attachment{
+          position: absolute;
+          top: 58px;
+          left: 35px;
+          color: $def-color1;
+        }
+      }
+      .m-form-item3{
+        position: relative;
+        >input{
+          padding-left:38px;
+        }
+      }
+    }
+    .m-add-btn{
+      text-align: center;
+      .m-btn-confirm{
+        height: 45px;
+        line-height: 45px;
+      }
+      .m-btn-cancel{
+        width: 88px;
+        height: 45px;
+        line-height: 45px;
+        margin-left: 15px;
+      }
+    }
+  }
+
+}

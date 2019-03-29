@@ -1,0 +1,37 @@
+.addApp-form-label{
+    text-align: left;
+}
+.addApp-form-input{
+    margin-left: 0px;
+}
+table{
+    tbody{
+        tr,td{
+            height: auto;
+        }
+        td:nth-child(2){
+            white-space: normal;
+            line-height: normal;
+            word-wrap: break-word
+        }
+    }
+    @media screen and (max-width: 1400px) {
+        th{
+            white-space: normal;
+        }        
+    }
+}
+// 清单的总计
+.list-summary{
+    margin-top: 15px;
+    padding-right: 48%;
+    display: flex;
+    background-color: #f3f3f3;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    .list-summary-part{
+        flex: 1;
+        padding-left: 15px;
+    }
+}

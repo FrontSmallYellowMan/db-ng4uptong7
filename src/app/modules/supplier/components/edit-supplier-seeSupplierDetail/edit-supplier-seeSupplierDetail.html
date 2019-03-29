@@ -1,0 +1,188 @@
+<div class="m-edit-supplier-ssd">
+
+  <h4>查看供应商详情</h4>
+
+  <!--供应商信息-->
+  <div class="m-edit-supplier-ssd-content1">
+
+    <div class="m-edit-supplier-ssd-title">
+      <h5>供应商信息</h5>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+        <span class="m-form-need"></span>供应商类别</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.vendorcountry|supplierPipe}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles m-select-title">
+        <span class="m-form-need"></span>公司代码</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        <i class="iqon-xia"></i>
+        <select name="CompanyAndCode" #CompanyAndCode="ngModel" [(ngModel)]="companyAndCode" id="" (ngModelChange)="getCompanySelect(companyAndCode)">
+          <option *ngIf="!isCompanyList" [ngValue]="companyAndCode">{{supplierData.companycode}} {{supplierData.company}}</option>
+          <option [ngValue]="list" *ngFor="let list of companyAndPayList;index as i">{{list.CompanyCode}} {{list.CompanyName}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+        <span class="m-form-need"></span>供应商名称</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.vendor}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles" style="width: 110px;">
+        <span class="m-form-need"></span>增值税号或统一社会信用代码</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1" style="top:10px;">
+        {{supplierData.valueaddedtaxno}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+        <span class="m-form-need"></span>注册地址</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.registeredaddress}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+        <span class="m-form-need"></span>供应商编号</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.vendorno}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="false">
+      <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+        <span class="m-form-need">*</span>供应商分类</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=1>
+        <span>核心</span>
+        <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=2>
+        <span>非核心</span>
+        <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=3>
+        <span>新产品</span>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <!--付款信息-->
+  <div class="m-edit-supplier-ssd-content1">
+
+    <div class="m-edit-supplier-ssd-title">
+      <h5>付款信息</h5>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>银行国别</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.bankcountrycode}} {{supplierData.bankcountry}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <!-- 占位用 -->
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>银行账户</p>
+      <div class="m-edit-supplier-ssd-input m-edit-supplier-ssd-yuan">
+        {{supplierData.bankaccount}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>付款条款</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.paymenttermscode}} {{supplierData.paymentterms}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>银行名称</p>
+      <div class="m-edit-supplier-ssd-input m-edit-supplier-ssd-yuan">
+        {{supplierData.bankname}}
+      </div>
+    </div>
+
+  </div>
+
+  <!--其他信息-->
+  <div class="m-edit-supplier-ssd-content1">
+
+    <div class="m-edit-supplier-ssd-title">
+      <h5>其他信息</h5>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="supplierData.internationaltradeterms">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>国际贸易条件</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.internationaltradeterms}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>币种</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.currencycode}}{{supplierData.currency}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+    </div>
+
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="supplierData.internationaltradelocation">
+      <p class="m-edit-supplier-ssd-form-title">
+        <span class="m-form-need"></span>国际贸易地点</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        {{supplierData.internationaltradelocation}}
+      </div>
+    </div>
+
+    <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+      <!-- 占位用 -->
+    </div>
+
+    <div class="m-edit-supplier-ssd-failUpLoad">
+      <p class="m-edit-supplier-ssd-failUpLoad-title">
+        <span class="m-form-need"></span>参考资料</p>
+      <div class="m-select m-edit-supplier-ssd-select-style1">
+        <ul class="m-enclosure" *ngFor="let list of supplierData.AccessoryList;index as i">
+          <li class="uploaded">
+            <i class="iqon-enclosure"></i>
+            <span class="filename" (click)="seeFileUpLoad(list.AccURL)">
+                {{list.AccName}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="m-commonly-btn">
+    <button class="m-btn-cancel" (click)="cancle()">关闭</button>
+  </div>
+
+
+</div>

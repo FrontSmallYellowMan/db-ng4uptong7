@@ -1,0 +1,27 @@
+<ul class="m-enclosure">
+    <li class="uploaded" *ngFor="let item of accessoriesInfo;index as i;">
+      <i class="iqon-enclosure"></i>
+      <span class="filename" [title]="item.AccessoryName" (click)="loadAccessory(item.AccessoryURL)"><span class="uploaded-filesName">{{item.AccessoryName}}</span><div class="file-download">下载</div></span>
+      <i class="iqon-close" 
+      *ngIf="(isCreate || isEdit&&item['CreatedByITcode']!=null&&item['CreatedByITcode'] == localUser['ITCode']&&(item['AccessoryType'] == '11' || item['AccessoryType'] == '19')) && allowDel"
+      (click) = "removeFiles(item)"></i>
+    </li>
+    <li *ngFor="let item of uploader.queue;index as i;" [ngClass]="item.isUploaded ? 'uploaded' : 'uploading'">
+      <i class="iqon-enclosure"></i>
+      <span class="filename" [ngStyle]="{'text-decoration': fileError[i] ? 'line-through': 'none'}" (click)="loadAccessory(item['AccessoryURL'])" [title]="item['AccessoryName']"><span>{{item.file.name}}</span><div class="file-download" *ngIf="item.isUploaded && !fileError[i]">下载</div></span>
+      <span class="filesize">（{{(item?.file?.size/1024/1024).toFixed(2)}}MB）</span>
+      <div class="m-progress-all" *ngIf="!item.isUploaded"><span [ngStyle]="{'width.%': item.progress}"></span></div>
+      <span class="upload-speed" *ngIf="!item.isUploaded">{{speed[i]}}</span>
+      <button class="m-btn-text" (click)="uploadFile(item)" [ngClass]="{'hide': item.isUploading || item.isUploaded}">重新上传</button>
+      <button class="m-btn-text" (click)="cancelUploadFile(item)" [ngClass]="{'hide': !item.isUploading || item.isUploaded}">取消</button>
+      <span *ngIf="item.isUploaded && !fileError[i]">上传成功</span>
+      <div class="error-msg" *ngIf="fileError[i]">{{fileErrorMsg[i]}}</div>
+      <i class="iqon-close" (click)="removeFile(item,i)"></i>
+    </li>
+
+    <li class="not-upload" *ngIf = "isEdit && !noUpload">
+      <i class="iqon-enclosure"></i>
+      <span>添加附件</span>
+      <input type="file" id="uploadFiles" #upfiles ng2FileSelect [uploader]="uploader" multiple>
+    </li>
+</ul>

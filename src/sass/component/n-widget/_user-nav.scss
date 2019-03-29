@@ -1,0 +1,61 @@
+/* 二级导航 */
+.m-user-nav{
+  position: relative;
+  float: left;
+  width: 286px;
+  background-color: #fff;
+
+  .m-usertab, .m-userimg{
+    margin: 0 auto;
+    width: 246px;
+  }
+
+  .m-select{
+    margin: 15px auto;
+    width: 246px;
+  }
+
+  >.m-userimg{
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $def-link2-color;
+    
+    .m-btn-text{
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: $def-main-color;
+    }
+
+    .m-usermore{
+      position: absolute;
+      left: -12px;
+      top: 0;
+      z-index: 100;
+      padding: 20px;
+      width: 271px;
+      background-color: #fff;
+      box-shadow: 0 0 7.5px 0 rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+      border: 1px solid $def-link1-color;
+      
+      >.m-userimg{
+        padding-bottom: 10px;
+      }
+      >.m-btn-text{
+        right: 12px;
+        top: 10px;
+      }
+    }
+  }
+
+  .m-user-tips{
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+
+    >.m-tips{
+      margin: 3px 0;
+    }
+  }
+}

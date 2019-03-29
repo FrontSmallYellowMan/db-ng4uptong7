@@ -1,0 +1,140 @@
+.erporderChange-form-approval {
+  margin-top: 20px;
+  position: relative;
+  text-align: left;
+
+  .erporderChange-form-title {
+    display: inline-block;
+    font-weight: bold;
+    min-width: 12%;
+    text-align: right;
+  }
+}
+
+.m-form-need {
+  color: red;
+  font-size: 13px;
+}
+
+.approverList{
+  display: inline-block;
+  padding: 0 0 0 20px;
+  line-height: 35px;
+}
+
+@mixin erporderChange-style {
+  display: inline-block;
+  width: 75%;
+  text-align: left;
+  span {
+    padding: 0 10px 0 2px;
+  }
+  input {
+    line-height: 33px;
+    height: 35px;
+    &::-webkit-input-placeholder {
+      color: #888;
+    } //Chrome,Safari
+    &::-moz-placeholder {
+      color: #888;
+    } //Firefox
+    &:-ms-input-placeholder {
+      color: #888;
+    } //IE10
+  }
+
+  textarea {
+    &::-webkit-input-placeholder {
+      color: #888;
+    } //Chrome,Safari
+    &::-moz-placeholder {
+      color: #888;
+    } //Firefox
+    &:-ms-input-placeholder {
+      color: #888;
+    } //IE10
+
+    border: 1px solid #e1e3eb;
+    border-radius: 3px;
+    padding: 10px 15px;
+  }
+}
+
+.erporderChange-select-style1 {
+  @include erporderChange-style;
+}
+
+.m-promised-title{
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+.m-user-approverSelect{
+  cursor: pointer;
+  color: #e1e3eb;
+  line-height: 30px;
+  height: 30px;
+    &:hover{
+      color: #57b9f8;
+      i{
+        color: #57b9f8;
+        border: 1px solid #57b9f8;
+      }
+    }
+
+  i{
+    display: inline-block;
+    float: left;
+    margin-right: 8px;
+    text-align: center;
+    color: #e1e3eb;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border-radius: 50%;
+    border: 1px solid #e1e3eb;
+  }
+}
+
+.m-user-approverSelect:hover{
+  cursor: pointer;
+  //color: #57b9f8;
+}
+
+.m-approver-width{
+  width: 20%!important;
+  padding: 0 0 10px 0;
+}
+
+.m-approver-change{
+  display: inline-block;
+  cursor: pointer;
+  color: #e1e3eb;
+  line-height: 30px;
+  height: 30px;
+    &:hover{
+      color: #57b9f8;
+      i{
+        color: #57b9f8;
+        border: 1px solid #57b9f8;
+      }
+    }
+
+  i{
+    display: inline-block;
+    margin-right: 8px;
+    text-align: center;
+    color: #e1e3eb;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border-radius: 50%;
+    border: 1px solid #e1e3eb;
+  }
+}
+
+.m-select-approver{
+  select{
+    width: 40%!important;
+  }
+}

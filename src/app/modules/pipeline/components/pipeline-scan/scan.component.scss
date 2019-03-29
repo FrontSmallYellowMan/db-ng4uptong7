@@ -1,0 +1,76 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+
+// 边框颜色
+$borderColor: #eeeff4;
+$inputBorderColor: #e1e3eb;
+// 白色背景
+$backColor: #fff;
+//蓝色
+$colorBlue: #76baf2;
+// 布局
+.form-container{
+    width: 75%;
+    margin: 14px auto 0px;
+    // 各部分标题
+    [class$='-area']{
+        background-color: $backColor;
+        margin-bottom: 10px;
+    }
+    .button-group{
+        text-align: center;
+        .m-btn-confirm{
+            width: 78px;
+        }
+    }
+    .area-title{
+        padding: 15px 0 15px 20px;
+        margin: 0;
+        color: $colorBlue;
+        border-bottom: 1px solid $borderColor;
+    }
+    // 各部分内容
+    .area-content{
+        width: 100%;
+        padding: 15px 30px;
+        .area-row{
+            width: 100%;
+            overflow: hidden;
+            .item{
+                float: left;
+                width: 50%;
+                text-align: center;
+                height: 60px;
+                line-height: 45px;
+                padding-bottom: 15px;
+                position: relative;
+                .title{
+                    float: left;
+                    width: 25%;
+                    text-align: right;
+                    padding-right: 12px;
+                }
+                .inputs{
+                    float: left;
+                    width: 75%;
+                    text-align: left;
+                }
+            }
+            .item-filled{
+                width: 100%;
+                .title{
+                    width: 12.5%;
+                }
+                .inputs{
+                    width: 87.5%;
+                }    
+            }
+            a{
+                cursor: pointer;
+            }
+        }
+        .area-row-visible{
+            overflow: visible;
+        }
+    }
+}

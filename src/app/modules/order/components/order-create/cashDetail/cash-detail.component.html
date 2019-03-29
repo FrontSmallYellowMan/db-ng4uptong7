@@ -1,0 +1,51 @@
+<div class="container m-order-number">
+    <div class="modal-header m-list-head">
+        <span style="font-size:12px;">应收账款明细</span>
+        <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="m-order-table" *ngIf="!defauls">
+            <loading [show]="loading"></loading>
+            <ul class="table-head">
+                <li>超期标记</li>
+                <li>公司代码</li>
+                <li>业务范围</li>
+                <li>预计收款日</li>
+                <li>销售日期</li>
+                <li>超期天数</li>
+                <li>欠款金额</li>
+                <li>ERP订单号</li>
+                <li>增值税发票号</li>
+                <li>销售员名称</li>
+                <li>平台</li>
+            </ul>
+            <div class="table-body">
+                <ul *ngFor = "let item of collectionList;index as i">
+                    <li><i class="iqon-right" *ngIf = "item.EXPIRE_FLAG == 'True'"></i><i *ngIf = "item.EXPIRE_FLAG == 'False'">&nbsp;</i></li>
+                    <li>{{item.CORP || "&nbsp;"}}</li>
+                    <li>{{item.DEPT || "&nbsp;"}}</li>
+                    <li>{{item.ENDDATE | iqDate:'YYYY-MM-DD' || "&nbsp;"}}</li>
+                    <li>{{item.SALE_DATE | iqDate:'YYYY-MM-DD' || "&nbsp;"}}</li>
+                    <li>{{item.EXPIRE_DAYS || "&nbsp;"}}</li>
+                    <li [title] ="item.AMOUNT">{{item.AMOUNT || "&nbsp;"}}</li>
+                    <li [title] ="item.VBELN">{{item.VBELN || "&nbsp;"}}</li>
+                    <li [title] ="item.TAXINVOICE">{{item.TAXINVOICE || "&nbsp;"}}</li>
+                    <li [title] ="item.SALESNAME">{{item.SALESNAME || "&nbsp;"}}</li>
+                    <li>{{item.SALESMAN || "&nbsp;"}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="m-noresult" *ngIf="defauls">
+            <div class="m-noresult-msg">
+              <i class="iqon-query"></i>
+              <p class="m-noresult-notice">暂无相关数据</p>
+
+            </div>
+        </div>
+        <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+    </div>
+    <!-- <div class="modal-footer">
+        <button class="m-btn-confirm" type="button" (click)="hide()">确定</button>
+        <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div> -->
+</div>

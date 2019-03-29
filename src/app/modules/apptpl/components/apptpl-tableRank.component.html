@@ -1,0 +1,71 @@
+<loading [show]="loading"></loading>
+<table class="table table-hover table-list">
+    <thead>
+        <tr>
+            <th><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                    (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                <th (click)="rankSet('a')">
+                    序号
+                    <i class="iqon-order" *ngIf="this.rank.a=='none'" ></i>
+                    <i class="iqon-orderup" *ngIf="this.rank.a=='up'" ></i>
+                    <i class="iqon-orderdown" *ngIf="this.rank.a=='down'" ></i>
+                </th>
+                <th (click)="rankSet('b')">
+                    原本部名称
+                    <i class="iqon-order" *ngIf="this.rank.b=='none'" ></i>
+                    <i class="iqon-orderup" *ngIf="this.rank.b=='up'" ></i>
+                    <i class="iqon-orderdown" *ngIf="this.rank.b=='down'" ></i>
+                </th>
+                <th (click)="rankSet('c')">
+                    原事业部名称
+                    <i class="iqon-order" *ngIf="this.rank.c=='none'" ></i>
+                    <i class="iqon-orderup" *ngIf="this.rank.c=='up'" ></i>
+                    <i class="iqon-orderdown" *ngIf="this.rank.c=='down'" ></i>
+                </th>
+                <th>原业务范围</th>
+                <th>现本部名称</th>
+                <th>现事业部名称</th>
+                <th>现业务范围</th>
+                <th>调整日期</th>
+                <th class="operate wp10">操作</th>
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                <th class="list-edit" colspan="4">已选{{checkedNum}}项<button type="button" (click)="deleteFiscal(fiscalList)">删除</button></th>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of fiscalList;index as i">
+            <td class="wp1"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td>
+            <td>
+                {{ (pagerData.pageNo-1)*pagerData.pageSize+i+1 }}
+            </td>
+            <td>
+                {{ item.srcBaseDeptName }}
+            </td>
+            <td>
+                {{ item.srcSubDeptName }}
+            </td>
+            <td>
+                {{ item.srcBusinessScope }}
+            </td>
+            <td>
+                {{ item.descBaseDeptName }}
+            </td>
+            <td>
+                {{ item.descSubDeptName }}
+            </td>
+            <td>
+                {{ item.descBusinessScope }}
+            </td>
+            <td>
+                {{ item.adjustmentDate | iqDate:'YYYY-MM-DD' }}
+            </td>
+            <td class="operate wp10">
+                <span (click)="deleteFiscal(item.id)">删除</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>

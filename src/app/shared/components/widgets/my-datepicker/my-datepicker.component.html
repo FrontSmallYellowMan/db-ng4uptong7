@@ -1,0 +1,33 @@
+<div #myDatePicker class="my-datepicker">
+  <input type="text" name="" readonly [disabled]="isDisabled" (click)="showPicker()" [placeholder]="PlaceHolder" [value]="choosedDate" [ngClass]="{'m-input-warn': Required && !bindDate}" style="cursor: pointer;" [ngStyle]="{'background-color':isDisabled?'#eee':'#fff','cursor':isDisabled?'not-allowed':'pointer'}">
+  <div class="picker-main" [ngClass]="{'hide': !show}">
+    <div class="p-ym">
+      <i class="iqon-angle-left" (click)="toPrevMonth()"></i>
+      <select [(ngModel)]="year" (ngModelChange)="getDate(year,month)">
+        <option *ngFor="let i of yearList" [value]="i">{{i}}</option>
+      </select>年&nbsp;&nbsp;&nbsp;
+      <select [(ngModel)]="month" (ngModelChange)="getDate(year,month)">
+        <option *ngFor="let i of monthList" [value]="i">{{i+1}}</option>
+      </select>月
+      <i class="iqon-angle-right" (click)="toNextMonth()"></i>
+    </div>
+    <ul class="p-day">
+      <li>一</li>
+      <li>二</li>
+      <li>三</li>
+      <li>四</li>
+      <li>五</li>
+      <li>六</li>
+      <li>日</li>
+    </ul>
+    <ul class="p-date">
+      <li *ngFor="let i of prevMonth" class="color-gray" (click)="toPrevMonth(i)" [ngStyle]="{'cursor': disabledPrevMonth ? 'not-allowed' : 'pointer'}">{{i}}</li>
+      <li *ngFor="let i of currentMonth" [ngClass]="{'currentday': day == i,'color-gray': i < disabledStartDate || i > disabledEndDate}" [ngStyle]="{'cursor': i < disabledStartDate || i > disabledEndDate ? 'not-allowed' : 'pointer'}" (click)="chooseDate(i)">{{i}}</li>
+      <li *ngFor="let i of nextMonth" class="color-gray" (click)="toNextMonth(i)" [ngStyle]="{'cursor': disabledNextMonth ? 'not-allowed' : 'pointer'}">{{i}}</li>
+    </ul>
+    <div class="my-today-button" (click)="getToday()">
+      <span>今天</span>
+    </div>
+  </div>
+  <i class="iqon-calendar-2" (click)="showPicker()" style="cursor: pointer;"></i>
+</div>

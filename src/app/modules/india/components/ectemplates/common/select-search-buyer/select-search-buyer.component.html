@@ -1,0 +1,31 @@
+<div class="ec-component-buyer">
+  <loading [show]="loading"></loading>
+  <div class="ec-component-buyer-header">
+    {{ modalTitle }}<i class="iqon-close" (click) = "close()"></i>
+  </div>
+  <div class="ec-component-buyer-body">
+    <div class="ec-component-buyer-body-search">
+      <input type="text" placeholder="-请输入查询条件" name="BuyerName" [(ngModel)]="query">
+      <button (click)="getBuyerList(query)">查询</button>
+    </div>
+    <div class="ec-component-buyer-body-result" *ngIf="currentPageItems && currentPageItems.length > 0">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>客户名称</td>
+                    <td>客户编号</td>
+                    <!--<td>客户类型</td>-->
+                </tr>
+                <tr *ngFor="let item of currentPageItems" (click)="onSelectedBuyer(item)">
+                    <td class="td-serchUser-1">{{ item.NAME }}</td>
+                    <td class="td-serchUser-2"> {{ item.KUNNR }}</td>
+                    <!--<td class="td-serchUser-3">{{ item.KTOKD }}</td>-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <div class="ec-component-buyer-footer" *ngIf="currentPageItems && currentPageItems.length > 0">
+    <iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+  </div>
+</div>

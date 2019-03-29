@@ -1,0 +1,46 @@
+
+@mixin border-radius($size: 50%) {
+  -webkit-border-radius: $size;
+  -moz-border-radius: $size;
+  border-radius: $size;
+}
+
+@mixin transition($prop: opacity, $delay: 0.5s, $timing: ease) {
+  -webkit-transition: $prop $delay $timing;
+  -o-transition: $prop $delay $timing;
+  transition: $prop $delay $timing;
+}
+
+@mixin boxshadowParam($shadow: 0) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin transform($params) {
+  -webkit-transform: $params;
+  -ms-transform: $params;
+  -o-transform: $params;
+  transform: $params;
+}
+
+@mixin translate($left: 0, $top: 0) {
+  -webkit-transform: translate($left, $top);
+  -ms-transform: translate($left, $top);
+  -o-transform: translate($left, $top);
+  transform: translate($left, $top);
+}
+
+@mixin transformNone() {
+  -webkit-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none;
+}
+
+
+
+
+@mixin imgInstropath($value, $repeat...) {
+  background: url("assets/"+$value) $repeat;
+}

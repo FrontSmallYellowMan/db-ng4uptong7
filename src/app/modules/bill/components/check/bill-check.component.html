@@ -1,0 +1,2323 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left">
+            <h1 class="apply-tit-h1">{{applyDate.proposer}}的冲红申请</h1>
+            <!-- 基础信息 -->
+            <div class="apply-p-base clearfix">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">基础信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-p-infor clearfix">
+                    <div class="m-exm-item">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <div class="m-user-info-small">
+                                        <span class="m-user-name">{{applyDate.proposer}}</span>
+                                        <!-- <span class="m-user-ename">{{applyDate.uId}}</span> -->
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请日期</div>
+                                <div class="m-exm-cont">{{applyDate.applydate}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">电话</div>
+                                <div class="m-exm-cont">{{applyDate.phone}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">成本中心</div>
+                                <div class="m-exm-cont">{{applyDate.costcenter}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">公司</div>
+                                <div class="m-exm-cont">{{applyDate.company}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">业务范围</div>
+                                <div class="m-exm-cont">{{applyDate.biz}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">发票</div>
+                                <div class="m-exm-cont">{{applyDate.invoicetype}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">所属平台</div>
+                                <div class="m-exm-cont">{{applyDate.platform}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">冲退类型</div>
+                                <div class="m-exm-cont">{{applyDate.revisetype}}</div>
+                                <div class="m-exm-cont" style="padding-left:78px" *ngFor="let item of subrevisetypeList">{{item}}</div>
+                            </li>
+                            <li class="m-exm-half" *ngIf="listType">
+                                <div class="m-exm-label">是否需要我<br>方上门取</div>
+                                <div class="m-exm-cont">{{applyDate.homepickup==1?'否':'是'}} <span style="padding-left:30px;">{{applyDate.transittype}}</span></div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">说明原因</div>
+                                <div class="m-exm-cont">{{applyDate.reason}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--财务信息 -->
+            <div class="apply-finance-infor" style="margin-top: 10px">
+                <div class="m-dialog-head clearfloat">
+                    <span class="m-dialog-head-change progress-txt">财务信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-finance-l">
+                    <!-- 冲红前 -->
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="add-w-b60 add-w-b601">共{{examineMoney.length}}条</th>
+                                <th colspan="9" class="m-text-center change">冲红前</th>
+                            </tr>
+                            <tr class="m-center">
+                                <th class='m-text-center'>序号</th>
+                                <th class="m-infor-td">客户编号</th>
+                                <th>客户名称</th>
+                                <th>原订单号</th>
+                                <th>系统发票号</th>
+                                <th>外部发票号</th>
+                                <th>原发票日期</th>
+                                <th>金额/元</th>
+                                <th>原始收复基准日</th>
+                                <th>原清账号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of examineMoney;let i = index" class="m-center">
+                                <td class="m-text-center add-w-b60">{{i+1}}</td>
+                                <td>{{item.originalcustomercode}}</td>
+                                <td>{{item.originalcustomer}}</td>
+                                <td>{{item.orderno}}</td>
+                                <td>{{item.internalinvoiceno}}</td>
+                                <td>{{item.externalinvoiceno}}</td>
+                                <td>{{item.invoicedate}}</td>
+                                <td>{{item.originalmoney}}</td>
+                                <td>{{item.originalreceiptdate}}</td>
+                                <td>{{item.originalcomplexaccount}}</td>
+                                <!--<td><a href="" class="m-text-center addApp-reduce">-</a></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--冲红后 -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="add-w-b60 add-w-b601">共{{examineMoney.length}}条</th>
+                                <th colspan="3" class="m-text-center change">冲红后</th>
+                                <th class="m-text-center change">特殊说明</th>
+                                <th class="m-text-center change">财务</th>
+                            </tr>
+                            <tr class="m-center">
+                                <th class="m-text-center">序号</th>
+                                <th class="m-infor-td">客户编号(冲名称时填写)</th>
+                                <th>客户名称</th>
+                                <th>金额/元(冲金额时填写)</th>
+                                <th> 付款账期(延过账期时填写)</th>
+                                <th><i class="addApp-form-tips">*</i>清账号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of examineMoney;let i = index;" class="m-center">
+                                <td class="m-text-center add-w-b60">{{i+1}}</td>
+                                <td>
+                                    <input class="m-infor-input" type="text" *ngIf="nameType==true" [(ngModel)]="item.customercode" (blur)="getPostCustomName($event)">                                    {{item.customercode}}
+                                </td>
+                                <td>
+                                    <div>{{item.customer}}</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="billTypeId=='priceType'">{{item.money}} </div>
+                                </td>
+                                <td class="posRel">
+                                    <div *ngIf="item.receiptdate!=0&&!isBusiness">{{item.receiptdate==1?'是':'否'}}</div>
+                                    <div class="m-select moneyPos" *ngIf="isBusiness" [ngStyle]="{'z-index':(100-i)*10}" (onClick)="addIndex123(i)">
+                                        <select [(ngModel)]="item.receiptdate" class="addApp-form-input" (ngModelChange)="selectedCompaney($event,item)">
+                                            <option value="0" class="option-bill">请选择</option>
+                                            <option *ngFor="let item of selectGroup" [value]='item'>{{item}}</option>  
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span *ngIf="!isFinance">{{item.complexaccout}}</span>
+                                    <span *ngIf="isFinance">
+                                        <input type="text" [(ngModel)]="item.complexaccout" (blur)="saveComplexaccout(item.complexaccout)">
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--单据信息 商务审批 可编辑 -->
+            <div class="apply-finance-inforL" *ngIf="isBusiness">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">单据信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-fin-table">
+                    <table class="m-info-table" *ngIf="revisetypeApprove!='typeFour'">
+                        <thead>
+                            <tr class="m-center">
+                                <th>ZCR订单</th>
+                                <th>ZDR订单</th>
+                                <th>RE订单</th>
+                                <th>RE交货单</th>
+                                <th>ZTY订单</th>
+                                <th>ZTY交货单</th>
+                                <th>ZRE订单</th>
+                                <th>ZRE交货单</th>
+                                <th>ZSD订单</th>
+                                <th>ZSD交货单</th>
+                                <th>ZOR订单号</th>
+                                <th>ZOR交货单</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of examineMoney" class="m-center">
+                                <td><input type="text" *ngIf="item.ZCRorderno!=null&&item.ZCRorderno!=''" [(ngModel)]=item.ZCRorderno></td>
+
+                                <td><input type="text" *ngIf="item.ZDRorderno!=null&&item.ZDRorderno!=''" [(ngModel)]=item.ZDRorderno></td>
+
+                                <td><input type="text" *ngIf="item.REorderno!=null&&item.REorderno!=''" [(ngModel)]=item.REorderno></td>
+
+                                <td><input type="text" *ngIf="item.REdeliveryno!=null&&item.REdeliveryno!=''" (focus)="clearInput(item.REdeliveryno,item)"
+                                        [(ngModel)]=item.REdeliveryno (blur)="savedeliveryno()"></td>
+
+                                <td><input type="text" *ngIf="item.ZTYorderno!=null&&item.ZTYorderno!=''" [(ngModel)]=item.ZTYorderno></td>
+
+                                <td><input type="text" *ngIf="item.ZTYdeliveryno!=null&&item.ZTYdeliveryno!=''" (focus)="clearInput(item.ZTYdeliveryno,item)"
+                                        [(ngModel)]=item.ZTYdeliveryno (blur)="savedeliveryno()"></td>
+
+                                <td><input type="text" *ngIf="item.ZREorderno!=null&&item.ZREorderno!=''" [(ngModel)]=item.ZREorderno></td>
+
+                                <td><input type="text" *ngIf="item.ZREdeliveryno!=null&&item.ZREdeliveryno!=''" (focus)="clearInput(item.ZREdeliveryno,item)"
+                                        [(ngModel)]=item.ZREdeliveryno (blur)="savedeliveryno()"></td>
+
+                                <td><input type="text" *ngIf="item.ZSDorderno!=null&&item.ZSDorderno!=''" [(ngModel)]=item.ZSDorderno></td>
+
+                                <td><input type="text" *ngIf="item.ZSDdeliveryno!=null&&item.ZSDdeliveryno!=''" (focus)="clearInput(item.ZSDdeliveryno,item)"
+                                        [(ngModel)]=item.ZSDdeliveryno (blur)="savedeliveryno()"></td>
+
+                                <td><input type="text" *ngIf="item.ZORorderno!=null&&item.ZORorderno!=''" [(ngModel)]=item.ZORorderno></td>
+
+                                <td><input type="text" *ngIf="item.ZORdeliveryno!=null&&item.ZORdeliveryno!=''" (focus)="clearInput(item.ZORdeliveryno,item)"
+                                        [(ngModel)]=item.ZORdeliveryno (blur)="savedeliveryno()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="m-info-table" *ngIf="revisetypeApprove=='typeFour'">
+                        <thead>
+                            <tr class="m-center">
+                                <th>ZCR订单</th>
+                                <th>ZDR订单</th>
+                                <th>RE订单</th>
+                                <th>RE交货单</th>
+                                <th>ZTY订单</th>
+                                <th>ZTY交货单</th>
+                                <th>ZRE订单</th>
+                                <th>ZRE交货单</th>
+                                <th>ZSD订单</th>
+                                <th>ZSD交货单</th>
+                                <th>ZOR订单号</th>
+                                <th>ZOR交货单</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of examineMoney" class="m-center">
+                                <td><input type="text" [(ngModel)]=item.ZCRorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZDRorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.REorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.REdeliveryno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZTYorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZTYdeliveryno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZREorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZREdeliveryno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZSDorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZSDdeliveryno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZORorderno (blur)="savedeliveryno()"></td>
+                                <td><input type="text" [(ngModel)]=item.ZORdeliveryno (blur)="savedeliveryno()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--单据信息 通用审批及查看 不可编辑 -->
+            <div class="apply-finance-inforL" *ngIf="!isBusiness&&isBusnessPass">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">单据信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-fin-table">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-center" *ngFor="let item of examineMoney;let i = index;">
+                                <th *ngIf="(i<1)&&item.ZCRorderno!=''">ZCR订单</th>
+                                <th *ngIf="(i<1)&&item.ZDRorderno!=''">ZDR订单</th>
+                                <th *ngIf="(i<1)&&item.REorderno!=''">RE订单</th>
+                                <th *ngIf="(i<1)&&item.REdeliveryno!=''">RE交货单</th>
+                                <th *ngIf="(i<1)&&item.ZTYorderno!=''">ZTY订单</th>
+                                <th *ngIf="(i<1)&&item.ZTYdeliveryno!=''">ZTY交货单</th>
+                                <th *ngIf="(i<1)&&item.ZREorderno!=''">ZRE订单</th>
+                                <th *ngIf="(i<1)&&item.ZREdeliveryno!=''">ZRE交货单</th>
+                                <th *ngIf="(i<1)&&item.ZSDorderno!=''">ZSD订单</th>
+                                <th *ngIf="(i<1)&&item.ZSDdeliveryno!=''">ZSD交货单</th>
+                                <th *ngIf="(i<1)&&item.ZORorderno!=''">ZOR订单</th>
+                                <th *ngIf="(i<1)&&item.ZORdeliveryno!=''">ZOR交货单</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of examineMoney" class="m-center">
+                                <td *ngIf="item.ZCRorderno!=''">{{item.ZCRorderno}}</td>
+                                <td *ngIf="item.ZDRorderno!=''">{{item.ZDRorderno}}</td>
+                                <td *ngIf="item.REorderno!=''">{{item.REorderno}}</td>
+                                <td *ngIf="item.REdeliveryno!=''">{{item.REdeliveryno}}</td>
+                                <td *ngIf="item.ZTYorderno!=''">{{item.ZTYorderno}}</td>
+                                <td *ngIf="item.ZTYdeliveryno!=''">{{item.ZTYdeliveryno}}</td>
+                                <td *ngIf="item.ZREorderno!=''">{{item.ZREorderno}}</td>
+                                <td *ngIf="item.ZREdeliveryno!=''">{{item.ZREdeliveryno}}</td>
+                                <td *ngIf="item.ZSDorderno!=''">{{item.ZSDorderno}}</td>
+                                <td *ngIf="item.ZSDdeliveryno!=''">{{item.ZSDdeliveryno}}</td>
+                                <td *ngIf="item.ZORorderno!=''">{{item.ZORorderno}}</td>
+                                <td *ngIf="item.ZORdeliveryno!=''">{{item.ZORdeliveryno}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--冲退明细 非商务 -->
+            <div class="apply-flush-details" *ngIf="!isBusiness&&ErpMinusFlag&&!listType&&(billTypeId=='priceType'||billTypeId=='materielType'||billTypeId=='costType')">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table">
+                        <table *ngIf="billTypeId=='priceType'" class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr change1 m-center">
+                                    <th>行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>原销售总额/元</th>
+                                    <th>新销售总额(返款前)/元</th>
+                                    <th>原返款总额/元</th>
+                                    <th>新返款总额/元</th>
+                                    <th>新销售净额/元</th>
+                                </tr>
+                            </thead>
+                            <tbody style="border-bottom:1px solid #ddd">
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td class="m-text-center add-w-b60">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.money}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.backmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.money-item.backmoney}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let item of tabledata;let i = index;">
+                                    <td colspan="7" style="text-align:right">合计</td>
+                                    <td>{{item.originalmoney}}</td>
+                                    <td><input type="text" [(ngModel)]="item.money"></td>
+                                    <td>{{item.originalbackmoney}}</td>
+                                    <td><input type="text" [(ngModel)]="item.backmoney"></td>
+                                    <td><input type="text" [(ngModel)]="item.money-item.backmoney"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="billTypeId=='materielType'" class="m-info-table ex-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th>行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额/元</th>
+                                    <th>返款总额/元</th>
+                                    <th>销售净额/元</th>
+                                    <!--<th><a href="" class="m-text-center addApp-reduce" (click)="addItems(table)">+</a></th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td class="m-text-center">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.materialcode}}
+                                        <!-- <input type="text" [(ngModel)]=item.materialcode (blur)="getPostMaterial($event)"> -->
+                                    </td>
+                                    <td>
+                                        {{item.description}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                        <!-- <input type="text" [(ngModel)]=item.num (blur)="checkInteger($event)"> -->
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                        <!-- <input type="text" [(ngModel)]=item.factory (blur)="checkFour($event)"> -->
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.storagelocation}}
+                                        <!-- <input type="text" [(ngModel)]=item.originalstoragelocation (blur)="checkFour($event)"> -->
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.batchno}}
+                                    </td>
+                                    <td>
+                                        {{item.money}}
+                                    </td>
+                                    <td>
+                                        {{item.backmoney}}
+                                    </td>
+                                    <td style="text-align: left;">
+                                        {{(item.money-item.backmoney) | backZero}}
+                                    </td>
+                                    <!--<td><a href="" class="m-text-center addApp-reduce">-</a></td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="billTypeId=='costType'" class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr change1 m-center">
+                                    <th>行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>新物料号</th>
+                                    <th>新物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width65">新库存地</th>
+                                    <th class="add-width65">批次</th>
+                                    <th class="add-width100">新批次</th>
+                                    <th>销售总额/元</th>
+                                    <th>原返款总额/元</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.materialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.description>
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.storagelocation>
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.batchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <!--<td><a href="" class="m-text-center addApp-reduce">-</a></td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--冲退明细 商务 -->
+            <div class="apply-flush-details" *ngIf="isBusiness&&!listType&&revisetypeApprove!='typeFour'">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item addApp-pos">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp sel-pos">
+                                        <ng-select name="companys" [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeFive'">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked (onClick)="isSendERP('是')">
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender" (onClick)="isSendERP('否')">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" (blur)="saveredNumber(redNumberNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width65">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th class="add-width200">物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(oldMaterrialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- materrialArrayCheck  -->
+                                <tr class="m-center" *ngFor="let item of oldMaterrialList;let i = index;">
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td class="add-width200">
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.originalstoragelocation>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td class="m-warn-td">
+                                        <input type="text" [(ngModel)]=item.originalbackmoney (blur)="judgeMoney(item.originalmoney,item.originalbackmoney)">
+                                        <p class='m-warn-p' style="color:red" *ngIf="item.originalbackmoney>1/3*item.originalmoney">*&nbsp;返款金额已超出销售金额30%</p>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(oldMaterrialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <ul class="addApp-base-list">
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item addApp-pos">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp sel-pos">
+                                        <ng-select name="companys" [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeFive'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" type="text" [(ngModel)]="invoiceremarkNow.text" (blur)="saveRemark(invoiceremarkNow.text)">
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeTwo'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}"
+                                style="padding-left:50px">
+                                <button class="m-btn-confirm alignRight" (click)="addApprove()">添加一订单</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeFive'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width65">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th class="add-width200">物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(oldMaterrialList2)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of oldMaterrialList2;let i = index;">
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td class="add-width200">
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.originalstoragelocation>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td class="m-warn-td">
+                                        <input type="text" [(ngModel)]=item.originalbackmoney >
+                                        <p class='m-warn-p' style="color:red" *ngIf="item.originalbackmoney>1/3*item.originalbackmoney">*&nbsp;返款金额已超出销售金额30%</p>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(oldMaterrialList2,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width65">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th class="add-width200">物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.materialcode (blur)="getDescription($event,item)">
+                                    </td>
+                                    <td class="add-width200">
+                                        <input type="text" [(ngModel)]=item.description>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.storagelocation>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.batchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.money>
+                                    </td>
+                                    <td class="m-warn-td">
+                                        <input type="text" [(ngModel)]=item.backmoney>
+                                        <p class='m-warn-p' style="color:red" *ngIf="item.backmoney>1/3*item.money">*&nbsp;返款金额已超出销售金额30%</p>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- 新订单 -->
+                        <div class="apply-order-type">
+                            <ul class="addApp-base-list" *ngIf="newTableFlag">
+                                <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                    <div class="addApp-form-item addApp-pos">
+                                        <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                        <div class="m-select addApp sel-pos">
+                                            <!-- ordertype-pos2 -->
+                                            <ng-select name="companys" [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData2($event)"></ng-select>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li *ngIf="revisetypeApprove=='typeFive'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                        <div class="addApp-progress-radio">
+                                            <div class="m-yes-no">
+                                                <input icheck type="radio" id="radio1" name="gender" checked>
+                                                <label for="radio1">是</label>
+                                            </div>
+                                            <div class="m-yes-no m-margin30">
+                                                <input icheck type="radio" id="radio2" name="gender">
+                                                <label for="radio2">否</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label addW">发票备注</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=erpDataSavePlus2.invoiceremark>
+                                    </div>
+                                </li>
+                                <li *ngIf="revisetypeApprove=='typeTwo'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}"
+                                    style="padding-left:50px">
+                                    <button class="m-btn-confirm alignRight" (click)="removeApprove()">删除订单</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <table class="m-info-table" *ngIf="newTableFlag">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width65">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th class="add-width200">物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(addMeterial)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of addMeterial;let i = index;">
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.materialcode>
+                                    </td>
+                                    <td class="add-width200">
+                                        <input type="text" [(ngModel)]=item.description>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td class="add-width65">
+                                        <input type="text" [(ngModel)]=item.storagelocation>
+                                    </td>
+                                    <td class="add-width100">
+                                        <input type="text" [(ngModel)]=item.batchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.money>
+                                    </td>
+                                    <td class="m-warn-td">
+                                        <input type="text" [(ngModel)]=item.backmoney>
+                                        <p class='m-warn-p' style="color:red" *ngIf="item.backmoney>1/3*item.money">*&nbsp;返款金额已超出销售金额30%</p>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(addMeterial,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="apply-order-btnSub" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <button [ngClass]="{'disabled':!ErpMinusFlag}" class="m-btn-confirm alignRight" (click)="sendErpMinus()">负向订单-写入ERP</button>
+                        <button [ngClass]="{'disabled':!ErpPlusFlag}" class="m-btn-confirm" (click)="sendErpPlus()">正向订单-写入ERP</button>
+                    </div>
+                </div>
+            </div>
+            <!--id>6-->
+            <div class="apply-flush-details" *ngIf="!ErpMinusFlag&&!listType&&!isBusiness">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item addApp-pos">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp sel-pos">
+                                        <ng-select name="companys" [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)" disabled="true"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeFive'">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked (onClick)="isSendERP('是')" disabled>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender" (onClick)="isSendERP('否')" disabled>
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" disabled>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width100">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="add-width100">销售总额</th>
+                                    <th class="add-width100">返款总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of materialList0;let i = index;">
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.materialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.description}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.storagelocation}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.batchno}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.money}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.backmoney}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <ul class="addApp-base-list">
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item addApp-pos">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp sel-pos">
+                                        <ng-select name="companys" [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)" disabled="true"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeFive'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked disabled>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender" disabled>
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" type="text" [(ngModel)]="invoiceremarkNow.text" disabled>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeTwo'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}"
+                                style="padding-left:50px">
+                                <button class="m-btn-confirm alignRight" disabled>添加一订单</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeFive'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class=" add-width100">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="add-width100">销售总额</th>
+                                    <th class="add-width100">返款总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of materialList1;let i = index;">
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                        <!-- <input type="text" [(ngModel)]=item.projcode> -->
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.materialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.description}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.storagelocation}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.batchno}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.money}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.backmoney}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width100">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="add-width100">销售总额</th>
+                                    <th class="add-width100">返款总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of materialList1;let i = index;">
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-type" *ngIf="materialList2.length>0">
+                        <ul class="addApp-base-list">
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item addApp-pos">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp sel-pos">
+                                        <!-- ordertype-pos2 -->
+                                        <ng-select name="companys" disabled [items]="orderTypeData" placeholder="请选择" [active]=needSecond (selected)="selecteOrderTypeData2($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeFive'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" disabled id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" disabled id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" disabled type="text" [(ngModel)]=erpDataSavePlus2.invoiceremark>
+                                </div>
+                            </li>
+                            <li *ngIf="revisetypeApprove=='typeTwo'" [ngClass]="{'col-4':(revisetypeApprove=='typeFive'||revisetypeApprove=='typeTwo')}"
+                                style="padding-left:50px">
+                                <button class="m-btn-confirm alignRight" disabled>删除订单</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="materialList2.length>0">
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeOne'||revisetypeApprove=='typeFive'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width100">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="add-width100">销售总额</th>
+                                    <th class="add-width100">返款总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of materialList2;let i = index;">
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                        <!-- <input type="text" [(ngModel)]=item.projcode> -->
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="add-width100">行项目号</th>
+                                    <th class="add-width100">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="add-width65">数量</th>
+                                    <th class="add-width65">工厂</th>
+                                    <th class="add-width65">库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="add-width100">销售总额</th>
+                                    <th class="add-width100">返款总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of materialList2;let i = index;">
+                                    <td class="add-width100">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.materialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.description}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="add-width65">
+                                        {{item.storagelocation}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.batchno}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.money}}
+                                    </td>
+                                    <td class="add-width100">
+                                        {{item.backmoney}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="apply-order-btnSub" *ngIf="revisetypeApprove=='typeTwo'||revisetypeApprove=='typeTwo'||revisetypeApprove=='typeThree'||revisetypeApprove=='typeFive'">
+                        <button class="m-btn-confirm alignRight disabled" (click)="sendErpMinus()">负向订单-写入ERP</button>
+                        <button class="m-btn-confirm disabled" (click)="sendErpPlus()">正向订单-写入ERP</button>
+                    </div> -->
+                </div>
+            </div>
+            <!--冲退明细 退换货 -->
+            <div class="apply-flush-details" *ngIf="listType&&!isBusiness&&ErpMinusFlag">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table">
+                        <table *ngIf="billTypeId=='returnGoods'" class="table table-hover dbox-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="width65">序号</th>
+                                    <th class="width65">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="width65">数量</th>
+                                    <th class="width65">退货数量</th>
+                                    <th class="width65">工厂</th>
+                                    <th class="width65">库存地</th>
+                                    <th class="width100">退入库存地</th>
+                                    <th class="width100">批次</th>
+                                    <th class="width65">销售额</th>
+                                    <th class="width100">返款总额</th>
+                                    <th class="width100">交货单号</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of materialList;let i = index;">
+                                <tr class="m-center">
+                                    <td class="width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.num}}
+                                    </td>
+                                    <td class="width65">
+                                        <input type="text" [(ngModel)]="item.returnnum" (blur)="NumFloatAlert(tabledata,item.money)">
+                                    </td>
+                                    <td class="width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]="item.returnstoragelocation" (blur)="NumFloatAlert(tabledata,item.money)">
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.deliveryno}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="billTypeId=='returnGoods'">
+                            <ul class="addApp-base-list">
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>检验项目</label>
+                                        <input class="addApp-form-input" [(ngModel)]=examineApply.checkbill type="text">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>外包装检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.outerpackagecheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>机器外观检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.appearancecheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>电性能检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.electroniccheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>附件检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.attachmentcheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>质检结论</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.checkconlusion>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>备注</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.checkremark>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="billTypeId=='exchange'">
+                            <ul class="addApp-base-list">
+                                <li style="width: 46%;float: left;">
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货方式</label>
+                                        <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.TransitMode}}</span>
+                                    </div>
+                                </li>
+                                <li style="width: 46%;float: left;">
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货地址</label>
+                                        <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.detailaddress}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <table *ngIf="billTypeId=='exchange'" class="table table-hover dbox-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="width65">序号</th>
+                                    <th class="width65">物料号</th>
+                                    <th>物料描述</th>
+                                    <th class="width65">数量</th>
+                                    <th class="width100">退货数量</th>
+                                    <th class="width65">工厂</th>
+                                    <th class="width65">库存地</th>
+                                    <th class="width100">退入库存地</th>
+                                    <th class="width100">批次</th>
+                                    <th class="width65">销售额</th>
+                                    <th class="width100">返款金额/元</th>
+                                    <th class="width100">交货单号</th>
+                                </tr>
+                            </thead>
+                            <tbody style="border-bottom: 1px solid #ccc;overflow-y: hidden;">
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td class="width65">
+                                        {{item.projcode}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td class="width65">
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.returnnum (blur)="checkInt($event)">
+                                    </td>
+                                    <td class="width65">
+                                        {{item.factory}}
+                                    </td>
+                                    <td class="width65">
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.returnstoragelocation (blur)="checkFour($event)">
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td class="width65">
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td class="width100">
+                                        {{item.deliveryno}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="billTypeId=='exchange'">
+                            <ul class="addApp-base-list">
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>检验项目</label>
+                                        <input class="addApp-form-input" [(ngModel)]=examineApply.checkbill type="text">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>外包装检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.outerpackagecheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>机器外观检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.appearancecheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>电性能检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.electroniccheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>附件检查</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.attachmentcheck>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>质检结论</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.checkconlusion>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="addApp-form-item">
+                                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>备注</label>
+                                        <input class="addApp-form-input" type="text" [(ngModel)]=examineApply.checkremark>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--退货明细 商务 -->
+            <div class="apply-flush-details" *ngIf="isBusiness&&listType&&ErpMinusFlag">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typesix'||revisetypeApprove=='typeseven'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp ordertype-pos">
+                                        <ng-select name="companys" [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" (blur)="saveredNumber(redNumberNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeeight'||revisetypeApprove=='typenine'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp ordertype-pos2">
+                                        <ng-select name="companys" [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender">
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" (blur)="saveredNumber(redNumberNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table">
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typesix'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th>行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(oldMaterrialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of oldMaterrialList;let i = index;">
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalstoragelocation>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(oldMaterrialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeseven'||revisetypeApprove=='typeeight'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(oldMaterrialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of oldMaterrialList;let i = index;">
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.returnstoragelocation>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(oldMaterrialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typenine'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.specifystoragelocation>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeeight'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp ordertype-pos">
+                                        <ng-select name="companys" [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" type="text" [(ngModel)]=invoiceremarkNow.text (blur)="saveRemark(invoiceremarkNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typenine'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp ordertype-pos2">
+                                        <ng-select name="companys" [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" type="text" [(ngModel)]=invoiceremarkNow.text (blur)="saveRemark(invoiceremarkNow.text)">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货方式</label>
+                                    <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.TransitMode}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货地址</label>
+                                    <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.detailaddress}}</span>
+                                </div>
+                            </li>
+                            <show-location *ngIf="showLocation" (missData)="missData($event)" (addressData)="addressData($event)"></show-location>
+                            <button class="m-btn-confirm" style="padding-left:15px" (click)="showTimeMap()">添加临时地址</button>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeeight'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th>销售总额</th>
+                                    <th>返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.returnstoragelocation>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typenine'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.projcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmaterialcode>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originaldescription>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.num>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.factory>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.specifystoragelocation>
+                                    </td>
+                                    <td class="width100">
+                                        <input type="text" [(ngModel)]=item.originalbatchno>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalmoney>
+                                    </td>
+                                    <td>
+                                        <input type="text" [(ngModel)]=item.originalbackmoney>
+                                    </td>
+                                    <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-btnSub">
+                        <button [ngClass]="{'disabled':!ErpMinusFlag}" class="m-btn-confirm alignRight" (click)="sendErpMinus()">负向订单-写入ERP</button>
+                        <button [ngClass]="{'disabled':!ErpPlusFlag}" class="m-btn-confirm" (click)="sendErpPlus()" *ngIf="revisetypeApprove=='typeeight'||revisetypeApprove=='typenine'">正向订单-写入ERP</button>
+                    </div>
+                </div>
+            </div>
+            <!--退货明细 商务审批后 -->
+            <div class="apply-flush-details" *ngIf="!isBusiness&&listType&&!ErpMinusFlag">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">冲退明细</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-flush-detailsInfo">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typesix'||revisetypeApprove=='typeseven'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp ordertype-pos">
+                                        <ng-select name="companys" [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)"
+                                            disabled></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" disabled (blur)="saveredNumber(redNumberNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeeight'||revisetypeApprove=='typenine'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">订单类型</label>
+                                    <div class="m-select addApp ordertype-pos2">
+                                        <ng-select name="companys" disabled=disabled [items]="orderTypeList" placeholder="请选择" [active]=needReturn (selected)="selecteOrderTypeList($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender">
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">红字通知单号</label>
+                                    <input class="addApp-form-input" disabled style="margin-right: 40px;" type="text" [(ngModel)]="redNumberNow.text" (blur)="saveredNumber(redNumberNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table">
+                        <table class="m-info-table " *ngIf="revisetypeApprove=='typesix'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <!-- <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        {{item.num}}
+                                    </td>
+                                    <td>
+                                        {{item.factory}}
+                                    </td>
+                                    <td>
+                                        {{item.originalstoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <!-- <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typeseven'||revisetypeApprove=='typeeight'">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <!-- <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        {{item.num}}
+                                    </td>
+                                    <td>
+                                        {{item.factory}}
+                                    </td>
+                                    <td>
+                                        {{item.returnstoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <!-- <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="m-info-table" *ngIf="revisetypeApprove=='typenine'">
+                            <thead>
+                                <tr class="m-infor-tr">
+                                    <th class="m-text-center m-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        {{item.num}}
+                                    </td>
+                                    <td>
+                                        {{item.factory}}
+                                    </td>
+                                    <td>
+                                        {{item.specifystoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <!-- <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typeeight'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp ordertype-pos">
+                                        <ng-select name="companys" disabled=disabled [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" disabled type="text" [(ngModel)]=invoiceremarkNow.text (blur)="saveRemark(invoiceremarkNow.text)">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="apply-order-type" *ngIf="revisetypeApprove=='typenine'">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>订单类型</label>
+                                    <div class="m-select addApp ordertype-pos2">
+                                        <ng-select name="companys" disabled=disabled [items]="orderTypeData" placeholder="请选择" [active]=needGo (selected)="selecteOrderTypeData($event)"></ng-select>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW"><i class="addApp-form-tips">*</i>是否写入ERP</label>
+                                    <div class="addApp-progress-radio">
+                                        <div class="m-yes-no">
+                                            <input icheck type="radio" id="radio1" name="gender" checked>
+                                            <label for="radio1">是</label>
+                                        </div>
+                                        <div class="m-yes-no m-margin30">
+                                            <input icheck type="radio" id="radio2" name="gender">
+                                            <label for="radio2">否</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label addW">发票备注</label>
+                                    <input class="addApp-form-input" disabled type="text" [(ngModel)]=invoiceremarkNow.text (blur)="saveRemark(invoiceremarkNow.text)">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货方式</label>
+                                    <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.TransitMode}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货地址</label>
+                                    <span style="padding-top: 9px;padding-left: 30px;">{{TransitModeData.detailaddress}}</span>
+                                </div>
+                            </li>
+                            <show-location *ngIf="showLocation" (missData)="missData($event)" disabled (addressData)="addressData($event)"></show-location>
+                            <button class="m-btn-confirm" style="padding-left:15px" disabled (click)="showTimeMap()">添加临时地址</button>
+                        </ul>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typeeight'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        {{item.num}}
+                                    </td>
+                                    <td>
+                                        {{item.factory}}
+                                    </td>
+                                    <td>
+                                        {{item.returnstoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <!-- <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-table" *ngIf="revisetypeApprove=='typenine'">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr m-center">
+                                    <th class="m-text-center">行项目号</th>
+                                    <th>物料号</th>
+                                    <th>物料描述</th>
+                                    <th>数量</th>
+                                    <th>工厂</th>
+                                    <th>库存地</th>
+                                    <th class="add-width100">批次</th>
+                                    <th class="m-text-right">销售总额</th>
+                                    <th class="m-text-right">返款总额</th>
+                                    <th><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="addERP(materialList)">+</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="m-center" *ngFor="let item of materialList;let i = index;">
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originalmaterialcode}}
+                                    </td>
+                                    <td>
+                                        {{item.originaldescription}}
+                                    </td>
+                                    <td>
+                                        {{item.num}}
+                                    </td>
+                                    <td>
+                                        {{item.factory}}
+                                    </td>
+                                    <td>
+                                        {{item.specifystoragelocation}}
+                                    </td>
+                                    <td class="width100">
+                                        {{item.originalbatchno}}
+                                    </td>
+                                    <td>
+                                        {{item.originalbackmoney}}
+                                    </td>
+                                    <td>
+                                        {{item.projcode}}
+                                    </td>
+                                    <!-- <td><a class="m-text-center addApp-reduce" style="cursor:pointer" (click)="minusERP(materialList,item)">-</a></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="apply-order-btnSub">
+                        <button [ngClass]="{'disabled':!ErpMinusFlag}" class="m-btn-confirm alignRight" (click)="sendErpMinus()">负向订单-写入ERP</button>
+                        <button [ngClass]="{'disabled':!ErpPlusFlag}" class="m-btn-confirm" (click)="sendErpPlus()" *ngIf="revisetypeApprove=='typeeight'||revisetypeApprove=='typenine'">正向订单-写入ERP</button>
+                    </div>
+                </div>
+            </div>
+            <!--附件 -->
+            <div class="addApply-base money apply-record">
+                <div class="addApp-up-file">
+                    <h2>附件</h2>
+                    <div class="addApp-file-details">
+                        <ul>
+                            <li *ngFor="let item of accessoryExamine;index as i" (click)="downloadFile(item)">
+                                <i class="iqon-enclosure"></i> {{item.AccessoryName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="addApp-file-table" *ngIf="monthPass&&(IsNodeId11||IsNodeId12)">
+                    <div class="addAPP-file-half">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr>
+                                    <th>外部发票号</th>
+                                    <th><i class="addApp-form-tips">*</i>红字通知单号</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of redListData">
+                                    <td>{{item.externalinvoiceno}}</td>
+                                    <td><input type="text" [(ngModel)]="item.rednoticeno" class="addApp-new-input"
+                                        /></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="addApp-file-table" *ngIf="rednoticenoFlag">
+                    <div class="addAPP-file-half">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr>
+                                    <th>外部发票号</th>
+                                    <th><i class="addApp-form-tips">*</i>红字通知单号</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of redListData">
+                                    <td>{{item.externalinvoiceno}}</td>
+                                    <td>{{item.rednoticeno}}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <!--审批-->
+                <div _ngcontent-c3="" class="addApp-file-table" *ngIf="urlFlag == 'approve'">
+                    <div _ngcontent-c3="" class="addAPP-file-half">
+                        <table _ngcontent-c3="" class="m-info-table">
+                            <thead _ngcontent-c3="">
+                                <tr _ngcontent-c3="">
+                                    <th _ngcontent-c3="">外部发票号</th>
+                                    <th _ngcontent-c3=""><i _ngcontent-c3="" class="addApp-form-tips">*</i>红字通知单号</th>
+                                </tr>
+                            </thead>
+                            <tbody _ngcontent-c3="">
+                                <tr _ngcontent-c3="">
+                                    <td _ngcontent-c3="">127638172</td>
+                                    <td _ngcontent-c3=""><input _ngcontent-c3="" class="addApp-new-input" type="text"></td>
+
+                                </tr>
+                                <tr _ngcontent-c3="">
+                                    <td _ngcontent-c3="">127638172</td>
+                                    <td _ngcontent-c3=""><input _ngcontent-c3="" class="addApp-new-input" type="text"></td>
+
+                                </tr>
+                                <tr _ngcontent-c3="">
+                                    <td _ngcontent-c3="">127638172</td>
+                                    <td _ngcontent-c3=""><input _ngcontent-c3="" class="addApp-new-input" type="text"></td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <db-wfhistory [wfHistoryData]="wfData.wfhistory"></db-wfhistory>
+            <db-wfapproval (onSave)="saveBillID6($event)" [appParms]="appParms" [hasSaved]="hasSaved" [isRed]="monthPass&&(IsNodeId5||IsNodeId7)"
+                *ngIf="!isView && !isADP"></db-wfapproval>
+            <db-wfadp [adpAppParms]="adpAppParms" *ngIf="!isView && isADP"></db-wfadp>
+        </div>
+        <!--审批过程 -->
+        <div class="apply-p-right">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

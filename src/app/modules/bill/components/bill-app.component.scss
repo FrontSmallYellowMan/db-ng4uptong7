@@ -1,0 +1,89 @@
+// component css goes here
+.disabled {
+    pointer-events: none;
+    cursor:not-allowed;
+    opacity: 0.5;
+}
+
+.table-auto-content{
+	table{
+		tbody{
+			tr{
+				td{
+					a{
+					color:#4a4a4a!important;
+					}
+				}
+			}
+		}
+	}
+}
+.disabled{
+	border-radius: 2.5px;
+    color: #57b9f8;
+    background-color: #ffffff;
+    border: solid 1px #57b9f8;
+	a{
+	color: #57b9f8;
+	}
+}
+.disablebtn{
+	cursor: not-allowed !important;
+	border-color: #999 !important;
+       color: rgba(0,0,0,.25)!important;
+    background-color: #f7f7f7!important;
+    border-color: #d9d9d9!important;
+}
+
+   .m-add-information{
+    a{
+    color: #57b9f8;
+    }
+   }
+  .m-add-information:hover{
+    a{
+    color: #fff;
+    }
+   }
+   .m-del-information{
+    color: #57b9f8;
+   }
+     .m-del-information:hover{
+    a{
+    color: #fff;
+    }
+   }
+   .m-orange{
+	   button{
+        border: 1px solid #f8bc49;
+	    background-color: #fff;
+	    border-radius: 4px;
+	    color:#f8bc49;
+	   }
+	    button:hover{
+	   		border: 1px solid #fff;
+		    background-color: #f8bc49;
+		    border-radius: 4px;
+		    color:#fff;
+	    }
+   }
+   tr{
+   th{
+    text-align: center !important;
+   }
+   td{
+       text-align: center !important;
+   }
+   }
+   .width70{
+        width: 70px !important;
+   }
+     .width140{
+        width: 140px !important;
+   }
+   .m-home-page .m-home-pageR .m-table-right .table-handle-content table tbody td span {
+       border: none;
+   }
+   .m-home-page .m-home-pageR .m-table-right .table-auto-content {
+        width: 100%;
+    }

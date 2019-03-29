@@ -1,0 +1,97 @@
+<div class="sc-relieve">
+  <div class="relieve-title">解除协议</div>
+  <form #form="ngForm">
+    <div class="relieve-content">
+      <div class="relieve-code39">
+        <span class="code39">条形码区域</span>
+      </div>
+      <ul class="relieve-content-item clearfix">
+        <li>
+          <div class="form-relieve-title">卖方：</div>
+          <div class="form-relieve-input">{{relieveContractData.SellerName}}</div>
+        </li>
+        <li>
+          <div class="form-relieve-title">协议编号：</div>
+          <div class="form-relieve-input">{{relieveContractData.RE_Code}}</div>
+        </li>
+        <li>
+          <div class="form-relieve-title">买方：</div>
+          <div class="form-relieve-input">{{relieveContractData.BuyerName}}</div>
+        </li>
+      </ul>
+      <div class="relieve-content-item1">
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;根据《中华人民共和国合同法》及其他有关法律、法规之规定，买卖双方于</span>
+        <!--<input type="text" [(ngModel)]="relieveContractData.QDTime" name="QDTime" #QDTime="ngModel" placeholder="-签约日期">-->
+        <div class="relieve-content-QDTime">
+          <my-datepicker PlaceHolder="-签约日期" [(ngModel)]="relieveContractData.QDTime" name="QDTime"></my-datepicker>
+        </div>
+        <span>签订了合同编号为</span>
+        <!--<input type="text" [(ngModel)]="relieveContractData.MainContractCode" name="MainContractCode" #MainContractCode="ngModel" readonly>-->
+        <span>{{relieveContractData.MainContractCode}}</span>
+        <span>，金额为</span>
+        <!--<input type="text" [(ngModel)]="relieveContractData.ContractMoney" name="ContractMoney" #ContractMoney="ngModel" readonly>-->
+        <span>{{relieveContractData.ContractMoney}}</span>
+        <span>的《</span>
+        <input type="text" [(ngModel)]="relieveContractData.ContractName" name="ContractName" #ContractName="ngModel" placeholder="-销售">
+        <span>合同》（以下简称原协议）。现经双方友好协商，特签订以下协议，以兹遵守：</span>
+      </div>
+      <div class="relieve-content-item2">
+        <ul>
+          <li>
+            <span>一、由于</span><span style="color:red;">*</span>
+            <input type="text" [(ngModel)]="relieveContractData.RelieveReason" name="RelieveReason" #RelieveReason="ngModel" placeholder="-解除原因" [ngClass]="{'m-input-warn':(RelieveReason.touched || form.submitted) && RelieveReason.invalid}" required>
+            <span>原因，经双方友好协商，对原协议予以解除。</span>
+          </li>
+          <li>
+            <span>二、本协议签署生效后，原协议的效力即为自始不生效，本解除协议一式肆份，双方各执贰份。</span>
+          </li>
+          <li>
+            <span>三、本协议自双方加盖公章或合同专用章之日起立即生效。</span>
+          </li>
+        </ul>
+      </div>
+      <ul class="relieve-content-item clearfix">
+        <li>
+          <div class="form-relieve-title">卖方（盖章）：</div>
+          <div class="form-relieve-input">
+            <!--<input type="text" [(ngModel)]="relieveContractData.SellerName" name="SellerName1" #SellerName1="ngModel" readonly>-->
+            {{relieveContractData.SellerName}}
+          </div>
+        </li>
+        <li>
+          <div class="form-relieve-title">买方（盖章）：</div>
+          <div class="form-relieve-input">
+            <!--<input type="text" [(ngModel)]="relieveContractData.BuyerName" name="BuyerName" #BuyerName1="ngModel" readonly>-->
+            {{relieveContractData.BuyerName}}
+          </div>
+        </li>
+        <li>
+          <div class="form-relieve-title">代表（签名）：</div>
+          <div class="form-relieve-input"></div>
+        </li>
+        <li>
+          <div class="form-relieve-title">代表（签名）：</div>
+          <div class="form-relieve-input"></div>
+        </li>
+        <li>
+          <div class="form-relieve-title">日期：</div>
+          <div class="form-relieve-input">
+            <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="relieveContractData.ContractTime" name="ContractTime" (ngModelChange)="contractTimeChange($event)"></my-datepicker>
+          </div>
+        </li>
+        <li>
+          <div class="form-relieve-title">日期：</div>
+          <div class="form-relieve-input">
+            <input type="text" [(ngModel)]="relieveContractData.BuyTime" name="BuyTime" #BuyTime="ngModel" readonly>
+          </div>
+        </li>
+      </ul>
+      <div class="form-relieve-footer">
+        <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+        <button class="m-btn-refuse m-btn-common" (click)="saveRelieveContract()">保存草稿</button>
+        <button class="m-btn-assist-1 ml20" (click)="getRelieveContractWithPDF()">预览</button>
+        <button class="m-btn-agree" (click)="sumitRelieveContract()">提交</button>
+      </div>
+    </div>
+  </form>
+</div>

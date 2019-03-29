@@ -1,0 +1,51 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+  <div class="modal-header m-dialog-head">
+    <span>支票选择列表</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+   
+                  <div class="m-table-right">
+                    <table  class="table table-hover table-list">
+                      <thead>
+                        <tr>
+                          <th style="padding: 0 8px;">
+                            <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+                             </th>
+                         <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                          <th>支票号</th>
+                          <th>支票金额</th>
+                          <th>客户代码</th>
+                          <th>客户名称</th>
+                          <th>创建人</th>
+                          <th>创建时间</th>
+                          </ng-container>
+                          <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                    <th class="list-edit" colspan="6">&nbsp;&nbsp;已选{{checkedNum}}项&nbsp;&nbsp;<button type="button" class="m-btn-del" (click)="save(invoiceApplyList)">确定</button></th>
+                  </ng-container>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor = 'let item of invoiceApplyList'>
+                          <td>
+                            <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked">
+                          </td>
+                          <td>{{item.ticketNum}}</td>
+                          <td>{{item.ticketAmount}}</td>
+                          <td>{{item.customCode}}</td>
+                          <td>{{item.customName}}</td>
+                          <td>
+                            {{item.applyUserName}}
+                          </td>
+                          <td>
+                            {{item.createDate | iqDate:'YYYY-MM-DD'}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              
+    </div>              
+</div>      
+

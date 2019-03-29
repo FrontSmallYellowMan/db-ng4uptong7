@@ -1,0 +1,37 @@
+<div class="m-cover"></div>
+<div class="m-option">
+  <div class="modal-header m-dialog-head">
+    <span>请选择</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+  <div *ngIf="!noSearch" class="m-search">
+    <!-- <i class="iqon-query" (click)="search()"></i> -->
+    <input [(ngModel)]="query.queryStr" (keyup.enter)="search()" name="QueryStr" type="text" placeholder="-请输入搜索条件">
+    <button type="button" class="m-btn-confirm" (click)="search()">搜索</button>
+  </div>
+  <div class="m-option-list">
+    <loading [show]="loading"></loading>
+    <table class="table table-hover table-list" *ngIf="_rows.length!=0">
+      <thead>
+        <tr>
+          <th *ngFor="let title of _columns;">{{title}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of _rows;index as i" (click)="choose(i)">
+          <ng-container *ngIf="itemString">
+            <td [title]="item">{{(''+item).length < 32 ? item : item.slice(0,32) + '...'}}</td>
+          </ng-container>
+          <ng-container *ngIf="!itemString">
+            <td *ngFor="let i of item" [title]="i">{{(''+i).length < 32 ? i : i.slice(0,32) + '...'}}</td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+    <iq-pager *ngIf="_rows.length!=0" [ngClass]="{'hide': !dataModal?.pager}" [data]="pagerData" (onChange)="onChangePager($event)" [simple]="true"></iq-pager>
+    <div *ngIf="total===0" class="m-select-dialog-warn" style="margin:40px;">
+      <i class="iqon-search-error"></i>
+      没有相关的搜索内容，请重新搜索
+    </div>
+  </div>
+</div>

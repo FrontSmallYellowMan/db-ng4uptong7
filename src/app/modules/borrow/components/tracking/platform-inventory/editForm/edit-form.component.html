@@ -1,0 +1,104 @@
+<div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+  <div class="modal-header m-dialog-head">
+    <span>{{ title }}发货平台和库存地关系</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <form #form="ngForm" (ngSubmit)="save($event)">
+    <div class="m-add-form">
+      <loading [show]="loading"></loading>
+        <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">平台：<span class="m-form-need">*</span></p>
+        <div class="m-select m-select-tip">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="platformInvObj.platformCode" #forminput name="platformname" (ngModelChange)="getStorageList()"
+            #platformname="ngModel" required [ngClass]="{'m-select-warn': !platformname.valid && (platformname.touched || form.submitted)}">
+              <option value=undefined>-请选择平台</option>
+              <option *ngFor="let item of platformsList" [ngValue]="item.platcode" 
+              [selected]="item.platcode==platformInvObj.platformCode">{{item.platname}}</option>
+            </select> 
+        </div>
+      </div> 
+       <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">库房名：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+           <input type="text" [(ngModel)]="platformInvObj.storeHouse" #forminput name="storeHouse" #storeHouse="ngModel" required [ngClass]="{'m-select-warn': !storeHouse.valid && (storeHouse.touched || form.submitted)}">
+             <div *ngIf="storeHouse.invalid && (storeHouse.dirty || storeHouse.touched)" class="alert alert-danger">
+              <div *ngIf="storeHouse.errors.required">
+               库房名必填
+               </div>
+            </div>
+
+        </div>
+      </div>  
+      <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">库存地前两位：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+          <input type="text" #forminput required minlength="2"   [ngClass]="{'m-select-warn': !storeHouseCode.valid && (storeHouseCode.touched || form.submitted)}"
+            name="storeHouseCode"  #storeHouseCode="ngModel" [(ngModel)]="platformInvObj.storeHouseCode"  >
+            <div *ngIf="storeHouseCode.invalid && (storeHouseCode.dirty || storeHouseCode.touched)" class="alert alert-danger">
+              <div *ngIf="storeHouseCode.errors.required">
+               库存地前两位必填
+               </div>
+          <div *ngIf="storeHouseCode.errors.minlength">
+            库存地前两位必须是两位
+          </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">收货岗ITcode：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+          <input type="text" #forminput required [ngClass]="{'m-select-warn': !acceptItCode.valid && (acceptItCode.touched || form.submitted)}"
+            name="acceptItCode" #acceptItCode="ngModel" [(ngModel)]="platformInvObj.acceptItCode">
+             <div *ngIf="acceptItCode.invalid && (acceptItCode.dirty || acceptItCode.touched)" class="alert alert-danger">
+              <div *ngIf="acceptItCode.errors.required">
+               收货岗ITcode必填
+               </div>
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">收货岗姓名：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+          <input type="text" #forminput required [ngClass]="{'m-select-warn': !acceptUserName.valid && (acceptUserName.touched || form.submitted)}"
+            name="acceptUserName" #acceptUserName="ngModel" [(ngModel)]="platformInvObj.acceptUserName">
+            <div *ngIf="acceptUserName.invalid && (acceptUserName.dirty || acceptUserName.touched)" class="alert alert-danger">
+              <div *ngIf="acceptUserName.errors.required">
+               收货岗姓名必填
+               </div>
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <p class="m-form-label">器材岗ITcode：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+          <input type="text" #forminput required [ngClass]="{'m-select-warn': !materieItCode.valid && (materieItCode.touched || form.submitted)}"
+            name="materieItCode" #materieItCode="ngModel" [(ngModel)]="platformInvObj.materieItCode">
+            <div *ngIf="materieItCode.invalid && (materieItCode.dirty || materieItCode.touched)" class="alert alert-danger">
+              <div *ngIf="materieItCode.errors.required">
+               器材岗ITcode必填
+               </div>
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+         <p class="m-form-label">器材岗姓名：<span class="m-form-need">*</span></p>
+        <div class="m-user-members">
+          <input type="text" #forminput required [ngClass]="{'m-select-warn': !meterieUserName.valid && (meterieUserName.touched || form.submitted)}"
+            name="meterieUserName" #meterieUserName="ngModel" [(ngModel)]="platformInvObj.meterieUserName">
+            <div *ngIf="meterieUserName.invalid && (meterieUserName.dirty || meterieUserName.touched)" class="alert alert-danger">
+              <div *ngIf="meterieUserName.errors.required">
+               器材岗姓名必填
+               </div>
+            </div>
+        </div> 
+      </div>
+    </div>
+    <div class="m-add-btn">
+      <button class="m-btn-confirm">确定</button>
+      <button type="button" class="m-btn-cancel" (click)="hide()">取消</button>
+    </div>
+  </form>
+</div>

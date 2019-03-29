@@ -1,0 +1,487 @@
+<div class="content-auto">
+  <loading [show]="loading"></loading>
+  <div class="addApply-container" style="padding-top: 62px">
+    <!--标题-->
+    <nav class="nav">编辑销售订单</nav>
+    <form #myApplyForm="ngForm">
+      <!-- 基本信息 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">基本信息</span>
+        </div>
+        <div class="addApp-base-infor">
+          <ul class="addApp-base-list">
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>订单类型</label>
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia" *ngIf="!isACustomer"></i>
+                <select #forminput name="orderType" [(ngModel)]="formData.SalesOrderData.OrderTypeId" (ngModelChange)="orderTypeChange()" #orderType="ngModel" required [ngClass]="{'m-select-warn': !isACustomer && !orderType.valid && (orderType.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListOrderType" [ngValue]="item.OrderTypeId">{{item.OrderName}}</option>
+                </select>
+              </div>
+            </li>
+            <!-- <li class="addApp-form-item" *ngIf="formData.SalesOrderData.OrderTypeId == '0002'">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>预收款</label>
+              <div class="m-btn-font" (click)="selectAdvance()">查询预收款</div>
+            </li>
+            <li class="addApp-form-item" *ngIf="formData.SalesOrderData.OrderTypeId != '0002'">
+
+            </li> -->
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>合同编号</label>
+              <input class="addApp-form-input w360" type="text" #forminput name="contractCode" required notblank [(ngModel)]="formData.SalesOrderData.ContractCode" #contractCode="ngModel" [ngClass]="{'m-input-warn': !contractCode.valid && (contractCode.touched || isSubmit)}"
+                readonly><span class="m-btn-font" (click)="contractView()">查看合同</span>
+                <p class="m-p-warn" style="position: absolute;top: 35px;left: 118px;" *ngIf="formData.SalesOrderData.SaleContractStatus==='1'">该合同已变更，请及时关注！</p>
+                <p class="m-p-warn" style="position: absolute;top: 35px;left: 118px;" *ngIf="formData.SalesOrderData.SaleContractStatus==='2'">该合同已解除，不允许提交和保存操作</p>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>销售员</label>
+              <div class="m-user-info" #salePerson user-image [hasClose]="false"></div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>收款人</label>
+              <div class="addApp-form-right" #forminput>
+                <iq-person-select #agentPerson name="agentPerson" [(ngModel)]="agentPerson.info" [max]="1" (ngModelChange)="changePerson(agentPerson.info)" ngDefaultControl></iq-person-select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>合同主体</label>
+              <input class="addApp-form-input" type="text" #forminput name="contractSubject" required [(ngModel)]="contractSubjectName" #contractSubject="ngModel" notblank [ngClass]="{'m-input-warn': !contractSubject.valid && (contractSubject.touched || isSubmit)}"
+                readonly>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>PO号</label>
+              <input class="addApp-form-input" type="text" #forminput name="poCode" [(ngModel)]="formData.SalesOrderData.POCode" #poCode="ngModel" required maxlength="150" [ngClass]="{'m-input-warn': !poCode.valid && (poCode.touched || isSubmit)}" trim trimReg="/[^\w\;$]*/g">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>合同币种</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <!-- <i class="iqon-xia"></i> -->
+                <select #forminput name="currency" [(ngModel)]="formData.SalesOrderData.CurrencyID" #currency="ngModel" disabled>
+                                <option value="">-请选择</option>
+                                <option *ngFor="let item of dropInfoList.ListCurrency" [ngValue]="item.CurrencyID">{{item.CurrencyName}}</option>
+                            </select>
+              </div>
+            </li>
+
+            <!-- 2018-11-07-新增字段，销售小组 -->
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>销售小组</label>
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select #forminput name="SalesGroup" [(ngModel)]="formData.SalesOrderData.SalesGroup" #SalesGroup="ngModel" required [ngClass]="{'m-select-warn': !SalesGroup.valid && (SalesGroup.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of saleGroupList" [ngValue]="item.SaleTeamID">{{item.FullInfo}}</option>
+                </select>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <!-- 新增内容，项目信息 -->
+      <div class="addApply-base" *ngIf="customerFormData">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">项目信息</span>
+          <span style="color:red">如果单签服务合同，一级审批人请选择"李静"，Itcode:lijings</span>          
+        </div>
+        <div class="addApp-base-infor m-projectInfo">
+          <db-customerform [readonly]=true [Data]="customerFormData"></db-customerform>
+        </div>
+      </div>
+
+      <!-- 支付信息 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">支付信息</span>
+        </div>
+        <div class="addApp-base-infor">
+          <ul class="addApp-base-list">
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>客户应收账款</label>
+              <input class="addApp-form-input w360" [ngClass]="{'m-input-warn': !receivable.valid && (receivable.touched || isSubmit)}" type="text" #forminput name="receivable" required [(ngModel)]="formData.SalesOrderData.Receivable" #receivable="ngModel" notblank
+                readonly><span class="m-btn-font" (click)="cashDetail()">查看明细</span>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>客户超期账款</label>
+              <input class="addApp-form-input" type="text" #forminput name="overdue" required [(ngModel)]="formData.SalesOrderData.Overdue" #overdue="ngModel" notblank [ngClass]="{'m-input-warn': !overdue.valid && (overdue.touched || isSubmit)}" readonly>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>售达方编码</label>
+              <input class="addApp-form-input w360" type="text" #forminput name="customerERPCode" required [(ngModel)]="formData.SalesOrderData.CustomerERPCode" #customerERPCode="ngModel" notblank [ngClass]="{'m-input-warn': !customerERPCode.valid && (customerERPCode.touched || isSubmit)}"
+                readonly><span class="m-btn-font" (click)="saleToParty()">查询</span>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>售达方名称</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerName" required [(ngModel)]="formData.SalesOrderData.CustomerName" #customerName="ngModel" notblank [ngClass]="{'m-input-warn': !customerName.valid && (customerName.touched || isSubmit)}"
+                readonly>
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer">
+              <label class="addApp-form-label"><i  class="addApp-form-tips">*</i>售达方邮编</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerPost" required [(ngModel)]="formData.SalesOrderData.CustomerPost" #customerPost="ngModel" notblank pattern="^[0-9]*$" maxlength="7" [ngClass]="{'m-input-warn': !customerPost.valid && (customerPost.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>售达方城市</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerCity" required [(ngModel)]="formData.SalesOrderData.CustomerCity" #customerCity="ngModel" notblank [ngClass]="{'m-input-warn': !customerCity.valid && (customerCity.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer || (!isACustomer && modifyTaxNumber)">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>售达方税号</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerTaxNumber" required [(ngModel)]="formData.SalesOrderData.CustomerTaxNumber" maxlength=18 minlength=15 pattern="^[a-zA-Z0-9]*$" #customerTaxNumber="ngModel" notblank [ngClass]="{'m-input-warn': !customerTaxNumber.valid && (customerTaxNumber.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer">
+              <label class="addApp-form-label double-font"><i class="addApp-form-tips">*</i>注册地址及<br/>电话</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerAddress" required [(ngModel)]="formData.SalesOrderData.CustomerAddress" #customerAddress="ngModel" notblank [ngClass]="{'m-input-warn': !customerAddress.valid && (customerAddress.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer">
+              <label class="addApp-form-label double-font"><i class="addApp-form-tips">*</i>售达方开户<br/>银行名称</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerBank" required [(ngModel)]="formData.SalesOrderData.CustomerBank" #customerBank="ngModel" notblank [ngClass]="{'m-input-warn': !customerBank.valid && (customerBank.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item" *ngIf="isACustomer">
+              <label class="addApp-form-label double-font"><i class="addApp-form-tips">*</i>售达方开户<br/>银行账号</label>
+              <input class="addApp-form-input" type="text" #forminput name="customerBankAccount" required [(ngModel)]="formData.SalesOrderData.CustomerBankAccount" #customerBankAccount="ngModel" notblank [ngClass]="{'m-input-warn': !customerBankAccount.valid && (customerBankAccount.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>系统账期</label>
+              <input class="addApp-form-input" type="text" #forminput name="accountPeriod" required [(ngModel)]="formData.SalesOrderData.AccountPeriod" #accountPeriod="ngModel" notblank [ngClass]="{'m-input-warn': !accountPeriod.valid && (accountPeriod.touched || isSubmit)}"
+                readonly>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>分销渠道</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="channelOfDistribution" #forminput required [(ngModel)]="formData.SalesOrderData.ChannelOfDistributionID" #channelOfDistribution="ngModel" [ngClass]="{'m-select-warn': !channelOfDistribution.valid && (channelOfDistribution.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListChannel" [ngValue]="item.ChannelOfDistributionID">{{item.Name}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>付款条件代码</label>
+              <input class="addApp-form-input" type="text" #forminput name="paymentTermsCode" required [(ngModel)]="formData.SalesOrderData.PaymentTermsCode" #paymentTermsCode="ngModel" notblank [ngClass]="{ 'w360': paymentSearch && !isACustomer,'m-input-warn': !paymentTermsCode.valid && (paymentTermsCode.touched || isSubmit)}"
+                readonly>
+              <span *ngIf="paymentSearch  && !isACustomer" class="m-btn-font" (click)="searchPayment()">查询</span>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>付款条件名称</label>
+              <input class="addApp-form-input" type="text" #forminput name="paymentTerms" required [(ngModel)]="formData.SalesOrderData.PaymentTerms" #paymentTerms="ngModel" notblank [ngClass]="{'m-input-warn': !paymentTerms.valid && (paymentTerms.touched || isSubmit)}"
+                readonly>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 商务信息 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">商务信息</span>
+        </div>
+        <div class="addApp-base-infor">
+          <ul class="addApp-base-list">
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>发票类型</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="invoiceType" [(ngModel)]="formData.SalesOrderData.InvoiceTypeID" #invoiceType="ngModel" #forminput required [ngClass]="{'m-select-warn': !invoiceType.valid && (invoiceType.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListInvoice" [ngValue]="item.InvoiceTypeID">{{item.Name}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>是否有无返款</label>
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="rebateAmount" required [(ngModel)]="formData.SalesOrderData.RebatePercentageID" #rebateAmount="ngModel" #forminput [ngClass]="{'m-select-warn': !rebateAmount.valid && (rebateAmount.touched || isSubmit)}" (change)="rebateAmountFun()">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListRebate" [ngValue]="item.RebatePercentageID">{{item.Name}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label">厂商项目编号</label>
+              <input class="addApp-form-input" type="text" #forminput name="manufacturerProNo" [(ngModel)]="formData.SalesOrderData.ManufacturerProNo" #manufacturerProNo="ngModel">
+            </li>
+            <li class="addApp-form-item w-full">
+              <label class="addApp-form-label">交货备注</label>
+              <div class="addApp-form-right">
+                <textarea rows="1" class="m-textarea" maxlength="300" #forminput name="deliveryNote" [(ngModel)]="formData.SalesOrderData.DeliveryNote" #deliveryNote="ngModel"></textarea>
+              </div>
+            </li>
+            <li class="addApp-form-item w-full">
+              <label class="addApp-form-label">发票备注</label>
+              <div class="addApp-form-right">
+                <textarea rows="1" class="m-textarea" maxlength="300" #forminput name="invoiceNote" [(ngModel)]="formData.SalesOrderData.InvoiceNote" #invoiceNote="ngModel"></textarea>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 其他信息 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">其他信息</span>
+        </div>
+        <div class="addApp-base-infor">
+          <ul class="addApp-base-list">
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>最终用户全称</label>
+              <input class="addApp-form-input" type="text" #forminput name="endUserName" required [(ngModel)]="formData.SalesOrderData.EndUserName" #endUserName="ngModel" notblank [ngClass]="{'m-input-warn': !endUserName.valid && (endUserName.touched || isSubmit)}">
+            </li>
+            <!-- <li class="addApp-form-item">
+                        <label class="addApp-form-label"><i class="addApp-form-tips">*</i>区域</label>
+                        <input class="addApp-form-input" type="text" #forminput name="customerRegion" [(ngModel)]="formData.SalesOrderData.CustomerRegion" #customerRegion="ngModel">
+                    </li> -->
+            <li class="addApp-form-item">
+              <label class="addApp-form-label">商务审批平台</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <!-- <i class="iqon-xia"></i> -->
+                <select name="busiApprovePlatform" [(ngModel)]="formData.SalesOrderData.BusiApprovePlatform" #busiApprovePlatform="ngModel" #forminput disabled>
+                                <option value="">-请选择</option>
+                                <option *ngFor="let item of dropInfoList.ListPlatform" [ngValue]="item.platformcode">{{item.platform}}</option>
+                            </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>部门产品组</label>
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select #forminput name="department" [(ngModel)]="formData.SalesOrderData.DepartmentProductGroupID" #department="ngModel" required [ngClass]="{'m-select-warn': !department.valid && (department.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListDepPro" [ngValue]="item.DepartmentProductGroupID">{{item.DepartmentProductGroupID + " | "+ item.Name}}</option>
+                  </select>
+              </div>
+            </li>
+            <!-- <li class="addApp-form-item"></li> -->
+            <!-- <li class="addApp-form-item">
+                <label class="addApp-form-label">DC行业大类</label>
+                <div class="m-select addApp-form-right">
+                    <i class="iqon-xia"></i>
+                    <select name="industry" [(ngModel)]="formData.SalesOrderData.IndustryID" #forminput #industry="ngModel">
+                        <option value="">-请选择</option>
+                        <option *ngFor="let item of dropInfoList.ListDCIndustry" [ngValue]="item.IndustryID">{{item.IndustryName}}</option>
+                    </select>
+                </div>
+            </li>
+            <li class="addApp-form-item">
+                <label class="addApp-form-label">部门行业</label>
+                <input class="addApp-form-input w360" type="text" #forminput name="projectIndustry" [(ngModel)]="projectIndustryName" #projectIndustry="ngModel" readonly><span class="m-btn-font" (click) = "selectedIndustry()">查询</span>
+            </li> -->
+            <li class="addApp-form-item">
+              <label class="addApp-form-label double-font"><i class="addApp-form-tips">*</i>事业部内部<br/>合同号</label>
+              <input class="addApp-form-input" type="text" #forminput required name="departmentContCode" [(ngModel)]="formData.SalesOrderData.DepartmentContCode" #departmentContCode="ngModel" notblank maxlength="20" pattern="^[0-9A-Za-z]*$" [ngClass]="{'m-input-warn': !departmentContCode.valid && (departmentContCode.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>卸货点</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="unloadingPointCode" [(ngModel)]="formData.SalesOrderData.UnloadingPointCode" #unloadingPointCode="ngModel" #forminput required [ngClass]="{'m-select-warn': !unloadingPointCode.valid && (unloadingPointCode.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListUnading" [ngValue]="item.UnloadingPointCode">{{item.UnloadingPointName+' | '+ item.UnloadingPointCode}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>装货点</label>
+              <!-- <input class="addApp-form-input" type="text"> -->
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="loadingPointCode" [(ngModel)]="formData.SalesOrderData.LoadingPointCode" #loadingPointCode="ngModel" #forminput required [ngClass]="{'m-select-warn': !loadingPointCode.valid && (loadingPointCode.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListLoading" [ngValue]="item.LoadingPointCode">{{item.LoadingPointName+' | '+ item.LoadingPointCode}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>装运条件</label>
+              <input class="addApp-form-input" type="text" #forminput required name="termsofShipment" [(ngModel)]="formData.SalesOrderData.TermsofShipment" #termsofShipment="ngModel" required notblank [ngClass]="{'m-input-warn': !termsofShipment.valid && (termsofShipment.touched || isSubmit)}"
+                readonly>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>国际贸易条款</label>
+              <div class="m-select addApp-form-right">
+                <i class="iqon-xia"></i>
+                <select name="deliveredTermACode" [(ngModel)]="formData.SalesOrderData.DeliveredTermACode" #deliveredTermACode="ngModel" #forminput required [ngClass]="{'m-select-warn': !deliveredTermACode.valid && (deliveredTermACode.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of dropInfoList.ListTerm" [ngValue]="item.DeliveredTermACode">{{item.DeliveredTermAName}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label double-font"><i class="addApp-form-tips">*</i>国际贸易条款<br/>备注</label>
+              <input class="addApp-form-input" maxlength="50" #forminput name="deliveredTermInfo" [(ngModel)]="formData.SalesOrderData.DeliveredTermInfo" #deliveredTermInfo="ngModel" required notblank [ngClass]="{'m-input-warn': !deliveredTermInfo.valid && (deliveredTermInfo.touched || isSubmit)}">
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 送达方与物料信息 -->
+      <input class="oc-input-none" #checkPoint name="delivery" type="text">
+      <oc-delivery-materials #delivery *ngIf="formData.SalesOrderData.SalesOrderID" [provinceCityInfo]="provinceCityInfo" [rebateAmountVal]="rebateAmountVal" [deliveryTypeList]="dropInfoList['ListCM']" [formData]="formData" [isSubmit]="isSubmit" (retrunCheckCallBack)="retrunCheckCallBack($event,i)"
+        (deliveryCallBack)="deliveryCallBack($event,i)"></oc-delivery-materials>
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">销售金额</span>
+        </div>
+        <div class="addApp-base-infor">
+          <div class="addApp-base-list">
+            <ul class="m-sales-money">
+              <li>订单金额: {{(formData.SalesOrderData.SalesAmountTotal || 0)| iqNumber:'1.2-2'}}</li>
+              <li>返款金额: {{(formData.SalesOrderData.RebateAmountTotal || 0)| iqNumber:'1.2-2'}}</li>
+              <li>物料总数量: {{(materialSum || 0)}}</li>
+              <li>合同金额: {{(formData.SalesOrderData.ContractMoney || 0)| iqNumber:'1.2-2'}}</li>
+              <li>未开销售金额: {{(formData.UnSalesAmount || 0)| iqNumber:'1.2-2'}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 关联支票 -->
+      <oc-link-cheque #cheque [contractCode]="formData.SalesOrderData.ContractCode" [amountTotal]="formData.SalesOrderData.SalesAmountTotal" [saleType]="formData.Type" [SalesOrderID]="formData.SalesOrderData.SalesOrderID" [chequeList]="formData.ReceiptData"
+        (onSuccess)="chequeCallBack($event)"></oc-link-cheque>
+      <!-- 发票邮寄地址 -->
+      <div class="addApply-base">
+        <div class="m-list-head m-dialog-head-change">
+          <span>发票邮寄地址</span>
+        </div>
+        <div class="addApp-base-infor">
+          <div class="addApp-base-list">
+            <li class="addApp-form-item w-full">
+              <label class="addApp-form-label">是否邮寄发票</label>
+              <input icheck type="radio" id="radio3" #forminput name="isMailingInvoice" [(ngModel)]="formData.SalesOrderData.IsMailingInvoice" value="1">
+              <label for="radio3" class="iradio_label">是</label>
+              <input icheck type="radio" id="radio4" #forminput name="isMailingInvoice" [(ngModel)]="formData.SalesOrderData.IsMailingInvoice" value="0">
+              <label for="radio4" class="iradio_label">否</label>
+            </li>
+          </div>
+          <div class="addApp-base-list" *ngIf="formData.SalesOrderData.IsMailingInvoice == '1'" style="margin-top:0;">
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>公司名称</label>
+              <input class="addApp-form-input" type="text" #forminput required name="invoiceCompanyName" [(ngModel)]="formData.SalesOrderData.InvoiceCompanyName" #invoiceCompanyName="ngModel" notblank [ngClass]="{'m-input-warn': !invoiceCompanyName.valid && (invoiceCompanyName.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>发票收件人</label>
+              <input class="addApp-form-input" type="text" #forminput required name="invoiceRecipient" [(ngModel)]="formData.SalesOrderData.InvoiceRecipient" #invoiceRecipient="ngModel" notblank [ngClass]="{'m-input-warn': !invoiceRecipient.valid && (invoiceRecipient.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item oc-address-ul">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>省(市)</label>
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select #forminput name="invoiceAreaID" [(ngModel)]="formData.SalesOrderData.InvoiceAreaID" #invoiceAreaID="ngModel" (change)="changeProvince()" required [ngClass]="{'m-select-warn': !invoiceAreaID.valid && (invoiceAreaID.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of provinceCityInfo.province" [ngValue]="item.ProvinceCode">{{item.ProvinceName}}</option>
+                </select>
+              </div>
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>城市</label>
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select #forminput name="invoiceCity" [(ngModel)]="formData.SalesOrderData.InvoiceCity" #invoiceCity="ngModel" (change)="changeCity()" required [ngClass]="{'m-select-warn': !invoiceCity.valid && (invoiceCity.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of cityList" [ngValue]="item.CityCode">{{item.CityName}}</option>
+                </select>
+              </div>
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>地区</label>
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select #forminput name="invoiceDistrict" [(ngModel)]="formData.SalesOrderData.InvoiceDistrict" #invoiceDistrict="ngModel" required [ngClass]="{'m-select-warn': !invoiceDistrict.valid && (invoiceDistrict.touched || isSubmit)}">
+                  <option value="">-请选择</option>
+                  <option *ngFor="let item of districtList" [ngValue]="item.CountyName">{{item.CountyName}}</option>
+                </select>
+              </div>
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>送货地址</label>
+              <input class="addApp-form-input" type="text" #forminput name="invoiceAddress" [(ngModel)]="formData.SalesOrderData.InvoiceAddress" #invoiceAddress="ngModel" required notblank [ngClass]="{'m-input-warn': !invoiceAddress.valid && (invoiceAddress.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>收件人邮编</label>
+              <input class="addApp-form-input" type="text" #forminput name="invoicePostCode" [(ngModel)]="formData.SalesOrderData.InvoicePostCode" pattern="^[0-9]*$" maxlength="7" #invoicePostCode="ngModel" required notblank [ngClass]="{'m-input-warn': !invoicePostCode.valid && (invoicePostCode.touched || isSubmit)}">
+            </li>
+            <li class="addApp-form-item">
+              <label class="addApp-form-label"><i class="addApp-form-tips">*</i>收件人电话</label>
+              <input class="addApp-form-input" type="text" #forminput pattern="^[0-9]*$" maxlength="18" name="invoicePhone" [(ngModel)]="formData.SalesOrderData.InvoicePhone" #invoicePhone="ngModel" required notblank [ngClass]="{'m-input-warn': !invoicePhone.valid && (invoicePhone.touched || isSubmit)}">
+            </li>
+          </div>
+        </div>
+      </div>
+      <!-- 订单备注 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">订单备注</span>
+        </div>
+        <div class="addApp-base-infor">
+          <div class="addApp-base-list">
+            <li class="addApp-form-item w-full">
+              <label class="addApp-form-label">订单备注</label>
+              <div class="addApp-form-right">
+                <textarea rows="1" class="m-textarea" maxlength="300" name="remark" [(ngModel)]="formData.SalesOrderData.Remark" #remark="ngModel"></textarea>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+      <!-- 附件上传 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">附件</span>
+        </div>
+        <div class="addApp-base-infor">
+          <div class="addApp-base-list">
+            <li class="addApp-form-item w-full">
+              <label class="addApp-form-label">上传附件</label>
+              <div class="addApp-form-right">
+                <iq-file-upload upType="1" [url]="uploadFilesApi" (onSuccess)="onFileCallBack($event)" [hasUploaded]="alreadyfilelUpLoadList" (onDeleteItem)="deleteUploadFile($event)"></iq-file-upload>           
+                <!-- <db-oc-upload upType="0" [url]="uploadFilesApi" [allowedFileType]="" [accessoriesInfo]="filesList" [maxFileNum]="10" [maxFileSize]="52428800" (onSuccess)="onFileCallBack($event)" [isUpload]="true" [isDelete]="true" class="float-right"></db-oc-upload> -->
+                <!-- <p class="m-input-notice">附件数量不超过10个，单个附件不超过5M</p> -->
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+      <!-- 审批人信息 -->
+      <div class="addApply-base">
+        <div class="m-list-head">
+          <span class="m-dialog-head-change">审批人信息</span>
+        </div>
+        <div class="addApp-base-infor">
+          <div class="addApp-base-list">
+            <li class="addApp-form-item w-full" style="margin:0;">
+              <label class="addApp-form-label">{{firstNodeName}}</label>
+              <div class="addApp-form-right" style="margin-left: 15px;">
+                <iq-person-select #busPerson name="busPerson" [(ngModel)]="busPerson.info" [max]="1" (ngModelChange)="getChange(busPerson.info)" ngDefaultControl></iq-person-select>
+              </div>
+            </li>
+
+            <li class="addApp-form-item w-full" style="margin:0;" *ngFor="let item of unSelectApprover;index as i;">
+              <ng-container *ngIf="!(!isOverAmount && item.nodeID == '3')">
+                <label class="addApp-form-label">{{item.nodeName}}</label>
+                <div class="addApp-form-right">
+                  <div class="m-user-info" user-image [hasClose]="false" [user]="person" *ngFor="let person of item.personList;index as i;"></div>
+                </div>
+              </ng-container>
+            </li>
+          </div>
+        </div>
+      </div>
+      <!-- 审批记录 -->
+      <div class="wfh-history" *ngIf="formData.SalesOrderData.Status === '3'">
+        <db-wfhistory [wfHistoryData]="wfData.wfHistory"></db-wfhistory>
+      </div>
+      <div class="addApp-submit-btn">
+        <div class="addApp-sub-btns" *ngIf="formData.SalesOrderData.SaleContractStatus!=='2'">
+          <!-- <button style="display:none" onkeydown="if(event.keyCode==13)return false;"></button> -->
+          <button class="m-btn-confirm" type="button" (click)="submit()">提交</button>
+          <button class="m-btn-sketch" type="button" (click)="save()">暂存</button>
+          <button class="m-btn-addAppback" type="button" (click)="cancel()">取消</button>
+        </div>
+        <div class="addApp-sub-btns" *ngIf="formData.SalesOrderData.SaleContractStatus==='2'">
+            <button class="m-btn-default" type="button" (click)="cancel()">取消</button>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>

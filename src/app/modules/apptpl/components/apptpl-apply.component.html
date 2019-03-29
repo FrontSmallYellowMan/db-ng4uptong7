@@ -1,0 +1,143 @@
+<div class="my-apply">
+  <div class="row">
+    <div class="col-md-6" style="position:relative">
+      <form #myApplyForm="ngForm" (ngSubmit)="submitForm($event)">
+        <div class="m-form-item-w100 m-approval">
+            <p class="m-form-label">冻结人<span class="m-form-need">*</span></p>
+            <div class="m-user-members">
+              <iq-person-select #forminput name="person" #person="ngModel"  required [(ngModel)]="person.info" [max]="1" (ngModelChange)="changePerson(person.info)" ngDefaultControl></iq-person-select>
+            </div>
+            <p class="m-warn-tip" *ngIf="(person.touched || myApplyForm.submitted) && person.invalid">请选择要冻结的人员</p>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">电话<span class="m-form-need">*</span></p>
+          <div class="m-user-members">
+            <input type="text" #forminput maxlength=11 minlength=6 name="tel" required [(ngModel)]="apply.tel" #tel="ngModel">
+          </div>
+          <p class="m-warn-tip" *ngIf="(tel.touched || myApplyForm.submitted) && tel.invalid">
+            <span *ngIf="tel.errors?.required">电话必填</span>
+            <span *ngIf="tel.errors?.minlength">电话不能少于6个字</span>
+            <span *ngIf="tel.errors?.maxlength">电话不能超过10个字</span>
+          </p>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">邮箱<span class="m-form-need">*</span></p>
+          <div class="m-user-members">
+            <input type="text" #forminput name="email" required pattern="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$" [(ngModel)]="apply.email" #email="ngModel">
+          </div>
+          <p class="m-warn-tip" *ngIf="(email.touched || myApplyForm.submitted) && email.invalid">
+            <span *ngIf="email.errors?.required">邮箱为必填项</span>
+            <span *ngIf="email.errors?.pattern">邮箱格式错误</span>
+          </p>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">原由<span class="m-form-need">*</span></p>
+          <div class="m-user-members">
+            <input type="text" #forminput maxlength=10 minlength=5 required name="reason" [(ngModel)]="apply.reason" #reason="ngModel">
+          </div>
+          <p class="m-warn-tip" *ngIf="(reason.touched || myApplyForm.submitted) && reason.invalid">
+            <span *ngIf="reason.errors?.required">原由必填</span>
+            <span *ngIf="reason.errors?.minlength">原由不能少于5个字</span>
+            <span *ngIf="reason.errors?.maxlength">原由不能超过10个字</span>
+          </p>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">平台名称 <span class="m-form-need">*</span></p>
+          <div class="m-select m-select-tip">
+            <i class="iqon-xia"></i>
+            <select [(ngModel)]="apply.platform" #forminput name="platformname" #platformname="ngModel" required [ngClass]="{'m-select-warn': !platformname.valid && (platformname.touched || myApplyForm.submitted)}">
+              <option value=undefined>-请选择平台</option>
+              <option *ngFor="let item of sellists" [ngValue]="item.code">{{item.text}}</option>
+            </select>
+            <p class="m-warn-tip" *ngIf="(platformname.touched || myApplyForm.submitted) && platformname.invalid">平台名称为必选项，请选择</p>
+          </div>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">同步到工作日历<span class="m-form-need">*</span></p>
+          <div class="m-user-members" #forminput>
+            <iq-switcher name="syncToSchedule" [(ngModel)]="apply.syncToSchedule" #syncToSchedule="ngModel"
+              [checked-value]="'1'" [unchecked-value]="'0'"></iq-switcher>
+          </div>
+          <p class="m-warn-tip">{{apply.syncToSchedule?"同步":"不同步"}}</p>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">性别<span class="m-form-need">*</span></p>
+          <div class="m-user-members" #forminput>
+            <label>
+              <input type="radio" name="gender" [(ngModel)]="apply.gender" id="male" #gender="ngModel" value="1" icheck
+                [disabled]="ifDisabled" (onClick)="icheckFun($event)" (onChange)="icheckFun($event)">
+              男
+            </label>
+            <label>
+              <input type="radio" name="gender" [(ngModel)]="apply.gender" id="female" #gender="ngModel" value="2" icheck>
+              女
+            </label>
+            <label>
+              <input type="radio" name="gender" [(ngModel)]="apply.gender" id="secrecy" #gender="ngModel" value="3" icheck>
+              保密
+            </label>
+          </div>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">请假类型<span class="m-form-need">*</span></p>
+          <div class="m-user-members" #forminput>
+            <input type="checkbox" icheck name="thingType" #thingType="ngModel" [(ngModel)]="apply.thingType" [disabled]="ifDisabled"
+            [indeterminate]="ifIndeterminate" (onClick)="icheckFun($event)" (onChange)="icheckFun($event)">
+            事假
+          </div>
+        </div>
+        <div class="m-form-item-w100 m-approval">
+          <p class="m-form-label">离开日期<span class="m-form-need">*</span></p>
+          <div class="m-user-members" #forminput>
+            <iq-datepicker [(ngModel)]="apply.leaveDate" (onChange) = "getDate($event)" name="leaveDate" #leaveDate="ngModel"
+            closeOnSelect="true" (onClose)="getDate($event)" placeHolder="请选择日期"></iq-datepicker>
+          </div>
+        </div>
+        <div class="">
+          <button class="btn btn-default" type="button" name="submit_btn" (click)="submitForm()">提交</button>
+        </div>
+      </form>
+    </div>
+       <div class="col-md-6">
+      <pre>
+        form:
+        是否提交/submitted:{{myApplyForm.submitted}}
+        是否通过校验/valid:{{myApplyForm.valid}}
+        是否碰过/touched:{{myApplyForm.touched}}
+        表单值:{{ myApplyForm.value | json}}
+      </pre>
+    </div>
+  </div>
+</div>
+<hr/>
+<p>其他：</p>
+<p>表格中的全选：</p>
+<table>
+            <thead>
+              <tr>
+                <th class="wp1"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+                <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                  <th class="wp10">公司代码</th>
+                  <th>公司名称</th>
+                  <th class="wp20">所属平台</th>
+                  <th class="wp20">税号</th>
+                  <th class="operate wp10">操作</th>
+                </ng-container>
+                <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                  <th class="list-edit" colspan="4">已选{{checkedNum}}项<button type="button">删除</button></th>
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let item of platInfoList;index as i">
+                  <td class="wp1"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td>
+                  <td class="wp10">code</td>
+                  <td>name</td>
+                  <td class="wp25">platformName</td>
+                  <td class="wp25">taxNo</td>
+                  <td class="operate wp10">
+                    <span>删除</span>
+                  </td>
+              </tr>
+            </tbody>
+</table>

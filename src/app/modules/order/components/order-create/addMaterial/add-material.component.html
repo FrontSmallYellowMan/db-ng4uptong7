@@ -1,0 +1,85 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    合同物料信息<span style="font-size:12px;">（所选物料必须为同一工厂）</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-search-all">
+      <div class="m-search" style="margin-right: 20px;">
+        <i class="iqon-query" (click)="search()"></i>
+        <input name="keyWord" (keyup.enter)="search()" [(ngModel)]="keyWord" placeholder="搜索商品编码,商品名称..." type="text">
+      </div>
+    </div>
+    <div class="m-order-table" *ngIf="!defauls">
+      <!-- <loading [show]="loading"></loading> -->
+      <ul class="table-head">
+        <li>
+          <input type="checkbox" allcheck="materialall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" [disabled]="disAll" (onClick)="selectedAll()" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+        </li>
+        <li>ERP商品编码</li>
+        <li>商品名称</li>
+        <li>数量</li>
+        <li>库存地</li>
+        <li>工厂</li>
+        <li>批次</li>
+        <li>备注</li>
+        <li>销售单位</li>
+      </ul>
+      <div class="table-body">
+        <ul *ngFor="let item of materialList;index as i">
+          <li><input type="checkbox" allcheckChild="materialall" icheck [disabled]="item.ifDisable || item.isError" [(ngModel)]="item.checked" (onClick)="selected(item)"></li>
+          <li [title]="item.MaterialCode">{{item.MaterialCode || "&nbsp;"}}</li>
+          <li [title]="item.MaterialName">{{item.MaterialName || "&nbsp;"}}</li>
+          <li [title]="item.AvailableQuantity || '0'">{{item.AvailableQuantity || "0"}}</li>
+          <li [title]="item.StorageLocation">{{item.StorageLocation || "&nbsp;"}}</li>
+          <li [title]="item.Factory">{{item.Factory || "&nbsp;"}}</li>
+          <li [title]="item.Batch">{{item.Batch || "&nbsp;"}}</li>
+          <li [title]="item.Remark || ''">{{item.Remark || "&nbsp;"}}</li>
+          <li [title]="item.SalesUnit || ''">{{item.SalesUnit || "&nbsp;"}}</li>
+          <li class="oc-count-error" *ngIf="item.isError"></li>
+        </ul>
+      </div>
+      <!-- <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" allcheck="materialall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                                (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+                        </th>
+                        <th>ERP商品编码</th>
+                        <th>商品名称</th>
+                        <th>数量</th>
+                        <th>工厂</th>
+                        <th>批次</th>
+                        <th>备注</th>
+                        <th>销售单位</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let item of materialList;index as i">
+                        <td><input type="checkbox" allcheckChild="materialall" icheck [(ngModel)]="item.checked"></td>
+                        <td>{{item.MaterialCode}}</td>
+                        <td>{{item.MaterialName}}</td>
+                        <td>{{item.Quantity}}</td>
+                        <td>{{item.Factory}}</td>
+                        <td>{{item.Batch}}</td>
+                        <td>{{item.Remark}}</td>
+                        <td>{{item.SalesUnit}}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+    </div>
+    <div class="m-noresult" *ngIf="defauls" style="position: static;">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+
+      </div>
+    </div>
+    <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+  </div>
+  <div class="modal-footer">
+    <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+    <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+  </div>
+</div>

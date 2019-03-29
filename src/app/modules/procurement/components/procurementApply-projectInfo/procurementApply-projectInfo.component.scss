@@ -1,0 +1,86 @@
+.my-textarea{
+  width: 88.3%;
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-left: 10px;
+  padding: 10px 15px;
+}
+
+.my-textarea-content{
+  @extend .my-textarea;
+  padding: 0;
+  border: none;
+}
+
+
+.m-content-box{
+  width: 88.3%;
+  margin: 7px 0 10px 0;
+  word-wrap: break-word; 
+  word-break: normal; 
+}
+
+.m-span{
+padding: 0 10px 0 10px;
+
+}
+
+.m-search-button{
+  width: 100px;
+  height: 35px;
+  background: linear-gradient(to right,#4ad7ff,#009cff);
+  font-size: 13px;
+  color: #fff;
+  border-radius: 3px;
+  transition: all linear 0.5s;
+  border: none;
+  opacity: 1;
+  &:hover{
+    background: linear-gradient(to right,#b72dfe,#009cff);
+    transition: all linear 0.5s;
+    width: 110px;
+    opacity: 0.7;
+ }
+}
+
+.m-select-content{
+  width: 83%;
+  margin-left: 10px;
+}
+
+.addApp-base-list{
+  li{
+   width:48%;
+   float: left;
+  }
+
+  .addApp-form-item{
+      display: flex;
+
+    .padSpan{
+        padding-left: 15px;
+        font-size: 12px;
+        line-height: 2.67;
+    }
+}
+}
+
+.isHide{
+  display: none;
+}
+
+:host/deep/.c-input-title{
+  width:19.8%!important;
+}
+
+:host/deep/.c-input-title-custom{
+  width:9.5%!important;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+    clear: both;
+}

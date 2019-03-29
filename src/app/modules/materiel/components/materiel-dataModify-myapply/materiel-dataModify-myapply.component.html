@@ -1,0 +1,120 @@
+<div class="m-overclass">
+  <div class="m-list-menu" >
+    <ul class="m-state" (click)="onTab($event)">
+      <li class="active" data-state="sExamine">审批中</li>
+      <li data-state="sFinish">已完成</li>
+      <li  data-state="sAll">全部</li>
+      <li data-state="sTemp">草稿</li>
+    </ul>
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i>
+        高级搜索
+      </div>
+    </div>
+
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <form #form = "ngForm">
+        <div class="m-search-item">
+          <label>物料ERP编号</label>
+          <!-- <div class="m-select-search">
+            <my-select [(ngModel)]="highSearch.MaterialERPCode" tabName="1" [placeHolder]="'-请选择物料ERP编号'" name="MaterialERPCode"></my-select>
+          </div> -->
+          <input type="text" [(ngModel)]="query.MaterialERPCode" name="MaterialERPCode" placeholder="-物料ERP编号">
+        </div>
+        <div class="m-search-item">
+          <label>申请人</label>
+          <input [(ngModel)]="query.ApplyName" type="text" name="ApplyName"  placeholder="-请填写申请人">
+        </div>
+        <div class="m-search-item">
+          <label>工厂</label>
+          <div class="m-select-search">
+          <input type="text" name="Factory" [(ngModel)]="query.Factory" placeholder="-请填写工厂">          
+            <!-- <my-select [(ngModel)]="query.Factory" tabName="1" [placeHolder]="'-请选择工厂'" name="Factory"></my-select> -->
+          </div>
+        </div>
+        <div class="m-search-item">
+          <label>销售组织</label>
+          <input type="text" name="MarketingOrganizationName" [(ngModel)]="query.MarketingOrganizationName" placeholder="-销售组织">
+        </div>
+        <div class="m-search-item m-search-items">
+          <label>申请日期</label>
+          <!-- <my-datepicker></my-datepicker> -->
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start">
+              <my-datepicker [(ngModel)]="query.BeginDate" format="YYYY-MM-DD" [EndDate]="query.EndDate" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>
+            </div> ~ 
+            <div class="m-datepicker-end">
+              <my-datepicker [(ngModel)]="query.EndDate" format="YYYY-MM-DD" [StartDate]="query.BeginDate" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+
+        </div>
+        <div class="m-search-btn">
+          <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" [ngClass]="{'hideStyle':isHide}">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <p class="m-p-notice">点击“新建物料数据修改”新建数据吧~</p>
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+
+      <div class="table-auto-content">
+        <table class="table table-hover table-list" style="table-layout:auto">
+          <thead>
+            <tr>
+              <th><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" (onClick)="changeWidth()" [indeterminate]="fullCheckedIndeterminate"
+                  (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+              <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                <th>序号</th>
+                <th>物料编号</th>
+                <th>物料描述（中文）</th>
+                <th>物料描述（英文）</th>
+                <th>销售组织</th>
+                <th>供应商物料编号</th>
+                <th>申请时间</th>
+                <th>申请状态</th>
+              </ng-container>
+              <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                <th class="list-edit" colspan="8">已选{{checkedNum}}项<button type="button" (click)="deleteList(searchList)">删除</button></th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let list of searchList;let i=index">
+              <td stopParentClick><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="list.checked" name="" [disabled]="list.ApplicationState==1"></td>
+              <td>{{(query.PageNo-1)*query.PageSize+i+1}}</td>
+              <td><span (click)="getDetail(list.ID)" class="clickText">{{list.MaterialERPCode}}</span></td>
+              <td title={{list.MaterialDescriptionCN}}>{{list.MaterialDescriptionCN_Old}}</td>
+              <td>{{list.MaterialDescriptionEN_Old}}</td>
+              <td title={{list.MarketingOrganizationName_Old}}>{{list.MarketingOrganizationName_Old}}</td>
+              <td>{{list.SupplyMaterialNumber_Old}}</td>
+              <td>{{list.ApplyTime|iqDate:"YYYY-MM-DD"}}</td>
+              <td>{{list.ApplicationStateName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>      
+    </div>
+    
+  </div>
+</div>

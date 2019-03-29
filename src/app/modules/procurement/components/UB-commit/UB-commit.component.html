@@ -1,0 +1,416 @@
+<div class="content-auto">
+	<!-- <loading [show]="isLoading"></loading> -->
+	<form #UBCommit="ngForm">
+		<div>
+			<div class="addApply-container">
+				<h1 class="addApply-tit-h1">UB工厂间转储订单</h1>
+				<!--基本信息-->
+				<div class="addApply-base">
+					<div class="m-dialog-head">
+						<span class="m-dialog-head-change progress-txt">基础信息</span>
+					</div>
+					<div class="addApp-base-infor">
+						<ul class="addApp-base-list">
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">申请人</label>
+									<div style="margin-left:10px;">
+										<div class="m-user-info" user-image [hasClose]="false" [user]="formData.ApplicantName.value"></div>
+										<!-- <iq-person-select name="ApplicantName" required [(ngModel)]="formData.ApplicantName.value" [max]="1"
+										 (onChange)="changeApplicantName($event)"></iq-person-select> -->
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label"><i class="addApp-form-tips">*</i>联系方式</label>
+									<input class="addApp-form-input" type="text" required #Telephone="ngModel" [(ngModel)]="formData.Telephone.value"
+										name="Telephone" [ngClass]="{'m-input-warn': Telephone.invalid && (Telephone.touched || isSubmit)}">
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="Telephone.invalid && (Telephone.touched || isSubmit)">请填写联系方式</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--采购信息-->
+				<div class="addApply-base money">
+					<div class="m-dialog-head">
+						<span class="m-dialog-head-change progress-txt">采购信息</span>
+						<span class="m-dialog-head-change progress-txt supplier-tip" *ngIf="false">
+							该采购订单供应商已过期，请事业部及时续签
+						</span>
+					</div>
+					<div class="addApp-base-infor">
+						<ul class="addApp-base-list">
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">操作平台：</label>
+									<ng-select class="addApp-form-input m-select-box" [items]="configDatas.platform" name="Platform" required ngModel [active]=showPlateform [(ngModel)]="showPlateform"  (selected)="getPlatform($event)">
+									</ng-select>
+								</div>
+							</li>
+						</ul>
+						<ul class="addApp-base-list" style="margin-top:0">
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">
+										<i class="addApp-form-tips">*</i>我方主体：</label>
+									<iq-select class="iqSelect" required name="company" [(ngModel)]="formData.CompanyName.value" [modalShow]="true"
+									 [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" 
+									 listApi="InitData/GetPageDataCompany" (onSelect)="CompanyChange($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"></iq-select>
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="formData.CompanyName.value === '' && isSubmit">请选择我方主体</p>
+							</li>
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label" style="width: 22%;">
+										<i class="addApp-form-tips">*</i>内部交易维护人：</label>
+									<iq-person-select name="InsiderTraderName" required [(ngModel)]="formData.InsiderTraderName.value" [max]="1"
+										ngDefaultControl (onChange)="changeInsiderTraderName($event)"></iq-person-select>
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="formData.InsiderTraderName.value === '' && isSubmit">请选择内部交易维护人</p>
+							</li>
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">
+										<i class="addApp-form-tips">*</i>供货工厂：</label>
+									<input class="addApp-form-input"  maxlength="4"
+										required name="VendorNo" type="text" #VendorNo="ngModel"
+										[(ngModel)]="formData.VendorNo.value" [ngClass]="{'m-input-warn': VendorNo.invalid && (VendorNo.touched || isSubmit)  || formData.VendorNo.invalidTip}"
+										(blur)="validateMainBody(formData.VendorNo.value, 'VendorNo')">
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="VendorNo.invalid && (VendorNo.touched || isSubmit)  || formData.VendorNo.invalidTip">{{ formData.VendorNo.invalidTip }}</p>
+							</li>
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label" style="width: 22%;"><i class="addApp-form-tips">*</i>需货工厂：</label>
+									<input class="addApp-form-input" maxlength="4" required name="FactoryCode" type="text" #FactoryCode="ngModel" 
+									 [(ngModel)]="formData.FactoryCode.value" [ngClass]="{'m-input-warn': FactoryCode.invalid && (FactoryCode.touched || isSubmit)}  || formData.FactoryCode.invalidTip"
+									 (blur)="validateMainBody(formData.FactoryCode.value, 'FactoryCode')">
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="FactoryCode.invalid && (FactoryCode.touched || isSubmit)  || formData.FactoryCode.invalidTip">{{ formData.FactoryCode.invalidTip }}</p>
+							</li>
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">
+										<i class="addApp-form-tips">*</i>需求跟踪号：</label>
+									<input class="addApp-form-input" maxlength="10" required name="TrackingNumber" type="text" 
+									 #TrackingNumber="ngModel" [(ngModel)]="formData.TrackingNumber.value" [ngClass]="{'m-input-warn': TrackingNumber.invalid && (TrackingNumber.touched || isSubmit) || formData.TrackingNumber.invalidTip}"
+									 (blur)="validateRequireTracing()">
+								</div>
+								<p class="m-p-warn procu-warn" *ngIf="TrackingNumber.invalid && (TrackingNumber.touched || isSubmit)  || formData.TrackingNumber.invalidTip">{{
+									formData.TrackingNumber.invalidTip }}</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--采购清单-->
+				<div class="addApply-base money">
+					<div class="m-dialog-head">
+						<span class="m-dialog-head-change progress-txt">采购清单</span>
+						<i class="iqon-fold" (click)="procurementListShow=!procurementListShow"></i>
+					</div>
+					<div class="addApp-base-infor" [ngClass]="{'hide': !procurementListShow}">
+						<div class="btn-content">
+							<div class="right">
+								<button class="m-btn-confirm min-btn" (click)="batchRemoveRows()">批量删除</button>
+								<button class="m-btn-confirm min-btn" (click)="downLoadFile()">excel导入模板</button>
+								<iq-file-upload class="min-btn" upType="0" [url]="fileUploadApi" [allowedFileType]="['xls', 'xlsx']" [showModel]="false"
+								 [text]="'批量上传'" (onSuccess)="uploadPurchase($event)"></iq-file-upload>
+							</div>
+						</div>
+						<div class="list-summary">
+							<div class="list-summary-part">
+								<span>物料数量合计：</span>
+								<span>{{ summaryNum }}</span>
+							</div>
+							<div class="list-summary-part">
+								<span>总金额：</span>
+								<span>{{ formData.PruchaseAmount.value | number:"1.2" }}</span>
+							</div>
+						</div>
+						<table class="table table-list table-border">
+							<thead>
+								<tr>
+									<th  style="width: 38px;">
+										<input allcheck="demoall" [(ngModel)]="fullChecked" icheck type="checkbox" name="fullChecked">
+									</th>
+									<th *ngFor="let item of tableConfig" [width]="item.width">
+										<i class="addApp-form-tips" *ngIf="item.isRequired">*</i>{{ item.title }}
+									</th>
+									<th class="no-scroll">
+										<span class="add-row" (click)="addRow()">+</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let item of listData;index as i">
+									<td stopParentClick style="width: 38px;">
+										<input allcheckChild="demoall" icheck type="checkbox" [(ngModel)]="item.checked" name="checked">
+									</td>
+									<td [title]="item.MaterialNumber" [width]="tableConfig[0].width">
+										<input type="text" [(ngModel)]="item.MaterialNumber" name="MaterialNumber{{i}}" required [ngClass]="{'m-input-warn':!item.MaterialNumber && isSubmit}"
+										 (blur)="getMateriel(i, item.MaterialNumber)">
+									</td>
+									<td [title]="item.MaterialDescription" [width]="tableConfig[1].width">{{ item.MaterialDescription }}</td>
+									<td [title]="item.Count" [width]="tableConfig[2].width">
+										<input type="text" [(ngModel)]="item.Count" only-number [onlyNumberSeveralDigits]="0" name="Count{{i}}" required [ngClass]="{'m-input-warn':!item.Count && isSubmit}"
+										 (ngModelChange)="countAmountSummary()">
+									</td>
+									<td [title]="item.InterTransPrice" [width]="tableConfig[3].width">
+										<input type="text" [(ngModel)]="item.InterTransPrice" only-number name="InterTransPrice{{i}}" required [ngClass]="{'m-input-warn':!item.InterTransPrice && isSubmit}"
+										 (ngModelChange)="countAmountSummary()">
+									</td>
+									<td [title]="item.StorageLocation" [width]="tableConfig[4].width">
+										<input type="text" [(ngModel)]="item.StorageLocation" name="StorageLocation{{i}}" conversionCase savePlace=4>
+									</td>
+									<td [title]="item.StorageLocationOut" [width]="tableConfig[5].width">
+										<input type="text" [(ngModel)]="item.StorageLocationOut" name="StorageLocationOut{{i}}" conversionCase savePlace=4>
+									</td>
+									<td [title]="item.Batch" [width]="tableConfig[6].width">
+										<input type="text" [(ngModel)]="item.Batch" name="Batch{{i}}" conversionCase savePlace=10>
+									</td>
+									<td [title]="item.BatchOut" [width]="tableConfig[7].width">
+										<input type="text" [(ngModel)]="item.BatchOut" name="BatchOut{{i}}" conversionCase savePlace=10>
+									</td>
+									<td [title]="item.IsStoreFor30">
+										<input icheck type="radio" [id]="'IsStoreFor30Yes' + i" [name]="'IsStoreFor30Item' + i" [attr.name]="'IsStoreFor30Item' + i" [(ngModel)]="item.IsStoreFor30" value="true">
+										<label [for]="'IsStoreFor30Yes' + i">是</label>
+										<input icheck type="radio" [id]="'IsStoreFor30No' + i" [name]="'IsStoreFor30Item' + i" [attr.name]="'IsStoreFor30Item' + i" [(ngModel)]="item.IsStoreFor30" value="false">
+										<label [for]="'IsStoreFor30No' + i">否</label>
+									</td>
+									<td [title]="item.IsCurrentMonthSale" [width]="tableConfig[9].width">
+										<input icheck type="radio" [id]="'IsCurrentMonthSaleYes' + i" [name]="'IsCurrentMonthSaleItem' + i" [attr.name]="'IsCurrentMonthSaleItem' + i" [(ngModel)]="item.IsCurrentMonthSale" value="true">
+										<label [for]="'IsCurrentMonthSaleYes' + i">是</label>
+										<input icheck type="radio" [id]="'IsCurrentMonthSaleNo' + i" [name]="'IsCurrentMonthSaleItem' + i" [attr.name]="'IsCurrentMonthSaleItem' + i" [(ngModel)]="item.IsCurrentMonthSale" value="false">
+										<label [for]="'IsCurrentMonthSaleNo' + i">否</label>
+									</td>
+									<td [title]="item.MainContractCode" (click)="openSalesAgreement(i)" [width]="tableConfig[10].width">{{ item.MainContractCode }}</td>
+									<td  style="width:40px">
+										<span class="delete-row" (click)="deleteRow(i)">-</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--附件-->
+				<div class="addApply-base money">
+					<div class="m-dialog-head">
+						<span class="m-dialog-head-change progress-txt">附件</span>
+					</div>
+					<div class="addApp-base-infor">
+						<ul class="addApp-base-list accessory-content">
+							<li>
+								<div class="addApp-form-item">
+									<label class="addApp-form-label">上传附件</label>
+									<div class="accessory-item">
+										<iq-file-upload upType="1" [url]="accessoryUrl" (onSuccess)="onUploadBack($event)" [maxFileSize] = "5242880" [maxFileNum]="10" [hasUploaded]="oldFileList"
+										 (onDeleteItem)="onDeleteItem($event)"></iq-file-upload>
+									</div>
+								</div>
+							</li>
+							<li class="file-tip-box">
+								<div class="addApp-form-item">
+									<label class="addApp-form-label"></label>
+									<div class="file-tip">
+										<span>上传不能超过10个文件，每个文件大小5M</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!--审批人信息-->
+				<div class="addApply-base money">
+					<div class="m-dialog-head">
+						<span class="m-dialog-head-change progress-txt">审批人信息</span>
+					</div>
+					<div class="addApp-base-infor">
+						<ul class="addApp-base-list accessory-content">
+					      <li>
+						    <div class="addApp-form-item">
+							  <span class="title">需货事业部</span>
+							    <!-- <ng-select class="addApp-form-input m-select-box" style="width: 220px;" [items]="ShowApproverList[0]" name="xhsyb" required ngModel [(ngModel)]="ShowUserSetting[0]" (selected)="getCurrentApprover($event,0)" placeholder="请选择">
+								</ng-select> -->
+							    <div class="m-select">
+							    <i class="iqon-xia"></i>
+							    <select class="wfApproveUser" name="xhsyb" [(ngModel)]="WFApproveUserJSON[0].UserSettings" required #xhsyb="ngModel" [ngClass]="{'m-input-warn': xhsyb.invalid && (xhsyb.touched || isSubmit)}">
+									<option value="">-请选择</option>
+									<option [value]="item.ITCode + '-' + item.UserName" *ngFor="let item of WFApproveUserJSON[0]?.ApproverList">{{ item.UserName }}</option>
+								</select>
+						       </div>
+				
+								<!-- <span class="m-p-warn procu-warn" *ngIf="xhsyb.invalid && (xhsyb.touched || isSubmit)">请选择需货事业部审批人</span> -->
+								<!-- <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow(WFApproveUserJSON[0]?.ApproverList,0)"><i class="iqon-add"></i>添加</div>
+								<div class="approver-node-content" *ngIf = "WFApproveUserJSON[0]?.IsOpened==1"> -->
+									<!-- <div *ngIf="WFApproveUserJSON[0]?.ApproverList&& WFApproveUserJSON[0]?.ApproverList.length>0">
+									  <div class="m-user-info" style="min-width: 150px;" *ngFor="let item of WFApproveUserJSON[0]?.ApproverList" user-image [user]="item"></div>
+									</div> -->
+									<!-- <div *ngIf="wfApproveUserArray[this.nodeItemIndex]?.UserSettings&& wfApproveUserArray[this.nodeItemIndex]?.UserSettings.length>0">
+									  <div class="m-user-info" style="min-width: 150px;" *ngFor="let item of wfApproveUserArray[this.nodeItemIndex]?.UserSettings" user-image [user]="item"></div>
+									</div> -->
+							   <!-- </div> -->
+								<!-- <span class="m-p-warn procu-warn" *ngIf="xhsyb.invalid && (xhsyb.touched || isSubmit)">请选择需货事业部审批人</span> -->
+							</div>
+							</li>
+						
+							<li>
+							  <div class="addApp-form-item">
+								<span class="title">供货事业部</span>
+								<!-- <ng-select class="addApp-form-input m-select-box" style="width: 220px;" [items]="ShowApproverList[1]" name="ghsyb" required ngModel [(ngModel)]="ShowUserSetting[1]" (selected)="getCurrentApprover($event,1)">
+								</ng-select> -->
+							    <div class="m-select">
+								 <i class="iqon-xia"></i>
+								  <select class="wfApproveUser" name="ghsyb" [(ngModel)]="WFApproveUserJSON[1].UserSettings" required #ghsyb="ngModel" [ngClass]="{'m-input-warn': ghsyb.invalid && (ghsyb.touched || isSubmit)}">
+									<option value="">-请选择</option>
+									<option [value]="item.ITCode + '-' + item.UserName" *ngFor="let item of WFApproveUserJSON[1]?.ApproverList">{{ item.UserName }}</option>
+								  </select>
+								</div>
+								<!-- <span class="m-p-warn procu-warn" *ngIf="ghsyb.invalid && (ghsyb.touched || isSubmit)">请选择供货事业部审批人</span> -->
+								<!-- <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow(WFApproveUserJSON[1]?.ApproverList,1)"><i class="iqon-add"></i>添加</div> -->
+							  </div>
+							</li>
+							<li>
+								<span class="title">采购员</span>
+								<div style="display: inline-block;width: 86%;vertical-align: middle;">
+									<div *ngFor="let item of buyers" class="user-info-container">
+										<div class="m-user-info" user-image [hasClose]="false" [user]="item"></div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<span class="title">内部交易价维护人</span>
+								<div class="accessory-user-container">
+									<iq-person-select name="InsiderTraderName" required [(ngModel)]="formData.InsiderTraderName.value" [max]="1"></iq-person-select>
+								</div>
+							</li>
+							<li>
+						      <div class="addApp-form-item">
+								<span class="title">物流中心统计岗</span>
+								<!-- <ng-select class="addApp-form-input m-select-box" style="width: 220px;" [items]="ShowApproverList[5]" name="wlzxtjg" required ngModel [(ngModel)]="ShowUserSetting[5]" (selected)="getCurrentApprover($event,5)">
+								</ng-select> -->
+								<div class="m-select">
+								 <i class="iqon-xia"></i>
+								  <select class="wfApproveUser" name="wlzxtjg" [(ngModel)]="WFApproveUserJSON[5].UserSettings" required #wlzxtjg="ngModel" [ngClass]="{'m-input-warn': wlzxtjg.invalid && (wlzxtjg.touched || isSubmit)}">
+								    <option value="">-请选择</option>
+									<option [value]="item.ITCode + '-' + item.UserName" *ngFor="let item of WFApproveUserJSON[5]?.ApproverList">{{ item.UserName }}</option>
+								  </select>
+								</div>
+								<!-- <span class="m-p-warn procu-warn" *ngIf="wlzxtjg.invalid && (wlzxtjg.touched || isSubmit)">请选择物流中心统计岗审批人</span> -->
+								<!-- <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow(WFApproveUserJSON[5]?.ApproverList,5)"><i class="iqon-add"></i>添加</div> -->
+							  </div>
+							</li>
+							<li>
+							  <div class="addApp-form-item">
+								<span class="title">物流收获岗</span>
+								<!-- <ng-select class="addApp-form-input m-select-box" style="width: 220px;" [items]="ShowApproverList[6]" name="wlshg" required ngModel [(ngModel)]="ShowUserSetting[6]" (selected)="getCurrentApprover($event,6)">
+								</ng-select> -->
+								<div class="m-select">
+								 <i class="iqon-xia"></i>
+								  <select class="wfApproveUser" name="wlshg" [(ngModel)]="WFApproveUserJSON[6].UserSettings" required #wlshg="ngModel" [ngClass]="{'m-input-warn': wlshg.invalid && (wlshg.touched || isSubmit)}">
+								   <option value="">-请选择</option>
+								   <option [value]="item.ITCode + '-' + item.UserName" *ngFor="let item of WFApproveUserJSON[6]?.ApproverList">{{ item.UserName }}</option>
+								  </select>
+							    </div>
+								<!-- <span class="m-p-warn procu-warn" *ngIf="wlshg.invalid && (wlshg.touched || isSubmit)">请选择物流收货岗审批人</span>
+								<div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow(WFApproveUserJSON[6]?.ApproverList,6)"><i class="iqon-add"></i>添加</div> -->
+							  </div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="addApp-submit-btn">
+				<div class="addApp-sub-btns">
+					<button class="m-btn-confirm" type="button" (click)="saveDatas('提交')">提交</button>
+					<button class="m-btn-more-big" type="button" (click)="saveDatas('草稿')">暂存</button>
+					<a (click)="backToMyApply()"><button class="m-btn-addAppback">取消</button></a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<modal #modal>
+	<modal-header class="modal-header-copy">
+		<span>选择合同信息</span>
+		<span class="pull-right" (click)="modal.close()">&times;</span>
+	</modal-header>
+	<modal-body>
+		<div class="search-row">
+			<div class="m-search-approval-query">
+				<div class="item">
+					<div class="title">销售员</div>
+					<div class="inputs">
+						<input type="text" [(ngModel)]="searchData.SalesPerson" name="Saler">
+					</div>
+				</div>
+				<div class="item">
+					<div class="title">项目名称</div>
+					<div class="inputs">
+						<input type="text" [(ngModel)]="searchData.ProjectName" name="ProjectName">
+					</div>
+				</div>
+				<div class="item">
+					<div class="title">客户名称</div>
+					<div class="inputs">
+						<input type="text" [(ngModel)]="searchData.BuyerName" name="BuyerName">
+					</div>
+				</div>
+				<div class="item">
+					<div class="title">PO号</div>
+					<div class="inputs">
+						<input type="text" [(ngModel)]="searchData.PO" name="PO">
+					</div>
+				</div>
+			</div>
+			<div class="m-search-approval-btn">
+				<button class="m-btn-confirm" (click)="searchApplyContracts()">查询</button>
+				<button class="m-btn-cancel" (click)="resetSearch()">重置</button>
+			</div>
+		</div>
+		
+		<div style="padding:0 2%;">
+			<div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'hideStyle': isDisplay}">
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">暂无相关数据</p>
+                    <p class="m-p-notice">点击“新建项目”新建数据吧~</p>
+                </div>
+            </div>
+            <div [ngClass]="{'hideStyle': !isDisplay}">
+				<table class="table table-list table-hover">
+					<thead>
+						<tr>
+							<th *ngFor="let item of salingTable" [width]="item.width">
+								{{ item.title }}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let item of salesDatas;index as i " (click)="chooseSales(item.MainContractCode)">
+							<td [title]="item.ProjectName">
+								{{ item.ProjectName }}
+							</td>
+							<td [title]="item.MainContractCode">
+								{{ item.MainContractCode }}
+							</td>
+							<td [title]="item.BuyerName">{{ item.BuyerName }}</td>
+							<td [title]="item.SalesName">{{ item.SalesName }}</td>
+							<td [title]="item.ContractMoney">{{ item.ContractMoney }}</td>
+							<td [title]="item.SC_Status">{{ item.SC_Status }}</td>
+							<td [title]="item.CreateTime">{{ item.CreateTime }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</modal-body>
+	<modal-footer>
+		<div class="page">
+			<iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+		</div>
+	</modal-footer>
+</modal>

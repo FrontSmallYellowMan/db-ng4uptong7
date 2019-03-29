@@ -1,0 +1,58 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+.g-hdp .g-list .m-usertree>li{
+  &.active::before{
+    height: 55px;
+  }
+
+  >a{
+    display: block;
+    height: 55px;
+    line-height: 55px;
+    font-size: 14px;
+
+    >i{
+      margin-right: 20px;
+      font-size: 20px;
+      vertical-align: middle;
+      color: $def-main-color;
+    }
+    .iqon-moveto-service{
+      display: inline-block;
+      transform: rotateY(180deg);
+    }
+    .iqon-myplates-alter{
+      display: inline-block;
+      transform: rotateX(180deg);
+    }
+  }
+}
+
+.m-search {
+    width: 100%;
+    line-height: 50px;
+    padding-left: 20px;
+    background: #f5f8fb none repeat scroll 0 0;
+    div{
+        float: left;
+    }
+    .m-search-2 {
+        // margin-right: 40px;
+        width: 250px;
+        position: relative;
+        // padding-top: 15px;
+        .iqon-query {
+        top: 10px !important;
+        // line-height: 25px;
+        }
+        input {
+            height: 30px;
+        }
+    }
+}
+.table-auto-content{
+  margin: 15px 20px;
+  table{
+    background-color: white;
+  }
+}

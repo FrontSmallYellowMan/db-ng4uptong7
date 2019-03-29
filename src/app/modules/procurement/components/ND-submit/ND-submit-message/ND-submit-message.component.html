@@ -1,0 +1,119 @@
+<form #NDOrderForm="ngForm">
+    <ul class="addApp-base-list">
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">模板名称</label>
+                <iq-select class="iqSelect" [(ngModel)]="TemplateName" name="TemplateName" ngModel [showIndex]="templateShowIndex" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                listApi="PurchaseManage/GetMyTemplate" (onSelect)="getTemplate($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent',SYB:bizdivision}"></iq-select>
+            </div>
+        </li>
+    </ul>
+    <ul class="addApp-base-list" style="margin-top:0">
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>我方主体</label>
+                <iq-select class="iqSelect" required name="company" ngModel [(ngModel)]="NDOrderMessage.CompanyName" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                listApi="InitData/GetPageDataCompany" (onSelect)="CompanyChange($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.CompanyName && isSubmit" >请选择我方主体</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>工厂</label>
+                <input class="addApp-form-input" maxlength="4" required name="factory" ngModel type="text" [attr.placeHolder]="factoryPlaceStr"
+                 [(ngModel)]=NDOrderMessage.FactoryCode (blur)="factoryCheck(NDOrderMessage.FactoryCode)">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.FactoryCode && isSubmit" >请填写工厂</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>供应商</label>
+                <iq-select class="iqSelect" required name="vendor" ngModel [(ngModel)]="NDOrderMessage.Vendor" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                [enterShowList]="false" (onSelect)="VendorChange($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择" [disabled]="!NDOrderMessage.CompanyCode"
+                [queryParams]="{queryStr:'querycontent',companycode:NDOrderMessage.CompanyCode}"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.Vendor && isSubmit" >请选择供应商</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>税率</label>
+                <ng-select class="addApp-form-input m-select-box" required name="taxrate" ngModel [items]="selectInfo.taxrate" placeholder="请选择"
+                     [disabled]="taxrateDisabled" (selected)="getTaxrate($event)" [(ngModel)]=activeTaxrate></ng-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.RateCode && isSubmit" >请选择税率</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>币种</label>
+                <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.currency" required name="currency" ngModel (selected)="getCurrency($event)"
+                 placeholder="请选择" [active]=avtiveCurrency [(ngModel)]=avtiveCurrency></ng-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.CurrencyCode && isSubmit" >请选择币种</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>运输方式</label>
+                <input class="addApp-form-input" type="text" name="TransportMode" [(ngModel)]=NDOrderMessage.TransportMode
+                 [onlyCharBlank]="NDOrderMessage.TransportMode" required placeholder="如：BY AIR FROM USA TO BEIJING" (blur)="sendData()">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.TransportMode && isSubmit">请填写运输方式</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>预计销售时间</label>
+                <my-datepicker class="addApp-form-input addApp-form-time" [(ngModel)]="NDOrderMessage.PlanSaleTime" required format="YYYY-MM-DD" name="PlanSaleTime" PlaceHolder="-请选择日期"
+                 ngModel (ngModelChange)="sendData()" [StartDate]="presellStartDate"></my-datepicker>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.PlanSaleTime && isSubmit" >请选择预计销售时间</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips"></i>收货人</label>
+                <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.deliveryPeople" name="receiver" ngModel (selected)="getReceiverPeople($event)"
+                    placeholder="请选择" [active]="avtiveDeliveryPeople" [(ngModel)]="avtiveDeliveryPeople"></ng-select>    
+            </div>
+            <!-- <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.DeliveryPeople && isSubmit">请填写收货人</p> -->
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>需求跟踪号</label>
+                <input class="addApp-form-input" type="text" name="tracenoF" maxlength=10 pattern="^[A-Za-z0-9]+$" [(ngModel)]=NDOrderMessage.TrackingNumber
+                    required (blur)="sendtraceno(NDOrderMessage.TrackingNumber)">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.TrackingNumber && isSubmit">请填写需求跟踪号</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>付款条款</label>
+                <iq-select class="iqSelect" name="paymentterms" ngModel [(ngModel)]="NDOrderMessage.paymentterms" [showIndex]="paymentShowIndex"
+                required [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}" listApi="vendor/paymentclause"
+                    placeHolder="-请选择" [queryParams]="{queryStr:'SearchTxt'}" (onSelect)="getPaymenttermsAndCode($event)"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!NDOrderMessage.paymentterms && isSubmit" >请选择付款条款</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">折扣系数</label>
+                <input class="addApp-form-input" type="text" name="Discount" [onlyZeroDecimal]="NDOrderMessage.Discount"
+                    [(ngModel)]=NDOrderMessage.Discount (blur)="sendData()">
+            </div>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>折扣前合计金额</label>
+                <span class="padSpan">{{NDOrderMessage.PreDiscountAmount | number:"1.2"}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>折扣后合计金额</label>
+                <span class="padSpan">{{NDOrderMessage.AfterDiscountAmount | number:"1.2"}}</span>
+            </div>
+        </li>
+    </ul>
+</form>

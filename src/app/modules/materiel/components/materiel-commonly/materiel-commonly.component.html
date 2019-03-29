@@ -1,0 +1,152 @@
+<!--<div class="m-home-pageR clearfix" >-->
+            <!--菜单-->
+            <div class="m-boardtop clearfix">
+                <!--面包屑组件-->
+                <iq-breadcrumb></iq-breadcrumb>
+                
+                <div class="m-dropdown g-fr">
+                    <button class="m-btn-success" (click)="addData()"><i class="iqon-add"></i>新建一般物料</button>
+                </div>
+                <!-- <iq-newcreat [dataCreat]=dataCreat></iq-newcreat> -->
+            </div>
+            
+            
+
+            <!--功能区-->
+            <div class="m-overclass">
+              <div class="m-contclass">
+                <form #form="ngForm" class="m-list-menu">
+
+                  <div class="m-commonly">
+
+                    <div class="m-commonly-up">
+
+                      <div class="m-commonly-item">
+                        <div class="m-commonly-title">物料ERP编号</div>
+                        <div class="m-commonly-input">
+                          <input type="text" placeholder="-请填写物料ERP编号" [(ngModel)]="reqSearchData.MaterialERPCode" name="MaterialERPCode">
+                        </div>
+                        <!-- <p class="m-p-warn" *ngIf="MaterialERPCode.invalid && (MaterialERPCode.touched||isSearch)">请填写物料ERP编号</p> 错误提示，需要时取消注释-->
+                      </div>
+
+                      <div class="m-commonly-item">
+                        <div class="m-commonly-title">供应商SAP编号</div>
+                        <div class="m-commonly-input">
+                          <input [(ngModel)]="reqSearchData.SupplierCodeSAP" type="text" placeholder="-请填写供应商SAP编号"  name="SupplierCodeSAP" >
+                        </div>
+                        <!-- <p class="m-p-warn" *ngIf="SupplierCodeSAP.invalid && (SupplierCodeSAP.touched||isSearch)">请选择供应商SAP编号</p> 错误提示，需要时取消注释-->
+                      </div>
+
+                      <div class="m-commonly-item">
+                        <div class="m-commonly-title">申请人</div>
+                        <div class="m-commonly-input m-commonly-input-width">
+                          <input type="text" placeholder="-请填写申请人" [(ngModel)]="reqSearchData.ApplyName" name="ApplyName">
+                        </div>
+                        <!-- <p class="m-p-warn" *ngIf="ApplyName.invalid && (ApplyName.touched||isSearch)">请填写申请人</p> 错误提示，需要时取消注释-->
+                      </div>
+
+                    </div>
+
+                    <div class="m-commonly-down">
+
+                      <div class="m-commonly-item">
+                        <div class="m-commonly-dataTitle">时间范围</div>
+                        <div class="m-commonly-dataComponent">
+                          <my-datepicker [(ngModel)]="reqSearchData.BeginDate" format="YYYY-MM-DD" [EndDate]="reqSearchData.EndDate"  PlaceHolder="-请选择日期" name="mDateStart"></my-datepicker>
+                        </div>
+                        
+                        <div class="m-commonly-dataTitle-line">~</div>
+                      
+                        <div class="m-commonly-dataComponent">
+                          <my-datepicker [(ngModel)]="reqSearchData.EndDate" format="YYYY-MM-DD" [StartDate]="reqSearchData.BeginDate" PlaceHolder="-请选择日期" name="mDateEnd"></my-datepicker>
+                        </div>
+                        <!-- <div class="m-date-err">
+                          <p class="m-p-warn m-commonly-p m-date-position-left" *ngIf="mDateStart.invalid&&(mDateStart.touched||isSearch)">请选择开始日期</p>                 
+                          <p class="m-p-warn m-commonly-p m-date-position-right" *ngIf="mDateEnd.invalid&&(mDateEnd.touched||isSearch)">请选择结束日期</p>
+                        </div>   日期起错误提示，需要时取消注释                    -->
+                      </div>
+
+                      <div class="m-commonly-button">
+                        <button class="m-btn-confirm" (click)="search()">搜索</button>
+                        <button class="m-btn-default m-btn-def" (click)="searchReset()">重置</button>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </form>
+
+
+              
+
+                <!-- 物料数据缺省 -->
+                <div class="m-noresult m-commonly-noresult m-apply" [ngClass]="{'isHide':isSearchResult}">
+                  <div class="m-noresult-msg">
+                      <i class="iqon-query"></i>
+                      <p class="m-noresult-notice">暂无相关数据</p>
+                      <p class="m-p-notice">点击“新建一般物料”建立相关数据吧~</p>
+                  </div>
+                </div>
+
+                <!--搜索后显示的版面-->
+                <div class="m-card-cont m-commonly-list" [ngClass]="{'isHide':!isSearchResult}" style="backgroud-color:#fff">
+                    <div class="table-auto-content">
+                      <loading [show]="loading"></loading>
+                      <table class="table table-hover table-list">
+                      <thead>
+                        <tr>
+                          <th >
+                            <input allcheck="demoall" [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onClick)="changeWidth()" (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox" name="">
+                          </th>
+
+                          <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                            <th>序号</th>
+                            <th>物料编号</th>
+                            <th>物料描述(中文)</th>
+                            <th>物料描述(英文)</th>
+                            <th>物料类型</th>
+                            <th>供应商sap编号</th>
+                            <th>申请人</th>
+                            <th>申请日期</th>
+                            <th>申请状态</th>
+                            <th>扩展状态</th>
+                            <th>操作</th>
+                          </ng-container>
+                          <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                            <th class="list-edit" colspan="10">已选{{checkedNum}}项<button type="button" (click)="deleteList(searchList)">删除</button></th>
+                          </ng-container>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <tr *ngFor="let list of searchList;let i=index">
+                          <td stopParentClick>
+                            <input [(ngModel)]="list.checked" [disabled]="list.InfoStatus==1" allcheckChild="demoall" icheck type="checkbox" name="">
+                          </td>
+                          <td>{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+                          <td><span (click)="editMateriel(list.MaterialRecordID,list.InfoStatus)" class="clickText">{{list.MaterialERPCode?list.MaterialERPCode:'点击查看'}}</span></td>
+                          <td title={{list.MaterialDescription}}>{{list.MaterialDescription}}</td>
+                          <td title={{list.MaterialDescriptionEN}}>{{list.MaterialDescriptionEN}}</td>
+                          <td>{{list.MaterialTypeName}}</td>
+                          <td>{{list.SupplierCodeSAP}}</td>
+                          <td>{{list.ApplyName}}</td>
+                          <td>{{list.ApplyTime|iqDate:"YYYY-MM-DD"}}</td>
+                          <td>{{list.InfoStatus|applyStatus}}</td>
+                          <td>{{list.ExtensionState|applyStatus:"extend"}}</td>
+                          <!-- <td stopParentClick><button class="m-button-style" [ngClass]="{'m-button-unExtend':list.ExtensionState==='2'||list.ExtensionState==='3'||list.MaterialERPCode===null}" (click)="extendMateriel(list.MaterialRecordID,list.MaterialERPCode)" [disabled]="list.ExtensionState==='2'||list.ExtensionState==='3'||list.MaterialERPCode===null">扩展</button></td> -->
+                          <td stopParentClick><button class="m-button-style" [ngClass]="{'m-button-unExtend':list.ExtensionState==='2'||list.ExtensionState==='3'||!list.MaterialERPCode}" (click)="extendMateriel(list.MaterialRecordID,list.MaterialERPCode)" [disabled]="list.ExtensionState==='2'||list.ExtensionState==='3'||!list.MaterialERPCode">扩展</button></td>
+                          
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    </div>
+                    
+                    <div class="page">
+                        <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+                    </div>
+                </div>
+              </div> 
+            </div>

@@ -1,0 +1,131 @@
+// 所有 销售信息
+.sell-con{
+    padding:0 25px;
+    /deep/ .popovers i {
+        top: 0px;
+        left: -35%;
+    }
+    .m-center{
+        text-align: center;
+        span{
+            padding-right:10px; 
+        }
+        .mid-h{
+            vertical-align: middle;
+            transition:300ms;
+            font-size: 15px;
+        }
+    }
+    .trans180{
+        display: inline-block;
+        transform:rotate(180deg);
+        -ms-transform:rotate(180deg); /* Internet Explorer */
+        -moz-transform:rotate(180deg); /* Firefox */  
+        transition:300ms;
+    }
+    .trans360{
+        display: inline-block;
+        transform:rotate(360deg);
+        -ms-transform:rotate(360deg); /* Internet Explorer */
+        -moz-transform:rotate(360deg); /* Firefox */  
+        transition:300ms;
+    }
+    .addApp-base-list{
+        .addApp-form-item{
+            
+            .padSpan{
+                padding-left: 15px;
+                font-size: 12px;
+                line-height: 2.67;
+            }
+        }
+    }
+    .m-tab-con{
+        padding: 15px 20px;
+        border-radius: 5px;
+        border-top-left-radius: 0px;
+        background-color: #f5f7fa;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+        .bgcf{
+            background-color: #fff!important;
+            tbody{
+                width: calc(100% + 1px);
+                padding-bottom: 1px;
+            }
+            th,td{
+                // height: 30px;
+                background-color: #fff;
+                line-height: 30px;
+                padding: 0 8px;
+            }
+        }
+        .colorA{
+            color: #57b9f8;
+        }
+    }
+}
+.sell-con .addApp-base-list .addApp-form-item .addApp-form-label{
+    width: 120px;
+}
+.col-md-6{
+    padding: 0!important;
+    margin: 0!important;
+    .addApp-form-label{
+        width: 30%!important;
+    }
+}
+
+.col-md-10{
+    line-height: 34px;
+    margin: 0 0 10px!important;
+    // margin-top: -35px\0!important;
+    .addApp-form-label{
+        width: 29%!important;
+    }
+}
+.addApp-base-list{
+    padding: 0!important;
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: space-between;
+    .addApp-form-input{
+        width:67.5%!important;
+        margin-left: 15px!important;
+    }
+}
+.dis-wid{
+    display: inline-block;
+    width: auto;
+    // white-space:nowrap; 
+    // overflow:hidden; 
+    // text-overflow:ellipsis;
+}
+@media (min-width: 992px){
+    .col-md-10{
+        width: 83.33333333%!important;
+        .addApp-form-label{
+            width: 16.5%!important;
+        }
+    }
+    
+}
+.addApp-ch-before table tbody {
+    overflow-y:auto;
+}
+.w100{
+    width: 100%;
+}
+.w141{
+    width: 146px;
+    width:157px\0;
+}
+.addApp-ch-before{
+    margin: 0!important;
+}
+
+.col-md-a{
+    // margin-left: -49.9%\0!important;
+}
+.cursor-po {
+    cursor:pointer;
+}

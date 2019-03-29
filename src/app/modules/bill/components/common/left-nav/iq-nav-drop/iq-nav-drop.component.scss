@@ -1,0 +1,86 @@
+// // component css goes here
+// .sidebar {
+//     position: fixed;
+//     top: 60px;
+//     z-index: 1;
+//     display: inline !important;
+//     width: 200px;
+//     height: 100%;
+//     padding: 0;
+//     color: #fff;
+//     background: #fff;
+//     .sidebar-nav{
+//       height: calc(100vh - 55px);
+//       position: relative;
+//       overflow-x: hidden;
+//       overflow-y: auto;
+//     }
+//     ul.nav{
+//       width: 200px;
+//       padding-left: 0;
+//       margin-bottom: 0;
+//       list-style: none;
+//       li.nav-item{
+//         position: relative;
+//         margin: 0;
+//         transition: background .3s ease-in-out;
+//         &.iq-nav-dropdown{
+//           &.open{
+//             ul{
+//               max-height: 1000px;
+//             }
+//           }
+//         }
+//         a.nav-link{
+//           display: block;
+//           padding: 0.75rem 1rem;
+//           clear: #fff;
+//           text-decoration: none;
+//           background: transparent;
+//           &.iq-nav-dropdown-toggle{
+//             &:before{
+//               position: absolute;
+//               top: 0.96875rem;
+//               right: 1rem;
+//               display: block;
+//               width: 0.875rem;
+//               height: 0.875rem;
+//               padding: 0;
+//               font-size: 0.875rem;
+//               line-height: 0.65625rem;
+//               text-align: center;
+//               content: "\2039";
+//               transition: .3s;
+//             }
+//           }
+//           &.active{
+//             color: #fff;
+//             background: #304047;
+//           }
+//           &:hover{
+//             color: #fff;
+//             background: #20a8d8 !important;
+//           }
+//           i{
+//             width: 20px;
+//             margin: 0 0.5rem 0 0;
+//             font-size: 14px;
+//             color: #b0bec5;
+//             text-align: center;
+//           }
+//           [class^="icon-"]{
+//             display: inline-block;
+//             margin-top: -4px;
+//             vertical-align: middle;
+//           }
+//         }
+//         ul{
+//           max-height: 0;
+//           padding: 0;
+//           margin: 0;
+//           overflow-y: hidden;
+//           transition: max-height .3s ease-in-out;
+//         }
+//       }
+//     }
+// }

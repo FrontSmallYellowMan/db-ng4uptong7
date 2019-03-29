@@ -1,0 +1,30 @@
+/* 用户导航 */
+
+.m-usertab{
+  @extend %clearfix;
+  width: 246px;
+  border-bottom: 1px solid $def-link1-color;
+
+  .m-usernav{
+    float:left;
+    width: 50%;
+    text-align: center;
+
+    >span{
+      display:inline-block;
+      position: relative;
+      padding:0 10px;
+      height:43px;
+      line-height: 43px;
+      color: #9196a0;
+      cursor: pointer;
+
+      &.active{
+        color: $def-font1-color;
+        border-bottom: 3px solid #63b9f0;
+      }
+    }
+
+  }
+
+}

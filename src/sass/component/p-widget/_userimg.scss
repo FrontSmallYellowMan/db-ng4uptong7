@@ -1,0 +1,21 @@
+/* 用户图片 */
+
+.m-userimg{
+
+  >img{
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .m-usermsg{
+    display: inline-block;
+    vertical-align: middle;
+
+    .m-userinfo{
+      color: #85868c;
+    }
+  }
+
+}

@@ -1,0 +1,117 @@
+<div class="m-boardtop clearfix">
+	<!--iq-breadcrumb></iq-breadcrumb-->
+	<div class="m-crumb">
+		<ul>我的位置：
+			<li><a>DCG业务管理平台</a></li>
+			<li><a>借用管理</a></li>
+			<li><a>借用跟踪</a></li>
+			<li><a>借用转移查询</a></li>
+		</ul>
+	</div>
+	<button class="m-btn-2 g-fr" style="margin-top: 7px;background-color: #57b9f8;" (click)="tranSferExcelfile()">Excel导出</button>
+
+
+</div>
+<div class="m-overclass">
+
+	<!--搜索条件-->
+	<div class="m-list-menu" style="background-color: #f5f7fa;">
+		<div class="m-table m-table1">
+			<table cellpadding="0" cellspacing="0" width="100%" style="line-height: 45px;text-align: center;">
+				<tr>
+					<td> <label>原预留号</label></td>
+					<td><input type="text" placeholder="-请输入原预留号" [(ngModel)]="query.oldYLH" name="oldYLH"></td>
+					<td> <label>新预留号</label></td>
+					<td><input type="text" placeholder="-请输入新预留号" [(ngModel)]="query.newYLH" name="newYLH"></td>
+					<td> <label>转移人</label></td>
+					<td><input type="text" placeholder="-请输入转移人" [(ngModel)]="query.applyPersonItcode" name="applyPersonItcode"></td>
+
+				</tr>
+				<tr>
+				<td> <label>申请日期</label></td>
+					<td width="25%">
+						<table width="100%">
+							<tr>
+								<td>
+									<my-datepicker [(ngModel)]="query.staDate" format="YYYY-MM-DD" PlaceHolder="-请选择日期" name="staDate"></my-datepicker>
+								</td>
+								<td>~</td>
+								<td>
+									<my-datepicker [(ngModel)]="query.endDate" PlaceHolder="-请选择日期" format="YYYY-MM-DD" name="endDate"></my-datepicker>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td> <label>接收人</label></td>
+					<td>
+						<input type="text" placeholder="-请输入接收人" [(ngModel)]="query.trsfPersonItcode" name="trsfPersonItcode">
+					</td>
+					<td> <label>审批状态</label></td>
+					<td> <select style="width: 100%;" class="form-control borrowSelect" [(ngModel)]="query.flowStatus" name="flowStatus">
+                            <option value="" selected>全部</option>
+                            <option *ngFor="let item1 of flowStatuslist" [value]="item1.code">{{item1.name}}</option>
+                        </select></td>
+					
+
+				</tr>
+
+
+			</table>
+		
+		<div class="m-scan-item btn-right">
+			<button class="m-btn-cancel btn-blue" (click)="search(0)">搜索</button>
+			<button class="m-btn-cancel" (click)="clearSearch()">重置</button>
+		</div>
+
+</div>
+	</div>
+
+
+
+
+	<div class="m-scan-result">
+		<!--搜索结果缺省页开始-->
+		<div class="m-noresult" [ngClass]="{'hide':borrowTransferApplyList && borrowTransferApplyList.length > 0}">
+			<loading [show]="loading"></loading>
+			<div class="m-noresult-msg">
+				<i class="iqon-query"></i>
+				<p class="m-noresult-notice">
+					很抱歉，没有找到有关的信息
+				</p>
+				<p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+			</div>
+		</div>
+		<!--搜索结果缺省页结束-->
+		<div class="m-card-cont" [ngClass]="{'hide':borrowTransferApplyList && borrowTransferApplyList.length == 0}">
+			<loading [show]="loading"></loading>
+			<table class="table table-hover table-list" style="table-layout: fixed;">
+				<thead>
+					<tr>
+
+						<th>申请单号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='approvalSort()'></i></th>
+						<th>子申请单号</th>
+						<th>原申请人</th>
+						<th>现申请人</th>
+						<th>当前环节</th>
+						<th>当前处理人</th>
+						<th>申请日期<i class="iqon-order" (click)='approvalSort()'></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor='let item of borrowTransferApplyList'>
+						<td (click)="goDetail(item.id,query.flowStatus)" title="{{item.brwTransId}}">{{item.brwTransId}}</td>
+						<td (click)="goDetail(item.id,query.flowStatus)" title="{{item.brwSubTransId}}">{{item.brwSubTransId}}</td>
+						<td (click)="goDetail(item.id,query.flowStatus)">{{item.oPersonName}}</td>
+						<td (click)="goDetail(item.id,query.flowStatus)">{{item.nPersonName}}</td>
+						<td (click)="goDetail(item.id,query.flowStatus)">{{item.flowCurrNodeName}}</td>
+						<td (click)="goDetail(item.id,query.flowStatus)">{{item.currApprAuthors}}</td>
+
+						<td (click)="goDetail(item.id,query.flowStatus)">{{item.applyDate|iqDate:'YYYY-MM-DD'}}</td>
+						<!--<td><span [routerLink]="['/borrow/tracking/tracking-edit',{itemid:item.id}]">编辑</span></td>-->
+					</tr>
+				</tbody>
+			</table>
+			<iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+		</div>
+	</div>
+</div>

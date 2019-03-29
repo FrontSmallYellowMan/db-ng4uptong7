@@ -1,0 +1,279 @@
+<div>
+  <loading [show]="submiting"></loading>
+  <div class="apply-progress">
+    <div class="apply-p-left addApply-container">
+      <h1 class="apply-tit-h1">查看NB采购订单</h1>
+      <!-- 基础信息 -->
+      <div class="apply-p-base clearfix apply-p-infor">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">基础信息</span>
+        </div>
+        <div class="m-exm-item">
+          <ul>
+            <li class="m-exm-half">
+              <div class="m-exm-label">申请人</div>
+              <div class="m-exm-cont">
+                <div class="m-user-info-small">
+                  <span class="m-user-name">{{NBOrderData.ApplicantName}}</span>
+                  <span class="m-user-ename">{{NBOrderData.ApplicantItCode}}</span>
+                </div>
+              </div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">申请日期</div>
+              <div class="m-exm-cont">{{NBOrderData.AddTime | iqDate:'YYYY-MM-DD'}}</div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">电话</div>
+              <div class="m-exm-cont">{{NBOrderData.Telephone}}</div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">本部</div>
+              <div class="m-exm-cont">{{NBOrderData.BBMC}}</div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">事业部</div>
+              <div class="m-exm-cont">{{NBOrderData.SYBMC}}</div>
+            </li>
+            <li class="m-exm-half">
+              <div class="m-exm-label">平台</div>
+              <div class="m-exm-cont">{{NBOrderData.Platform}}</div>
+            </li>
+            <li class="m-exm-half" *ngIf="NBOrderData.ERPOrderNumber">
+              <div class="m-exm-label">采购订单号</div>
+              <div class="m-exm-cont">{{NBOrderData.ERPOrderNumber}}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 采购信息 -->
+      <div class="apply-p-base mt15 clearfix">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">采购信息</span>
+          <span class="m-dialog-head-change progress-txt supplier-tip" *ngIf="NBOrderData.VendorTrace==-1" >
+            该采购订单供应商已过期，请事业部及时续签
+          </span>
+        </div>
+        <div class="apply-p-infor">
+          <div class="m-exm-item">
+            <ul>
+              <li class="m-exm-half" style="width:100%" *ngIf="NBOrderData.TemplateID">
+                <div class="m-exm-label">模板名称</div>
+                <div class="m-exm-cont">{{TemplateName}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">我方主体</div>
+                <div class="m-exm-cont">{{NBOrderData.CompanyName}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">工厂</div>
+                <div class="m-exm-cont">{{NBOrderData.FactoryCode}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">供应商</div>
+                <div class="m-exm-cont">{{NBOrderData.Vendor}}</div>
+              </li>
+              <li class="m-exm-half" *ngIf="isTenStart">
+                <div class="m-exm-label">对方业务范围</div>
+                <div class="m-exm-cont">{{NBOrderData.BusinessRange}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">税率</div>
+                <div class="m-exm-cont">{{NBOrderData.RateName}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">币种</div>
+                <div class="m-exm-cont">{{NBOrderData.Currency}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">需求跟踪号</div>
+                <div class="m-exm-cont">{{NBOrderData.TrackingNumber}}</div>
+              </li>
+              <li class="m-exm-half" *ngIf="NBOrderData.paymenttermscode" >
+                <div class="m-exm-label">付款条款</div>
+                <div class="m-exm-cont">{{NBOrderData.paymentterms}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="apply-finance-infor clearfix" style="margin-top: 10px" *ngIf="saleContractState?.length>0">
+        <saleContractState [changeSaleContractState]='saleContractState'></saleContractState>
+      </div>
+
+      <!--采购清单 -->
+      <div class="apply-finance-infor clearfix" style="margin-top: 10px">
+        <div class="m-dialog-head clearfloat">
+          <span class="m-dialog-head-change progress-txt">采购清单</span>
+          <i class="iqon-fold" (click)="procurementListShow=!procurementListShow"></i>
+        </div>
+        <div *ngIf="procurementListShow">
+          <div class="btn-content">
+            <div class="right">
+              <button class="m-btn-confirm min-btn" (click)="showOrder()">查看采购订单</button>
+            </div>
+          </div>
+          <div class="apply-finance-l">
+            <table class="m-info-table" style="width:100%;table-layout:fixed">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td width="20%"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td width="10%" *ngIf="NBType!='directNB'"></td>
+                </tr>
+                <tr class="m-infor-tr">
+                  <th [attr.colspan]="clospanNum" class="m-text-center change">
+                    <span class="col-md-3">物料数量合计 {{procurementListPrice.numAmount}}</span>
+                    <span class="col-md-3" *ngIf="!ISRMB">外币总金额 {{NBOrderData.PurchaseForeignAmount | number:"1.2"}}</span>
+                    <span class="col-md-3">未税总金额 {{NBOrderData.PruchaseAmount | number:"1.2"}}</span>
+                    <span class="col-md-3">含税总金额 {{NBOrderData.PruchaseAmountTax | number:"1.2"}}</span>
+                  </th>
+                </tr>
+                <tr class="m-center">
+                  <th>序号</th>
+                  <th>物料号</th>
+                  <th width="20%">物料描述</th>
+                  <th>数量</th>
+                  <th>未税单价</th>
+                  <th>未税总价</th>
+                  <th>库存地</th>
+                  <th>需求跟踪号</th>
+                  <th>批次</th>
+                  <th width="10%" *ngIf="NBType!='directNB'">物料来源</th>
+                </tr>
+              </thead>
+              <tbody [ngClass]="{'m-table-tbody':NBOrderData.PurchaseOrderDetails.length>10}">
+                <tr *ngFor="let item of NBOrderData.PurchaseOrderDetails;let i = index" class="m-center">
+                  <td>{{i+1}}</td>
+                  <td>{{item.MaterialNumber}}</td>
+                  <td width="20%" title={{item.MaterialDescription}}>{{item.MaterialDescription}}</td>
+                  <td>{{item.Count}}</td>
+                  <td>{{item.Price | number:"1.2"}}</td>
+                  <td>{{item.Amount | number:"1.2"}}</td>
+                  <td>{{item.StorageLocation}}</td>
+                  <td>{{item.TrackingNumber}}</td>
+                  <td>{{item.Batch}}</td>
+                  <td width="10%" class="queto" *ngIf="NBType!='directNB'" [title]="item.text">{{item.text}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--采购申请信息 -->
+      <div class="apply-finance-infor" style="margin-top: 10px" *ngIf="applyListLocalShow">
+        <div class="m-dialog-head clearfloat">
+          <span class="m-dialog-head-change progress-txt">采购申请信息</span>
+          <span class="m-dialog-head-change">下单金额汇总：{{NBOrderData.PruchaseAmount | number:"1.2"}}</span>
+        </div>
+        <div class="apply-finance-l">
+          <table class="m-info-table">
+            <thead>
+              <tr>
+                <td></td>
+                <td width="230px"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td width="170px" class="w170"></td>
+              </tr>
+              <tr>
+                <th>采购申请编号</th>
+                <th class="m-infor-td">供应商名称</th>
+                <th>未税总金额</th>
+                <th>已采购金额</th>
+                <th>本次采购金额</th>
+                <th>申请人</th>
+                <th>申请日期</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of applyListLocal;index as i">
+                <td><a style="cursor: pointer;" (click)="getProcurementApply(item.purchaserequisitiontype,item.purchaserequisitionid)">{{item.requisitionnum}}</a></td>
+                <td width="230px">{{item.vendor}}</td>
+                <td>{{item.excludetaxmoney | number:"1.2"}}</td>
+                <td>{{item.cumulativeconsumemoney | number:"1.2"}}</td>
+                <td>{{item.localMoney | number:"1.2"}}</td>
+                <td>{{item.username}}</td>
+                <td width="170px">{{item.addtime | iqDate:'YYYY-MM-DD'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--支持文件-->
+      <div class="apply-finance-infor">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">支持文件</span>
+        </div>
+        <div class="btP10">
+          <div class="addApp-form-item">
+            <label class="addApp-form-label tp20">附件文件</label>
+            <ul>
+              <li class="pdLi upload-show" *ngFor="let item of AccessorySee_Support;index as i">
+                <i class="iqon-enclosure"></i>
+                <span class="pdf cur-point" (click)="checkSeal(item.AccessoryURL)">{{item.AccessoryName}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--审批记录 -->
+      <db-wfhistory [wfHistoryData]="wfData.wfHistory"></db-wfhistory>
+
+      <!-- 审批意见 -->
+      <div class="apply-opinion" *ngIf="!isView">
+        <div class="m-exm-item">
+          <p class="m-exm-advice">审批意见</p>
+          <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="opinion" name="opinion"></textarea>
+        </div>
+      </div>
+
+      <!-- 1.非-加签审批类 页面 -->
+      <div class="approval-buttons" *ngIf="!isView&&!isSignApprovalPage">
+        <div>
+          <button class="m-btn-agree apply-agree" (click)="doApproval('agree')">同意</button>
+        </div>
+        <div>
+          <button class="m-btn-refuse apply-refuse" (click)="doApproval('reject')">驳回</button>
+        </div>
+        <div class="approval-dropdown">
+          <button class="m-btn-more-big">
+            更多<i class="iqon-xia"> </i>
+          </button>
+          <ul class="m-dropdown-option">
+            <li (click)="doApproval('sign')">加签</li>
+            <li (click)="doApproval('transfer')">转办</li>
+          </ul>
+        </div>
+        <div class="approval-btnCanel" (click)="goback()">
+          返回
+        </div>
+      </div>
+
+      <!-- 2.加签审批类 页面 -->
+      <div class="approval-buttons" *ngIf="!isView&&isSignApprovalPage">
+        <div>
+          <button class="m-btn-agree apply-agree" (click)="doApproval('agree+')">同意</button>
+        </div>
+        <div class="approval-btnCanel" (click)="goback()">
+          返回
+        </div>
+      </div>
+    </div>
+
+    <!--审批过程流程图 -->
+    <div class="apply-p-right">
+      <db-wfview #wfview></db-wfview>
+    </div>
+  </div>
+</div>

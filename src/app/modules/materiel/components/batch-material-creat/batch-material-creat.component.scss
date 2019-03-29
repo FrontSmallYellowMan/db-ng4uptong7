@@ -1,0 +1,37 @@
+
+.m-main-content{
+  padding: 50px;
+  .m-main-content-material-type{
+    padding-bottom: 15px;
+    ul>li{
+      float: left;
+      height: 40px;
+      line-height: 40px;
+      padding-right: 10px;
+    }
+  }
+  .m-main-content-material-betch{
+    padding-bottom: 15px;
+    ul>li{
+      float: left;
+      padding-right: 15px;
+    }
+  }
+  .m-main-content-material-downtpl{
+    ul>li{
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .m-main-content-material-warn{
+    width: 80%;
+    position: relative;
+    margin-bottom: 15px;
+    button{
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+
+

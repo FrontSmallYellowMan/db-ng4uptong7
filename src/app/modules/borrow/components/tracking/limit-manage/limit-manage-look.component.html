@@ -1,0 +1,120 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left ">
+            <h1 class="apply-tit-h1">额度管理</h1>
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">基础信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-p-infor  m-clearfix">
+                    <div class="m-exm-item" style="width:100%">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <!--div class="m-user-info-small">
+                                        <div class="m-user-members" style="float: left;">
+                                            <div user-image [hasClose]="false" [user]="userInfo" *ngIf="notchange"></div>
+                                        </div>
+                                    </div-->
+                                    {{mainData.applyUserName}}
+                                    <span style="color: #a8b1bd;">{{mainData.applyItCode}}</span>
+                                </div>
+
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">联系方式</div>
+                                <div class="m-exm-cont">{{mainData.applyUserTel}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">员工编号</div>
+                                <div class="m-exm-cont">{{mainData.applyUserNo}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">平台</div>
+                                <div class="m-exm-cont">{{mainData.platformCode}}-{{mainData.platformName}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请维度</div>
+                                <div class="m-exm-cont" *ngIf="mainData.applyDimension==='1'">
+                                    事业部
+                                </div>
+                                <div class="m-exm-cont" *ngIf="mainData.applyDimension==='0'">
+                                    本部
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">
+                                    <span *ngIf="mainData.applyDimension==='1'">事业部</span>
+                                    <span *ngIf="mainData.applyDimension==='0'">本部</span>
+                                </div>
+                                <div class="m-exm-cont">{{mainData.deptName}}</div>
+                            </li>
+                            <li class="m-exm-half" *ngFor="let item of subData">
+                                <div class="m-exm-label">{{item.businessScopeCode}}</div>
+                                <div class="m-exm-cont">
+                                    {{item.setAmount}}万元
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">当前常规额度</div>
+                                <div class="m-exm-cont">{{mainData.currentAmount}}万元</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">已使用额度</div>
+                                <div class="m-exm-cont">{{mainData.usedAmount==null?"":mainData.usedAmount+"元"}}</div>
+                            </li>
+                            <li width="100%">
+                                <div class="m-exm-label">申请理由</div>
+                                <div class="m-exm-cont">{{mainData.applyReason}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">额度使用记录</span>
+                     <i [ngClass]="{'iqon-fold-translate':isShow}" class="iqon-fold" (click)="toggle()"></i>
+                </div>
+                <div class="apply-p-infor  m-clearfix" *ngIf="isShow">
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr>
+                                    <th class="wp5">序号</th>
+                                    <th class="wp10">申请单号</th>
+                                    <th class="wp5">申请日期</th>
+                                    <th class="wp5">申请人</th>
+                                    <th class="wp5">申请单类型</th>
+                                    <th class="wp10">当前环节</th>
+                                    <th class="wp5">使用额度</th>
+                                    <th class="wp10">当前常规额度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of logList;index as i">
+                                    <td><span>{{i + 1}}</span></td>
+                                    <td><span>{{item.applyNo}}</span></td>
+                                    <td><span>{{item.applyDate|iqDate:'YYYY-MM-DD'}}</span></td>
+                                    <td><span>{{item.applyUserName||'/'||item.applyItcode}}</span></td>
+                                    <td><span>{{item.applyType}}</span></td>
+                                    <td><span>{{item.currentNodeName}}</span></td>
+                                    <td><span>{{item.applyAmount}}元</span></td>
+                                    <td><span>{{item.totalAmount}}万元</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns" style="text-align: center">
+                    <button class="m-btn-confirm" (click)="goBack()">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

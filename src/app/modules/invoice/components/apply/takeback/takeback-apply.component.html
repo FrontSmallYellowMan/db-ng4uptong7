@@ -1,0 +1,173 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">取回申请</h1>
+            <!--基本信息-->
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="addApp-base-infor">
+                    <ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">申请人</label>
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="person"
+                                    (ngModelChange)="changePerson(person)"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"
+                                    >联系电话</label
+                                >
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    required
+                                    [(ngModel)]="phone"
+                                />
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="addApp-form-reason">
+                        <div class="addAPP-form-rs">
+                            <label class="addApp-form-reasonlabel"
+                                ><i class="addApp-form-tips">*</i
+                                >取回原因</label
+                            >
+                            <input
+                                class="addApp-form-input"
+                                type="text"
+                                placeholder="取回原因"
+                                [(ngModel)]="takebackRemark"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">取回支票信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="m-info-table" style="width: 98%;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">序号</th>
+                                    <th style="text-align:center">支票号</th>
+                                    <th style="text-align:center">出票日期</th>
+                                    <th style="text-align:center">支票金额</th>
+                                    <th style="text-align:center">出票账号</th>
+                                    <th style="text-align:center">出票银行</th>
+                                    <th style="text-align:center">收款人</th>
+                                    <th style="text-align:center">客户代码</th>
+                                    <th style="text-align:center">客户名称</th>
+                                    <th style="text-align:center">合同编号</th>
+                                    <th style="text-align:center">欠款金额</th>
+                                    <th
+                                        *ngIf="addFlag"
+                                        style="text-align:center"
+                                    >
+                                        <i
+                                            class="iqon-add"
+                                            style="cursor: pointer;color:#57b9f8"
+                                            title="增加支票项"
+                                            (click)="searchInvoice()"
+                                        ></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="
+                                        let invoice of invoicelist;
+                                        let i = index
+                                    "
+                                >
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ invoice.ticketNum }}</td>
+                                    <td>
+                                        {{
+                                            invoice.checkoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </td>
+                                    <td>{{ invoice.ticketAmount }}</td>
+                                    <td>{{ invoice.checkoutAccount }}</td>
+                                    <td>{{ invoice.checkoutBank }}</td>
+                                    <td>{{ invoice.payeeName }}</td>
+                                    <td>{{ invoice.customCode }}</td>
+                                    <td>{{ invoice.customName }}</td>
+                                    <td>{{ invoice.contractNum }}</td>
+                                    <td>{{ invoice.debtAmount }}</td>
+                                    <td
+                                        style="text-align:center"
+                                        *ngIf="addFlag"
+                                    >
+                                        <i
+                                            class="iqon-minimize"
+                                            style="cursor: pointer;color:#57b9f8"
+                                            title="删除支票"
+                                            (click)="deltr(i)"
+                                        ></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="addApply-base">
+                <div class="m-list-head">
+                    <span class="m-dialog-head-change">审批人信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div class="addApp-base-list">
+                        <li class="addApp-form-item w-full" style = "margin:0;">
+                        <label class="addApp-form-label">商务审批人</label>
+                        <div class="addApp-form-right">
+                            <div class="m-user-info"  user-image  [hasClose]="false" [user] = "p"  *ngFor = "let p of bassinApproveList"></div>
+                        </div>
+                    </li>
+                    </div>
+                </div> 
+            </div>            -->
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns" style="text-align: center">
+                    <button
+                        *ngIf="addFlag"
+                        class="m-btn-confirm"
+                        type="button"
+                        (click)="takeback()"
+                    >
+                        我要取回
+                    </button>
+                    <button
+                        *ngIf="!addFlag"
+                        class="m-btn-confirm"
+                        type="button"
+                        (click)="takeback2()"
+                    >
+                        重新取回
+                    </button>
+                    <!-- <button *ngIf="submitFlag=='1'" class="m-btn-confirm" type="button" disabled>提交中...</button> -->
+                    <button
+                        class="m-btn-sketch"
+                        type="button"
+                        (click)="close()"
+                    >
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

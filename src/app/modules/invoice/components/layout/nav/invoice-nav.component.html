@@ -1,0 +1,132 @@
+<div class="m-home-pageL">
+  <div class="m-boardtop clearfix">
+    <div class="m-boardmenu">
+      <a
+        *ngIf="admin || salesman || business || financial"
+        href="javascript:;"
+        [ngClass]="{ active: flag === '0' }"
+        (click)="changeFlag('0')"
+        routerLink="/invoice/list"
+        >支票</a
+      >
+      <!-- <a *ngIf="plantformCode=='21' && (admin || salesman || business || financial)" href="javascript:;" [ngClass]="{'active':flag==='1'}" (click)="changeFlag('1')" routerLink="{{routerLinkStr}}">商票</a> -->
+    </div>
+  </div>
+  <ul
+    class="m-usertree"
+    *ngIf="flag == '0' && (admin || salesman || business || financial)"
+  >
+    <li routerLinkActive="active" class="m-hasicon">
+      <a routerLink="/invoice/list"> 支票交存申请</a>
+    </li>
+    <!-- <li [ngClass]="{'open':open}"  (click)='open=!open'>
+             <a class="m-hasicon" >支票交存审批</a>
+              <i class="iqon-angle-right"></i>
+             <ul class="m-tree">
+               <li routerLinkActive="active" (click)='open=false' class="m-hasicon">
+                  <a routerLink="/invoice/approve/approveList/0">待我接收（商务）</a>
+               </li>
+               <li routerLinkActive="active" (click)='open=false' class="m-hasicon">
+                  <a routerLink="/invoice/approve/approveList/1">到期支票上传（商务）</a>
+               </li>
+               <li routerLinkActive="active" (click)='open=false' class="m-hasicon">
+                  <a routerLink="/invoice/approve/approveList/2">待接收支票（财务）</a>
+               </li>
+               <li routerLinkActive="active" (click)='open=false' class="m-hasicon">
+                  <a routerLink="/invoice/approve/approveList/3">确认银行取走（财务）</a>
+               </li>
+               <li routerLinkActive="active" (click)='open=false' class="m-hasicon">
+                  <a routerLink="/invoice/approve/approveList/6,7,9,10">退票拒收返回（商务）</a>
+               </li>
+             </ul>
+           </li> -->
+    <li routerLinkActive="active" class="m-hasicon">
+      <a routerLink="/invoice/delaylist"> 支票延期</a>
+    </li>
+    <li [ngClass]="{ open: open2 }" (click)="open2 = !open2">
+      <a class="m-hasicon">撤换票</a> <i class="iqon-angle-right"></i>
+      <ul class="m-tree">
+        <li routerLinkActive="active" (click)="open2 = false" class="m-hasicon">
+          <a routerLink="/invoice/revoked/list"> 支票撤票</a>
+        </li>
+        <li routerLinkActive="active" (click)="open2 = false" class="m-hasicon">
+          <a routerLink="/invoice/change/list"> 支票换票</a>
+        </li>
+      </ul>
+    </li>
+
+    <li routerLinkActive="active" class="m-hasicon">
+      <a routerLink="/invoice/takeback/list"> 支票取回</a>
+    </li>
+
+    <li routerLinkActive="active" class="m-hasicon">
+      <a routerLink="/invoice/invoicestatuslist"> 支票查询</a>
+    </li>
+  </ul>
+  <ul
+    class="m-usertree"
+    *ngIf="
+      flag == '1' &&
+      plantformCode == '21' &&
+      (admin || salesman || business || financial)
+    "
+  >
+    <li *ngIf="salesman || admin" routerLinkActive="active" class="m-hasicon">
+      <a routerLink="/invoice/tradeticket/list">我的申请</a>
+    </li>
+    <li
+      *ngIf="business || financial || admin"
+      [ngClass]="{ open: open }"
+      (click)="open = !open"
+    >
+      <a class="m-hasicon">我的审批</a> <i class="iqon-angle-right"></i>
+      <ul class="m-tree">
+        <li
+          *ngIf="business || admin"
+          routerLinkActive="active"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/invoice/tradeticket/approveList/0/11">确认接收</a>
+        </li>
+        <li
+          *ngIf="business || admin"
+          routerLinkActive="active"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/invoice/tradeticket/approveList/1/11">到期商票上传</a>
+        </li>
+        <li
+          *ngIf="financial || admin"
+          routerLinkActive="active"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/invoice/tradeticket/approveList/2/10">财务确认接收</a>
+        </li>
+        <li
+          *ngIf="financial || admin"
+          routerLinkActive="active"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/invoice/tradeticket/approveList/3/11">确认银行取走</a>
+        </li>
+        <li
+          *ngIf="business || admin"
+          routerLinkActive="active"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/invoice/tradeticket/approveList/6,7,9,10/11"
+            >拒收或退回</a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<!--作为占位符，Angular将基于当前的路由器状态动态填�?-->
+<router-outlet></router-outlet>

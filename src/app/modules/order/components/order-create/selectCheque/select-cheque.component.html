@@ -1,0 +1,78 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    {{IsRelateCheque==2?"汇票":"支票"}}信息<span style="font-size:12px;" *ngIf="saleType !== 2">（只查询当前客户和当前合同都所有{{IsRelateCheque==2?"汇票":"支票"}}）</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-order-table" *ngIf="!defauls">
+      <loading [show]="loading"></loading>
+      <ul class="m-table-head">
+        <li>
+          <input type="checkbox" allcheck="chequeall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+        </li>
+        <li>申请人</li>
+        <li>支票状态</li>
+        <li>支票号</li>
+        <li>出票日期</li>
+        <li>支票金额</li>
+        <li>支票已使用金额</li>
+        <li>收款人</li>
+        <li>客户名称</li>
+      </ul>
+      <div class="m-table-body">
+        <ul *ngFor="let item of invoiceList;index as i">
+          <li><input type="checkbox" allcheckChild="chequeall" icheck [disabled]="item.tick_amount_used == item.ticket_amount" [(ngModel)]="item.checked"></li>
+          <li [title]="item.apply_user_name">{{item.apply_user_name || "&nbsp;"}}</li>
+          <li [title]="item.invoice_status_name">{{item.invoice_status_name || "&nbsp;"}}</li>
+          <li [title]="item.ticket_num">{{item.ticket_num || "&nbsp;"}}</li>
+          <li>{{item.checkout_date || "&nbsp;"}}</li>
+          <li>{{(item.ticket_amount || 0) | iqNumber:'1.2-2'}}</li>
+          <li>{{(item.tick_amount_used || 0) | iqNumber:'1.2-2'}}</li>
+          <li [title]="item.payee">{{item.payee || "&nbsp;"}}</li>
+          <li [title]="item.custom_name">{{item.custom_name || "&nbsp;"}}</li>
+        </ul>
+      </div>
+      <!-- <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" allcheck="chequeall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                                (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+                        </th>
+                        <th>申请人</th>
+                        <th>支票状态</th>
+                        <th>支票号</th>
+                        <th>出票日期</th>
+                        <th>支票金额</th>
+                        <th>收款人</th>
+                        <th>客户名称</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let item of invoiceList;index as i">
+                        <td><input type="checkbox" allcheckChild="chequeall" icheck [(ngModel)]="item.checked"></td>
+                        <td>{{item.apply_user_name}}</td>
+                        <td>{{item.invoice_status_name}}</td>
+                        <td>{{item.ticket_num}}</td>
+                        <td>{{item.checkout_date}}</td>
+                        <td>{{item.ticket_amount}}</td>
+                        <td>{{item.payee}}</td>
+                        <td>{{item.custom_name}}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+    </div>
+    <div class="m-noresult" *ngIf="defauls">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+
+      </div>
+    </div>
+    <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+  </div>
+  <div class="modal-footer">
+    <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+    <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+  </div>
+</div>

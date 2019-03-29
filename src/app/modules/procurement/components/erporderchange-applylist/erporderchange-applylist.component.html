@@ -1,0 +1,192 @@
+<div class="m-overclass">
+  <div class="m-list-menu" >
+    <ul class="m-state" (click)="onTab($event)" #tab>
+      <li class="active" data-state=1>审批中</li>
+      <li data-state=2>已完成</li>
+      <li data-state="">全部</li>
+      <li data-state=0>草稿</li>
+    </ul>
+
+    <!-- <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i>
+        高级搜索
+      </div>
+    </div> -->
+
+    <!-- 高级搜索 -->
+    <!-- <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div> -->
+    <!-- <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <form #form = "ngForm">
+        
+        <div class="m-search-item">
+          <label style="padding:10px 0 0 0">需求跟踪号</label>
+          <input type="text" name="TrackingNumber" placeholder="-请填写需求跟踪号" [(ngModel)]="myApplyQuery.TrackingNumber">
+        </div>
+
+        <div class="m-search-item">
+          <label>ERP订单号<br>(修改前)</label>
+          <input type="text" name="OriginalERPOrderNo" placeholder="-请填写ERP订单号(修改前)" [(ngModel)]="myApplyQuery.OriginalERPOrderNo">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding:10px 0 0 0">申请单号</label>
+          <input type="text" name="ERPOrderChangeNo" placeholder="-请填写申请单号" [(ngModel)]="myApplyQuery.ERPOrderChangeNo">
+        </div>
+
+        <div class="m-search-item">
+          <label style="padding:10px 0 0 0">供应商名称</label>
+          <input type="text" name="Vendor" placeholder="-请填写供应商名称" [(ngModel)]="myApplyQuery.Vendor">
+        </div>
+
+        <div class="m-search-item">
+          <label>是否采购<br>冲红</label>
+            <div class="m-select m-select-width">
+              <i class="iqon-xia"></i>
+              <select name="IsRedInvoice" [(ngModel)]="myApplyQuery.IsRedInvoice">
+                <option value="" disabled selected>-请选择</option>
+                <option value="">全部</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+              </select>
+            </div>
+        </div>
+
+        <div class="m-search-item m-search-items m-search-clear">
+            <label>申请日期</label>
+            <div class="m-datepicker-comb">
+              <div class="m-datepicker-start">
+                <my-datepicker [(ngModel)]="myApplyQuery.BeginTime" format="YYYY-MM-DD" [EndDate]="myApplyQuery.EndTime" PlaceHolder="-开始日期" name="BeginDate"></my-datepicker>
+              </div> <span>~</span> 
+              <div class="m-datepicker-end">
+                <my-datepicker [(ngModel)]="myApplyQuery.EndTime" format="YYYY-MM-DD"  [StartDate]="myApplyQuery.BeginTime" PlaceHolder="-结束日期" name="EndDate"></my-datepicker>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="m-search-btn">
+          <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </form>
+    </div> -->
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="highSearchShow=true">
+        <i class="iqon-highsearch"></i> 高级搜索
+      </div>
+    </div>
+
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="highSearchShow = false">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <div class="form">
+        <div class="m-search-item">
+          <label>需求跟踪号</label>
+          <input type="text" name="TrackingNumber" placeholder="-请填写需求跟踪号" [(ngModel)]="myApplyQuery.TrackingNumber">
+        </div>
+        <div class="m-search-item">
+          <label>ERP订单号<br>(修改前)</label>
+          <input type="text" name="OriginalERPOrderNo" placeholder="-请填写ERP订单号(修改前)" [(ngModel)]="myApplyQuery.OriginalERPOrderNo" style="position: relative;top: -10px;">
+        </div>
+        <div class="m-search-item">
+          <label>申请单号</label>
+          <input type="text" name="ERPOrderChangeNo" placeholder="-请填写申请单号" [(ngModel)]="myApplyQuery.ERPOrderChangeNo">
+        </div>
+        <div class="m-search-item">
+          <label>供应商名称</label>
+          <input type="text" name="Vendor" placeholder="-请填写供应商名称" [(ngModel)]="myApplyQuery.Vendor">
+        </div>
+        <div class="m-search-item">
+          <label>是否采购冲红</label>
+          <div class="m-select">
+            <i class="iqon-xia"></i>
+            <select name="IsRedInvoice" [(ngModel)]="myApplyQuery.IsRedInvoice">
+              <option value="" disabled selected>-请选择</option>
+              <option value="">全部</option>
+              <option value="1">是</option>
+              <option value="0">否</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="m-search-item m-search-items">
+          <label>申请日期</label>
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start">
+              <my-datepicker [(ngModel)]="myApplyQuery.BeginTime" format="YYYY-MM-DD" [EndDate]="myApplyQuery.EndTime" PlaceHolder="-开始日期" name="BeginDate"></my-datepicker>
+            </div> ~
+            <div class="m-datepicker-end">
+              <my-datepicker [(ngModel)]="myApplyQuery.EndTime" format="YYYY-MM-DD"  [StartDate]="myApplyQuery.BeginTime" PlaceHolder="-结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="m-search-btn">
+            <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+            <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" [ngClass]="{'hideStyle':isHide}">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <p class="m-p-notice">点击“新建采购订单修改”新建数据吧~</p>
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}" style="width:auto">
+    <div class="table-auto-content">
+      <table class="table table-hover table-list" style="table-layout:auto">
+        <thead>
+          <tr>
+            <th *ngIf="myApplyQuery.ApproveState=='0'||myApplyQuery.ApproveState==''" class="wp5"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+              <th class="wp5">序号</th>
+              <th>申请单号</th>
+              <th>需求跟踪号</th>
+              <th>ERP订单号(修改前)</th>
+              <th class="wp15">供应商名称</th>
+              <th>订单金额(修改前)</th>
+              <th class="wp15" *ngIf="myApplyQuery.ApproveState==='1'||myApplyQuery.ApproveState===''">当前处理人</th>
+              <th *ngIf="myApplyQuery.ApproveState!=='2'">当前环节名称</th>
+              <th>申请人</th>
+              <th>申请日期</th>
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+              <th class="list-edit" colspan="9">已选{{checkedNum}}项<button type="button" (click)="deleteList(searchList)">删除</button></th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of searchList;index as i" style="cursor: auto;">
+            <td class="wp5" stopParentClick *ngIf="myApplyQuery.ApproveState==='0'||myApplyQuery.ApproveState===''"><input type="checkbox"  allcheckChild="demoall" [(ngModel)]="item.checked" icheck name="" [disabled]="item.ApproveState!='0'&&item.ApproveState!='2'"></td>
+            <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+            <td [title]="item.ERPOrderChangeNo"><span (click)="getDetail(i)" class="list-first-td">{{item.ERPOrderChangeNo}}</span></td>
+            <td>{{item.TrackingNumber}}</td>
+            <td>{{item.OriginalERPOrderNo}}</td>
+            <td [title]="item.Vendor"><p class="m-p-warp">{{item.Vendor}}</p></td>
+            <td>{{item.OriginalOrderAmount|number:"1.2"}}</td>
+            <td *ngIf="myApplyQuery.ApproveState==='1'||myApplyQuery.ApproveState===''"><p class="m-p-warp" [title]="item.currentNodeApprovers">{{item.currentNodeApprovers}}</p></td>
+            <td *ngIf="myApplyQuery.ApproveState!=='2'">{{item.ApproveState|erpOrderChangePipe}}</td>
+            <td>{{item.UserName}}</td>
+            <td>{{item.AddTime|iqDate:"YYYY-MM-DD"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page">
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+      </div>
+  </div>
+</div>

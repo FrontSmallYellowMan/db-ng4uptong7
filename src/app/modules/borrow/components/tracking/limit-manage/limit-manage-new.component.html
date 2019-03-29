@@ -1,0 +1,352 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <form #myApplyForm="ngForm">
+            <div class="addApply-container">
+                <h1 class="addApply-tit-h1">新建额度申请</h1>
+                <!--基本信息-->
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">基础信息</span>
+                    </div>
+                    <div class="addApp-base-infor">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label">
+                                        申请人</label
+                                    >
+                                    <div class="m-user-info-small">
+                                        <div
+                                            class="m-user-members"
+                                            style="float: left;"
+                                        >
+                                            <div
+                                                user-image
+                                                [hasClose]="false"
+                                                [user]="userInfo"
+                                                *ngIf="notChange"
+                                                style="margin-left:10px"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label">
+                                        联系方式</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="addApp-form-input"
+                                        #forminput
+                                        maxlength="11"
+                                        minlength="6"
+                                        name="tel"
+                                        required
+                                        [(ngModel)]="apply.applyUserTel"
+                                        #tel="ngModel"
+                                    />
+                                    <p
+                                        class="m-warn-tip"
+                                        *ngIf="
+                                            (tel.touched ||
+                                                myApplyForm.submitted) &&
+                                            tel.invalid
+                                        "
+                                    >
+                                        <span *ngIf="tel.errors?.required"
+                                            >电话必填</span
+                                        >
+                                        <span *ngIf="tel.errors?.minlength"
+                                            >电话不能少于6个字</span
+                                        >
+                                        <span *ngIf="tel.errors?.maxlength"
+                                            >电话不能超过10个字</span
+                                        >
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label">
+                                        员工编号
+                                    </label>
+                                    <span class="span-text">{{
+                                        apply.applyUserNo
+                                    }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label">
+                                        平台</label
+                                    >
+                                    <span class="span-text">{{
+                                        apply.platformName
+                                    }}</span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label">
+                                        申请维度</label
+                                    >
+                                    <span class="span-text">
+                                        <input
+                                            type="radio"
+                                            class="radio"
+                                            icheck
+                                            [(ngModel)]="apply.applyDimension"
+                                            name="applyDimension"
+                                            #radio1
+                                            checked
+                                            value="1"
+                                            (onClick)="
+                                                changeApplyDimension('1')
+                                            "
+                                        />
+                                        <label for="radio1" class="radio-label"
+                                            >事业部</label
+                                        >
+                                        <input
+                                            type="radio"
+                                            class="radio"
+                                            icheck
+                                            [(ngModel)]="apply.applyDimension"
+                                            name="applyDimension"
+                                            #radio2
+                                            value="0"
+                                            (onClick)="
+                                                changeApplyDimension('0')
+                                            "
+                                        />
+                                        <label for="radio2" class="radio-label"
+                                            >本部</label
+                                        >
+                                    </span>
+                                </div>
+                            </li>
+
+                            <li *ngIf="apply.applyDimension === '1'">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"
+                                        >事业部</label
+                                    >
+
+                                    <j-iq-select
+                                        style="margin-left:10px;"
+                                        [(ngModel)]="apply.deptName"
+                                        name="deptname"
+                                        java="true"
+                                        [dataModal]="{
+                                            item: ['data', 'rows'],
+                                            title: ['data', 'columns'],
+                                            pager: ['data', 'pager']
+                                        }"
+                                        listApi="borrow/dept-relation/bbmc-sybmc"
+                                        [queryParams]="{
+                                            issyb: apply.applyDimension
+                                        }"
+                                        placeHolder=" -请选择-   "
+                                        (onSelect)="getOrgBusiScope($event)"
+                                    ></j-iq-select>
+                                </div>
+                            </li>
+                            <li *ngIf="apply.applyDimension === '0'">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"
+                                        >本部</label
+                                    >
+                                    <j-iq-select
+                                        style="margin-left:10px;width: 100px;"
+                                        [(ngModel)]="apply.baseDeptName"
+                                        name="baseDeptName"
+                                        java="true"
+                                        [dataModal]="{
+                                            item: ['data', 'rows'],
+                                            title: ['data', 'columns'],
+                                            pager: ['data', 'pager']
+                                        }"
+                                        listApi="borrow/dept-relation/bbmc-sybmc"
+                                        [queryParams]="{
+                                            issyb: apply.applyDimension
+                                        }"
+                                        placeHolder=" -请选择-   "
+                                        (onSelect)="getOrgBusiScope($event)"
+                                    ></j-iq-select>
+                                </div>
+                            </li>
+
+                            <li
+                                *ngFor="let deptRelation of subData; index as i"
+                            >
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"
+                                        ><span class="addApp-form-tips">*</span
+                                        >{{
+                                            deptRelation.businessScopeCode
+                                        }}</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="addApp-form-input"
+                                        required
+                                        #forminput
+                                        [(ngModel)]="deptRelation.setAmount"
+                                        [name]="'setAmount' + i"
+                                        (change)="calculateCurrAmount()"
+                                    />万元
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"
+                                        >当前常规额度
+                                    </label>
+                                    <input
+                                        type="text"
+                                        class="addApp-form-input"
+                                        [(ngModel)]="apply.currentAmount"
+                                        name="currentAmount"
+                                        readonly
+                                    />万元
+                                </div>
+                            </li>
+                            <li *ngIf="applyType === 'e'">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"
+                                        >已使用额度</label
+                                    >
+                                    <span class="span-text">{{
+                                        apply.usedAmount == null
+                                            ? ""
+                                            : usedAmountNew + "元"
+                                    }}</span>
+                                </div>
+                            </li>
+                            <li style="width:96%">
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label-1"
+                                        >申请理由</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="addApp-form-input-1"
+                                        [(ngModel)]="apply.applyReason"
+                                        name="applyReason"
+                                        maxlength="140"
+                                    />
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="addApply-container" *ngIf="applyType === 'e'">
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change progress-txt"
+                            >额度使用记录</span
+                        >
+                        <i
+                            [ngClass]="{ 'iqon-fold-translate': isShow }"
+                            class="iqon-fold"
+                            (click)="toggle()"
+                        ></i>
+                    </div>
+                    <div class="apply-p-infor  m-clearfix" *ngIf="isShow">
+                        <div
+                            style="width: 98%;padding-left: 25px;padding-top:10px"
+                        >
+                            <table class="m-info-table">
+                                <thead>
+                                    <tr>
+                                        <th class="wp5">序号</th>
+                                        <th class="wp10">申请单号</th>
+                                        <th class="wp5">申请日期</th>
+                                        <th class="wp5">申请人</th>
+                                        <th class="wp5">申请单类型</th>
+                                        <th class="wp10">当前环节</th>
+                                        <th class="wp5">使用额度</th>
+                                        <th class="wp5">当前常规额度</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of logList; index as i"
+                                    >
+                                        <td>
+                                            <span>{{ i + 1 }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ item.applyNo }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{
+                                                item.applyDate
+                                                    | iqDate: "YYYY-MM-DD"
+                                            }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{
+                                                item.applyUserName ||
+                                                    "/" ||
+                                                    item.applyItcode
+                                            }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ item.applyType }}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{
+                                                item.currentNodeName
+                                            }}</span>
+                                        </td>
+                                        <td>
+                                            <span
+                                                >{{ item.applyAmount }}元</span
+                                            >
+                                        </td>
+                                        <td>
+                                            <span
+                                                >{{
+                                                    item.totalAmount
+                                                }}万元</span
+                                            >
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns">
+                    <button
+                        class="m-btn-confirm"
+                        (click)="submitApply()"
+                        *ngIf="applyType === 'n'"
+                        [disabled]="disabled"
+                    >
+                        提交
+                    </button>
+                    <button
+                        class="m-btn-confirm"
+                        (click)="submitRDraft()"
+                        *ngIf="applyType === 'e'"
+                        [disabled]="disabled"
+                    >
+                        确定
+                    </button>
+                    <button class="m-btn-confirm" (click)="goBack()">
+                        返回
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

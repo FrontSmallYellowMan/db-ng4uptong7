@@ -1,0 +1,33 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow" style="width:600px;margin:20 auto">
+  <div class="modal-header m-dialog-head">
+    <span>收款人公司查询</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+          <div class="m-search" style="width:200px;margin-left:365px;margin-top:5px;margin-bottom:5px">
+                  <i class="iqon-query" (click)="searchPayee()" style="cursor:pointer"></i>
+                  <input name="state" (keydown)="checkEnterKey($event.keyCode)" placeholder="公司代码\公司名称" [(ngModel)]="company" type="text">
+          </div>
+          <div style="width:580px;">
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <thead>
+                <tr> 
+                  <th style="text-align:center;width:221px;">公司代码</th>
+                  <th style="text-align:center;width:330px">公司名称</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div id='scroll' style="overflow-y:scroll; width:597px;height:300px;">
+          <table class="m-info-table" style="width:95%;margin:auto">
+              <tbody>
+                <tr *ngFor = 'let item of conpanyList' (click)="changeCheck(item.companycode)">
+                  <td style="text-align:center;width:221px;">{{item.companycode}}</td>
+                  <td style="text-align:center;width:330px">{{item.company}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>              
+</div>      
+

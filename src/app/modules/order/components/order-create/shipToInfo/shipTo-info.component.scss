@@ -1,0 +1,136 @@
+.m-search-all{
+    height:30px;
+    .m-search{
+        width: 250px;
+        float: right;
+    }
+}
+.m-order-number{
+    z-index: 1045;
+    top:2%;
+    left:25%;
+}
+.modal-body{
+    height:505px;
+    padding-top:15px;
+}
+.m-order-table{
+    margin: 15px 0;
+    text-align: left;
+    border:0;
+    border-top: 1px solid #d2d8e0;
+}
+.m-order-table  tr{
+     th,td{
+       &:nth-child(1){
+           width:130px;
+           border-left:0;
+       }
+       &:nth-child(2){
+           width:220px;
+       }
+       &:nth-child(3){
+           width:130px;
+       }
+    }
+}
+.inline-block{
+    display: inline-block;
+}
+input[type=text]{
+    height:30px;
+}
+input[disabled]{
+    background-color: #ffffff;
+}
+.m-advance-footer{
+    text-align: left;
+    ul{
+        display: inline-block;
+        width: 100%;
+        li{
+            float: left;
+            width: 50%;
+            line-height: 35px;
+            span{
+                width:25%;
+                display: inline-block;
+                font-weight: 700;
+            }
+            .m-select{
+                width:65%;
+                display: inline-block;
+                select {
+                    height:30px;
+                }
+            }
+        }
+    }
+    input[type=text]{
+        height:30px;
+        width:65%;
+        padding:0 8px;
+    }
+}
+.m-order-number .modal-footer{
+    margin:12px 0 ;
+}
+.m-shipTo-head{
+    background-color: #f5f7fa;
+    height:30px;
+    line-height: 30px;
+    border-bottom:1px solid #d2d8e0;
+    border-right:1px solid #d2d8e0;
+    li{
+        float: left;
+        padding:0 8px;
+        font-weight: 500;
+        border-left:1px solid #d2d8e0;
+        &:nth-child(1){
+            width:100px;
+            // border-left:0;
+        }
+        &:nth-child(2){
+            width:230px;
+        }
+        &:nth-child(3){
+            width:260px;
+        }
+    }
+}
+.m-shipTo-body{
+    height:180px;
+    overflow-y: auto;
+    li{
+        width:100%;
+        border-bottom:1px solid #d2d8e0;
+        border-right:1px solid #d2d8e0;
+        height:30px;
+        cursor: pointer;
+        span{
+            display: inline-block;
+            line-height: 30px;
+            padding:0 8px;
+            border-left:1px solid #d2d8e0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            &:nth-child(1){
+                width:100px;
+                // border-left:0;
+            }
+            &:nth-child(2){
+                width:230px;
+            }
+            &:nth-child(3){
+                width:260px;
+            }
+        }
+    }
+}
+/deep/ .addApp-form-tips{
+    line-height: 2.63;
+}
+.m-input-change,.m-select-change{
+    border-color: #57b9f8;
+}

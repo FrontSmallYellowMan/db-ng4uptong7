@@ -1,0 +1,26 @@
+<div class="modal">
+    <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+        <div class="modal-header m-dialog-head">
+            <span>错误提醒信息列表</span>
+            <i class="iqon-close" (click)="hide()"></i>
+        </div>
+
+        <div class="m-order-table">
+            <table>
+                    <tr> 
+                        <td>行号</td>
+                        <td>错误信息</td>
+                    </tr>
+                    <tr *ngFor='let item of messageList'>                       
+                        <td>
+                            {{item.rowNum}}
+                        </td>
+                        <td style="width:1015px">
+                            {{item.message}}
+                        </td>
+                    </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

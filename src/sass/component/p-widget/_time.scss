@@ -1,0 +1,39 @@
+/*设置时间弹框*/
+.m-alert-time {
+  width: 390px;
+  height: 169px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  .m-time-content {
+    .m-form-item {
+      width: 340px;
+      height: 40px;
+      border-radius: 3px;
+      margin-top: 15px;
+      position: relative;
+      margin-left: 25px;
+      .iqon-ask-leave {
+        font-size: 13px;
+        position: absolute;
+        left: 15px;
+        top: 12px;
+      }
+      input {
+        padding-left: 38px;
+      }
+      span {
+        position: absolute;
+        right: 25px;
+        top: 10px;
+        color: $def-color1;
+      }
+    }
+  }
+  .m-time-confirm {
+    position: absolute;
+    right: 26px;
+    bottom: 14px;
+  }
+}

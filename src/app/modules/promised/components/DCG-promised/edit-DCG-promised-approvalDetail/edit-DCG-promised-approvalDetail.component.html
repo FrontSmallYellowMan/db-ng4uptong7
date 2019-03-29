@@ -1,0 +1,175 @@
+<div class="m-edit-approvalDetail m-supplier-apply-left">
+  <h4>查看承诺详情</h4>
+  <!-- 基本信息 -->
+  <div class="m-edit-approvalDetail-content1 clearfix">
+    <div class="m-edit-approvalDetail-title">
+      <h5>基本信息</h5>
+    </div>
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">申请人</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        <span>{{commitmentData.SalesName}}</span>
+        <span class="m-user-ename">{{commitmentData.SalesITCode|lowercase}}</span>
+      </div>
+    </div>
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>事业部</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.SalesDeparment}}
+      </div>
+    </div>
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>平台</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.PlatformName}}
+      </div>
+    </div>
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>信用评级</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.SalesLevel}}
+      </div>
+    </div>
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>代理商名称</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.AgentName}}
+      </div>
+    </div>
+
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>合同编号</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.ContractID}}
+      </div>
+    </div>
+
+    <div class="m-edit-approvalDetail-form m-edit-approvalDetail-tips">
+      <p class="m-edit-approvalDetail-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>合同金额</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        {{commitmentData.ContractMoney}}
+        <span *ngIf="commitmentData.ContractMoney">元</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!--承诺信息-->
+  <div class="m-edit-approvalDetail-content1 clearfix">
+
+    <div class="m-edit-approvalDetail-title">
+      <h5>承诺信息</h5>
+    </div>
+
+    <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips">
+      <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-promised-p">
+        <span class="m-form-need"></span>承诺类型</p>
+      <div class="m-select m-edit-approvalDetail-select-style1 m-promised-div" *ngFor="let item of commitTypesList; index as i;">
+        <div style="width:350px;display:inline-block">{{item.Name}}</div>
+        <span *ngIf="myApplyOrMyApproval==='t'">
+          <input type="checkbox" icheck [name]="item.Code+i" [attr.name]="item.Code+i" value="是" [(ngModel)]="item.IsReach">
+        </span>
+      </div>
+    </div>
+
+    <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" *ngIf="commitmentData.ReturnMoney">
+      <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title">
+        <span class="m-form-need"></span>回款金额</p>
+      <div class="m-select m-edit-approvalDetail-select-style1 m-promised-div">
+        {{commitmentData.ReturnMoney}}
+      </div>
+    </div>
+
+    <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips">
+      <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title">
+        <span [ngSwitch]="commitmentData.CommitTypeCode">
+          <span *ngSwitchCase="'0001'">清理时间</span>
+          <span *ngSwitchCase="'0007'">回款时间</span>
+          <span *ngSwitchCase="'0009'">承诺达成时间</span>
+          <span *ngSwitchDefault>返还时间</span>
+        </span>
+      </p>
+
+      <div class="m-select m-edit-approvalDetail-select-style1 m-promised-div">
+        {{commitmentData.CommitDate|iqDate:"YYYY-MM-DD"}}
+      </div>
+    </div>
+
+    <div class="m-edit-promised-ncp-form-row m-edit-approvalDetail-tips" style="width:100%">
+      <p class="m-edit-promised-ncp-form-title m-edit-approvalDetail-form-titles m-select-title" style="vertical-align: top;">
+        <span class="m-form-need"></span>承诺内容</p>
+      <div class="m-select m-edit-approvalDetail-select-style1 m-promised-div" style="padding-right:20px;width:88%">
+        {{commitmentData.CommitMatters}}
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <!--附件信息-->
+  <div class="m-edit-approvalDetail-content1 clearfix">
+
+    <div class="m-edit-approvalDetail-title">
+      <h5>附件信息</h5>
+    </div>
+
+    <div class="m-edit-approvalDetail-failUpLoad">
+      <p class="m-edit-approvalDetail-failUpLoad-title">
+        <span class="m-form-need"></span>附件信息</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        <ul class="m-enclosure">
+          <li class="uploaded" *ngFor="let item of DCGIData.AttachmentList; index as i">
+            <i class="iqon-enclosure"></i>
+            <span class="filename" (click)="seeFileUpLoad(item.AccessoryURL)">
+              {{item.AccessoryName}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!--审批历史记录-->
+  <div class="m-edit-approvalDetail-content1" *ngIf="wfHistory.length>0">
+    <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+  </div>
+  <!--审批历史记录 end-->
+
+  <!--审批按钮-->
+  <div class="m-div-margin" *ngIf="myApplyOrMyApproval==='e'&&taskState==='0'&&ADP=='0'">
+    <db-wfapproval [appParms]="approveData" [hasSaved]="isApproval" (onSave)="onApproval($event)" (onApprovalComplateCallBack)="writeStorage()"></db-wfapproval>
+  </div>
+
+  <!-- 加签审批按钮 -->
+  <div *ngIf="taskState=='0'&&ADP=='1'" class="m-div-margin">
+      <db-wfadp [adpAppParms]="approveData"></db-wfadp>
+    </div>
+
+  <div class="m-commonly-btn" *ngIf="myApplyOrMyApproval==='a'||taskState==='1'">
+    <button type="button" (click)="revokeApproval()" class="m-btn-warn" *ngIf="myApplyOrMyApproval==='a'" [disabled]="commitmentData.WFStatus==='已完成'" [ngClass]="{'m-button-disabled':commitmentData.WFStatus==='已完成'}">撤销审批</button>
+    <button class="m-btn-cancel" (click)="cancle()">关闭</button>
+  </div>
+
+
+</div>
+
+<!-- 审批全景图 -->
+<div class="apply-p-right">
+  <db-wfview #wfView></db-wfview>
+</div>

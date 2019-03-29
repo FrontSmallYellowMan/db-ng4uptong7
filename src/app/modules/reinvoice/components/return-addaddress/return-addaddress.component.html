@@ -1,0 +1,68 @@
+<form #addAddress="ngForm">
+  <div class="addaddress-result-modal">
+    <ul>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>收货单位：</label></span>
+        <input type="text" placeholder="-请输入收货单位" required name="SDF_NAME" [(ngModel)]="temporaryaddress.SDF_NAME" #SDFNAME="ngModel" [ngClass]="{'m-input-warn':(SDFNAME.touched || addAddress.submitted) && SDFNAME.invalid}">
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>收货地址：</label></span>
+        <input type="text" placeholder="-请输入收货地址" required name="detailaddress" [(ngModel)]="temporaryaddress.detailaddress" #detailaddress="ngModel" [ngClass]="{'m-input-warn':(detailaddress.touched || addAddress.submitted) && detailaddress.invalid}">
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>省份：</label></span>
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select required name="province" [(ngModel)]="temporaryaddress.provincecode" (ngModelChange)="provinceModeChange($event)"
+            #province="ngModel" [ngClass]="{'m-select-warn':(province.touched || addAddress.submitted) && province.invalid}">
+            <option value="">{{loadingMsg}}</option>
+            <option *ngFor="let item of provinceArray" [ngValue]="item.ProvinceCode">{{item.ProvinceName}}</option>
+          </select>
+        </div>
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>城市：</label></span>
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select required name="city" [(ngModel)]="temporaryaddress.citycode" (ngModelChange)="cityModeChange($event)"
+            #city="ngModel" [ngClass]="{'m-select-warn':(city.touched || addAddress.submitted) && city.invalid}">
+            <option value="">{{loadingMsg}}</option>
+            <option *ngFor="let item of cityArray" [ngValue]="item.CityCode">{{item.CityName}}</option>
+          </select>
+        </div>
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>区（县）：</label></span>
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select required name="district" [(ngModel)]="temporaryaddress.district"
+            #district="ngModel" [ngClass]="{'m-select-warn':(district.touched || addAddress.submitted) && district.invalid}">
+            <option value="">{{loadingMsg}}</option>
+            <option *ngFor="let item of districtArray" [ngValue]="item.CountyName">{{item.CountyName}}</option>
+          </select>
+        </div>
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>邮政编码：</label></span>
+        <input type="text" placeholder="-请输入邮政编码" required name="zipcode" [(ngModel)]="temporaryaddress.zipcode" #zipcode="ngModel" [ngClass]="{'m-input-warn':(zipcode.touched || addAddress.submitted) && zipcode.invalid}">
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>联系人：</label></span>
+        <input type="text" placeholder="-请输入联系人" required name="connecter" [(ngModel)]="temporaryaddress.connecter" #connecter="ngModel" [ngClass]="{'m-input-warn':(connecter.touched || addAddress.submitted) && connecter.invalid}">
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>联系电话：</label></span>
+        <input type="text" placeholder="-请输入联系电话" required name="phone" [(ngModel)]="temporaryaddress.phone" #phone="ngModel" [ngClass]="{'m-input-warn':(phone.touched || addAddress.submitted) && phone.invalid}">
+      </li>
+      <li class="clearfix">
+        <span><i class="c-form-need">*</i><label>签收标准：</label></span>
+        <input type="text" placeholder="-请输入签收标准" required name="signstandard" [(ngModel)]="temporaryaddress.signstandard" #signstandard="ngModel" [ngClass]="{'m-input-warn':(signstandard.touched || addAddress.submitted) && signstandard.invalid}">
+      </li>
+    </ul>
+    <div class="m-at-btn">
+      <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+      <button class="m-btn-confirm" type="submit" (click)="sure()">保存</button>
+      <button class="m-btn-cancel" type="button" (click)="cancel()">返回</button>
+    </div>
+  </div>
+</form>

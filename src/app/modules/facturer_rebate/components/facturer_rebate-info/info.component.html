@@ -1,0 +1,11 @@
+<div>
+    <div class="modal-info">
+        <div class="info-header">
+            <span>导入错误信息</span>
+            <span class="pull-right icon-close" (click)="closeInfo()">&times;</span>
+        </div>
+        <div class="info-body">
+            <p *ngFor="let value of infoList">{{ value }}</p>
+        </div>
+    </div>
+</div>

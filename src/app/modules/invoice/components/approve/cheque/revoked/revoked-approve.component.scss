@@ -1,0 +1,120 @@
+.disabled {
+    pointer-events: none;
+    cursor:not-allowed;
+    opacity: 0.5;
+}
+.m-clearfix:after{
+     content:".";        
+     display:block;        
+     height:0;        
+     clear:both;        
+     visibility:hidden;        
+
+}
+.widthmax{
+margin-right: inherit;
+}
+.apply-progress .apply-p-left .apply-p-infor {
+  min-height: 0;
+}
+.addApp-form-item .addApp-form-label {
+  width: 90px;
+  font-size: 12px;
+  line-height: 34px;
+  text-align: right;
+  display: inline-table;
+}
+.m-exm-tabletitle{
+	margin-top: 10px !important;
+	  margin-left: 37px !important;
+	  ul{
+	      display: flex;
+		  height: 35px;
+		  line-height: 35px;
+		  font-weight: 600;
+		  li{
+		    display: flex;
+		    width:50%;
+		  }
+	  }
+}
+.marginright8{
+	  margin-right: 8px;
+}
+.marginright30{
+	  margin-right: 30px;
+}
+.marginleft50{
+	  padding:0 20px;
+	  span{
+	    line-height:34px;
+	    margin-left:10px;
+	  }
+}
+.addApp-up-file{
+	    height: 75px !important;
+    line-height: 75px !important;
+}
+.apply-p-right{
+	overflow: hidden;
+}
+.m-user-info{
+    /*
+    padding: 0 10px;
+		line-height: 0px;
+    */
+    float: left;
+    min-width: 180px;
+    margin-right: 40px;
+}
+.m-user-info1{
+    padding: 0 10px;
+		line-height: 0px;
+   
+}
+
+.addApply-base{
+    margin-bottom: 10px;
+    input[readonly]{
+        background-color: #ffffff;
+    }
+}
+.addApply-container .addApply-base .addApp-base-infor .addApp-base-list > li{
+    width: 49%;
+    &.w-full{
+        width: 100%;
+    }
+}
+.addApp-form-item {
+    position: relative;
+    .addApp-form-tips{
+        line-height: 0;
+    }
+    .m-warn-tip{
+        position: absolute;
+        left: 18%;
+        top: 36px;
+    }
+    .addApp-form-label{
+        width:16%;
+    }
+}
+
+.w-full .addApp-form-right{
+    width:91.8%;
+    height:auto;
+}
+.w-full .addApp-form-label{
+    width:7.8%;
+}
+.addApp-form-right{
+    width: 83%;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+/deep/ .w-full .iradio_square-blue{
+    margin-left: 10px;
+    top: 8px
+}

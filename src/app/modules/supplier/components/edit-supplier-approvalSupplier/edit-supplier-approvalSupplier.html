@@ -1,0 +1,263 @@
+<div class="m-edit-supplier-ssd m-supplier-apply-left">
+  
+    <h4>查看供应商详情</h4>
+  
+    <!-- 基本信息 -->
+    <div class="m-edit-supplier-ssd-content1">
+  
+      <div class="m-edit-supplier-ssd-title">
+        <h5>基本信息</h5>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">申请人</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          <span>{{supplierData.username}}</span><span class="m-user-ename">{{supplierData.itcode|lowercase}}</span>
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>申请日期</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.addtime}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>联系方式</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.phone}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>成本中心</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.costcenter}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>本部</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.BBMC}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>事业部</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.SYBMC}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+  
+    </div>
+  
+  
+    <!--供应商信息-->
+    <div class="m-edit-supplier-ssd-content1">
+  
+      <div class="m-edit-supplier-ssd-title">
+        <h5>供应商信息</h5>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>供应商类别</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.vendorcountry|supplierPipe}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles m-select-title">
+          <span class="m-form-need"></span>公司代码</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+         {{supplierData.companycode}} {{supplierData.company}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>供应商名称</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.vendor}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles" style="width: 110px;">
+          <span class="m-form-need"></span>增值税号或统一社会信用代码</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.valueaddedtaxno}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need"></span>注册地址</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.registeredaddress}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="isShowApprovalButton">
+        <p class="m-edit-supplier-ssd-form-title m-edit-supplier-ssd-form-titles">
+          <span class="m-form-need" *ngIf="taskState!='1'">*</span>供应商分类</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=0 [disabled]="taskState==='1'">
+          <span>核心</span>
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=1 [disabled]="taskState==='1'">
+          <span>非核心</span>
+          <input type="radio" icheck [(ngModel)]="supplierData.classnamecode" name="Classnamecode" value=2 [disabled]="taskState==='1'">
+          <span>新产品</span>
+        </div>
+      </div>
+  
+    </div>
+  
+  
+  
+    <!--付款信息-->
+    <div class="m-edit-supplier-ssd-content1">
+  
+      <div class="m-edit-supplier-ssd-title">
+        <h5>付款信息</h5>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>银行国别</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.bankcountrycode}} {{supplierData.bankcountry}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <!-- 占位用 -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>银行账户</p>
+        <div class="m-edit-supplier-ssd-input m-edit-supplier-ssd-yuan">
+          {{supplierData.bankaccount}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>付款条款</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.paymenttermscode}} {{supplierData.paymentterms}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>银行名称</p>
+        <div class="m-edit-supplier-ssd-input m-edit-supplier-ssd-yuan">
+          {{supplierData.bankname}}
+        </div>
+      </div>
+  
+    </div>
+  
+    <!--其他信息-->
+    <div class="m-edit-supplier-ssd-content1">
+  
+      <div class="m-edit-supplier-ssd-title">
+        <h5>其他信息</h5>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="!!supplierData.internationaltradeterms">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>国际贸易条件</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.internationaltradeterms}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>币种</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.currencycode}}{{supplierData.currency}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="isdescribeErrShowCN">{{describeErrCN}}</p>  -->
+      </div>
+  
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips" *ngIf="!!supplierData.internationaltradelocation">
+        <p class="m-edit-supplier-ssd-form-title">
+          <span class="m-form-need"></span>国际贸易地点</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          {{supplierData.internationaltradelocation}}
+        </div>
+      </div>
+  
+      <div class="m-edit-supplier-ssd-form m-edit-supplier-ssd-tips">
+        <!-- 占位用 -->
+      </div>
+  
+      <div class="m-edit-supplier-ssd-failUpLoad">
+        <p class="m-edit-supplier-ssd-failUpLoad-title">
+          <span class="m-form-need"></span>参考资料</p>
+        <div class="m-select m-edit-supplier-ssd-select-style1">
+          <ul class="m-enclosure" *ngFor="let list of supplierData.AccessoryList;index as i">
+            <li class="uploaded">
+              <i class="iqon-enclosure"></i>
+              <span class="filename" (click)="seeFileUpLoad(list.AccURL)">
+                  {{list.AccName}}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+    </div>
+  
+
+    <!--审批历史记录-->
+    <div class="m-edit-supplier-ssd-content1" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <!--审批历史记录 end-->
+
+    <!--审批按钮-->
+    <div class="m-div-margin" *ngIf="isShowApprovalButton&&taskState==='0'&&ADP!='1'">
+      <db-wfapproval [appParms]="approveData" [hasSaved]="isApproval" (onSave)="writeSupplierType($event)" (onApprovalComplateCallBack)="writeStorage()" (onAlertSuccessCallBack)="routerSupplierDetail($event)"></db-wfapproval>
+    </div>
+
+    <!-- 反填环节审批按钮 -->
+    <!-- <div class="m-button-margin" *ngIf="taskState=='0'&&ADP=='0'&&approveData.nodeid==='7'">
+      <button type="button" (click)="backSaleApplval()" class="m-btn-agree">同意</button>
+      <button class="approval-button-back" type="button" (click)="cancel()">返回</button>
+    </div> -->
+
+    <!-- 加签审批按钮 -->
+    <div *ngIf="taskState=='0'&&ADP=='1'" class="m-div-margin">
+      <db-wfadp [adpAppParms]="approveData"></db-wfadp>
+    </div>
+
+    <div class="m-commonly-btn" *ngIf="!isShowApprovalButton||taskState==='1'">
+      <button class="m-btn-cancel" (click)="cancle()">关闭</button>
+    </div>
+  
+  
+  </div>
+
+  <!-- 审批全景图 -->
+  <div class="apply-p-right">
+    <db-wfview #wfView></db-wfview>
+  </div>

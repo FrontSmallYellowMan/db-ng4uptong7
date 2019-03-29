@@ -1,0 +1,28 @@
+<!--承诺类型-->
+<div class="edit-HUAWEI-typeList">
+  <div class="edit-HUAWEI-typeList-title">请选择承诺类型</div>
+  <table class="m-info-table" style="table-layout:fixed">
+    <thead>
+      <tr>
+        <th class="wp10">请选择</th>
+        <th>类型名称</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of promisedTypeList;">
+        <td>
+          <input type="checkbox" icheck [name]="item.CommitTypeCode" [attr.value]="item.CommitTypeCode" [(ngModel)]="item.checked">
+        </td>
+        <td>{{item.CommitTypeName}}</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <div class="edit-HUAWEI-typeList-button">
+    <button type="button" class="m-btn-confirm" (click)="getTypeLlist()">确定</button>
+    <button type="button" class="m-btn-default" (click)="cancel()">取消</button>
+  </div>
+
+</div>

@@ -1,0 +1,60 @@
+          <!--菜单-->
+            <div class="m-boardtop clearfix">
+              <!--面包屑组件-->
+              <iq-breadcrumb></iq-breadcrumb>
+              
+              <div class="m-dropdown g-fr">
+                  <button class="m-btn-success" (click)="newMaterialBatchPrice()"><i class="iqon-add"></i>新建物料批次价格维护</button>
+              </div>
+              <!-- <iq-newcreat [dataCreat]=dataCreat></iq-newcreat> -->
+          </div>
+          
+          
+
+          <!--功能区-->
+          <div class="m-overclass">
+            <div class="m-contclass">           
+
+              <!-- 物料数据缺省 -->
+              <div class="m-noresult m-commonly-noresult m-apply" [ngClass]="{'isHide':isSearchResult}">
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">暂无相关数据</p>
+                    <p class="m-p-notice">点击“新建物料批次价格维护”建立相关数据吧~</p>
+                </div>
+              </div>
+
+              <!--搜索后显示的版面-->
+              <div class="m-card-cont m-commonly-list" [ngClass]="{'isHide':!isSearchResult}">
+                  <div class="table-auto-content">
+                    <table class="table table-hover table-list" style="table-layout:fixed">
+                    <thead>
+                      <tr>           
+                          <th style="width:20%">序号</th>
+                          <th style="width:20%">申请编号</th>
+                          <th style="width:20%">申请人</th>
+                          <th style="width:20%">申请日期</th>
+                          <th style="width:20%">申请状态</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr *ngFor="let item of materialList;index as i">
+                        <td>{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+                        <td><span class="clickText" (click)="getDetail(i)">{{item.RecordID}}</span></td>
+                        <td>{{item.ApplyName}}</td>
+                        <td>{{item.ApplyTime|iqDate:'YYYY-MM-DD'}}</td>
+                        <td>{{item.Status|batchMaterialPriceState}}</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                  </div>
+                  
+                  <div class="page">
+                      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+                  </div>
+              </div>
+            </div> 
+          </div>

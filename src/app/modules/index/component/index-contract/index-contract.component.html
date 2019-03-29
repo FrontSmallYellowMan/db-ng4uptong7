@@ -1,0 +1,54 @@
+<div class="m-wrap">
+  <div class="m-list-menu">
+    <!--<ul class="m-state">
+      <li [class.active]="query.Type === 'Stock'" (click)="toggle('Stock')">待备货</li>
+      <li [class.active]="query.Type === 'Print'" (click)="toggle('Print')">待用印</li>
+      <li [class.active]="query.Type === 'UnSales'" (click)="toggle('UnSales')">待开销售</li>
+    </ul>-->
+    <!--<div class="m-search-all">
+      <div class="m-search">
+        <i class="iqon-query" (click)="search()"></i>
+        <input [(ngModel)]="query.SearchKey" (keyup.enter)="search()" name="SearchKey" placeholder="-请输入任务描述关键字" type="text">
+      </div>
+    </div>-->
+  </div>
+  <div class="m-card-cont">
+    <loading [show]="loading"></loading>
+    <div class="m-noresult" [hidden]="contractList.length">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+        <p class="m-p-notice">请输入新的搜索条件，重新搜索~</p>
+      </div>
+    </div>
+    <div [hidden]="!contractList.length">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th>我方主体</th>
+            <th>客户名称</th>
+            <th>合同金额</th>
+            <th>合同状态</th>
+            <th>合同类型</th>
+            <th>采购通知</th>
+            <th>印章岗审批日期</th>
+            <th>申请日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of contractList;index as i" (click)="openContractPage(item)">
+            <td>{{item.SellerCompany}}</td>
+            <td>{{item.BuyerName}}</td>
+            <td>{{item.ContractMoney}}</td>
+            <td>{{item.SC_Status | contractInfoTransform:"SC_Status"}}</td>
+            <td>{{item.ContractType}}</td>
+            <td>{{item.PurchaseNotified | contractInfoTransform:"PurchaseNotified"}}</td>
+            <td>{{item.SealApprovalTime | iqDate:"YYYY-MM-DD"}}</td>
+            <td>{{item.SubmitTime}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

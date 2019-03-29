@@ -1,0 +1,90 @@
+<div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+  <div class="modal-header m-dialog-head">
+    <span>新建财年调整</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <form #form="ngForm" (ngSubmit)="save()">
+    <div class="m-add-form">
+      <loading [show]="loading"></loading>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+          <span class="m-form-label" style="float:left;">调整日期：<span class="m-form-need">*</span></span>
+         <my-datepicker style="width: 225px;margin-left: 75px;float:left;"   [(ngModel)]="fiscalObj.adjustmentDate" PlaceHolder="-请选择调整日期" #adjustmentDate="ngModel" name="adjustmentDate"  ></my-datepicker>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">原本部名称：<span class="m-form-need">*</span></span>
+          <input type="text" style="width:230px;margin-left:55px;" #forminput required [ngClass]="{'m-select-warn': !srcBaseDeptName.valid && (srcBaseDeptName.touched || form.submitted)}"
+            name="srcBaseDeptName" #srcBaseDeptName="ngModel" [(ngModel)]="fiscalObj.srcBaseDeptName">
+                <div *ngIf="srcBaseDeptName.invalid && (srcBaseDeptName.dirty || srcBaseDeptName.touched)" class="alert alert-danger">
+              <div *ngIf="srcBaseDeptName.errors.required">
+               原本部名称必填
+               </div>
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">原事业部名称：<!--span class="m-form-need">*</span--></span>
+          <input type="text" style="width:230px;margin-left:45px;" #forminput [ngClass]="{'m-select-warn': !srcSubDeptName.valid && (srcSubDeptName.touched || form.submitted)}"
+            name="srcSubDeptName" #srcSubDeptName="ngModel" [(ngModel)]="fiscalObj.srcSubDeptName">
+              <div *ngIf="srcSubDeptName.invalid && (srcSubDeptName.dirty || srcSubDeptName.touched)" class="alert alert-danger">
+              <!--div *ngIf="srcSubDeptName.errors.required">
+               原事业部名称必填
+               </div-->
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">原业务范围代码：<span class="m-form-need">*</span></span>
+          <input type="text" style="width:230px;margin-left:35px;" #forminput required [ngClass]="{'m-select-warn': !srcBusinessScope.valid && (srcBusinessScope.touched || form.submitted)}"
+            name="srcBusinessScope" #srcBusinessScope="ngModel" [(ngModel)]="fiscalObj.srcBusinessScope">
+              <div *ngIf="srcBusinessScope.invalid && (srcBusinessScope.dirty || srcBusinessScope.touched)" class="alert alert-danger">
+              <div *ngIf="srcBusinessScope.errors.required">
+               原业务范围代码必填
+               </div>
+            </div>
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">现本部名称：<span class="m-form-need">*</span></span>
+          <input type="text" style="width:230px;margin-left:60px;" #forminput required [ngClass]="{'m-select-warn': !descBaseDeptName.valid && (descBaseDeptName.touched || form.submitted)}"
+            name="descBaseDeptName" #descBaseDeptName="ngModel" [(ngModel)]="fiscalObj.descBaseDeptName">
+              <div *ngIf="descBaseDeptName.invalid && (descBaseDeptName.dirty || descBaseDeptName.touched)" class="alert alert-danger">
+              <div *ngIf="descBaseDeptName.errors.required">
+               现本部名称必填
+               </div>
+            </div>
+        </div>
+      </div>
+      
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">现事业部名称：</span>
+          <input type="text" style="width:230px;margin-left:58px;" #forminput  
+            name="descSubDeptName" #descSubDeptName="ngModel" [(ngModel)]="fiscalObj.descSubDeptName">
+        </div>
+      </div>
+      <div class="m-form-item-w100 m-approval">
+        <div class="m-user-members">
+        <span class="m-form-label">现业务范围代码：<span class="m-form-need">*</span></span>
+          <input type="text" style="width:230px;margin-left:45px;" #forminput  required [ngClass]="{'m-select-warn': !descBusinessScope.valid && (descBusinessScope.touched || form.submitted)}"
+            name="descBusinessScope" #descBusinessScope="ngModel" [(ngModel)]="fiscalObj.descBusinessScope">
+            <div *ngIf="descBusinessScope.invalid && (descBusinessScope.dirty || descBusinessScope.touched)" class="alert alert-danger">
+              <div *ngIf="descBusinessScope.errors.required">
+              现业务范围代码必填
+               </div>
+            </div>
+        </div>
+      </div>
+     
+    </div>
+    <div class="m-add-btn">
+      <button class="m-btn-confirm">确定</button>
+      <button type="button" class="m-btn-cancel" (click)="hide()">取消</button>
+    </div>
+  </form>
+</div>

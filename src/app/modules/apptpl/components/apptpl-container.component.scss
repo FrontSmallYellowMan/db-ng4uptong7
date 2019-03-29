@@ -1,0 +1,28 @@
+:host {
+  border: 1px solid #999;
+  display: block;
+  min-height: 400px;
+}
+.nav{
+  position: absolute;
+  width:300px;
+  border-right: 1px solid #f77;
+  /deep/ ul{
+    li{
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+    }
+    li:hover{
+      background-color: blue;
+      a{
+        color:red;
+      }
+    }
+  }
+
+}
+.content{
+  width:90%;
+  padding-left: 305px;
+}

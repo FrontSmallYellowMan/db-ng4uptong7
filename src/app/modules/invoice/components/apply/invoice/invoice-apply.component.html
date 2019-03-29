@@ -1,0 +1,374 @@
+<div class="content-auto">
+    <div class="addApply-container" style="padding-top: 62px">
+        <!--基本信息-->
+        <div class="m-basic-info">
+            <h2>基本信息</h2>
+            <!--选择类型基础信息 -->
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th width="6%">
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >申请人
+                        </th>
+                        <td width="38%" class="user">
+                            <iq-person-select
+                                required
+                                [(ngModel)]="person"
+                                (ngModelChange)="changePerson(person)"
+                                ngDefaultControl
+                                [max]="1"
+                            ></iq-person-select>
+                        </td>
+                        <th width="6%">联系电话</th>
+                        <td width="38%">
+                            <input
+                                type="text"
+                                style="vertical-align:middle;height:35px;line-height:35px;"
+                                [(ngModel)]="invoiceInfo.applyPhone"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="6%">
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >接收平台
+                        </th>
+                        <td width="38%">
+                            <select
+                                (change)="getPlatForms($event)"
+                                required
+                                class="form-control"
+                            >
+                                <option value="">-请选择-</option>
+                                <option
+                                    *ngFor="let p of platforms"
+                                    [selected]="
+                                        p.platcode == invoiceInfo.platformCode
+                                    "
+                                    value="{{ p.platcode + '|' + p.platname }}"
+                                    >{{ p.platname }}</option
+                                >
+                            </select>
+                        </td>
+                        <th width="6%">
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >是否押票
+                        </th>
+                        <td class="flex">
+                            <p>
+                                <input
+                                    type="radio"
+                                    value="1"
+                                    icheck
+                                    name="isPawnTicket"
+                                    [(ngModel)]="invoiceInfo.isPawnTicket"
+                                    class="ng-untouched ng-pristine ng-valid"
+                                /><label>是</label>
+                            </p>
+                            <p>
+                                <input
+                                    type="radio"
+                                    value="0"
+                                    icheck
+                                    name="isPawnTicket"
+                                    [(ngModel)]="invoiceInfo.isPawnTicket"
+                                    class="ng-untouched ng-pristine ng-valid ng-no"
+                                /><label>否</label>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--延期支票信息-->
+        <div class="addApply-base money">
+            <div class="m-dialog-head">
+                <span class="m-dialog-head-change">请填写支票信息：</span>
+            </div>
+            <div class="addApp-base-infor">
+                <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                    <table class="m-info-table" style="width: 98%;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">序号</th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >支票号
+                                </th>
+                                <th style="width:120px;text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >出票日期
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >支票金额
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >出票人账号
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >出票人银行
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >收款人
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >客户代码
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                        >*</i
+                                    >客户名称
+                                </th>
+                                <th style="text-align:center">
+                                    <i
+                                        class="addApp-form-tips addApp-form-tips1"
+                                    ></i
+                                    >合同编号
+                                </th>
+                                <th style="text-align:center">欠款金额</th>
+                                <th
+                                    *ngIf="submitFlag && addFlag"
+                                    width="5%"
+                                    class="m-text-center"
+                                >
+                                    <i
+                                        class="iqon-add"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="增加支票"
+                                        (click)="addTr()"
+                                    ></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let invoiceInfo of invoices;
+                                    let i = index
+                                "
+                            >
+                                <td style="width:43px;text-align:center">
+                                    {{ i + 1 }}
+                                </td>
+                                <td style="text-align:center">
+                                    <input
+                                        class="m-infor-input"
+                                        type="text"
+                                        name="ticketNum"
+                                        [(ngModel)]="invoiceInfo.ticketNum"
+                                    />
+                                </td>
+                                <!--<my-datepicker PlaceHolder="请选择日期" [(ngModel)]="invoiceInfo.checkoutDate"  style="cursor: pointer;width: 115px;" ></my-datepicker>-->
+                                <my-datepicker
+                                    PlaceHolder="请选择日期"
+                                    [(ngModel)]="invoiceInfo.checkoutDate"
+                                    style="cursor: pointer;width: 115px;"
+                                ></my-datepicker>
+                                <td style="text-align:center">
+                                    <input
+                                        class="m-infor-input"
+                                        type="text"
+                                        name="ticketAmount"
+                                        [(ngModel)]="invoiceInfo.ticketAmount"
+                                    />
+                                </td>
+                                <td style="text-align:center">
+                                    <input
+                                        class="m-infor-input"
+                                        type="text"
+                                        name="checkoutAccount"
+                                        [(ngModel)]="
+                                            invoiceInfo.checkoutAccount
+                                        "
+                                    />
+                                </td>
+                                <td style="text-align:center">
+                                    <input
+                                        class="m-infor-input"
+                                        type="text"
+                                        name="checkoutBank"
+                                        [(ngModel)]="invoiceInfo.checkoutBank"
+                                    />
+                                </td>
+                                <td style="text-align:center">
+                                    <div class="m-search">
+                                        <i
+                                            class="iqon-query"
+                                            (click)="toQueryPayee(i)"
+                                            style="cursor:pointer"
+                                        ></i>
+                                        <input
+                                            readonly
+                                            class="m-infor-input"
+                                            name="payeeName"
+                                            [(ngModel)]="invoiceInfo.payeeName"
+                                            type="text"
+                                        />
+                                    </div>
+                                </td>
+                                <td style="text-align:center">
+                                    <div class="m-search">
+                                        <i
+                                            class="iqon-query"
+                                            (click)="toQueryCustom(i)"
+                                            style="cursor:pointer"
+                                        ></i>
+                                        <input
+                                            readonly
+                                            class="m-infor-input"
+                                            name="customCode"
+                                            [(ngModel)]="invoiceInfo.customCode"
+                                            type="text"
+                                        />
+                                    </div>
+                                </td>
+                                <td style="text-align:center">
+                                    <input
+                                        readonly
+                                        class="m-infor-input"
+                                        type="text"
+                                        name="customName"
+                                        [(ngModel)]="invoiceInfo.customName"
+                                    />
+                                </td>
+                                <td style="text-align:center">
+                                    <div class="m-search">
+                                        <i
+                                            class="iqon-query"
+                                            (click)="toQueryContract(i)"
+                                            style="cursor:pointer"
+                                        ></i>
+                                        <input
+                                            readonly
+                                            class="m-infor-input"
+                                            name="contractNum"
+                                            [(ngModel)]="
+                                                invoiceInfo.contractNum
+                                            "
+                                            type="text"
+                                        />
+                                    </div>
+                                </td>
+                                <td style="text-align:center">
+                                    <div class="m-search">
+                                        <i
+                                            class="iqon-query"
+                                            (click)="
+                                                toQueryDebt(i, invoiceInfo)
+                                            "
+                                            style="cursor:pointer"
+                                        ></i>
+                                        <input
+                                            readonly
+                                            class="m-infor-input"
+                                            name="debtAmount"
+                                            value="{{
+                                                invoiceInfo.debtAmount == null
+                                                    ? ''
+                                                    : invoiceInfo.debtAmount.toFixed(
+                                                          2
+                                                      )
+                                            }}"
+                                            type="text"
+                                        />
+                                    </div>
+                                </td>
+                                <td
+                                    *ngIf="submitFlag && addFlag"
+                                    style="text-align:center"
+                                >
+                                    <i
+                                        class="iqon-minimize"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="删除支票"
+                                        (click)="deleteInvoice(i)"
+                                    ></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="addApply-base">
+            <div class="m-list-head">
+                <span class="m-dialog-head-change">审批人信息</span>
+            </div>
+            <div class="addApp-base-infor">
+                <div class="addApp-base-list">
+                    <li
+                        class="addApp-form-item w-full"
+                        style="margin:0;"
+                        *ngIf="invoiceInfo.platformCode == '21'"
+                    >
+                        <label class="addApp-form-label">商务审批人</label>
+                        <div class="addApp-form-right">
+                            <div
+                                class="m-user-info"
+                                user-image
+                                [hasClose]="false"
+                                [user]="p"
+                                *ngFor="let p of bassinApproveList"
+                            ></div>
+                        </div>
+                    </li>
+                    <li class="addApp-form-item w-full" style="margin:0;">
+                        <label class="addApp-form-label">财务审批人</label>
+                        <div class="addApp-form-right">
+                            <div
+                                class="m-user-info"
+                                user-image
+                                [hasClose]="false"
+                                [user]="p"
+                                *ngFor="let p of finaceApproveList"
+                            ></div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                <button
+                    *ngIf="addFlag"
+                    class="m-btn-confirm"
+                    (click)="creatInvoice()"
+                >
+                    提交
+                </button>
+                <button
+                    *ngIf="!addFlag"
+                    class="m-btn-confirm"
+                    (click)="reCreatInvoice()"
+                >
+                    提交
+                </button>
+                <!-- <button *ngIf="!submitFlag" class="m-btn-confirm">提交中...</button> -->
+                <button class="m-btn-sketch" type="button" (click)="close()">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

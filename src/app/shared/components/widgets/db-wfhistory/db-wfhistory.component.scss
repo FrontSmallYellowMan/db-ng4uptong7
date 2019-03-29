@@ -1,0 +1,85 @@
+.apply-record {
+    // margin: 10px 0px;
+    background: #fff;
+    .m-exm-item {
+      margin-bottom: 15px;
+      padding: 20px 27px;
+      background-color: #fff;
+      .m-exm-record {
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .m-exm-advice {
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -15px;
+        margin-bottom: -5px;
+        > li {
+          width: 100%;
+          height: 38px;
+          .m-exm-label {
+            display: inline-block;
+            vertical-align: middle;
+            width: 110px;
+            font-weight: bold;
+            padding: 10px 0;
+            // text-align: right;
+          }
+          .m-exm-cont {
+            display: inline-block;
+            vertical-align: middle;
+            .light-color-text {
+              color: #ddd;
+            }
+          }
+          .m-exm-time {
+            margin-left: 20px;
+            padding: 10px 0;
+          }
+          .m-exm-remark {
+            display: inline-block;
+            width: 50px !important;
+            margin-left: 30px;
+            padding: 15px 0 10px;
+            vertical-align: top;
+            word-break: break-all;
+            word-wrap: break-word;
+            span{
+              display: inline-block;
+              width: 15px;
+            }
+          }
+          .normal-weight-text {
+            font-weight: normal;
+          }
+        }
+        .m-exm-half {
+          width: 50%;
+        }
+      }
+      .m-exm-history > li {
+        min-height: 37px;
+        height: auto;
+      }
+      .m-exm-history > li .m-exm-cont {
+        width: 150px;
+        .m-user-info-small {
+          display: inline-block;
+          margin: 10px;
+          width: 150px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    .m-dialog-head-text{
+      color: #57b9f8;
+    }
+  }

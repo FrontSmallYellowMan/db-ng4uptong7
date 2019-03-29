@@ -1,0 +1,352 @@
+.ri-red-approve{
+    width: 100%;
+    padding: 80px 20px 0;
+    .ri-red-approve-left{
+        margin-right: 20px;
+        float: left;
+        width: 80%;
+        position: relative;
+    }
+    .ri-red-approve-right{
+        overflow: hidden;
+    }
+}
+.ri-red-apply{
+    width: 100%;
+    .red-apply-title{
+        margin: 20px auto;
+        font-size: 16px;
+        color: #151515;
+    }
+    .red-apply-content{
+        width: 100%;
+        border-radius: 3px;
+        background-color: #ffffff;
+        margin-bottom: 15px;
+        .apply-content-title{
+            width: 100%;
+            padding-top: 19.5px;
+            padding-left: 25.5px;
+            padding-bottom: 19.5px;
+            text-align: left;
+            font-size: 14px;
+            color: #57b9f8;
+            border-bottom: 1px solid #e1e3eb;
+        }
+        .apply-content-main{
+            width: 100%;
+            border-radius: 3px;
+            background-color: #FFF;
+            font-size: 12px;
+            color: #151515;
+            padding: 10px 30px;
+            .c-form-item{
+                    width: 50%;
+                    float: left;
+                    height: 30px;
+                    .c-input-title{
+                        float: left;
+                        line-height: 30px;
+                        padding-right: 10px;
+                        text-align: right;
+                        width: 18%;
+                        .c-form-need{
+                            color: #ea6269;
+                            padding-right: 3px;
+                        }
+                    }
+                    .c-input-wrap{
+                        float: left;
+                        width: 82%;
+                        text-align: left;
+                        position: relative;
+                        line-height: 30px;
+                    }
+                    .c-input-msg{
+                        text-align: right;
+                        color: #ea6269;
+                    }
+            }
+            .c-form-item-small{
+                float: left;
+                width: 91%;
+                margin-left: 9%;
+                height: 30px;
+            }
+            .c-form-item-custom{
+                width: 100%;
+                float: left;
+                .c-input-title{
+                    float: left;
+                    padding-right: 10px;
+                    text-align: right;
+                    width: 9%;
+                }
+                .c-input-wrap{
+                    float: left;
+                    width: 91%;
+                    text-align: left;
+                    position: relative;
+                }
+            }
+            .apply-invoice-search{
+                float: left;
+                height: 35px;
+                line-height: 35px;
+                width: 50%;
+                .search-title{
+                    float: left;
+                    padding-right: 10px;
+                    width: 18%;
+                    text-align: right;
+                }
+                .search-content{
+                    float: left;
+                    width: 82%;
+                }
+                .c-form-need{
+                    color: #ea6269;
+                    padding-right: 3px;
+                }
+                .m-search .iqon-query{
+                    width: 35px;
+                    line-height: 35px;
+                }
+            }
+            .invoice-before {
+                position: relative;
+                top: 10px;
+                .m-info-table{
+                    width: 100%;
+                    .table-head-tr1{
+                        font-size: 14px;
+                    }
+                }
+                .invoice-before-total{
+                    position: absolute;
+                    top: 11px;
+                    left: 10px;
+                }
+                // 删除该行 begin
+                .m-enmc-handStyle{
+                    cursor: pointer;
+                }
+                td:last-child:hover{
+                    .bubble-tips{
+                        transition: all 0.5s linear;
+                        opacity: 1;
+                    }	
+                }
+                .bubble-tips{
+                    position: absolute;
+                    transition: all 0.2s linear;
+                    opacity: 0;
+                    z-index: 100;
+                    .triangle-style{
+                        position: absolute;
+                        width: 8px;
+                        height: 8px;
+                        background-color:#333333;  
+                        transform: rotate(45deg);
+                        -ms-transform:rotate(45deg); 	/* IE 9 */
+                        -moz-transform:rotate(45deg); 	/* Firefox */
+                        -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+                        -o-transform:rotate(45deg); 
+                        margin: -15px 0 0 30px;
+                    }
+                    .bubble-content{
+                        background-color:#333333;  
+                        padding:5px;
+                        border-radius: 3px;
+                        color:#fff;
+                        font-size: 12px;
+                        line-height: 20px;
+                        margin:-25px 0 0 34px;
+                        width: 60px;
+                    }
+                }
+                // 删除该行 end
+            }
+            .invoice-after{
+                position: relative;
+                top: 25px;
+                .m-info-table{
+                    width: 100%;
+                    td{
+                        line-height: normal;
+                        vertical-align: middle;
+                        input{
+                            line-height: 25px;
+                        }
+                    }
+                }
+                .invoice-after-total{
+                    position: absolute;
+                    top: 11px;
+                    left: 10px;
+                }
+            }
+            .apply-content-title-message{
+                color: #ea6269;
+                padding-left: 15px;
+            }
+            .material-detail-tab{
+                width: 100%;
+                .material-detail-tabtitle{
+                    width: 100%;
+                    ul{
+                        width: 100%;
+                        padding-bottom: 5px;
+                        li{
+                            float: left;
+                            width: 160px;
+                            height: 34px;
+                            background-color: #ffffff;
+                            border: solid 1px #e1e3eb;
+                            color: #4a4a4a;
+                            text-align: center;
+                            line-height: 34px;
+                            cursor:pointer;
+                            margin: 5px 0 5px -1px;
+                        }
+                        .active{
+                            color: #ffffff;
+                            background-color: #57b9f8;
+                            border: 0;
+                        }
+                    }
+                }
+                .material-detail-tabcontent{
+                    width: 100%;
+                    .m-enmc-handStyle{
+                        cursor: pointer;
+                    }
+                    .addApp-reduce{
+                        font-size: 25px;
+                    }
+                    th .material-col-need{
+                        color: #ea6269;
+                        padding-right: 3px;
+                    }
+                    td{
+                        line-height: normal;
+                        vertical-align: middle;
+                    }
+                    input{
+                        line-height: 25px;
+                    }
+                    input:focus, input[type=number]:focus {
+                        border: 1px solid #59aeea;
+                    }
+                    input[type=number]{
+                        width: 100%;
+                        border: 1px solid #e1e3eb;
+                        border-radius: 3px;
+                        -moz-appearance: textfield;
+                    }
+                    input::-webkit-outer-spin-button,
+                    input::-webkit-inner-spin-button{
+                        -webkit-appearance: none !important;
+                        margin: 0; 
+                    }
+                    .material-description-tip, .material-backmoney-tip{
+                        color:#ea6269;
+                    }
+                    .material-table-title{
+                        padding: 0 0 10px 25px;
+                        color: #ea6269;
+                    }
+                    .material-detail-tabcontent-tabitem{
+                        margin-bottom: 20px;
+                    }
+                    .material-table-title-node6{
+                        padding: 5px 0;
+                        width: 100%;
+                        .table-title-title,.table-title-content{
+                            float: left;
+                            height: 35px;
+                            line-height: 35px;
+                        }
+                        .table-title-title{
+                            width: 10%;
+                            text-align: right;
+                        }
+                        .table-title-content{
+                            width: 23%;
+                            text-align: center;
+                            margin: 0 1%;
+                            span {
+                                display: inline-block;
+                                width: 100%;
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+            .material-col-need{
+                color: #ea6269;
+                padding-right: 3px;
+            }
+            input{
+                line-height: 25px;
+            }
+            input:focus, input[type=number]:focus {
+                border: 1px solid #59aeea;
+            }
+            .apply-content-main-accessory a{
+                color: #4a4a4a;
+            }
+            .apply-content-main-accessory a:hover{
+                cursor: pointer;
+                color: #59aeea;
+            }
+        }
+        .mater-detail-content{
+            padding: 10px 30px 35px;
+            
+        }
+    }
+    .red-apply-footer{
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 35px;
+        padding-top: 15px;
+        .m-btn-common{
+            margin-left: 15px;
+        }
+        .m-btn-cancel{
+            background-color: #f3f3f3;;
+            text-align: center;
+            border: none;
+            border-radius: 3px;
+            transition: all .7s;
+            font-size: 14px;
+            overflow: hidden;
+            display: inline-block;
+            height: 45px;
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .m-btn-default{
+            height: 45px;
+        }
+    }
+    .contract-approval{
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+// :host/deep/.iqon-close,:host/deep/.not-upload,:host/deep/.uploaded span:nth-last-child(2){
+//     display: none;
+// }
+// :host/deep/.uploaded{
+//     border: none;
+// }
+:host/deep/.apply-opinion{
+    padding: 15px 20px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    border-radius: 3px;
+}

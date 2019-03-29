@@ -1,0 +1,219 @@
+// rgba(74,74,74)
+$text-color: #4a4a4a;
+$text-color-new: #a8b1bd;
+$text-gray: #a4a4a4;
+// rgba(57, 189, 138) 绿色
+// rgba(72, 188, 239) 蓝色#48bcef
+// rgba(224, 62, 57) // 红色
+// rgba(243, 113, 77) //橙色
+$link-color: rgb(72, 188, 239);
+$theme-color: $link-color;
+$theme-font-color: rgb(59, 167, 229);
+$theme-color-light: rgba(72, 188, 239, .25);
+$theme-color-ll: rgba(72, 188, 239, .10);
+$theme-color-middle: rgba(72, 188, 239, .5);
+$theme-color-svg: rgba(72, 188, 239, .5);
+$outline-color: rgba(72, 188, 239, .25);
+$text-color-light: rgba(74, 74, 74, .5);
+$text-color-little-light: rgba(74, 74, 74, .7);
+// $base-font-family: "Microsoft YAHEI", Arial, sans-serif;
+$base-font-win: tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;
+// $base-font-mac: tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;
+// $base-font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+$confirm-color: #1ab394;
+$col-success: #2bb562;
+$col-danger: #f45654;
+$col-grey: #a2a2a2;
+$col-remain: #f45654;
+$col-447: #447ae9;
+$col-fail: #e01f31;
+$col-low: #ffc938;
+$col-middle: #ffa257;
+$col-remind: #63c6b1;
+$col-remind-ll: rgba(99,198,177,0.08);
+
+$status-success: #2bb562;
+
+$process-bar: #cfeff9;
+
+$theme-color-dark: #3cb1d4;
+$theme-color-light-dark: #c4e3ec;
+$disabled-color: #d7d7d7;
+$disabled-text-color: #c5c4c4;
+$theme-color-little-light: rgba(72, 188, 239, .15);
+$theme-shadow: rgba(59, 175, 248, .7);
+
+$reject-color: $theme-color-light;
+$list-icon-color: $theme-color-light;
+$portal-theme: $theme-color-light;
+
+// 首页任务分类不再是按照我参与的，我发起的、我响应的来划分了，而是按照高中低的方式
+// 理想是美好的，现实是这帮需求设计人员天马行空！！
+$priority1: $col-low; // #93d9ee;
+$priority2: $col-middle; // #89c997;
+$priority3: $col-danger; // #f6c632;
+
+// $talk-attachment: #97de69; // 红色主题下
+$talk-pic: #f3844d;
+$talk-attachment: #a3ddf7;
+$talk-emoji: #fac931;
+$talk-subject: #97de69;
+// #a3ddf7;
+
+// 未读消息通知
+$notify: #ff5352;
+
+// 考勤状态
+$attend1: rgba(240,87,153,.4);
+$attend2: rgba(240,87,153,.6);
+$attend3: rgba(67,203,175,.6);
+$attend4: rgba(67,203,175,1);
+$attend5: rgba(65,192,230,.6);
+$attend6: rgba(65,192,230,1);
+
+// 问题反馈
+$fb-no-start: #ff974b;
+$fb-settled: #57cb9e;
+$fb-dealing: #ff6464;
+
+// 个人主页
+$hp-level-color: #43cbaf;
+$hp-level-bg: #d0f2eb;
+$hp-reply: #f69ac2;
+$hp-sendmail: #43cbaf;
+
+// 新闻
+$news-bg: #f69ac2;
+
+// 办公用品
+$office-amount: #f69ac2;
+
+// 规章制度
+$rule-tag: #f69ac2;
+
+// 应用商城
+$istore-buy: #6dd6ad;
+
+// 企业设置
+$setting-success: #7adfb8;
+$setting-red: #e45656;
+$setting-confirm: #43cb66;
+$setting-admin: #f95353;
+$setting-btn: #f8bc49;
+$setting-btn-deep: #f58e61;
+$setting-light: #a3ddf7;
+
+// 主题
+$theme-blue: rgb(72, 188, 239);
+$theme-red: rgb(224, 62, 57);
+$theme-pink-green: rgb(47, 201, 170);
+$theme-green: rgb(57, 189, 138);
+$theme-orange: rgb(243, 113, 77);
+$theme-roseo: rgb(244, 84, 133);
+
+// 引导
+$ug-light: #a3ddf7;
+$ug-light2: #95e4f2;
+$ug-step: #7adfb8;
+
+// 日程
+$schdule-tag: #7adfb8;
+$schdule-strong: #5adc82;
+$schdule-title: #4eb98f;
+$schdule-pass: #00ad7e;
+
+// 会议室
+$meeting-reverse: #43cbaf;
+$meeting-tel: #f7a4c8;
+$meeting-uo: #ff7a7a;
+//72, 188, 239
+$top-setting: rgb(53,174,227);
+
+$whole-width: 1200px;
+$whole-horizon-padding: 40px;
+
+$header-height: 86px;
+$header-height-2: 56px;
+$header-vertical-padding: 15px;
+$header-inner-height: $header-height - $header-vertical-padding * 2;
+
+$left-width: 200px;
+$right-width: $whole-width - $whole-horizon-padding * 2 - $left-width;
+$center-width: 600px;
+$right-portal-width: 240px;
+
+$border-color: #e2e2e2;
+
+$border-bottom: 1px solid $border-color;
+$table-background-color: #fdfdfd;
+$warn-tips-color: #a94442;
+
+//按钮
+$btn-border-color:#e1e3eb;
+$btn-sky-blue:#57b9f8;
+$btn-light-green: #4cc9a7;
+$btn-color-warn:#ea6269;
+
+
+
+//新添加OA
+
+//默认背景色
+$def-bg-color:#f3f3f3;
+//主题颜色
+$def-main-color:#57b9f8;
+//辅助颜色1
+$def-assist1-color:#4cc9a7;
+//辅助颜色2
+$def-assist2-color:rgba(87,185,248,0.1);
+//警示颜色
+$def-warn-color:#ea6269;
+//灰色
+$def-color1:#d2d8e0;
+//深灰
+$def-color2:#5c6166;
+//浅灰
+$def-color3:#f5f7fa;
+//一级线条颜色
+$def-link1-color:#e1e3eb;
+//二级线条颜色
+$def-link2-color:#eeeeee;
+//文字颜色1
+$def-font1-color:#4a4a4a;
+//文字颜色2
+$def-font2-color:#a8b1bd;
+//缺省文字颜色
+$def-dfont-color:#c2c8d1;
+//弹出蒙版颜色
+$def-mask-color:rgba(0,0,0,0.08);
+//头像颜色1
+$def-avatar1-color:#66a4ea;
+//头像颜色2
+$def-avatar2-color:#67ccb3;
+//头像颜色3
+$def-avatar3-color:#ef9051;
+//头像颜色4
+$def-avatar4-color:#f370ab;
+//头像颜色5
+$def-avatar5-color:#51cdf6;
+//头像颜色6
+$def-avatar6-color:#9ccc65;
+//头像颜色7
+$def-avatar7-color:#ffc30f;
+
+//响应式临界点
+$breakpoints: (small: 500px, medium: 800px, large: 1200px);
+
+
+/* 选人组件高度 */
+$user-height: 40px;
+/* 选人组件头像大小 */
+$user-img-size: 30px;
+/* 选人组件人名颜色-中文 */
+$user-name-chinese: $text-color;
+/* 选人组件人名颜色-英文 */
+$user-name-english: $text-color-new;
+/* 必须提示颜色 */
+$msg-need: #ff4d4d;
+/* 替换添加 */
+$user-change-color: #e1e3eb;

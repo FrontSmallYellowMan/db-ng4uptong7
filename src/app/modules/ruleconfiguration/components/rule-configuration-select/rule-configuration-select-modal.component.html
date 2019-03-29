@@ -1,0 +1,52 @@
+<!--弹出框-->
+<div class="rule-modal">
+  <div class="rule-modal-title">
+      <div>{{title}}</div>
+      <div class="rule-modal-close"><i class="iqon-close" (click)="cancle()"></i></div>
+  </div>
+   
+
+  <div class="m-search">
+    <input type="text" name="querycontent" placeholder="-请填写搜索内容" [(ngModel)]="querySYBMCData.querycontent" (keyup.enter)="search()">
+    <button type="button" class="m-btn-confirm" (click)="search()">搜索</button>
+  </div>
+
+    <table class="m-info-table" style="table-layout:fixed" *ngIf="contentList.length>0">
+      <thead>
+        <tr>
+          <th class="wp10">
+            <input allcheck="ruleConfigurantionAllChild" [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox" name="">
+          </th>
+          <th *ngFor="let title of titleList">{{title}}</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr *ngFor="let item of contentList;index as i;">
+          <td>
+            <input type="checkbox" icheck [(ngModel)]="item.checked" name="" allcheckChild="ruleConfigurantionAllChild" (ngModelChange)="getConent(i)">
+          </td>
+          <td *ngFor="let content of item">{{content}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 搜索缺省页 -->
+    <div *ngIf="contentList.length===0" class="m-default"><i class="iqon-search-error"></i>暂无搜索内容</div>
+
+    <div class="page" [ngClass]="{'m-hide':contentList.length===0}">
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+      </div>
+  
+  </div>
+
+  <!-- 已选列表 -->
+  <div class="m-select-box">
+    <div [ngClass]="{'m-select-list':saveValueList.length===0,'m-select-list-final':saveValueList.length>0}">
+      <h3>已选列表</h3>
+
+        <div *ngFor="let content of saveValueList">{{content}}</div>
+
+    </div>
+  </div>
+

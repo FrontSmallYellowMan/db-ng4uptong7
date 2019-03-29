@@ -1,0 +1,125 @@
+.m-search-all {
+  height: 30px;
+  position: absolute;
+  right: 5px;
+
+  .m-search {
+    width: 250px;
+    float: right;
+  }
+}
+
+.m-order-number {
+  z-index: 1045;
+  top: 6%;
+  left: 18%;
+  width: 860px;
+}
+
+.modal-body {
+  height: 455px;
+  padding-top: 15px;
+}
+
+.m-order-table {
+  padding-top: 30px;
+  position: relative;
+  margin: 43px 0 0;
+
+  .table-head {
+    background-color: #f5f7fa;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    line-height: 30px;
+    width: 808px;
+    border-bottom: 1px solid #d2d8e0;
+  }
+
+  .table-body {
+    width: 808px;
+    max-height: 360px;
+    overflow-y: auto;
+
+    ul {
+      height: 30px;
+      border-bottom: 1px solid #d2d8e0;
+      position: relative;
+
+      &:hover {
+        background-color: #fbfbfb;
+      }
+    }
+  }
+
+  li {
+    line-height: 30px;
+    float: left;
+    border-left: 1px solid #d2d8e0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:nth-child(1) {
+      width: 38px;
+      border-left: 0;
+    }
+
+    &:nth-child(2) {
+      width: 120px;
+    }
+
+    &:nth-child(3) {
+      width: 240px;
+    }
+
+    &:nth-child(4) {
+      width: 60px;
+    }
+
+    &:nth-child(5) {
+      width: 50px;
+    }
+
+    &:nth-child(6) {
+      width: 50px;
+    }
+
+    &:nth-child(7) {
+      width: 60px;
+    }
+
+    &:nth-child(8) {
+      width: 105px;
+    }
+
+    &:nth-child(9) {
+      width: 60px;
+    }
+  }
+
+  .oc-count-error {
+    position: absolute;
+    width: 100%;
+    height: 29px;
+    top: 1px;
+    border: 1px solid red;
+  }
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+/deep/ .iqon-calendar-2 {
+  display: none;
+}
+
+/deep/ .my-datepicker {
+  width: 120px;
+}
+
+.m-order-number .modal-footer {
+  margin-top: 20px;
+}

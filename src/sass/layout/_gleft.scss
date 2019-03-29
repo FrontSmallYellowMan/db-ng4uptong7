@@ -1,0 +1,32 @@
+.g-list {
+    // float: left;
+    // position: relative;
+    // // padding-bottom: 9999px;
+    // // margin-bottom: -9999px;
+    // overflow: hidden;
+    // background: #fff none repeat scroll 0 0;
+    // border-right: 1px solid #e2e2e2;
+    // min-height: 395px;
+    // width: 285px;
+    // z-index: 1000;
+    // height: 100%;
+    width: 240px;
+    height: 100%;
+    min-height: 395px;
+    position: relative;
+    float: left;
+    overflow: hidden;
+    z-index: 1000;
+    background: #fff none repeat scroll 0 0;
+    border-right: 1px solid #e2e2e2;
+}
+
+.g-fl{
+  float: left;
+}
+.m-user-nav {
+    position: relative;
+    float: left;
+    width: 240px;
+    background-color: #fff;
+}

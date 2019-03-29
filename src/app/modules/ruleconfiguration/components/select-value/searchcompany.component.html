@@ -1,0 +1,32 @@
+<div class="container m-order-number">
+    <div class="modal-body clearfix">
+        <!-- <loading [show]="loading"></loading> -->
+        <div class="m-search-all">
+            <div class="m-search">
+                <i class="iqon-query" (click) = "search()"></i>
+                <input name="name" (keyup.enter) = "search()" [(ngModel)] = "companysearch" placeholder="搜索公司代码或公司名称..." type="text">
+            </div>
+        </div>
+        <div class="m-order-table">
+            <loading [show]="loading"></loading>
+            <ul class="m-shipTo-head">
+                <li></li>
+                <li>公司代码</li>
+                <li>公司名称</li>
+            </ul>
+            <div class="m-shipTo-body">
+                <ul  *ngFor = "let item of companyList;index as i">
+                    <li><input type="checkbox" (onChange) = "selected(item.checked,i)" icheck [(ngModel)]="item.checked"></li>
+                    <li title = "{{item.CompanyCode}}">{{item.CompanyCode || "&nbsp;"}}</li>
+                    <li title = "{{item.CompanyName}}">{{item.CompanyName || "&nbsp;"}}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+    </div>
+    <div class="modal-footer">
+        <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+        <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,85 @@
+.ec-distype-maintenance{
+    .ec-distype-maintenance-title{
+        color: #39a0f7;
+        height: 55px;
+        line-height: 35px;
+        padding: 10px 20px;
+        background-color: #f5f7fa;
+        box-shadow: 0 0 6.4px 1.1px rgba(0, 0, 0, 0.05);
+        border: solid 1px #e2e2e2;
+        border-left: 0;
+    }
+    .ec-distype-maintenance-content{
+        padding: 35px 55px;
+        // background: #fff;
+        .ec-distype-maintenance-content-item{
+            width: 50%;
+            float: left;
+            padding-bottom: 5px;
+            .maintenance-content-item-title,.maintenance-content-item-control{
+                float: left;
+                width: 50%;
+                height: 35px;
+                line-height: 35px;
+            }
+            .maintenance-content-item-title{
+                width: 19%;
+                text-align: right;
+                span{
+                    color: #ff4d4d;
+                }
+            }
+            .maintenance-content-item-control{
+                width: 81%;
+                position: relative;
+                a{
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    text-align: center;
+                    height: 35px;
+                    color: #fff;
+                    border: none;
+                    border-radius: 3px;
+                    -webkit-transition: all .7s;
+                    transition: all .7s;
+                    font-size: 14px;
+                    overflow: hidden;
+                    background: -webkit-linear-gradient(175deg, #3495f6, #42c2f7);
+                    background: linear-gradient(275deg, #3495f6, #42c2f7);
+                    line-height: 35px;
+                    min-width: 80px;
+                }
+            }
+
+        }
+        .ec-distype-maintenance-content-item-ddt{
+            width: 100%;
+            padding-bottom: 5px;
+            .maintenance-content-item-ddt-title,.maintenance-content-item-ddt-control{
+                float: left;
+                height: 35px;
+                line-height: 35px;
+                text-align: right;
+            }
+            .maintenance-content-item-ddt-title{
+                width: 10%;
+            }
+            .maintenance-content-item-ddt-control{
+                width: 27%;
+                padding-right: 8px;
+                display: inline-flex;
+            }
+        }
+    }
+    .ec-distype-maintenance-footer{
+        text-align: center;
+        a{
+            display: inline-block;
+            width: 148px;
+            height: 35px;
+            line-height: 35px;
+            cursor: pointer;
+        }
+    }
+}

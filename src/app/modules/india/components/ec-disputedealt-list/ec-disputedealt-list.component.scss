@@ -1,0 +1,128 @@
+.rp-list{
+    position: relative;
+    .rp-distype-title{
+        color: #39a0f7;
+        height: 55px;
+        line-height: 35px;
+        padding: 10px 20px;
+        background-color: #f5f7fa;
+        box-shadow: 0 0 6.4px 1.1px rgba(0, 0, 0, 0.05);
+        border: solid 1px #e2e2e2;
+        border-left: 0;
+        button{
+            float: right;
+            text-align: center;
+            height: 35px;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            transition: all .7s;
+            overflow: hidden;
+            background: linear-gradient(138deg,#00d5b4,#0cd3ab,#00c1a8);
+            padding: 0 26px;
+            height: 36px;
+            line-height: 36px;
+            font-size: 14px;
+            background-image: linear-gradient(138deg,#00d5b4,#0cd3ab,#00c1a8);
+        }
+    }
+    .rp-list-search{
+        width: 100%;
+        padding: 15px 15px 0;
+        .search-item{
+            float: left;
+            width: 50%;
+            margin-bottom: 5px;
+            .search-title,.search-input{
+                float: left;
+                height: 35px;
+                line-height: 35px;
+            }
+            .search-title{
+                width: 15%;
+                text-align: left;
+                padding-right: 2%;
+            }
+            .search-input{
+                width: 82%;
+                text-align: left;
+                .inputs-date{
+                    float: left;
+                }
+                .inputs-date-select{
+                    width: 48%;
+                }
+                .inputs-date-line{
+                    width: 4%;
+                    text-align: center;
+                }
+            }
+        }
+        .list-search-button{
+            float: left;
+            text-align: right;
+            button{
+                text-align: center;
+                height: 35px;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                transition: all .7s;
+                font-size: 14px;
+                overflow: hidden;
+                background: linear-gradient(275deg,#3495f6,#42c2f7);
+                line-height: 35px;
+                min-width: 80px;
+            }
+            button:hover {
+                opacity: 0.85;
+            }
+            button:focus {
+                outline: none;
+            }
+        }
+    }
+    .rp-list-content{
+        position: absolute;
+        top: 155px;
+        width: 100%;
+        .rp-list-content-menu{
+            float: left;
+            width: 50%;
+        }
+        .search-button{
+            width: 98%;
+            margin-bottom: 5px;
+            .list-statistics-info{
+                float: left;
+                text-align: left;
+                width: 60%;
+                padding-left: 15px;
+                .list-statistics-info-title{
+                    padding-left: 5px;
+                    border-left: 5px solid #57b9f8;
+                }
+                .list-statistics-info-content{
+                    height: 25px;
+                    line-height: 25px;
+                    span{
+                        color:#ff4d4d;
+                    }
+                }
+            }
+        }
+        .rp-list-content-table{
+            padding: 0 15px 15px;
+            table{
+                background: white;
+                text-align: center;
+                thead tr th{
+                    text-align: center;
+                }
+            }
+        }
+        .rp-list-content-null{
+            padding: 15px;
+        }
+    }
+}

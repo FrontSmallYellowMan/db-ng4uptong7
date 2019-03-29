@@ -1,0 +1,53 @@
+<div class="g-hdp sales-main">
+  <div class="g-list index-list">
+    <div class="">
+      <div class="m-user-info">
+        <div class="m-user-img">
+          <user-image-head [user]="{userID: userInfo.ITCode, userCN: userInfo.UserName, userEN: userInfo.ITCode.toLocaleLowerCase()}"></user-image-head>
+        </div>
+        <div class="m-user-names">
+          <div class="">
+            <span class="m-user-name">{{userInfo.UserName}}</span>
+            <span class="m-user-ename">{{userInfo.ITCode}}</span>
+          </div>
+          <div class="m-select">
+            <i class="iqon-xia"></i>
+            <select>
+              <option *ngFor="let item of rolesList">{{item.HomeRoleName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <ul class="m-usertree m-usertree-approve">
+        <li (click)="myapproval()">我的审批<span class="m-num">{{approvalCount}}</span></li>
+        <li (click)="myMessage()">我的消息<span class="m-num">{{messageCount}}</span></li>
+      </ul>
+      <ul class="m-usertree m-usertree-apply">
+        <li class="open my-collection">
+          <a href="javascript:;">我的收藏</a>
+          <span class="collection-sort" (click)="sortCollection()">{{isSorting?'完成':'排序'}}</span>
+          <i class="icon-text-right iqon-add-circle" (click)="editMyCollection()"></i>
+          <ul class="m-tree index-tree" [style.height]="45 * collectionList.length + 'px'">
+            <li dragY [stopDrag]="!isSorting" (dragStart)="dragStart($event)" (dragEnd)="dragEnd($event)" *ngFor="let item of collectionList;index as i" [ngStyle]="{top: 45 * item.Sorting + 'px',transform: isSorting?'skew(-10deg)':'none'}">
+              <a (click)="openMyCollection(item.URL)">
+                <i class="icon-text-left iqon-concat-o"></i>
+                {{item.FunctionName}}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="open">
+          <a href="javascript:;">我的应用</a>
+          <ul class="m-tree">
+            <li *ngFor="let item of myApp">
+              <a [routerLink]="'/' + item.url"><i class="icon-text-left {{item.iqon}}"></i>{{item.name}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="g-right">
+    <router-outlet></router-outlet>
+  </div>
+</div>

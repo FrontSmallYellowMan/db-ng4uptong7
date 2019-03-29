@@ -1,0 +1,200 @@
+<div>
+    <table *ngIf="billTypeId=='priceType'" class="table table-hover dbox-table">
+        <thead>
+            <tr class="m-infor-tr">
+                <th class="m-text-center">序号</th>
+                <th class="m-text-center">物料号</th>
+                <th class="m-text-center">物料描述</th>
+                <th class="m-text-center"  style="width:50px">数量</th>
+                <th class="m-text-center">工厂</th>
+                <th class="m-text-center">库存地</th>
+                <th class="m-text-center" style="width:100px">批次</th>
+                <th>原销售总额/元</th>
+                <th>新销售总额(返款前)/元</th>
+                <th>原返款总额/元</th>
+                <th>新返款总额/元</th>
+                <th style="width:150px">新销售净额/元</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let item of tabledata;let i = index;" style="border-bottom:1px solid #ddd">
+            <tr style="text-align: center;">
+                <td>
+                    {{item.projcode}}
+                </td>
+                <td>
+                    {{item.originalmaterialcode}}
+                </td>
+                <td>
+                    {{item.originaldescription}}
+                </td>
+                <td>
+                    {{item.num}}
+                </td>
+                <td>
+                    {{item.factory}}
+                </td>
+                <td>
+                    {{item.originalstoragelocation}}
+                </td>
+                <td>
+                    {{item.originalbatchno}}
+                </td>
+                <td style="text-align: left;">
+                    {{item.originalmoney}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="item.money" (blur)="NumFloatAlert(tabledata,item.money);returnBillMoneyData(tabledata)">
+                </td>
+                <td style="text-align: left;">
+                    {{item.originalbackmoney}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="item.backmoney" (blur)="BillbackMoneyBlur(item);returnBillMoneyData(tabledata)">
+                </td>
+                <td style="text-align: left;">
+                    {{(item.money-item.backmoney) | backZero}}
+                </td>
+            </tr>
+        </tbody>
+        <tfoot  *ngIf="tabledata.length>0">
+            <tr>
+                <td colspan="7" style="text-align:right">合计</td>
+                <td >{{tabledata | BillTableOriginalmoney}}</td>
+                <td  class="m-text-right visible">
+                    {{tabledata | Billmoney}}
+                    <p class='m-warn-p' style="color:red" *ngIf="BillmoneyWarn">*&nbsp;新销售总计应与原单的销售总计相等</p>
+                </td>
+                <td>{{tabledata | BillTableAddNum3}}</td>
+                <td  class="m-text-right visible">
+                    {{tabledata | BillTableAddNum4}}
+                     <p class='m-warn-p' style="color:red" *ngIf="BillbackMoneyWarn">*&nbsp;返款金额已超出销售金额30%</p>
+                </td>
+                <td>{{tabledata | BillSurplus}}</td>
+            </tr>
+        </tfoot>
+    </table>
+    <table *ngIf="billTypeId=='materielType'" class="table table-hover dbox-table">
+        <thead>
+            <tr class="m-infor-tr">
+                <th class="m-text-center">序号</th>
+                <th style="width:120px" class="m-text-center">物料号</th>
+                <th class="m-text-center">物料描述</th>
+                <th class="m-text-center" style="width:100px">数量</th>
+                <th class="m-text-center" style="width:100px">工厂</th>
+                <th class="m-text-center" style="width:100px">库存地</th>
+                <th class="m-text-center" style="width:100px">批次</th>
+                <th>销售总额/元</th>
+                <th>返款总额/元</th>
+                <th>销售净额/元</th>
+                <th><a class="m-text-center addApp-reduce" (click)="addItems(tabledata)" style="cursor: pointer;">+</a></th>
+            </tr>
+        </thead>
+
+        <tbody style="border-bottom: 1px solid #ddd">
+            <tr *ngFor="let item of tabledata;" style="text-align: center;">
+                <td>
+                    {{item.projcode}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.materialcode (blur)="getPostMaterial($event,item)">
+                </td>
+                <td>
+                    {{item.description}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.num (blur)="checkInteger($event)">
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.factory (blur)="checkFour($event)">
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.storagelocation (blur)="checkFour($event)">
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.batchno>
+                </td>
+                <td style="text-align: left;">
+                    <input type="text" [(ngModel)]=item.money (blur)="NumFloatAlertCur(item.money)">
+                </td>
+                <td style="text-align: left;">
+                        <!-- (blur)="Maxin(item.money,item.backmoney)" -->
+                    <input type="text" [(ngModel)]=item.backmoney >
+                </td>
+                <td style="text-align: left;">
+                    {{(item.money-item.backmoney) | backZero}}
+                </td>
+                <td>
+                     <a class="m-text-center addApp-reduce" (click)="removeItems(tabledata,item)" style="cursor: pointer;">-</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table *ngIf="billTypeId=='costType'" class="table table-hover dbox-table">
+        <thead>
+            <tr class="m-infor-tr">
+                <th class="m-text-center">序号</th>
+                <th class="m-text-center">物料号</th>
+                <th class="m-text-center">物料描述</th>
+                <th class="m-text-center">新物料号</th>
+                <th class="m-text-center">新物料描述</th>
+                <th class="m-text-center">数量</th>
+                <th class="m-text-center">工厂</th>
+                <th class="m-text-center">库存地</th>
+                <th class="m-text-center" style="width: 100px;">新库存地</th>
+                <th class="m-text-center">批次</th>
+                <th class="m-text-center" style="width: 100px;">新批次</th>
+                <th>销售总额/元</th>
+                <th>原返款总额/元</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of tabledata;" style="text-align: center;">
+                <td>
+                    {{item.projcode}}
+                </td>
+                <td>
+                    {{item.originalmaterialcode}}
+                </td>
+                <td>
+                    {{item.originaldescription}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.materialcode  (blur)="getDescription($event,item)">
+                </td>
+                <td [ngClass]="{'redWarn':item.originaldescription!=item.description}">
+                    {{ item.description }}
+                </td>
+                <td>
+                    {{item.num}}
+                </td>
+                <td>
+                    {{item.factory}}
+                </td>
+                <td>
+                    {{item.originalstoragelocation}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.storagelocation (blur)="checkFour($event)">
+                </td>
+                <td>
+                    {{item.originalbatchno}}
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]=item.batchno>
+                </td>
+                <td style="text-align: left;">
+                    {{item.originalmoney}}
+                </td>
+                <td style="text-align: left;">
+                    {{item.originalbackmoney}}
+                </td>
+                <!--<td>
+                    <button (click)="addItems(table)">
+                        -
+                </button>
+                </td>-->
+            </tr>
+        </tbody>
+    </table>
+
+</div>

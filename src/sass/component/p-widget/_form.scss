@@ -1,0 +1,31 @@
+/*上下结构表单项*/
+.m-form-label{
+  color: $text-color;
+  line-height: 25px;
+  font-weight: bold;
+
+  .m-form-need{
+    margin-left: 5px;
+    color: $msg-need;
+  }
+
+  .m-user-msg{
+    margin-left: 5px;
+    font-weight: normal;
+    color: $def-main-color;
+  }
+}
+.m-form-item{
+  float: left;
+  padding-bottom: 15px;
+  width: 50%;
+
+  >label{
+    margin: 0 30px 0 5px;
+    font-weight: normal;
+  }
+}
+.m-form-item-w100{
+  @extend .m-form-item;
+  width: 100%;
+}

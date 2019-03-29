@@ -1,0 +1,59 @@
+<div class="m-approverList" *ngIf="!errorMessage">
+  <ng-container *ngFor="let item of approverData;index as i">
+
+    <div class="m-approverList-item" *ngIf="item.IsOpened===1" [class.isDelete]='item.isDelete'>
+
+      <label class="m-approverList-title"><i class="m-required-state" *ngIf="item.IfRequired==1">*</i>{{item.NodeName}}</label>
+      <div class="m-approverList-box">
+
+        <!-- 当为不可选择状态时，显示审批人列表 -->
+        <ng-container *ngIf="item.RuleExpressionJSON">
+          <div user-image [hasClose]="false" [user]="personItem" class="m-approverList-person" *ngFor="let personItem of item.approverListData;index as i"></div>
+        </ng-container>
+        <!-- 当需要选择时，显示为下拉列表 -->
+        <!-- <div class="m-select m-select-box" *ngIf="!item.RuleExpressionJSON">
+          <i class="iqon-xia"></i>
+          <select [compareWith]="compareFn" [(ngModel)]="item.selectApprover" (ngModelChange)="getApprover(item.selectApprover,i)">
+            <option value='' disabled selected>-请选择</option>
+            <option [ngValue]="personItem" *ngFor="let personItem of item.approverListData;index as i">{{personItem.UserName+' '+personItem.ITCode}}</option>
+          </select>
+        </div> -->
+
+        <!-- 2018-11-12 变换审批人为多选，当需要选择时，显示为弹出列表 -->
+        <div class="m-approver-box" *ngIf="!item.RuleExpressionJSON" >
+
+          <!-- 选择的审批人显示 -->
+            <div user-image (onClose)="deleteApprover(item.selectApprover,i,selectApproverIndex)" class="m-user-info" [hasClose]="true" [user]="selectItem" style="width:160px;margin-right:80px" *ngFor="let selectItem of item.selectApprover;index as selectApproverIndex">
+              <div class="deleteApprover"><i class="iqon-close22"></i></div>
+            </div>
+             <!-- 添加按钮 -->
+              <div class="approver-add" (click)="getApprovalUser(i)" [ngClass]="{'ALine':item.selectApprover.length>0}">
+                <i class="iqon-add"></i>添加
+              </div>
+
+              <!-- 注释掉原逻辑，以防后续修改 -->
+              <!-- <span class="approver-add" (click)="getApprovalUser(i)" *ngIf="!item.selectApprover||item.selectApprover.length===0">
+                <i class="iqon-add"></i>添加
+              </span> -->
+
+             <!-- <span *ngIf="item.selectApprover&&item.selectApprover.length>0" class="approver-replace" (click)="getApprovalUser(i)">
+               <i class="iqon-eachother"></i>替换
+            </span> -->
+          <!-- 当审批人环节为非必审时，可以在视图山删除此环节 -->
+          <!-- <span *ngIf="item.IfRequired==0" class="approver-delete" (click)="deleteApprovalList(i)">
+              <i class="iqon-close22"></i>删除此环节
+          </span> -->
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+</div>
+
+<div class="m-approverList" *ngIf="errorMessage">
+  <div class="m-errMsg">
+    <i class="iqon-member"></i>{{errorMessage}}
+  </div>
+</div>

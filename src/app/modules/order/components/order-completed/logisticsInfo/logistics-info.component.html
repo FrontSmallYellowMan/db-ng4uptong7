@@ -1,0 +1,45 @@
+<div class="container m-order-number">
+  <loading [show]="loading"></loading>
+  <div class="modal-header m-list-head">
+    <span>物流信息</span>
+    <span (click)="getDeliveryInfo()" class="m-right-btn">获取交货单号</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-logistics-title clearfix">
+      <!-- <ul>
+        <li *ngFor="let item of mailNoList;index as i;" [class.active]="item.active" (click)="tabChange(item)"><span>{{item.id}}</span></li>
+      </ul> -->
+      <!-- <tab-switch [tabList]="mailNoList" [active]="activeTabId" (onChange)="tabChange($event)"></tab-switch> -->
+      <div class="m-list-menu">
+        <ul class="m-state">
+          <li *ngFor="let item of mailNoList" [ngClass]="{'active' : item.active}" (click)="tabChange(item)">{{ item.id }}</li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="m-logistics-head clearfix">
+      <ul>
+        <li><span>ERP交货单号：</span>{{logisticsInfo.doNo}}</li>
+        <li><span>ERP订单号：</span>{{logisticsInfo.erpNo}}</li>
+        <li><span>销售订单号：</span>{{logisticsInfo.tradeNo}}</li>
+        <li><span>快递单号：</span>{{logisticsInfo.mailNo}}</li>
+        <li><span>状态：</span>{{orderStatus[logisticsInfo.orderStatus]}}</li>
+      </ul>
+    </div> -->
+    <ul class="m-logistics-info">
+      <li><span>交货单号：</span>{{LogisticsInfo?.DeliveryOrderCode}}</li>
+      <li><span>发票号：</span>{{LogisticsInfo?.InvoiceCode}}</li>
+      <li><span>物流凭证号：</span>{{LogisticsInfo?.CertificateCode}}</li>
+    </ul>
+    <div class="m-logistics-body clearfix">
+      <div *ngFor="let item of logisticsInfo.steps.step;index as i;last as isLast">
+        <div class="m-step-node" [ngClass]="{'m-border-color':!isLast}">
+          <div class="m-step-point">
+            <i></i>
+          </div>
+          {{item.acceptAddress}}<br/>{{item.acceptTime}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

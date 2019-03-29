@@ -1,0 +1,6 @@
+<div class="m-select-person-check-box">
+  <div class="m-select-person-check-content">
+    <span class="m-selectApprover" *ngFor="let item of showModelData.valueList;index as i">{{item.UserName}}/{{item.ITCode}} <i class="iqon-close-b" (click)="removeRerson(i)" *ngIf='!readonly'></i></span>
+  </div>
+  <div class="m-select-person-check-button"><button class="m-btn-confirm m-button-width" (click)="searchPerson()" [disabled]="readonly" [ngClass]="{'m-btn-change':showModelData.valueList && showModelData.valueList.length>0,'m-btn-disabled':readonly}"><i class="iqon-person"></i>{{showModelData.valueList && showModelData.valueList.length>0?'修改':'查询'}}</button></div>
+</div>

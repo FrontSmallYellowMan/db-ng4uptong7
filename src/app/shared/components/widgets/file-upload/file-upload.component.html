@@ -1,0 +1,40 @@
+<div class="m-fileupload" *ngIf="upType == 0">
+  <input *ngIf="!disabled" id="{{upLoadBtnId}}" type="file" #upfiles ng2FileSelect [uploader]="uploader" multiple>
+  <span class="m-fileupload-text">{{buttonText}}</span>
+</div>
+<!-- <button class="m-btn-default" (click)="showModal()">{{buttonText}}</button> -->
+<div [ngClass]="upType == 0 ? 'file-upload-type0' : 'file-upload-type1'" *ngIf="(upType == 1 || (!!uploader.queue.length && modalShow))&&showModel">
+  <div class="m-dialog-head" *ngIf="upType == 0">
+    <span>文件上传</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <ul class="m-enclosure">
+
+    <li class="uploaded" *ngFor="let item of hasUploaded;index as i">
+      <i class="iqon-enclosure" (click)="clickFile(item, i)"></i>
+      <span class="filename" (click)="clickFile(item, i)">{{item?.name}}</span>
+      <span *ngIf="item?.size" class="filesize">（{{item?.size | iqFileSize}}）</span>
+      <span>上传成功</span>
+      <i class="iqon-close" (click)="removeUploaded(i)"></i>
+    </li>
+
+    <li *ngFor="let item of uploader.queue;index as i;" [ngClass]="item.isUploaded ? 'uploaded' : 'uploading'">
+      <i class="iqon-enclosure" (click)="clickFile(item.file, hasUploaded.length + i)"></i>
+      <span class="filename" (click)="clickFile(item.file, hasUploaded.length + i)" [ngStyle]="{'text-decoration': fileError[i] ? 'line-through': 'none'}">{{item.file.name}}</span>
+      <span class="filesize">（{{item?.file?.size | iqFileSize}}）</span>
+      <div class="m-progress-all" *ngIf="!item.isUploaded"><span [ngStyle]="{'width.%': item.progress}"></span></div>
+      <span class="upload-speed" *ngIf="!item.isUploaded">{{speed[i]}}</span>
+      <button class="m-btn-text" type="button" (click)="uploadFile(item)" [ngClass]="{'hide': item.isUploading || item.isUploaded}">重新上传</button>
+      <button class="m-btn-text" type="button" (click)="cancelUploadFile(item)" [ngClass]="{'hide': !item.isUploading || item.isUploaded}">取消</button>
+      <span *ngIf="item.isUploaded && !fileError[i]">上传成功</span>
+      <div class="error-msg" *ngIf="fileError[i]">{{fileErrorMsg[i]}}</div>
+      <i class="iqon-close" (click)="removeFile(item,i)"></i>
+    </li>
+
+    <li class="not-upload" *ngIf="!disabled">
+      <i class="iqon-enclosure"></i>
+      <span>添加附件</span>
+      <input id="{{upLoadBtnId+'1'}}" type="file" #upfiles ng2FileSelect [uploader]="uploader" multiple>
+    </li>
+  </ul>
+</div>

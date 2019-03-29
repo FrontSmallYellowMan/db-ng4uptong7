@@ -1,0 +1,33 @@
+.sc-relieve{
+    margin: 95px auto 0;
+    width: 80%;
+    .relieve-title{
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Applied Font Bold', 'Applied Font';
+        text-align: center;
+    }
+    .ud-relieve-content{
+        width: 100%;
+        position: relative;
+        margin-top: 45px;
+        left: 25%;
+        width: 50%;
+        .item-title,.item-content{
+            float: left;
+            margin-bottom: 15px;
+        }
+        .item-content{
+            padding-left: 15px;
+            width: 90%;
+        }
+        .ud-relieve-footer{
+            width: 100%;
+            text-align: center;
+            margin-top: 35px;
+        }
+        textarea.m-input-warn {
+            border-color: #ea6269 !important;
+        }
+    }
+}

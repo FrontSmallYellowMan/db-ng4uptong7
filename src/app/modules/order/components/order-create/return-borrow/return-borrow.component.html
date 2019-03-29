@@ -1,0 +1,44 @@
+<div class="addApply-base">
+  <div class="m-list-head m-dialog-head-change">
+    <span>原始借用的物料信息</span>
+    <!-- 送达方为多送达方时，可删除 -->
+    <span class="m-right-btn" (click)="selectAdvanceNumber()">选择预留号</span>
+  </div>
+  <div class="addApp-base-infor">
+    <div class="addApp-base-list">
+      <div class="m-order-table" [ngClass]="{'m-border-botom':materialList.length>0}">
+        <ul class="m-table-head">
+          <li>序号</li>
+          <li>预留号</li>
+          <li>ERP商品编码</li>
+          <li>商品名称</li>
+          <li>数量</li>
+          <li>库存地</li>
+          <li>工厂</li>
+          <li>批次</li>
+          <!-- <li>备注</li>
+          <li>销售单位</li> -->
+          <li class="m-info-btn" (click)="addMaterial()">+</li>
+        </ul>
+        <div class="m-table-body">
+          <ul *ngFor="let item of materialList;index as i">
+            <li>{{materialList.length - i}}</li>
+            <li>{{item.ReservationNo}}</li>
+            <li>{{item.MaterialNo}}</li>
+            <li [title]="item.MaterialName">{{item.MaterialName}}</li>
+            <li>
+              <input class="m-infor-input" type="text" (blur)="changeReturnCount(item)" [(ngModel)]="item.ReturnCount" [ngClass]="{'m-input-warn': item.ReturnCount === 0&& isSubmit}">
+            </li>
+            <li [title]="item.OnwayStore">{{item.OnwayStore}}</li>
+            <li [title]="item.Factory">{{item.Factory}}</li>
+            <li [title]="item.Batch">{{item.Batch}}</li>
+            <li class="m-info-btn" (click)="delMaterial(materialList,i)">-
+              <!--<span>删除该行</span>--></li>
+          </ul>
+        </div>
+      </div>
+      <!-- 厂商直发不用下面提示 -->
+      <!-- <div style="margin-top:10px;width:100%;"><span class="m-warn-tip">当前送达方信息与合同发生变化，请同时提交委托发货原件给商务</span></div> -->
+    </div>
+  </div>
+</div>

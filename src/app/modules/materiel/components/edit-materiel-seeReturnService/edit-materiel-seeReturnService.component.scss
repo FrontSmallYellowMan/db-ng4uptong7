@@ -1,0 +1,38 @@
+.m-srs{
+	
+    margin: 0 auto;
+    width:75%;
+    .m-exm{
+    	width: 100%;
+    	.m-exm-item{
+    		position: relative;
+    		width: 100%;
+    	}
+    }
+}
+
+.m-cnm-title{
+	color: #76BAF2;
+	margin: 0px auto 20px;
+	padding:0 0 15px 0;
+	clear: both;
+	&::after{
+		content: '';
+	    display: block;
+	    position: absolute;
+	    left: 0;
+	    top: 50px;
+	    width: 100%;
+	    border-bottom: 1px solid #EEEFF4;
+	}
+}
+
+.m-srs-titleStyle{
+
+    width: 100px!important;
+}
+
+.m-srs-titleWidth{
+
+    padding-left: 120px!important;
+}

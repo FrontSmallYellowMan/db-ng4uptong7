@@ -1,0 +1,447 @@
+.contract-view{
+    width: 100%;
+    padding: 80px 20px 0;
+    .contract-view-left{
+        margin-right: 20px;
+        float: left;
+        width: 80%;
+        position: relative;
+        .contract-modal{
+            position: absolute;
+            top: 8%;
+            left: 25%;
+            z-index: 25;
+            padding: 10px 25px;
+            width: 55%;
+            background-color: #FFF;
+            border: 1px solid #e1e3eb;
+            box-shadow: 0.5px 0.9px 4px 0 rgba(124, 124, 124, 0.3);
+        }
+    }
+    .contract-view-right{
+        overflow: hidden;
+    }
+}
+.contract{
+    width: 100%;
+    padding-bottom: 75px;
+    .apply-record {
+        margin: 15px 0;
+        background: #fff;
+    }
+    .contract-approval{
+        margin-top: 15px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .contract-adp-approval{
+        margin: 15px 0;
+        padding-left: 20px;
+        background: #fff;
+        padding-right: 20px;
+        padding-top: 20px;
+        height: 123px;
+    }
+    .contract-view-buttons{
+        float: left;
+        position:relative;
+        left:50%;
+        padding-bottom: 135px;
+        padding-top: 20px;
+        div{
+            float: left;
+            position:relative;
+            left:-50%;
+            margin: 0 8px;
+        }
+    }
+    .contract-history{
+        width: 100%;
+        margin-top: 15px;
+        overflow: hidden;
+    }
+    .contract-title{
+        margin: 15px auto;
+        font-size: 16px;
+        color: #151515;
+    }
+    .c-content{
+        width: 100%;
+        border-radius: 3px;
+        background-color: #ffffff;
+        margin-bottom: 15px;
+        .c-content-title{
+            width: 100%;
+            padding-top: 19.5px;
+            padding-left: 25.5px;
+            padding-bottom: 19.5px;
+            text-align: left;
+            font-size: 14px;
+            color: #57b9f8;
+            border-bottom: 1px solid #e1e3eb;
+            position: relative;
+            .title-downproduct{
+                text-align: center;
+                height: 30px;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                transition: all .7s;
+                font-size: 14px;
+                overflow: hidden;
+                background: linear-gradient(275deg,#3495f6,#42c2f7);
+                line-height: 30px;
+                min-width: 100px;
+                display: inline-block;
+                position: absolute;
+                left: 115px;
+                top: 10px;
+                cursor: pointer;
+            }
+            .title-downproduct:hover {
+                opacity: 0.85;
+            }
+            .title-downproduct:focus {
+                outline: none;
+            }
+        }
+        .c-content-main{
+            width: 100%;
+            border-radius: 3px;
+            background-color: #FFF;
+            font-size: 12px;
+            color: #151515;
+            padding: 10px 30px;
+            .c-form-item-custom{
+                width: 100%;
+                float: left;
+                .c-input-title{
+                        float: left;
+                        height: 100%;
+                        line-height: 30px;
+                        padding-right: 10px;
+                        text-align: left;
+                        width: 12%;
+                        color: #151515;
+                        .c-form-need{
+                            color: red;
+                            padding-right: 3px;
+                        }
+                    }
+                    .c-input-wrap{
+                        float: left;
+                        width: 88%;
+                        height: 100%;
+                        text-align: left;
+                        position: relative;
+                        .m-textarea{
+                            height: 80px;
+                        }
+                        .c-wrap-chain{
+                            float: left;
+                            height: 30px;
+                            line-height: 30px;
+                        }
+                        .c-wrap-line{
+                            width: 20px;
+                            border: 1px solid #e1e3eb;
+                        }
+                        .c-wrap-chain-text{
+                            width: 30%;
+                        }
+                        .c-wrap-chain-line{
+                            padding: 0 3px;
+                            margin-top: -5px;
+                        }
+                    }
+                    .c-input-wrap-item{
+                        padding-top: 7px;
+                        padding-right: 38px;
+                    }
+            }
+            .c-form-item{
+                    width: 50%;
+                    height: 30px;
+                    float: left;
+                    .c-input-title{
+                        float: left;
+                        height: 100%;
+                        line-height: 30px;
+                        padding-right: 10px;
+                        text-align: left;
+                        width: 23%;
+                        color: #151515;
+                        .c-form-need{
+                            color: red;
+                            padding-right: 3px;
+                        }
+                    }
+                    .c-input-wrap{
+                        float: left;
+                        width: 77%;
+                        height: 100%;
+                        line-height: 30px;
+                        text-align: left;
+                        position: relative;
+                        .c-wrap-account{
+                            float: left;
+                            width: 50%;
+                            input{
+                                margin-left: 10px;
+                                width: 94%;
+                            }
+                        }
+                    }
+                    .c-input-wrap-buyer{
+                        span{
+                            display: inline-block;
+                            margin-right: 12px;
+                        }
+                        i{
+                            display: inline-block;
+                            margin-left: 5px;
+                            text-align: center;
+                            line-height: 30px;
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 50%;
+                            font-size: 13px;
+                            cursor: pointer;
+                            border: 1px solid #e1e3eb;
+                        }
+                    }
+            }
+            .c-form-item-file{
+                width: 100%;
+                float: left;
+                margin-top: 5px;
+                .c-file-title{
+                    text-align: center;
+                    float: left;
+                    padding-right: 10px;
+                    width: 12.5%;
+                }
+                .c-file-wrap{
+                    float: left;
+                    width: 75%;
+                    text-align: left;
+                    position: relative;
+                    // padding: 5px 0;
+                    // border: 1px solid #e1e3eb;
+                    // border-radius: 5px;
+                    line-height: 35px;
+                }
+            }
+        }
+        .c-content-business{
+            width: 100%;
+            padding: 15px 30px 20px 65px;
+            line-height: 1.5;
+            white-space:normal;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+                
+    }
+    .c-content-seal{
+        margin-top: 15px;
+        .file-upload{
+            width: 50%;
+            padding: 0 30px;
+        }
+        .contract-recovery{
+            width: 100%;
+            margin-top: 8px;
+            .contract-recovery-file{
+                width: 55%;
+            }
+            .contract-recovery-item{
+                width: 33%;
+                float: left;
+                line-height: 40px;
+                .contract-recovery-item-title{
+                    width: 30%;
+                    float: left;
+                    padding-left: 2%;
+                }
+                .contract-recovery-item-content{
+                    width: 70%;
+                    float: left;
+                    span{
+                        margin-left: 3px;
+                    }
+                }
+            }
+        }
+    }
+    .m-select .iqon-xia {
+        position: absolute;
+        top: 21px;
+        right: 10px;
+        color: #a8b1bd;
+        z-index: 1;
+    }
+    .m-user-info {
+        position: relative;
+        padding: 0 6px;
+        height: 50px;
+        cursor: pointer;
+        line-height: 50px;
+        width: 150px;
+    }
+    .m-user-change {
+        display: inline-block;
+        color: #e1e3eb;
+        line-height: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 11px;
+        left: 151px;
+    }
+    .c-content-footer{
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 35px;
+        padding-top: 15px;
+        .m-btn-common{
+            margin-left: 15px;
+        }
+        .m-btn-cancel{
+            background-color: #f3f3f3;;
+            text-align: center;
+            border: none;
+            border-radius: 3px;
+            transition: all .7s;
+            font-size: 14px;
+            overflow: hidden;
+            display: inline-block;
+            height: 45px;
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .m-btn-default{
+            height: 45px;
+        }
+    }
+}
+.m-select-warn{
+    border: 1px solid #ea6269;
+}
+textarea:hover, textarea:focus {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid #009DD9;
+}
+.contract .m-select .iqon-xia {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    color: #a8b1bd;
+    z-index: 1;
+}
+.m-dialog-head{
+    color: #57b9f8;
+}
+.relieveaccess-content{
+    margin-bottom: 15px;
+    .relieveaccess-file{
+        background: white;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 0 25px 15px;
+        .relieveaccess-file-title{
+            line-height: 20px;
+            max-width: 75px;
+            width: 22%;
+            display: inline-table;
+            text-align: right;
+        }
+        .relieveaccess-file-wrap{
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            margin-left: 15px;
+            line-height: 18px;
+            border: 1px solid #e1e3eb;
+            border-radius: 3px;
+            line-height: 35px;
+            color: #a8b1bd;
+            ul{
+                width: 100%;
+                top: 0;
+                min-height: 38px;
+                li{
+                    padding: 0 15px;
+                    border-bottom: 1px solid #eee;
+                    a{
+                        color: #151515;
+                    }
+                    i{
+                        margin-right: 10px;
+                    }
+                }
+                li:last-child {
+                    border-bottom: none;
+                }
+                li:hover a,li:hover {
+                    color: #57b9f8;
+                }
+            }
+        }
+    }
+}
+.addApply-container{
+    position: relative;
+    .title-downproduct{
+        text-align: center;
+        height: 30px;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        transition: all .7s;
+        font-size: 14px;
+        overflow: hidden;
+        background: linear-gradient(275deg,#3495f6,#42c2f7);
+        line-height: 30px;
+        min-width: 100px;
+        display: inline-block;
+        position: absolute;
+        left: 115px;
+        top: 10px;
+        cursor: pointer;
+    }
+    .title-downproduct:hover {
+        opacity: 0.85;
+    }
+    .title-downproduct:focus {
+        outline: none;
+    }
+}
+
+.c-content-title{
+    position: relative;
+    .title-select-project{
+        position: absolute;
+        top: 25px;
+        left: 150px;
+        span{
+            display: inline-block;
+            padding-right: 15px;
+        }
+    }
+}
+.c-input-wrap-customerunclertotalinfo{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+}
+.tlright{
+    text-align: right !important;
+    padding-right: 0 !important;
+}

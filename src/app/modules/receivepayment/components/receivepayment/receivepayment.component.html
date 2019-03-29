@@ -1,0 +1,30 @@
+<div class="g-hdp">
+  <div class="main">
+    <div class="m-home-page">
+      <div class="g-right">
+         <div class="m-home-pageR clearfix">
+             <router-outlet></router-outlet>
+         </div>
+      </div>
+     </div>
+     <div class="g-list m-home-page">
+        <div class="m-home-pageL">
+            <ul class="m-usertree">
+                <li class="m-hasicon" [ngClass]="{'active':leftNavName == '我的欠款'}">
+                    <i class="iqon-report"></i>
+                    <a (click)="search('我的欠款','/receivepayment/rp-myarrears')" style="cursor:pointer">我的欠款</a>
+                </li>
+                <li class="m-hasicon" [ngClass]="{'active':leftNavName == '欠款查询'}">
+                    <i class="iqon-report"></i>
+                    <a (click)="search('欠款查询','/receivepayment/rp-riskarrears')" style="cursor:pointer">运作/风控欠款查询</a>
+                </li>
+                <li class="m-hasicon" [ngClass]="{'active':leftNavName == '我的回款'}">
+                    <i class="iqon-record"></i>
+                    <a (click)="search('我的回款','/receivepayment/rp-myreceivepayment')" style="cursor:pointer">我的回款</a>
+                    <!--<span>3</span>-->
+                </li>
+            </ul>
+        </div>
+     </div>
+  </div>
+</div>

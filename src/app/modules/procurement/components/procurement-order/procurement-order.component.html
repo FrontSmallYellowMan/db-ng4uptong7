@@ -1,0 +1,9 @@
+<div class="m-boardtop clearfix">
+  <div class="m-boardmenu">
+    <a routerLinkActive="active" routerLink="/procurement/procurement-order/my-apply">我的申请<span class="m-nums hide">5</span></a>
+    <a routerLinkActive="active" routerLink="/procurement/procurement-order/my-approval">我的审批<span class="m-nums" *ngIf="approvaTtotalNum" >{{approvaTtotalNum}}</span></a>
+  </div>
+  <!-- <iq-newcreat [dataCreat]=dataCreat></iq-newcreat> -->
+  <!-- <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addProcurementOrder()"><i class="iqon-add"></i>新建订单</button> -->
+</div>
+<router-outlet></router-outlet>

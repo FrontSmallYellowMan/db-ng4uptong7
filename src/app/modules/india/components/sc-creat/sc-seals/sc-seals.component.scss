@@ -1,0 +1,75 @@
+.addApply-container{
+  margin: 0;
+}
+.addApp-form-right{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 15px;
+    line-height: 32px;
+}
+.addApp-form-input{
+    border:0;
+}
+.addApp-form-item .addApp-form-label{
+  width:18%;
+}
+.addApp-form-tips{
+  font-style: normal;
+}
+.m-list-head{
+  padding-left:25px;
+}
+.table-list > tbody > tr{
+  height:40px;
+}
+.table-list > tbody > tr > td {
+    // line-height: 13px;
+    padding-left:15px;
+    border-bottom: 0;
+}
+.table-list .operate{
+    text-align: left;
+    width:90px;
+}
+.m-order-number,.m-dialog-head{
+    background-color: #f3f4f6;
+}
+.modal-body{
+    background-color: #fff;
+    margin: 20px;
+    padding: 15px 25px 0;
+}
+.m-order-table{
+    text-align: left;
+    background-color: #fff;
+    margin:0;
+}
+.m-search-all{
+    float: inherit;
+    line-height: 30px;
+    width:30%;
+    margin-left:70%;
+    margin-bottom:15px;
+}
+.m-search .iqon-query{
+    left: 0;
+    border:0;
+}
+.m-search > input{
+    padding-left: 32px;
+    padding-right: 15px;
+}
+
+.m-order-number{
+    width:780px;
+    z-index:1045;
+    left:20%;
+    top:2%;
+}
+.m-order-number .modal-body{
+    height: 465px;
+}
+.m-order-table tbody{
+    max-height: 315px;
+}

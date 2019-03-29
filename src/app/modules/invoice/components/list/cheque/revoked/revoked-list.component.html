@@ -1,0 +1,175 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-boardmenu">
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: flag === '0' }"
+                (click)="changeFlag('0')"
+                >我的申请<span class="m-num hide"></span
+            ></a>
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: flag === '1' }"
+                (click)="changeFlag('1')"
+                >我的审批<span class="m-num" *ngIf="count2 > 0">{{
+                    count2
+                }}</span></a
+            >
+        </div>
+        <div class="m-dropdown g-fr">
+            <button class="m-btn-success" (click)="addsq()">
+                <i class="iqon-add"></i>新建申请
+            </button>
+        </div>
+    </div>
+
+    <!--搜索-->
+    <div class="m-list-menu" [ngSwitch]="flag">
+        <ul *ngSwitchCase="'0'" class="m-state">
+            <li
+                [ngClass]="{ active: flowstates == '1' }"
+                (click)="changeapplytype('1')"
+            >
+                审批中
+            </li>
+            <li
+                [ngClass]="{ active: flowstates == '3' }"
+                (click)="changeapplytype('3')"
+            >
+                已完成
+            </li>
+            <li
+                [ngClass]="{ active: flowstates == '0' }"
+                (click)="changeapplytype('0')"
+            >
+                草稿
+            </li>
+            <li
+                [ngClass]="{ active: flowstates == 'myall' }"
+                (click)="changeapplytype('myall')"
+            >
+                全部
+            </li>
+        </ul>
+        <ul *ngSwitchCase="'1'" class="m-state">
+            <li
+                [ngClass]="{ active: flowstates == '01' }"
+                (click)="changeapplytype('01')"
+            >
+                待我审批
+            </li>
+            <li
+                [ngClass]="{ active: flowstates == '02' }"
+                (click)="changeapplytype('02')"
+            >
+                我已审批
+            </li>
+            <li
+                [ngClass]="{ active: flowstates == 'all' }"
+                (click)="changeapplytype('all')"
+            >
+                全部
+            </li>
+        </ul>
+
+        <div class="m-search-all">
+            <!--
+                        <div class="alter">
+                            <div class="m-select">
+                                </div>
+                        </div>
+                        -->
+            <div class="m-search">
+                <i
+                    class="iqon-query"
+                    id="searchChange"
+                    (click)="getFreezeInfo()"
+                    style="cursor:pointer"
+                ></i>
+                <input
+                    name="state"
+                    placeholder="表单号/申请人/ITCode"
+                    [(ngModel)]="InvoicePeopleITCode"
+                    type="text"
+                    (keyup.enter)="mykeydown()"
+                />
+            </div>
+        </div>
+    </div>
+
+    <!-- 物料数据缺省 -->
+    <div class="m-overclass" [ngClass]="{ isHide: isSearchResult }">
+        <div class="m-noresult" style="height: calc(100vh - 190px);">
+            <div class="m-noresult-msg">
+                <i class="{{ img1 }}"></i>
+                <p class="m-noresult-notice">{{ msg1 }}</p>
+                <p class="m-p-notice">{{ msg2 }}</p>
+            </div>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="m-table-right" [ngClass]="{ isHide: !isSearchResult }">
+        <div class="">
+            <table
+                class="table table-hover table-list"
+                style="table-layout: fixed;"
+            >
+                <thead>
+                    <tr>
+                        <th>表单号</th>
+                        <th>申请日期</th>
+                        <th *ngIf="flowstates != '3'">审批人</th>
+                        <th>当前环节</th>
+                        <th>支票数量</th>
+                        <th>支票合计</th>
+                        <th *ngIf="flowstates == '0'">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let item of freezePersonnelData"
+                        (click)="goto(item.id)"
+                    >
+                        <td
+                            class="operate"
+                            style="text-align:left"
+                            title="{{ item.revokedId }}"
+                        >
+                            <!--
+							  <input icheck type="checkbox" [(ngModel)] = 'item.checkBox' style="position: absolute; opacity: 0;" (onChange) = 'selectPersonnel(item)'>
+							  -->
+                            {{ item.revokedId }}
+                        </td>
+                        <td>{{ item.createDate | iqDate: "YYYY-MM-DD" }}</td>
+                        <td
+                            *ngIf="flowstates != '3'"
+                            title="{{ item.currApprAuthors }}"
+                        >
+                            {{ item.currApprAuthors }}
+                        </td>
+                        <td tit>{{ item.flowCurrNodeName }}</td>
+                        <td>{{ item.totalNum }}</td>
+                        <td>{{ item.totalAmount }}</td>
+                        <td *ngIf="flowstates == '0'">
+                            <a
+                                href="javascript:;"
+                                (click)="
+                                    delDraftById(item.id);
+                                    $event.stopPropagation()
+                                "
+                                >删除</a
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page">
+            <iq-pager
+                [data]="pagerData"
+                (onChange)="onChangePage($event)"
+            ></iq-pager>
+        </div>
+    </div>
+</div>

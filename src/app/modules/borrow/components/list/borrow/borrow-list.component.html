@@ -1,0 +1,453 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-crumb">
+            <ul>
+                <li class="marginr30" style="cursor:pointer">
+                    <a
+                        [ngClass]="{ 'm-li-active': myApplyShow }"
+                        (click)="showApplyList()"
+                        >我的申请</a
+                    >
+                </li>
+                <li style="cursor:pointer">
+                    <a
+                        [ngClass]="{ 'm-li-active': !myApplyShow }"
+                        (click)="showApproveList()"
+                        >我的审批</a
+                    ><span class="m-num">{{ myWaitNum }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="m-dropdown g-fr">
+            <button class="m-btn-main-2" (click)="createBorrowPage()">
+                + 新建申请
+            </button>
+        </div>
+    </div>
+    <!--搜索-->
+    <div class="m-list-menu" *ngIf="myApplyShow">
+        <ul class="m-state">
+            <li
+                [ngClass]="{ active: query.flowStatus == '1' }"
+                id="defaultlist1"
+                (click)="search1('1')"
+            >
+                审批中
+            </li>
+            <li
+                [ngClass]="{ active: query.flowStatus == '3' }"
+                (click)="search1('3')"
+            >
+                已完成
+            </li>
+            <li
+                [ngClass]="{ active: query.flowStatus == '' }"
+                (click)="search1('')"
+            >
+                全部
+            </li>
+            <li
+                [ngClass]="{ active: query.flowStatus == '0' }"
+                (click)="search1('0')"
+            >
+                草稿
+            </li>
+
+            <!--<input type="hidden" [(ngModel)]="query.flowStatus" name="flowStatus" value="0" (keyup.enter)="search()">-->
+        </ul>
+    </div>
+    <div class="m-list-menu" *ngIf="!myApplyShow">
+        <ul class="m-state">
+            <li
+                [ngClass]="{ active: query1.flowStatus == '0' }"
+                id="defaultlist"
+                (click)="search2('0')"
+            >
+                待我审批
+            </li>
+            <li
+                [ngClass]="{ active: query1.flowStatus == '1' }"
+                (click)="search2('1')"
+            >
+                我已审批
+            </li>
+            <li
+                [ngClass]="{ active: query1.flowStatus == '' }"
+                (click)="search2('')"
+            >
+                全部
+            </li>
+        </ul>
+    </div>
+    <!--为页面刷新添加 20171220 weiyg-->
+    <div [ngClass]="{ hide: true }">
+        <button type="button" id="searchBtn" (click)="search()"></button>
+    </div>
+    <!--表格-->
+    <div class="m-content-right" *ngIf="myApplyShow">
+        <div
+            class=""
+            style="height:48px;padding:10px;"
+            *ngIf="myApplyShow && query.flowStatus == '3'"
+        >
+            <span>
+                <button class="leftbutton" (click)="toTransferApply()">
+                    转移
+                </button>
+            </span>
+        </div>
+        <div
+            class="m-noresult"
+            [ngClass]="{ hide: borrowApplyList && borrowApplyList.length > 0 }"
+        >
+            <loading [show]="loading"></loading>
+            <div class="m-noresult-msg">
+                <i class="iqon-query"></i>
+                <p class="m-noresult-notice">
+                    很抱歉，没有找到有关的信息
+                </p>
+                <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+            </div>
+        </div>
+        <ul
+            class="table-uls"
+            [ngClass]="{ hide: borrowApplyList && borrowApplyList.length == 0 }"
+        >
+            <li
+                class="table-list"
+                *ngFor="let item of borrowApplyList; index as i"
+            >
+                <div class="table-list-header">
+                    <div class="list-info">
+                        <input
+                            type="checkbox"
+                            [disabled]="
+                                item.readonly || item.unClearIterStatus == 0
+                            "
+                            (click)="clickTransferApply($event, item)"
+                            [(ngModel)]="item.checked"
+                            style="margin-top: 10px;"
+                            *ngIf="myApplyShow && query.flowStatus == '3'"
+                        />
+                        <p>{{ item.createDate | iqDate: "YYYY-MM-DD" }}</p>
+                        <div>
+                            <p>主申请单号</p>
+                            <span>{{ item.mainApplyNo }}</span>
+                        </div>
+                        <div>
+                            <p>子申请单号</p>
+                            <span>{{ item.subApplyNo }}</span>
+                        </div>
+                    </div>
+                    <div
+                        user-image
+                        [user]="this.applyUserList[i]"
+                        [showHover]="true"
+                        *ngIf="
+                            this.applyUserList.length > 0 &&
+                            this.applyUserList[i]
+                        "
+                    ></div>
+                </div>
+                <div class="table-list-body">
+                    <ul class="list-body-uls">
+                        <li
+                            style="min-width: 200px;"
+                            *ngIf="query.flowStatus == '3'"
+                            (click)="openBorrowPage(item.applyId)"
+                        >
+                            <h4>{{ item.borrowCustomerName }}</h4>
+                        </li>
+                        <li
+                            *ngIf="query.flowStatus != '3'"
+                            (click)="openBorrowPage(item.applyId)"
+                        >
+                            <h4>{{ item.borrowCustomerName }}</h4>
+                        </li>
+                        <li (click)="openBorrowPage(item.applyId)">
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <label style="letter-spacing: 0.6px;"
+                                        >业务范围编号</label
+                                    >
+                                    <span>{{ item.businessScope }}</span>
+                                </li>
+                                <li>
+                                    <label>项目名称</label>
+                                    <span>{{ item.projectName }}</span>
+                                </li>
+                                <li>
+                                    <label>预留号</label>
+                                    <span>{{ item.reservationNo }}</span>
+                                </li>
+                                <li>
+                                    <label>库存地</label>
+                                    <span>{{ item.inventory }}</span>
+                                </li>
+                                <!--<li>
+											<label >借用总金额</label>
+											<span>{{item.borrowTotalAmount}}</span>
+										</li>
+									
+										<li>
+											<label style="letter-spacing: 7.2px;">借用金额</label>
+											<p><span>{{item.borrowAmount}}</span></p>
+										</li>-->
+                            </ul>
+                        </li>
+                        <li (click)="openBorrowPage(item.applyId)">
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <label style="letter-spacing: 1.6px;"
+                                        >借用总金额</label
+                                    >
+                                    <span>{{ item.borrowTotalAmount }}</span>
+                                </li>
+                                <li>
+                                    <label>借用金额</label>
+                                    <p>
+                                        <span>{{ item.borrowAmount }}</span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <label>借用属性</label>
+                                    <span>{{ item.borrowAttributeName }}</span>
+                                </li>
+
+                                <li>
+                                    <label>借用日期</label>
+                                    <p>
+                                        <span>{{
+                                            item.borrowDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            (click)="openBorrowPage(item.applyId)"
+                            *ngIf="myApplyShow && query.flowStatus == '3'"
+                        >
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <span
+                                        >超期<font
+                                            style="font-size:14px;color:red;"
+                                        >
+                                            {{ item.expireddays }} </font
+                                        >天</span
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li *ngIf="myApplyShow && query.flowStatus == '3'">
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <span
+                                        *ngIf="item.unClearIterStatus == 0"
+                                        style="color:#a8b1bd"
+                                        >归 还</span
+                                    >
+                                    <span
+                                        *ngIf="item.unClearIterStatus == 1"
+                                        style="color:#57b9f8"
+                                        (click)="toRtnApply(item)"
+                                        >归 还</span
+                                    >
+                                </li>
+                                <li>
+                                    <span>&nbsp;&nbsp;</span>
+                                </li>
+                                <li>
+                                    <span
+                                        *ngIf="item.unClearIterStatus == 0"
+                                        style="color:#a8b1bd"
+                                        >转销售归还</span
+                                    >
+                                    <span
+                                        *ngIf="item.unClearIterStatus == 1"
+                                        style="color:#57b9f8"
+                                        (click)="toSealRtnApply(item)"
+                                        >转销售归还</span
+                                    >
+                                </li>
+                            </ul>
+                        </li>
+                        <li
+                            (click)="openBorrowPage(item.applyId)"
+                            class="user-approve"
+                            *ngIf="myApplyShow && query.flowStatus != '3'"
+                        >
+                            <p>
+                                <i class="iqon-audit2"></i>
+                                <span>{{ item.flowCurrNodeName }}</span>
+                            </p>
+                            <p class="m-user-info">
+                                <!--<span class="m-user-name">张新颖</span>-->
+                                <span class="m-user-ename">{{
+                                    item.currApprAuthors
+                                }}</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!--<div class="m-pop-up">
+				<i class="iqon-shang"></i>
+				<div class="m-pop-content">
+		            <div class="m-user-info-small m-user-info-big">
+		              <div class="m-user-noimg m-user-noimgs">新颖</div>
+		              <span class="m-user-name">张新颖</span>
+		              <span class="m-user-ename">zhangxyaa</span>
+		            </div>
+		            <ul class="uls-tree">
+						<li>
+							<label>本部名称</label>
+							<span>联想终端</span>
+						</li>
+						<li>
+							<label>事业部名称</label>
+							<span>E53-DCG-Think业务块</span>
+						</li>
+						<li>
+							<label>归属平台</label>
+							<span>北京</span>
+						</li>
+					</ul>
+				</div>
+			</div>-->
+        <ng-container *ngIf="borrowApplyList && borrowApplyList.length > 0">
+            <iq-pager
+                [data]="pagerData"
+                (onChange)="onChangePager($event)"
+            ></iq-pager>
+        </ng-container>
+    </div>
+    <div class="m-content-right" *ngIf="!myApplyShow">
+        <!--搜索结果缺省页开始-->
+        <div
+            class="m-noresult"
+            [ngClass]="{
+                hide: borrowApplyList1 && borrowApplyList1.length > 0
+            }"
+        >
+            <loading [show]="loading"></loading>
+            <div class="m-noresult-msg">
+                <i class="iqon-query"></i>
+                <p class="m-noresult-notice">
+                    很抱歉，没有找到有关的信息
+                </p>
+                <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+            </div>
+        </div>
+        <ul
+            class="table-uls"
+            [ngClass]="{
+                hide: borrowApplyList1 && borrowApplyList1.length == 0
+            }"
+        >
+            <li
+                class="table-list"
+                *ngFor="let item of borrowApplyList1; index as i"
+                (click)="openBorrowPage(item.applyId)"
+            >
+                <div class="table-list-header">
+                    <div class="list-info">
+                        <p>{{ item.createDate | iqDate: "YYYY-MM-DD" }}</p>
+                        <div>
+                            <p>主申请单号</p>
+                            <span>{{ item.mainApplyNo }}</span>
+                        </div>
+                        <div>
+                            <p>子申请单号</p>
+                            <span>{{ item.subApplyNo }}</span>
+                        </div>
+                    </div>
+                    <div
+                        user-image
+                        [user]="this.applyUserList1[i]"
+                        [showHover]="true"
+                        *ngIf="this.applyUserList1 && this.applyUserList1[i]"
+                    ></div>
+                </div>
+                <div class="table-list-body">
+                    <ul class="list-body-uls">
+                        <li>
+                            <h4>{{ item.borrowCustomerName }}</h4>
+                        </li>
+                        <li>
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <label style="letter-spacing: 0.6px;"
+                                        >业务范围编号</label
+                                    >
+                                    <span>{{ item.businessScope }}</span>
+                                </li>
+                                <li>
+                                    <label style="letter-spacing: 1.6px;"
+                                        >借用总金额</label
+                                    >
+                                    <span>{{ item.borrowTotalAmount }}</span>
+                                </li>
+                                <li>
+                                    <label>项目名称</label>
+                                    <span>{{ item.projectName }}</span>
+                                </li>
+                                <li>
+                                    <label>借用金额</label>
+                                    <p>
+                                        <span>{{ item.borrowAmount }}</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="list-body-uls-tree">
+                                <li>
+                                    <label>预留号</label>
+                                    <span>{{ item.reservationNo }}</span>
+                                </li>
+                                <li>
+                                    <label>借用属性</label>
+                                    <span>{{ item.borrowAttributeName }}</span>
+                                </li>
+                                <li>
+                                    <label>库存地</label>
+                                    <span>{{ item.inventory }}</span>
+                                </li>
+                                <li>
+                                    <label>借用日期</label>
+                                    <p>
+                                        <span>{{
+                                            item.borrowDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="user-approve">
+                            <p>
+                                <i class="iqon-audit2"></i>
+                                <span>{{ item.flowCurrNodeName }}</span>
+                            </p>
+                            <p class="m-user-info">
+                                <span class="m-user-ename">{{
+                                    item.currApprAuthors
+                                }}</span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <ng-container *ngIf="borrowApplyList1 && borrowApplyList1.length > 0">
+            <iq-pager
+                [data]="pagerData"
+                (onChange)="onChangePager2($event)"
+            ></iq-pager>
+        </ng-container>
+    </div>
+</div>

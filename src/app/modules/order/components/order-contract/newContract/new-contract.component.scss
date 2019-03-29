@@ -1,0 +1,75 @@
+.m-order-number{
+    z-index: 1045;
+    width:830px;
+    top:10%;
+    left:20%;
+    .m-search-all{
+        height:30px;
+        .m-search{
+            width: 250px;
+            float: right;
+            margin-right: 20px;
+        }
+    }
+    .modal-body{
+        height:455px;
+        padding-top:15px;
+        position: relative;
+    }
+    .contract-material-table {
+        border: 1px solid #d2d8e0;
+        margin: 20px 0;
+        thead{
+            background-color: #f5f7fa;
+        }
+        td{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            cursor: pointer;
+            border-left: 1px solid #d2d8e0;
+            &:first-child{
+                border-left: none;
+            }
+        }
+        th{
+            line-height: 30px;
+            border-left: 1px solid #d2d8e0;
+            &:first-child{
+                border-left: none;
+            }
+        }
+        .money-right{
+            text-align: right;
+        }
+        tbody tr:last-child{
+            border-bottom:0;
+        }
+    }
+    .table{
+        margin-bottom: 0!important;
+    }
+    .m-scan .m-scan-body .m-scan-default {
+        margin-top: 100px;
+        margin-bottom: 0;
+        .m-scan-logo {
+            background-color: #57b9f8;
+            margin-bottom: 30px;
+            color: #ffffff;
+            i{
+                display: inline-block;
+                margin-top: 35px;
+                font-size: 30px;
+            }
+        }
+        h3 {
+           font-size: 20px;
+           line-height: 20px;
+           font-weight: normal;
+           color: rgba(74, 74, 74, 0.7);
+           margin-bottom: 19px;
+       }
+    }
+
+}

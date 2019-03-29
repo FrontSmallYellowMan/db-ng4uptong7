@@ -1,0 +1,120 @@
+.m-list-head{
+  padding-left:25px;
+}
+.addApp-form-right{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 15px;
+    line-height: 18px;
+}
+.addApp-form-right a{
+  color: #57b9f8;
+  cursor: pointer;
+}
+.addApp-form-right a:focus{
+  text-decoration: none;
+}
+.addApp-form-item .addApp-form-label{
+    line-height: 20px;
+    max-width: 75px;
+    width:22%;
+}
+.addApply-container{
+  margin: 0;
+}
+.addApp-form-input{
+    border:0;
+}
+
+.m-fileupload{
+  display: inline-block;
+  position: relative;
+  padding: 0 15px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 1px solid #e2e2e2;
+  color: #4a4a4a;
+  background-color: #fff;
+  text-align: center;
+  overflow: hidden;
+  transition: all .7s;
+
+  &:hover{
+    background-color: #fff * 0.85;
+  }
+
+  input[type=file]{
+    position: absolute;
+    font-size: 0;
+    width: 100%;
+    height: 100%;
+    outline: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    margin-left: -18px;
+    z-index: 1;
+    cursor: pointer;
+  }
+}
+/deep/ .w-50 .filename>span{
+    max-width: 72px;
+}
+/deep/ .w-50 .filename>span.uploaded-filesName{
+    max-width: 200px;
+}
+/deep/ .m-enclosure{
+  width: 100%;
+  top: 0;
+  min-height: 38px;
+  .filename{
+    // display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+    z-index: 9;
+    &>span{
+      display: inline-block;
+      overflow: hidden;
+      line-height: 20px;
+      margin-top: 7px;
+      vertical-align: top;
+    }
+  }
+
+  .error-msg{
+    display: inline-block;
+    vertical-align: middle;
+    word-break: break-all;
+    max-width: 500px;
+    color: red;
+  }
+  li.not-upload input[type=file]{
+      width:100%;
+      font-size: 430px;
+      overflow: hidden;
+  }
+}
+
+.file-upload-type1{
+  background: #fff;
+  text-align: left;
+
+  .m-enclosure{
+    border: none;
+  }
+}
+
+.file-upload-type0{
+  @extend .file-upload-type1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 20px;
+  z-index: 1035;
+  border: 2px solid #e1e3eb;
+}

@@ -1,0 +1,400 @@
+<div class="content-auto">
+    <form #myApplyForm="ngForm">
+        <div class="addApply-container" style="padding-top: 62px">
+            <!--标题-->
+            <nav class="nav">{{ name }}</nav>
+
+            <!--基本信息-->
+            <div class="m-basic-info">
+                <h2>基本信息</h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="6%">预留号</th>
+                            <td width="38%" class="user">
+                                <!--<span class="m-user-mark">Cai</span>
+                          <span>{{applyUser.name}}11</span>
+                          <span class="m-ft-col">caihl</span>-->
+                                <input
+                                    *ngIf="this.isSaved == 'n'"
+                                    type="text"
+                                    id="reservationNo"
+                                    name="reservationNo"
+                                    required
+                                    placeholder="请填写"
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply.reservationNo
+                                    "
+                                />
+
+                                <span *ngIf="this.isSaved != 'n'">{{
+                                    rtnAppPo.borrowReturnApply.reservationNo
+                                }}</span>
+                            </td>
+                            <td colspan="2">
+                                <span *ngIf="this.isSaved == 'n'">
+                                    <button
+                                        class="btn btn-info custom"
+                                        (click)="queryUnClearItems()"
+                                    >
+                                        查询
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>申请人</th>
+                            <td>
+                                <div class="m-user-info-small">
+                                    <div
+                                        class="m-user-members"
+                                        style="float: left;"
+                                    >
+                                        <div
+                                            user-image
+                                            [hasClose]="false"
+                                            [user]="userInfo"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <th>联系方式</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.applyUserTel }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>员工编号</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.applyUserNo }}
+                            </td>
+                            <th>业务范围编号</th>
+                            <td>
+                                {{
+                                    rtnAppPo.borrowReturnApply.businessScopeCode
+                                }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>本部</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.baseDeptName }}
+                            </td>
+                            <th>事业部</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.subDeptName }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>平台</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.platformCode }}-{{
+                                    rtnAppPo.borrowReturnApply.platformName
+                                }}
+                            </td>
+                            <th>工厂</th>
+                            <td>{{ rtnAppPo.borrowReturnApply.factory }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>原凭证号(1)</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.oldVoucherNo1 }}
+                            </td>
+                            <th>原凭证号(2)</th>
+                            <td>
+                                {{ rtnAppPo.borrowReturnApply.oldVoucherNo2 }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>是否异地归还</th>
+                            <td>
+                                <input
+                                    type="radio"
+                                    class="radio"
+                                    icheck
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply
+                                            .allopatryReturn
+                                    "
+                                    name="allopatryReturn"
+                                    #radio1
+                                    checked
+                                    value="1"
+                                />
+                                <label for="radio1" class="radio-label"
+                                    >是</label
+                                >
+                                <input
+                                    type="radio"
+                                    class="radio"
+                                    icheck
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply
+                                            .allopatryReturn
+                                    "
+                                    name="allopatryReturn"
+                                    #radio2
+                                    value="0"
+                                />
+                                <label for="radio2" class="radio-label"
+                                    >否</label
+                                >
+                            </td>
+                            <th>取货方式</th>
+                            <td>
+                                <input
+                                    type="radio"
+                                    class="radio"
+                                    icheck
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply.pickupType
+                                    "
+                                    name="pickupType"
+                                    #radio3
+                                    checked
+                                    value="0"
+                                />
+                                <label for="radio1" class="radio-label"
+                                    >销售员自送</label
+                                >
+                                <input
+                                    type="radio"
+                                    class="radio"
+                                    icheck
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply.pickupType
+                                    "
+                                    name="pickupType"
+                                    #radio4
+                                    value="1"
+                                />
+                                <label for="radio2" class="radio-label"
+                                    >物流取货</label
+                                >
+                            </td>
+                        </tr>
+                        <tr *ngIf="saleRole">
+                            <th>归还总金额</th>
+                            <td>
+                                {{
+                                    rtnAppPo.borrowReturnApply.returnTotalAmount
+                                }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>归还说明</th>
+                            <td colspan="3">
+                                <input
+                                    type="hidden"
+                                    name="returnTotalAmount"
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply
+                                            .returnTotalAmount
+                                    "
+                                />
+                                <input
+                                    type="text"
+                                    required
+                                    placeholder="请填写"
+                                    [(ngModel)]="
+                                        rtnAppPo.borrowReturnApply.returnMemo
+                                    "
+                                    name="returnMemo"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--标题-->
+            <nav class="nav1 nav" *ngIf="rtnAppPo.rtnTransportPoList">
+                <span>物料与运输信息</span>
+            </nav>
+            <!--物料与运输信息1-->
+            <div
+                class="m-material-info1"
+                *ngFor="let item of rtnAppPo.rtnTransportPoList; index as i"
+            >
+                <h2>
+                    物料与运输信息{{ i + 1 }}
+                    <button type="button" (click)="delTransport(i)">
+                        删除
+                    </button>
+                </h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="6%">取货地址</th>
+                            <td class="flex">
+                                <select
+                                    class="form-control deliveryAddressSelect"
+                                    style="width: 20%"
+                                    (change)="
+                                        transportAddressesChange(item, $event)
+                                    "
+                                    #rtnAddressId
+                                    name="rtnAddressId"
+                                    required
+                                >
+                                    <option value="">-请选择</option>
+                                    <option
+                                        *ngFor="let item1 of rtnAddresses"
+                                        [value]="item1.deliveryAddressId"
+                                        [selected]="
+                                            item1.deliveryAddressId ==
+                                            item.rtnTransport.rtnAddressId
+                                        "
+                                        >{{ item1.deliveryAddress }}</option
+                                    >
+                                </select>
+                                <div class="btns1" style="margin-left: 0px;">
+                                    <button
+                                        (click)="
+                                            editTimeMap(
+                                                item,
+                                                rtnAddressId.value
+                                            )
+                                        "
+                                    >
+                                        编辑
+                                    </button>
+                                    <button (click)="showTimeMap()">
+                                        添加取货地址
+                                    </button>
+                                </div>
+                            </td>
+                            <th
+                                width="6%"
+                                *ngIf="
+                                    rtnAppPo.borrowReturnApply.pickupType == 1
+                                "
+                            >
+                                运输方式
+                            </th>
+                            <td
+                                width="38%"
+                                *ngIf="
+                                    rtnAppPo.borrowReturnApply.pickupType == 1
+                                "
+                            >
+                                <select
+                                    class="form-control borrowSelect"
+                                    (change)="transportTypeChange(item, $event)"
+                                    name="transportCode"
+                                    required
+                                >
+                                    <option value="">-请选择</option>
+                                    <option
+                                        *ngFor="let item1 of transportTypesOpts"
+                                        [value]="item1.code"
+                                        [selected]="
+                                            item1.code ==
+                                            item.rtnTransport.transportCode +
+                                                '_' +
+                                                item1.name
+                                        "
+                                        >{{ item1.name }}</option
+                                    >
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <show-location
+                    *ngIf="showLocation"
+                    (missData)="missData($event)"
+                    [customerName]="customerName"
+                    [addressId]="addressId"
+                    (addressData)="addressData($event)"
+                ></show-location>
+                <div class="tables">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="">物料描述</th>
+                                <th width="8%">批次</th>
+                                <th width="8%">单位</th>
+                                <th width="8%">数量</th>
+                                <th *ngIf="saleRole" width="13%">
+                                    归还金额/元
+                                </th>
+                                <th width="10%">借用在途库</th>
+                                <th width="5%" class="m-text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let item1 of item.rtnMaterielAppList;
+                                    index as j
+                                "
+                            >
+                                <td class="m-text-center add-w-b60">
+                                    {{ j + 1 }}
+                                </td>
+                                <td>{{ item1.meterialNo }}</td>
+                                <td>{{ item1.meterialMemo }}</td>
+                                <td>{{ item1.batch }}</td>
+                                <td>
+                                    {{ item1.unit }}
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="item1.count"
+                                        name="count{{ i }}{{ j }}"
+                                        (change)="materielNumberChange(item1)"
+                                    />
+                                </td>
+                                <td *ngIf="saleRole">
+                                    {{ item1.totalAmount }}
+                                </td>
+                                <td>{{ item1.onwayStore }}</td>
+                                <td class="m-text-center">
+                                    <i
+                                        class="iqon-jian adds"
+                                        (click)="delRtnMaterielApp(item, j, i)"
+                                    ></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--物料与运输信息2-->
+
+            <!--提交-->
+            <div class="addApp-sub-btns">
+                <button
+                    *ngIf="
+                        (isSaved == 'n' || (currAppFlag && isSaved == 'e'))
+                    "
+                    class="m-btn-confirm"
+                    type="button"
+                    (click)="submitApply()"
+                >
+                    提交
+                </button>
+                <!--button *ngIf="isClick" class="m-btn-disable">提交中...</button-->
+                <button
+                    *ngIf="
+                        (isSaved == 'n' || (currAppFlag && isSaved == 'e'))
+                    "
+                    class="m-btn-sketch"
+                    (click)="clickSaveBorrowRtnApply($event)"
+                >
+                    暂存
+                </button>
+                <button class="m-btn-cancel2" (click)="goBack()">取消</button>
+            </div>
+        </div>
+    </form>
+</div>

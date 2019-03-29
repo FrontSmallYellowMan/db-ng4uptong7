@@ -1,0 +1,122 @@
+//名片申请 --详细信息
+.m-blue-tip{
+  color: $def-main-color;
+}
+.m-warn-tip{
+  color: $msg-need;
+}
+.m-card-apply{
+  padding: 30px 0 20px;
+  width: 900px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+    color: #4A4A4A;
+  }
+
+  .m-card-form{
+    @extend %clearfix;
+    position: relative;
+    margin: 15px 0;
+    padding-bottom: 20px;
+    background-color: #fff;
+
+    .m-btn-import{
+      width: 170px;
+      position: absolute;
+      top: 26px;
+      right: 28px;
+      color: $def-main-color;
+      border: 1px solid $def-main-color;
+      padding: 0;
+
+      &:hover{
+        color: #fff;
+        background-color: $def-main-color;
+      }
+    }
+
+    .m-form-item, .m-form-item-w100{
+      padding: 10px 25px;
+    }
+
+    .m-approval{
+      padding-bottom: 0;
+    }
+
+    .m-company-msg{
+      @extend %clearfix;
+      float: left;
+      margin: 10px 25px;
+      padding: 15px 20px;
+      width: 850px;
+      background-color: $def-color3;
+
+      >div{
+        float: left;
+      }
+
+      .m-company-address .m-company-enaddress{
+        color: $def-font2-color;
+      }
+
+      .m-company-postcode, .m-company-web{
+        width: 50%;
+        padding-right: 30px;
+      }
+    }
+  }
+
+  .m-form-preview{
+    @extend %clearfix;
+    padding: 20px 20px 10px;
+    background-color: #f3f3f3;
+
+    .m-card-view{
+      float: left;
+
+      &:first-child{
+        margin-right: 30px;
+      }
+
+      .m-card-front,.m-card-back{
+        width: 390px;
+        height: 225px;
+        background-color:#fff;
+        border: 1px solid $def-link1-color;
+      }
+
+      >p{
+        margin-top: 10px;
+        text-align: right;
+        color: #9196a0;
+      }
+    }
+
+  }
+  .m-card-btn{
+    text-align: center;
+    button{
+      margin-right: 15px;
+      &.m-btn-next{
+        width: 160px;
+      }
+      &.m-btn-tempsave{
+        vertical-align: top;
+        width: 84px;
+        height: 45px;
+        padding: 0;
+        min-width: 84px;
+
+        &:hover{
+          color: #fff;
+          background-color: #999;
+        }
+      }
+      &.m-btn-cancel2{
+        text-align: left;
+      }
+    }
+  }
+}

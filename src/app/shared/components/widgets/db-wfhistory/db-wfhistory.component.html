@@ -1,0 +1,24 @@
+<div class="apply-record">
+  <div class="m-dialog-head">
+    <span class="m-dialog-head-change progress-txt m-dialog-head-text">审批记录</span>
+    <!--<i class="iqon-fold"></i>-->
+  </div>
+  <div class="m-exm-item">
+    <ul class="m-exm-history">
+      <li *ngFor="let item of wfHistoryData">
+        <div class="m-exm-label normal-weight-text">{{item.nodename}}</div>
+        <div class="m-exm-cont">
+          <div class="m-user-info-small">
+            <img alt="纪永凤" class="m-user-img" src="assets/default-user.png">
+            <span class="m-user-name">{{item.user}}</span>
+          </div>
+        </div>
+        <span class="m-exm-time">{{item.auditime}}</span>
+        <span class="m-exm-remark">
+          {{item.approveresult}}
+        </span>
+        <span style="display: inline-block;width: 39%;vertical-align: text-top;">{{item.taskopinions}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

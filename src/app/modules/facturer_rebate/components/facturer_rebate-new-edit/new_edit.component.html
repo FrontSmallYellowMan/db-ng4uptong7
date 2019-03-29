@@ -1,0 +1,274 @@
+<loading [show]="isLoading"></loading>
+<div class="form-container">
+    <form id="rebate-form" #form="ngForm">
+        <div class="common-area">
+            <div class="area-title">
+                <h5>返款申请</h5>
+            </div>
+    
+            <div class="area-content">
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">创建人</div>
+                        <div class="inputs">
+                            <iq-person-select name="CreateName" required [(ngModel)]="formDataConfig.CreateName.value" [max]="1" ngDefaultControl></iq-person-select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">创建日期</div>
+                        <div class="inputs readonly-display">
+                            <p *ngIf="showCreateTime">{{ formDataConfig.CreateTime.value | date:'yyyy-MM-dd' }}</p>
+                            <p *ngIf="!showCreateTime">保存后系统自动生成</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="formDataConfig.FactoryName.required">*</span>
+                            厂商名称
+                        </div>
+                        <div class="inputs">
+                            <input type="text" [(ngModel)]="formDataConfig.FactoryName.value" name="FactoryName"  #FactoryName="ngModel" maxlength="30"
+                            [ngClass]="{'m-input-warn': FactoryName.invalid && (FactoryName.touched || isSubmit)}" [required]="formDataConfig.FactoryName.required">
+                        </div>
+                        <p class="m-p-warn" *ngIf="FactoryName.invalid && (FactoryName.touched || isSubmit)">请填写厂商名称</p>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="formDataConfig.AgentName.required">*</span>
+                            代理商名称
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <input type="text" [(ngModel)]="formDataConfig.AgentName.value" name="AgentName"  #AgentName="ngModel" readonly
+                            [title]="formDataConfig.AgentName.value"
+                            (click)="openAgentName()" [ngClass]="{'m-input-warn': AgentName.invalid && (AgentName.touched || isSubmit)}" [required]="formDataConfig.AgentName.required">
+                        </div>
+                        <p class="m-p-warn" *ngIf="AgentName.invalid && (AgentName.touched || isSubmit)">请选择代理商名称</p>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="formDataConfig.SalesOrganization.required">*</span>
+                            销售组织
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <select name="SalesOrganization"
+                                (change)="selectSalesOrganization($event)"
+                                [ngClass]="{ 'm-input-warn': formDataConfig.SalesOrganization.isValid && isSubmit }"
+                                autocomplete="off"
+                                [required]="formDataConfig.SalesOrganization.required">
+                                <option value="" disabled>--请选择--</option>
+                                <option  
+                                *ngFor="let item of configDatas.SalesOrganization" 
+                                [value]="item.SalesOrganizationID + '-' + item.Name"
+                                [selected]="item.SalesOrganizationID === formDataConfig.SalesOrganizationCode.value"
+                                >{{ item.SalesOrganizationID + '-' +  item.Name }}</option>
+                            </select>
+                        </div>
+                        <p class="m-p-warn" *ngIf="formDataConfig.SalesOrganization.isValid && isSubmit">请选择销售组织</p>
+                    </div>
+                    <div class="item">
+                        <div class="title">激励编号</div>
+                        <div class="inputs">
+                            <input type="text" [(ngModel)]="formDataConfig.IncentiveNumber.value" name="IncentiveNumber" maxlength="50"
+                            #IncentiveNumber="ngModel" maxlength="30">
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="formDataConfig.RefundAmount.required">*</span>
+                            返款金额
+                        </div>
+                        <div class="inputs">
+                            <input type="text" only-number [(ngModel)]="formDataConfig.RefundAmount.value" name="RefundAmount"  #RefundAmount="ngModel" 
+                            [ngClass]="{'m-input-warn': RefundAmount.invalid && (RefundAmount.touched || isSubmit)}" [required]="formDataConfig.RefundAmount.required">
+                        </div>
+                        <p class="m-p-warn" *ngIf="RefundAmount.invalid && (RefundAmount.touched || isSubmit)">请填写返款金额</p>
+                    </div>
+                    <div class="item">
+                        <div class="title">返款失效日期</div>
+                        <div class="inputs">
+                            <my-datepicker [(ngModel)]="formDataConfig.InvalidTime.value" name="InvalidTime"
+                            (ngModelChange) = "changeSpecialDate('InvalidTime')"
+                            [Required]="formDataConfig.InvalidTime.isValid && formDataConfig.InvalidTime.required"></my-datepicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            已占用金额
+                        </div>
+                        <div class="inputs readonly-display">
+                            {{ formDataConfig.AfterAmount.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            剩余金额
+                        </div>
+                        <div class="inputs readonly-display">
+                            {{ formDataConfig.AvailableAmount.value }}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+        </div>
+        <!-- <div class="spectial-area">
+            <div class="area-title">
+                <h5>个性信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.AgencyType?.IfRequired">*</span>
+                            签约代理类型
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <select [(ngModel)]="roleFieldConfig.AgencyType.FieldValue" name="AgencyType" 
+                            #AgencyType="ngModel" [required]="roleFieldConfig.AgencyType?.IfRequired"
+                            [ngClass]="{'m-input-warn': AgencyType.invalid && (AgencyType.touched || isSubmit)}">
+                                <option [value]="item.value" *ngFor="let item of roleFieldConfig.AgencyType?.Data">{{ item.text }}</option>
+                            </select>
+                        </div>
+                        <p class="m-p-warn" *ngIf="AgencyType.invalid && (AgencyType.touched || isSubmit)">请选择签约代理类型</p>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.ChannelType?.IfRequired">*</span>
+                            渠道分类
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <select [(ngModel)]="roleFieldConfig.ChannelType.FieldValue" name="ChannelType"
+                            #ChannelType="ngModel" [required]="roleFieldConfig.ChannelType?.IfRequired"
+                            [ngClass]="{'m-input-warn': ChannelType.invalid && (ChannelType.touched || isSubmit)}">
+                                <option [value]="item.value" *ngFor="let item of roleFieldConfig.ChannelType?.Data">{{ item.text }}</option>
+                            </select>
+                        </div>
+                        <p class="m-p-warn" *ngIf="ChannelType.invalid && (ChannelType.touched || isSubmit)">请选择签约代理类型</p>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.Po?.IfRequired">*</span>
+                            厂商PO号
+                        </div>
+                        <div class="inputs">
+                            <input type="text" [(ngModel)]="roleFieldConfig.Po.FieldValue" name="Po"
+                            #Po="ngModel" [required]="roleFieldConfig.Po?.IfRequired"
+                            [ngClass]="{'m-input-warn': Po.invalid && (Po.touched || isSubmit)}">
+                        </div>
+                        <p class="m-p-warn" *ngIf="Po.invalid && (Po.touched || isSubmit)">请选择签约代理类型</p>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.ProjectTrade?.IfRequired">*</span>
+                            项目所属行业
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <select [(ngModel)]="roleFieldConfig.ProjectTrade.FieldValue" name="ProjectTrade"
+                            #ProjectTrade="ngModel" [required]="roleFieldConfig.ProjectTrade?.IfRequired"
+                            [ngClass]="{'m-input-warn': ProjectTrade.invalid && (ProjectTrade.touched || isSubmit)}">
+                                <option [value]="item.value" *ngFor="let item of roleFieldConfig.ProjectTrade?.Data">{{ item.text }}</option>
+                            </select>
+                        </div>
+                        <p class="m-p-warn" *ngIf="ProjectTrade.invalid && (ProjectTrade.touched || isSubmit)">请选择项目所属行业</p>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.OrderType?.IfRequired">*</span>
+                            订单类型
+                        </div>
+                        <div class="inputs">
+                            <i class="iqon-xia"></i>
+                            <select [(ngModel)]="roleFieldConfig.OrderType.FieldValue" name="OrderType"
+                            #OrderType="ngModel" [required]="roleFieldConfig.OrderType?.IfRequired"
+                            [ngClass]="{'m-input-warn': OrderType.invalid && (OrderType.touched || isSubmit)}">
+                                <option [value]="item.value" *ngFor="let item of roleFieldConfig.OrderType?.Data">{{ item.text }}</option>
+                            </select>
+                        </div>
+                        <p class="m-p-warn" *ngIf="OrderType.invalid && (OrderType.touched || isSubmit)">请选择订单类型</p>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item item-filled">
+                        <div class="title">
+                            <span class="form-required" *ngIf="roleFieldConfig.ProductType?.IfRequired">*</span>
+                            产品类型
+                        </div>
+                        <div class="inputs">
+                            <span *ngFor="let checkboxItem of roleFieldConfig.ProductType?.Data; index as i;">
+                                <input icheck type="checkbox" [id]="'checkbox' + i" [name]="'checkItem' + i" [(ngModel)]="checkboxItem.ischecked">
+                                <label [for]="'checkbox' + i">{{ checkboxItem.text }}</label>
+                            </span>
+                        </div>
+                        <p class="m-p-warn" *ngIf="isProductTypeChecked">请选择产品类型</p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="attachment-area">
+            <div class="area-title">
+                <h5>附件信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <iq-file-upload upType="0" [maxFileNum]=100 [url]="uploadUrl" [hasUploaded]="editEploadItems" [showModel]="false"
+              text="添加附件" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)"></iq-file-upload>
+                </div>
+            </div>
+        </div> -->
+        <div class="button-group">
+            <button class="m-btn-confirm" (click)="saveRebate()">保存</button>
+            <button class="m-btn-cancel" (click)="cancelRebate()">取消</button>
+        </div>
+    </form>
+</div>
+
+<modal #modal>
+    <modal-header class="modal-header-copy">
+      <span>{{ modalConfig.title }}</span>
+      <span class="pull-right" (click)="modal.close()">&times;</span>
+    </modal-header>
+    <modal-body>
+        <div class="search-row">
+            <input type="text" class="form-control"  [placeholder]="modalConfig.placeholder" [(ngModel)]="modalConfig.searchText">
+            <button class="btn btn-info" (click)="modalConfig.onSearch(modalConfig.searchText)">查询</button>
+            <div *ngIf="modalConfig.validMessage" class="valid-message">
+              {{modalConfig.validMessage}}
+            </div>
+        </div>
+        <div style="padding:0 2%;">
+          <table class="table table-list table-hover">
+            <tbody>
+              <tr>
+                <td *ngFor="let item of modalConfig.tableTitle">{{ item.name }}</td>
+              </tr>
+              <tr *ngFor="let row of modalConfig.currentPageItems" (click)="modalConfig.onSelected(item)" class="modal-table-row" (click)="modalConfig.onRowSelected(row)">
+                <td [title]="row[item.field]" *ngFor="let item of modalConfig.tableTitle">{{ row[item.field] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <div class="page">
+            <iq-pager [data]="modalConfig.pagerData" [simple]="true" (onChange)="modalConfig.onChangePage($event)"></iq-pager>
+        </div>
+    </modal-footer>
+</modal>

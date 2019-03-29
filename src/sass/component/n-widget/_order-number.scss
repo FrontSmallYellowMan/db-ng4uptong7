@@ -1,0 +1,33 @@
+/* 发票号或订单号 */
+.m-order-number {
+  width: 665px;
+  overflow: auto;
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  z-index: 100;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  .modal-body {
+    padding: 0 25px;
+    height: 165px;
+    overflow: auto;
+   }
+  table{
+    border-collapse: collapse;
+    tr{
+      border-bottom: 1px solid #d2d8e0;
+      th{
+        border: none;
+      }
+    }
+  }
+  .m-order-table{
+    border-bottom: none;
+  }
+  .modal-footer{
+    margin-top: 40px;
+  }
+}

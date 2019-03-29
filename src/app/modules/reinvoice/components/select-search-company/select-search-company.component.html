@@ -1,0 +1,16 @@
+<div class="select-search">
+  <div class="select-modal" (click)="toggle()">
+    {{selectedItem?.companycode}}-{{selectedItem?.company}}
+    <i class="iqon-xia"></i>
+  </div>
+  <div class="search-modal" [ngClass]="{'hide': !optionShow}">
+    <div class="search-wrap">
+      <input [(ngModel)]="keyWord" (keyup)="search(keyWord)" class="m-input" type="text" name="search" placeholder="-请输入搜索条件">
+    </div>
+    <div class="option-wrap">
+      <ul class="option-list">
+        <li *ngFor="let item of _optionList;index as i" (click)="selectItem(item)">{{item?.companycode}}-{{item?.company}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

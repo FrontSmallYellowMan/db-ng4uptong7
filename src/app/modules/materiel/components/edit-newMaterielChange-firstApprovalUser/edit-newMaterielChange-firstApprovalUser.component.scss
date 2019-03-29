@@ -1,0 +1,46 @@
+.edit-nmc-firstApprovalUser{
+    
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  z-index: 2100;
+  background-color: #fff;
+  position: absolute;
+  max-height: 500px;
+
+  table{
+      width:90%;
+      margin: 10px auto 10px;
+
+      .a_point{
+          cursor: pointer;
+      }
+
+      
+    
+  }
+
+  .m-info-table{
+
+    tbody tr{  
+      cursor: pointer;
+      &:hover{
+        background-color:#F0F8FE;
+      }
+    }
+     
+  }
+
+  .edit-nmc-salesList-title{
+      margin: 10px auto 0;
+      width: 90%;
+      font-size: 16px;
+  }
+
+  .edit-nmc-button{
+      margin: 0px auto 10px;
+      text-align:center;
+  }
+
+}

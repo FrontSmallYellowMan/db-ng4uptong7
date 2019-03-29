@@ -1,0 +1,61 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    <span>借用信息</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <!-- <loading [show]="loading"></loading> -->
+    <form #form="ngForm">
+    <div class="m-search-all">
+      <div class="m-search-item">
+        <label style="margin-right:10px;">销售员</label>
+        <input (keyup.enter)="search()" [(ngModel)]="query.UserInfo" placeholder="请输入销售员ID或姓名" type="text" required #UserInfo="ngModel" name="UserInfo" [ngClass]="{'m-input-warn':UserInfo.invalid&&(UserInfo.touched||isSearch)}">
+        <p class="m-p-warn" *ngIf="UserInfo.invalid&&(UserInfo.touched||isSearch)">请输入销售员ID或姓名</p>
+      </div>
+      <div class="m-search-item">
+        <label style="margin-right:10px;">预留号</label>
+        <input (keyup.enter)="search()" [(ngModel)]="query.ReservationNo" required placeholder="请输入预留号" type="text" #ReservationNo="ngModel" name="ReservationNo" [ngClass]="{'m-input-warn':ReservationNo.invalid&&(ReservationNo.touched||isSearch)}">
+        <p style="padding: 0 0 0 70px" class="m-p-warn" *ngIf="ReservationNo.invalid&&(ReservationNo.touched||isSearch)">请输入预留号</p>        
+      </div>
+      <label style="margin-right:10px;position: relative;top: 5px;">借用日期</label>
+      <div class="inline-block">
+        <my-datepicker PlaceHolder="-请选择日期" [Required]="!query.BeginDate&&(isSearch)"  [(ngModel)]="query.BeginDate" [EndDate]="query.EndDate" [required]="true" #BeginDate="ngModel" name="BeginDate" ></my-datepicker>
+        <p class="m-p-warn" *ngIf="!query.BeginDate&&(isSearch)">请选择起始日期</p>                
+      </div>
+      <div class="inline-block" style="position: relative;top: 5px;">~</div>
+      <div class="inline-block date-right">
+        <my-datepicker PlaceHolder="-请选择日期" [Required]="!query.EndDate&&(isSearch)" [(ngModel)]="query.EndDate" [StartDate]="query.BeginDate" required name="EndDate"></my-datepicker>
+        <p class="m-p-warn" *ngIf="!query.EndDate&&(isSearch)">请选择结束日期</p>      
+      </div>
+      <button type="button" class="m-btn-default" style="margin-left:10px;height: 30px;" (click)="search()">搜索</button>
+      <button type="button" class="m-btn-default" style="margin-left:10px;height: 30px;" (click)="reset()">重置</button>
+    </div>
+  </form>
+    <div class="m-order-table">
+      <loading [show]="loading"></loading>
+      <ul class="m-shipTo-head">
+        <li>&nbsp;</li>
+        <li>销售员</li>
+        <li>预留号</li>
+        <li>借用日期</li>
+        <li>预计归还日期</li>
+        <li>工厂</li>
+      </ul>
+      <div class="m-shipTo-body">
+        <ul *ngFor="let item of borrowList;index as i">
+          <li><input type="checkbox" (onChange)="selected(item)" icheck [(ngModel)]="item.checked"></li>
+          <li title="{{item.ApplyItCode}}">{{item.ApplyItCode+"/"+item.ApplyUserName || "&nbsp;"}}</li>
+          <li title="{{item.ReservationNo}}">{{item.ReservationNo || "&nbsp;"}}</li>
+          <li title="{{item.BorrowDate}}">{{item.BorrowDate | iqDate:'YYYY-MM-DD' || "&nbsp;"}}</li>
+          <li title="{{item.GiveBackDay}}">{{item.GiveBackDay | iqDate:'YYYY-MM-DD' || "&nbsp;"}}</li>
+          <li title="{{item.Factory}}">{{item.Factory || "&nbsp;"}}</li>
+        </ul>
+      </div>
+    </div>
+    <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+  </div>
+  <div class="modal-footer">
+    <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+    <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+  </div>
+</div>

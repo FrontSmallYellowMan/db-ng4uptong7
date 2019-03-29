@@ -1,0 +1,21 @@
+/*费用明细tabs*/
+
+.m-charge-tabs ul {
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+        width: 160px;
+        line-height: 34px;
+        margin-right: -1px;
+        margin-bottom: -1px;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid #e1e3eb;
+        &.active {
+            background: #57b9f8;
+            color: #fff;
+            border:1px;
+        }
+    }
+}

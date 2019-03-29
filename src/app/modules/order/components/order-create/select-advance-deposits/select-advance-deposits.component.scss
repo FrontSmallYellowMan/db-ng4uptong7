@@ -1,0 +1,145 @@
+.m-search-all{
+    height:30px;
+    text-align: right;
+    .m-search{
+        width: 250px;
+        float: right;
+    }
+}
+.m-order-number{
+    z-index: 1045;
+    top:6%;
+    left:13%;
+    width:1000px;
+}
+.modal-body{
+    height:455px;
+    padding-top:15px;
+    position: relative;
+}
+.m-order-table{
+    margin: 15px 0;
+}
+.m-order-table{
+    padding-top:30px;
+    position: relative;
+    .table-head{
+        background-color: #f5f7fa;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        z-index: 9;
+        line-height: 30px;
+        width: 948px;
+        border-bottom: 1px solid #d2d8e0;
+        li{
+           &:nth-child(10){
+               width:105px;
+           }
+           &:nth-child(11){
+               padding-left: 0;
+               width:80px;
+               text-align: center;
+           }
+        }
+    }
+    .table-body{
+        width: 948px;
+        max-height:280px;
+        overflow-y: auto;
+        ul{
+            height: 30px;
+            border-bottom: 1px solid #d2d8e0;
+        }
+    }
+    li{
+        line-height: 30px;
+        float: left;
+        border-left: 1px solid #d2d8e0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:nth-child(1){
+            width:35px;
+            border-left:0;
+        }
+       &:nth-child(2){
+           width:85px;
+       }
+       &:nth-child(3){
+           width:100px;
+       }
+       &:nth-child(4){
+           width:85px;
+       }
+       &:nth-child(5){
+           width:70px;
+       }
+       &:nth-child(6){
+           width:85px;
+       }
+       &:nth-child(7){
+           width:65px;
+       }
+       &:nth-child(8){
+           width:80px;
+       }
+       &:nth-child(9){
+           width:80px;
+       }
+       &:nth-child(10){
+           width:105px;
+       }
+       &:nth-child(11){
+           width:80px;
+       }
+       &:nth-child(12){
+           padding-left: 10px;
+           width:48px;
+           text-align: right;
+       }
+    }
+    &:hover{
+        background-color: #fbfbfb;
+    }
+}
+.inline-block{
+    display: inline-block;
+}
+/deep/ input[type=text]{
+    height:30px;
+}
+/deep/ .iqon-calendar-2{
+    display: none;
+}
+/deep/ .my-datepicker{
+    width:120px;
+}
+/deep/ .my-datepicker .picker-main{
+    right:0;
+}
+.m-advance-footer{
+    text-align: left;
+    position: absolute;
+    width: 94%;
+    bottom: 18px;
+    ul{
+        display: inline-block;
+        width: 100%;
+        li{
+            float: left;
+            width: 33%;
+            span{
+                float: right;
+                display: inline-block;
+                margin-right: 50px;
+            }
+        }
+    }
+    input[type="checkbox"]{
+        margin-right: 10px;
+    }
+}
+.m-order-number .modal-footer{
+    margin-top:0;
+}

@@ -1,0 +1,333 @@
+<div class="pc-list" (click)="menuOperation.hideIndiaList()">
+  <loading [show]="loading"></loading>
+  <!--一级菜单-->
+  <div class="pc-list-menu clearfix">
+    <div class="pc-list-menu-left">
+      <ul class="clearfix">
+        <li [class.active]="menuType === 'apply'" (click)="tabMenu('apply')">我的申请</li>
+        <li [class.active]="menuType === 'approval'" (click)="tabMenu('approval')">
+          我的审批
+          <i class="m-num" id="myApproverTotal">{{waitApprovalCount}}</i>
+        </li>
+      </ul>
+    </div>
+    <db-india-firstmenu (addCallBack)="addCallBack()"></db-india-firstmenu>
+  </div>
+  <!--二级菜单-->
+  <div class="m-list-menu">
+    <ul class="m-state" [class.noview]="menuType !== 'apply'">
+      <li [class.active]="secondMenuType === 'approval'" (click)="secondTabMenu('approval')">审批中</li>
+      <li [class.active]="secondMenuType === 'completed'" (click)="secondTabMenu('completed')">已完成</li>
+      <li [class.active]="secondMenuType === 'all'" (click)="secondTabMenu('all')">全部</li>
+      <li [class.active]="secondMenuType === 'draft'" (click)="secondTabMenu('draft')">草稿</li>
+    </ul>
+    <ul class="m-state" [class.noview]="menuType !== 'approval'">
+      <li [class.active]="secondMenuType === 'waitapproval'" (click)="secondTabMenu('waitapproval')">待我审批</li>
+      <li [class.active]="secondMenuType === 'examinedapproved'" (click)="secondTabMenu('examinedapproved')">我已审批</li>
+      <li [class.active]="secondMenuType === 'allapproval'" (click)="secondTabMenu('allapproval')">全部</li>
+    </ul>
+    <div class="sc-search-show" *ngIf="!showSearch">
+      <div class="m-search-high" (click)="toggleSearch()">
+        <i class="iqon-highsearch"></i> 高级搜索
+      </div>
+    </div>
+    <div class="sc-search-hide" *ngIf="showSearch">
+      <span (click)="toggleSearch()">收起高级搜索</span>
+    </div>
+  </div>
+  <!--搜索-->
+  <div>
+    <div class="m-search-approval clearfix" *ngIf="menuType == 'apply' && showSearch">
+      <div class="m-search-approval-content">
+        <div class="m-search-approval-query">
+          <div class="item">
+            <div class="title">
+              <label>我方主体</label>
+            </div>
+            <div class="inputs">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="applyQuery.SellerCompanyCode">
+                  <option value="">-请选择我方主体</option>
+                  <option *ngFor="let item of companyData" [ngValue]="item.companycode">{{item.company}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="item item-z">
+            <div class="title title-z">
+              <label>申请日期</label>
+            </div>
+            <div class="inputs">
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="applyQuery.SubmitTimeStart" [EndDate]="applyQuery.SubmitTimeEnd"></my-datepicker>
+              </div>
+              <div class="inputs-date inputs-date-line">~</div>
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="applyQuery.SubmitTimeEnd" [StartDate]="applyQuery.SubmitTimeStart"></my-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>对方主体</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="applyQuery.BuyerName" placeholder="-请输入对方主体">
+            </div>
+          </div>
+          <!--<div class="item item-z">
+            <div class="title title-z">
+              <label>完成日期</label>
+            </div>
+            <div class="inputs">
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="applyQuery.SealApprovalTimeStart" [EndDate]="applyQuery.SealApprovalTimeEnd"></my-datepicker>
+              </div>
+              <div class="inputs-date inputs-date-line">~</div>
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="applyQuery.SealApprovalTimeEnd" [StartDate]="applyQuery.SealApprovalTimeStart"></my-datepicker>
+              </div>
+            </div>
+          </div>-->
+          <div class="item">
+            <div class="title">
+              <label>合同名称</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="applyQuery.ContractName" placeholder="-请输入合同名称">
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>合同编号</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="applyQuery.MainContractCode" placeholder="-请输入合同编号">
+            </div>
+          </div>
+        </div>
+        <div class="m-search-approval-btn">
+          <button class="m-btn-confirm" (click)="onSearch('btnSearch')">搜索</button>
+          <button class="m-btn-cancel" (click)="onReset()">重置</button>
+        </div>
+      </div>
+    </div>
+    <div class="m-search-approval" *ngIf="menuType == 'approval' && showSearch">
+      <div class="m-search-approval-content">
+        <div class="m-search-approval-query">
+          <div class="item">
+            <div class="title">
+              <label>我方主体</label>
+            </div>
+            <div class="inputs">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="approveQuery.SellerCompanyCode">
+                  <option value="">-请选择我方主体</option>
+                  <option *ngFor="let item of companyData" [ngValue]="item.companycode">{{item.company}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="item item-z">
+            <div class="title title-z" style="width: 11.5%;">
+              <label>申请日期</label>
+            </div>
+            <div class="inputs">
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="approveQuery.SubmitTimeStart" [EndDate]="approveQuery.SubmitTimeEnd"></my-datepicker>
+              </div>
+              <div class="inputs-date inputs-date-line">~</div>
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="approveQuery.SubmitTimeEnd" [StartDate]="approveQuery.SubmitTimeStart"></my-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>对方主体</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="approveQuery.BuyerName" placeholder="-请输入对方主体">
+            </div>
+          </div>
+          <div class="item item-z">
+            <div class="title title-z" style="width: 11.5%;">
+              <label>完成日期</label>
+            </div>
+            <div class="inputs">
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="approveQuery.SealApprovalTimeStart" [EndDate]="approveQuery.SealApprovalTimeEnd"></my-datepicker>
+              </div>
+              <div class="inputs-date inputs-date-line">~</div>
+              <div class="inputs-date inputs-date-select">
+                <my-datepicker PlaceHolder="-请选择日期" [(ngModel)]="approveQuery.SealApprovalTimeEnd" [StartDate]="approveQuery.SealApprovalTimeStart"></my-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>申请人ITcode</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="approveQuery.ApplyItcode" placeholder="-请输入申请人ITcode">
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>申请单号</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="approveQuery.MainContractCode" placeholder="-请输入申请单号">
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>项目名称</label>
+            </div>
+            <div class="inputs">
+              <input type="text" [(ngModel)]="approveQuery.ContractName" placeholder="-请输入项目名称">
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>本部</label>
+            </div>
+            <div class="inputs">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="approveQuery.Headquarter" (change)="onDepartmentChange(approveQuery.Headquarter)">
+                  <option value="">-请选择本部</option>
+                  <option *ngFor="let item of departmentAndBusinessList" [ngValue]="item.BBMC">{{item.BBMC}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>事业部</label>
+            </div>
+            <div class="inputs">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="approveQuery.BusinessUnit">
+                  <option value="">-请选择事业部</option>
+                  <option *ngFor="let item of BusinessList" [ngValue]="item.SYBMC">{{item.SYBMC}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="title">
+              <label>平台</label>
+            </div>
+            <div class="inputs">
+              <div class="m-select">
+                <i class="iqon-xia"></i>
+                <select [(ngModel)]="approveQuery.Platform">
+                  <option value="">-请选择平台</option>
+                  <option *ngFor="let item of PlatformList" [ngValue]="item.platformcode">{{item.platform}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="item" *ngIf="secondMenuType == 'examinedapproved' || secondMenuType == 'allapproval'">
+            <div class="title">
+              <label>合同是否回收</label>
+            </div>
+            <div class="inputs">
+              <span>
+                <input icheck type="radio" id="radio1" name="Outsourcing" [(ngModel)]="approveQuery.IsRecovery" value="1" [disabled]="disabledOutsourcing">
+                <label for="radio1">是</label>
+              </span>
+              <span>
+                <input icheck type="radio" id="radio2" name="Outsourcing" [(ngModel)]="approveQuery.IsRecovery" value="0" [disabled]="disabledOutsourcing">
+                <label for="radio2">否</label>
+              </span>
+              <span>
+                <input icheck type="radio" id="radio3" name="Outsourcing" [(ngModel)]="approveQuery.IsRecovery" value="2" [disabled]="disabledOutsourcing">
+                <label for="radio2">PO</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="m-search-approval-btn">
+          <button class="m-btn-confirm" (click)="onSearch()">搜索</button>
+          <button class="m-btn-cancel" (click)="onReset()">重置</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--表格-->
+  <div class="m-table-right">
+    <table class="table table-hover table-list" *ngIf="menuType === 'apply'">
+      <thead>
+        <tr>
+          <th style="width:140px;">申请单号</th>
+          <th style="width: 190px;">我方主体</th>
+          <th style="width: 185px;">对方主体</th>
+          <th style="width: 90px;">合同金额(元)</th>
+          <th style="width: 130px;">合同名称</th>
+          <th style="width: 50px;">平台</th>
+          <th *ngIf="secondMenuType == 'approval' || secondMenuType == 'all'">当前环节</th>
+          <th *ngIf="secondMenuType == 'approval' || secondMenuType == 'all'">当前处理人</th>
+          <th *ngIf="secondMenuType != 'approval'">申请日期</th>
+          <th class="operate" *ngIf="secondMenuType == 'draft'">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of applyDataList" style="cursor: auto;">
+          <td>
+            <span (click)="onClickTr(item)" class="list-first-td">{{item.MainContractCode}}</span>
+          </td>
+          <td [title]="item.SellerCompany">{{item.SellerCompany}}</td>
+          <td [title]="item.BuyerName">{{item.BuyerName}}</td>
+          <td>{{item.ContractMoney}}</td>
+          <td [title]="item.ContractName">{{item.ContractName}}</td>
+          <td>{{item.Platform}}</td>
+          <td [title]="item.CurrentLink" *ngIf="secondMenuType == 'approval' || secondMenuType == 'all'">{{item.CurrentLink}}</td>
+          <td [title]="item.CurrentTreatment" *ngIf="secondMenuType == 'approval' || secondMenuType == 'all'">{{item.CurrentTreatment}}</td>
+          <td *ngIf="secondMenuType != 'approval'">{{item.SubmitTime | date:'yyyy-MM-dd'}}</td>
+          <td class="operate" *ngIf="secondMenuType == 'draft'">
+            <span class="m-del-information" (click)="onDelete(item)">删除</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-hover table-list" *ngIf="menuType === 'approval'">
+      <thead>
+        <tr>
+          <th style="width: 140px;">申请单号</th>
+          <th style="width: 190px;">我方主体</th>
+          <th style="width: 185px;">对方主体</th>
+          <th style="width: 90px;">合同金额(元)</th>
+          <th style="width: 130px;">合同名称</th>
+          <th style="width: 50px;">平台</th>
+          <th>申请人</th>
+          <th>申请日期</th>
+          <th class="operate" *ngIf="secondMenuType != 'waitapproval'">审批环节</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of approveDataList" style="cursor: auto;">
+          <td>
+            <span (click)="onClickTr(item)" class="list-first-td">{{item.MainContractCode}}</span>
+          </td>
+          <td [title]="item.SellerName">{{item.SellerCompanyCode}}-{{item.SellerName}}</td>
+          <td [title]="item.BuyerName">{{item.BuyerName}}</td>
+          <td>{{item.ContractMoney}}</td>
+          <td>{{item.ContractName}}</td>
+          <td>{{item.Platform}}</td>
+          <td [title]="item.ApplyName">{{item.ApplyItcode}}-{{item.ApplyName}}</td>
+          <td>{{item.Applydate | date:'yyyy-MM-dd'}}</td>
+          <td class="operate" [title]="item.currentapprove" *ngIf="secondMenuType != 'waitapproval'">{{item.currentapprove}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <iq-pager *ngIf="menuType === 'apply'" [data]="applyPager" (onChange)="onSearch()"></iq-pager>
+      <iq-pager *ngIf="menuType === 'approval'" [data]="approvePager" (onChange)="onSearch()"></iq-pager>
+    </div>
+  </div>
+</div>

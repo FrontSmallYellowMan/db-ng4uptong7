@@ -1,0 +1,270 @@
+
+@import '../../../../sass/base/variables';
+@import '../../../../sass/base/util';
+
+.g-hdp .g-list .m-usertree>li{
+  &.active::before{
+    height: 55px;
+  }
+
+  >a{
+    display: block;
+    height: 55px;
+    line-height: 55px;
+    font-size: 14px;
+
+    >i{
+      margin-right: 20px;
+      font-size: 20px;
+      vertical-align: middle;
+      color: $def-main-color;
+    }
+    .iqon-moveto-service{
+      display: inline-block;
+      transform: rotateY(180deg);
+    }
+    .iqon-myplates-alter{
+      display: inline-block;
+      transform: rotateX(180deg);
+    }
+  }
+}
+
+input[type=text].ng-touched.ng-invalid,select.ng-touched.ng-invalid,textarea.ng-touched.ng-invalid{
+  border: 1px solid $def-warn-color!important;
+}
+
+.modal-dialog{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 20px;
+  min-width: 300px;
+  background: #fff;
+  z-index: 1042;
+
+  .m-modal-form{
+    padding: 10px 20px;
+  }
+
+  .m-modal-btn{
+    text-align: center;
+  }
+}
+.m-form-label{
+  font-weight:bold;
+}
+.m-datepicker-comb{
+  display: inline-block;
+  width: 300px;
+  display: flex;
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+  }
+}
+
+
+
+.table{
+  font-size: 12px;
+  white-space: nowrap;
+  margin-bottom: 0;
+  table-layout: auto;
+  
+  tr{
+    cursor: auto;
+  }
+
+  >thead>tr>th{
+    border:none;
+  }
+}
+.table-auto-content,.m-card-cont{
+  width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+　-moz-box-sizing: inherit;
+　-webkit-box-sizing: inherit;
+}
+.page{
+  margin-top: 15px;
+}
+.opcitys{
+  opacity: 0;
+}
+
+* {
+　　box-sizing: border-box;
+　　-moz-box-sizing: inherit;
+　　-webkit-box-sizing: inherit;
+}
+.m-overclass{
+  padding: 10px 20px;
+  
+  .m-list-menu{
+    /*margin:15px 0;*/
+
+    .m-search-open{
+      position: relative;
+      float: right;
+      padding: 18px 25px;
+      background-color: $def-color3;
+      color: $def-main-color;
+      box-shadow: 0 -2px 3px rgba( 0, 0, 0, .15);
+      cursor: pointer;
+    }
+    .m-search-more{
+      float: left;
+      width: 100%;
+      background-color: $def-color3;
+      box-shadow: 0 0 5px rgba( 0, 0, 0, .15);
+
+      form{
+        padding: 15px 25px;
+        @extend %box-flex;
+      }
+
+      .m-search-item{
+        margin-bottom: 10px;
+        width: 30%;
+        margin-left: -15px;
+        >label{
+          display: inline-block;
+          margin-right: 4px;
+          text-align: right;
+          width: 19%;
+        }
+        >input[type=text],.m-select-search{
+          display: inline-block;
+          width: 76%;
+        }
+      }
+
+      .m-search-btn{
+        float: right;
+        .research{
+          width: 78px;
+        }
+        .resets{
+            width: 78px;
+            margin-left: 15px;
+        }
+      }
+    }
+    .m-search-high{
+      text-align: center;
+    }
+  }
+
+  .m-noresult{
+    height: calc(100vh - 190px);
+    margin-top: 10px;
+  }
+
+  .m-mate-list{
+    background-color: #fff;
+    margin:15px 0;
+  }
+}
+.m-search-items{
+  display: flex;
+  justify-content: flex-end;
+  line-height: 35px;
+  width: 40%!important;
+  margin-left: -25px!important;
+  .m-datepicker-comb{
+    margin-left: 5px;
+    width: 79%;
+    .m-datepicker-start,.m-datepicker-end{
+      width: 48%;
+    }
+    span{
+      width: 5%;
+      text-align: center;
+
+    }
+  }
+}
+.hideStyle{
+  display: none;
+}
+
+.list-edit{
+  width: 100%!important;
+}
+
+.table-list td{
+    overflow: hidden!important;  /*溢出隐藏*/
+    text-overflow: ellipsis; /*以省略号...显示*/
+    white-space: nowrap;  /*强制不换行*/
+}
+
+.m-select-width-style1{
+  width: 60%;
+  display: inline-block;
+}
+
+.m-select-width{
+  display: inline-block;
+  width: 76%;
+  border-radius: 5px;
+}
+
+.m-search-clear{
+  clear: both;
+}
+
+.m-font-relative{
+  position: relative;
+  top: -10px;
+}
+
+.font-color{
+  color: #4E4E4E!important;
+}
+
+.m-promised-input-padding{
+ padding: 0 20px 0 15px!important;
+}
+
+.m-timeDifference-color-red{
+  color: firebrick;
+}
+
+.m-timeDifference-color-green{
+  color: green;
+}
+
+.m-timeDifference-color-blue{
+  color: rgb(49, 148, 206);
+}
+
+
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+//select选择框标红样式
+.m-select-warn{
+  border: 1px solid #DA6A6C!important;
+}
+
+//textarea选择框标红样式
+.m-textarea-warn{
+  border: 1px solid #DA6A6C!important;
+}
+
+//点击文字样式
+.clickText{
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover{
+      color:#70B7F3;
+  }
+}

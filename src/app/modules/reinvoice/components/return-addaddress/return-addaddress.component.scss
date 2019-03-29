@@ -1,0 +1,38 @@
+.addaddress-result-modal{
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform:translateX(-50%);
+    z-index: 9999;
+    background-color: #fff;
+    width: 600px;
+    padding: 25px 35px;
+    border-radius: 5px;
+    li{
+        height: 35px;
+        line-height: 35px;
+        margin-top: 5px;
+        span{
+            width: 22%;
+            float: left;
+            text-align: right;
+        }
+        .m-select,input{
+            width: 70%;
+            margin-right: 7%;
+            float: right;
+        }
+        input:focus {
+            border: 1px solid #59aeea;
+        }
+    }
+    .c-form-need{
+        color: #ea6269;
+        padding-right: 3px;
+    }
+    .m-at-btn{
+        text-align: center;
+        clear: both;
+        padding-top: 15px;
+    }
+}

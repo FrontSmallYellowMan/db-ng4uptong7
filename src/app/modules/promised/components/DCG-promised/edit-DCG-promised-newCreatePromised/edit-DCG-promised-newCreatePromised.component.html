@@ -1,0 +1,254 @@
+<form #form="ngForm">
+
+  <div class="m-edit-promised-ncp">
+
+    <h4>{{pageTitle}}</h4>
+
+    <!-- 基本信息 -->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">申请人</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <div class="m-user-info-small">
+            <div user-image [hasClose]="false" [user]="userInfo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>事业部</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          {{commitmentData.SalesDeparment}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredItemStatus.PlatformID">*</span>平台</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="PlatformName" id="" [required]="requiredItemStatus.PlatformID" [(ngModel)]="commitmentData.PlatformID" #PlatformName="ngModel" [ngClass]="{'m-select-warn':PlatformName.invalid&&(PlatformName.touched||isSubmit),'selectPlaceHolderColor':commitmentData.PlatformID===null}"
+            (ngModelChange)="getPlatForm(commitmentData.PlatformID)">
+            <option value="null" selected disabled>-请选择</option>
+            <option [value]="item.platformcode" *ngFor="let item of listPlatform">{{item.platform}}</option>
+
+          </select>
+        </div>
+        <p class="m-p-warn" style="line-height:20px;" *ngIf="PlatformName.invalid&&(PlatformName.touched||isSubmit)">请选择平台</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips" style="top:5px;">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>信用评级</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          {{commitmentData.SalesLevel}}
+        </div>
+        <!-- <p class="m-p-warn" style="line-height:20px;" *ngIf="!supplierData.phone && (Phone.touched||isSubmit)">请填写联系方式</p>         -->
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredItemStatus.ContractID">*</span>合同编号</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写合同编号" [required]="requiredItemStatus.ContractID" trim [(ngModel)]="commitmentData.ContractID" name="ContractID" #ContractID="ngModel" maxlength="40" [ngClass]="{'m-input-warn':ContractID.invalid&&(ContractID.touched||isSubmit)}">
+        </div>
+        <p class="m-p-warn" *ngIf="ContractID.invalid&& (ContractID.touched||isSubmit)">请填写合同编号</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredItemStatus.ContractMoney">*</span>合同金额</p>
+        <div class="m-select m-edit-promised-ncp-select-style1 m-input-width">
+          <input type="text" placeholder="-请填写合同金额，保留两位小数" [required]="requiredItemStatus.ContractMoney" only-number name="ContractMoney" [(ngModel)]="commitmentData.ContractMoney"
+            #ContractMoney="ngModel" pattern="\d+\.[0-9]{2}" [ngClass]="{'m-input-warn':ContractMoney.invalid&&(ContractMoney.touched||isSubmit)}">
+          <span>元</span>
+        </div>
+        <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredItemStatus.AgentName">*</span>代理商名称</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写代理商名称" [required]="requiredItemStatus.AgentName" trim [(ngModel)]="commitmentData.AgentName" name="AgentName" #AgentName="ngModel" maxlength="200" [ngClass]="{'m-input-warn':AgentName.invalid&&(AgentName.touched||isSubmit)}">
+        </div>
+        <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p>
+      </div>
+
+    </div>
+
+
+    <!--承诺信息-->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>承诺信息</h5>
+      </div>
+
+      <!-- 承诺类型 -->
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" style="width: 51.8%;">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>承诺类型</p>
+        <div class="m-select m-edit-promised-ncp-select-style1" style="width: 71%;">
+          <i class="iqon-xia"></i>
+          <select name="CommitTypeCode" id="" [(ngModel)]="commitmentData.CommitTypeCode" #CommitTypeCode="ngModel" required (ngModelChange)="getPromisedClass(commitmentData.CommitTypeCode)" [ngClass]="{'selectPlaceHolderColor':commitmentData.CommitTypeCode===null,'m-select-warn':CommitTypeCode.invalid&& (CommitTypeCode.touched||isSubmit)}">
+            <option value="null" disabled selected>-请选择</option>
+            <option [value]="item.CommitTypeCode" *ngFor="let item of listCommitmentType" [disabled]="item.CommitTypeCode===''||item.unSelect">{{item.CommitTypeName}}</option>
+          </select>
+        </div>
+        <i class="iqon-add-bold m-add-color" (click)="addPromised()"></i>
+        <p class="m-p-warn" *ngIf="CommitTypeCode.invalid&& (CommitTypeCode.touched||isSubmit)" style="padding-right:6%">请选择承诺类型</p>
+      </div>
+      <!-- 多条承诺类型 -->
+      <ng-container *ngIf="commitTypesList.length>0">
+        <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" style="width: 51.8%;" *ngFor="let element of commitTypesList;let i=index">
+          <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+            <span class="m-form-need"></span>
+          </p>
+          <div class="m-select m-edit-promised-ncp-select-style1" style="width: 71%;">
+            <i class="iqon-xia"></i>
+            <select [name]="i + 'CommitTypeCode'+element.id" [attr.name]="i + 'CommitTypeCode'+element.id" [(ngModel)]="element.Code" (ngModelChange)="addPromisedTypeInList({'Code':element.Code,'Name':'','IsReach':'否',id: element.id},i)" [ngClass]="{'selectPlaceHolderColor':commitmentData.CommitTypeCode===null}">
+              <option value='' disabled selected>-请选择</option>
+              <option [value]="item.CommitTypeCode" *ngFor="let item of listCommitmentType" [disabled]="item.CommitTypeCode===''||item.unSelect">{{item.CommitTypeName}}</option>
+            </select>
+          </div>
+          <i class="iqon-jian m-add-color" (click)="removePromisedType(i)"></i>
+          <!-- <p class="m-p-warn" *ngIf="Vendorcountry.invalid&& (Vendorcountry.touched||isSubmit)">请选择供应商类别</p>         -->
+        </div>
+      </ng-container>
+
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>
+          <span [ngSwitch]="commitmentData.CommitTypeCode">
+            <span *ngSwitchCase="'0001'">清理时间</span>
+            <span *ngSwitchCase="'0007'">回款时间</span>
+            <span *ngSwitchCase="'0009'">承诺达成时间</span>
+            <span *ngSwitchDefault>返还时间</span>
+          </span>
+        </p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <my-datepicker #reachDate="ngModel" [(ngModel)]="commitmentData.CommitDate" [Required]="reachDate.touched||isSubmit" format="YYYY-MM-DD"
+            PlaceHolder="-请选择开始日期" name="BeginDate" (getTimeSuccessCallBack)="alertPromisedDate($event)" [StartDate]="nowDate" ></my-datepicker>
+        </div>
+        <p class="m-p-warn" *ngIf="!commitmentData.CommitDate&& (reachDate.touched||isSubmit)">请选择
+          <span [ngSwitch]="commitmentData.CommitTypeCode">
+            <span *ngSwitchCase="'0001'">清理时间</span>
+            <span *ngSwitchCase="'0007'">回款时间</span>
+            <span *ngSwitchCase="'0009'">承诺达成时间</span>
+            <span *ngSwitchDefault>返还时间</span>
+          </span>
+        </p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" *ngIf='commitmentData.CommitTypeCode==="0007"'>
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>回款金额</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写回款金额" required only-number [(ngModel)]="commitmentData.ReturnMoney" name="ReturnMoney" #ReturnMoney="ngModel" [ngClass]="{'m-input-warn':ReturnMoney.invalid&& (ReturnMoney.touched||isSubmit)}">
+        </div>
+        <p class="m-p-warn" *ngIf="ReturnMoney.invalid&& (ReturnMoney.touched||isSubmit)">请填写回款金额</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles" style="vertical-align:top;">
+          <span class="m-form-need">*</span>承诺事项</p>
+        <div class="m-edit-promised-ncp-select-style1">
+          <textarea id="" cols="80" rows="10" placeholder="-请填写承诺原因" maxlength="4000" [(ngModel)]="commitmentData.CommitMatters" name="CommitMatters" #CommitMatters="ngModel" required [ngClass]="{'m-textarea-warn':CommitMatters.invalid&& (CommitMatters.touched||isSubmit)}"></textarea>
+        </div>
+        <p class="m-p-warn" *ngIf="CommitMatters.invalid&& (CommitMatters.touched||isSubmit)" style="position: relative;right: -130px;width: 500px;">请填写承诺事项</p>
+        
+      </div>
+
+
+    </div>
+
+    <!-- 附件信息 -->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>附件信息</h5>
+      </div>
+      <div class="m-edit-promised-ncp-fileUpLoad">
+        <p class="m-edit-promised-ncp-fileUpLoad-title">
+          <span class="m-form-need"></span>上传附件</p>
+        <div class="m-edit-promised-ncp-fileUpLoad-list">
+          <iq-file-upload upType="1" [url]="upFileApiLink" (onSuccess)="fileUploadSuccess($event)" [hasUploaded]="alreadyfilelUpLoadList"
+            (onDeleteItem)="deleteUploadFile($event)"></iq-file-upload>
+        </div>
+      </div>
+
+    </div>
+    <!-- 附件信息 end-->
+
+    <!--审批历史记录-->
+     <div class="m-edit-approvalDetail-content1" *ngIf="wfHistory.length>0">
+       <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+     </div>
+    <!--审批历史记录 end-->
+
+    <!-- 审批人信息 -->
+    <div class="m-edit-promised-ncp-content1">
+      <div class="m-edit-promised-ncp-title">
+        <h5>审批人信息</h5>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-approval m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredItemStatus.SYBApprove1">*</span>事业部一级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove1" [required]="requiredItemStatus.SYBApprove1" [max]="1" (ngModelChange)="getApprovalPerson(_SYBApprove1,1)" name="SYBApprove1"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="requiredItemStatus.SYBApprove1&&_SYBApprove1.length===0">请选择事业部一级审批人</p>    
+      </div>
+
+      <div class="m-edit-promised-ncp-form-approval m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredItemStatus.SYBApprove2">*</span>事业部二级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove2" [required]="requiredItemStatus.SYBApprove2" [max]="1" (ngModelChange)="getApprovalPerson(_SYBApprove2,2)" name="SYBApprove2"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="requiredItemStatus.SYBApprove2&&_SYBApprove2.length===0">请选择事业部二级审批人</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-approval m-edit-promised-ncp-tips">
+          <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+            <span class="m-form-need" *ngIf="requiredItemStatus.DCGRiskApprove">*</span>风险岗审批人</p>
+          <div class="m-edit-promised-ncp-select-style1 m-height37">
+            <iq-person-select [(ngModel)]="_DCGRiskApprove" [required]="requiredItemStatus.DCGRiskApprove" [max]="1" (ngModelChange)="getApprovalPerson(_DCGRiskApprove,3)" name="DCGRiskApprove"></iq-person-select>
+          </div>
+          <p class="m-p-warn m-approvalPerson-warn" *ngIf="requiredItemStatus.DCGRiskApprove&&_DCGRiskApprove.length===0">请选择风险岗审批人</p>
+        </div>
+
+      <div class="m-edit-promised-ncp-form-approval m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredItemStatus.DCGBusiApprove">*</span>销售商务岗审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_DCGBusiApprove" [required]="requiredItemStatus.DCGBusiApprove&&_DCGBusiApprove.length===0" [max]="1" (ngModelChange)="getApprovalPerson(_DCGBusiApprove,4)" name="DCGBusiApprove"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="requiredItemStatus.DCGBusiApprove&&_DCGBusiApprove.length===0">请选择商务岗审批人</p>
+      </div>
+
+    </div>
+    <!-- 审批人信息 end-->
+
+
+    <div class="m-commonly-btn">
+      <button class="m-btn-confirm m-btn-margin" (click)="onSubmit()" type="button">提交</button>
+      <button class="m-btn-default m-btn-tempsave" (click)="tempSave()" type="button">暂存</button>
+      <button class="m-btn-cancel2 m-btn-width" (click)="cancle()" type="button">取消</button>
+    </div>
+
+  </div>
+
+
+
+</form>

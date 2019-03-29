@@ -1,0 +1,328 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">新建支票延期申请</h1>
+            <!--基本信息-->
+            <div class="m-basic-info addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="m-table m-table1">
+                    <table width="100%">
+                        <tr>
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>申请人
+                            </th>
+                            <td width="38%">
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="sqr"
+                                    (onChange)="changePerson(sqr)"
+                                    (ngModelChange)="changePerson(sqr)"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </td>
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>联系电话
+                            </th>
+                            <td width="38%">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    [(ngModel)]="delayApply.applyPhone"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr colspan="4">
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>部门
+                            </th>
+                            <td width="38%" colspan="3">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    [(ngModel)]="delayApply.applyDept"
+                                    disabled
+                                />
+                            </td>
+                        </tr>
+
+                        <tr colspan="4">
+                            <th width="6%">
+                                <i class="addApp-form-tips">*</i>延期原因
+                            </th>
+                            <td width="78%" colspan="3">
+                                <input
+                                    class="addApp-form-input"
+                                    type="text"
+                                    [(ngModel)]="delayApply.delayReason"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!--<ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>申请人</label>
+                                <iq-person-select required [(ngModel)]="sqr" (ngModelChange)="changePerson(sqr)" ngDefaultControl [max]="1"></iq-person-select>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"><i class="addApp-form-tips">*</i>联系电话</label>
+                                <input class="addApp-form-input" type="text" [(ngModel)]="delayApply.applyPhone">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item col12">
+                                <label class="addApp-form-label"><i class="addApp-form-tips"></i>部门</label>
+                                <input class="addApp-form-input" type="text" [(ngModel)]="delayApply.applyDept" disabled>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <div class="addApp-form-reason">
+                        <div class="addAPP-form-rs">
+                            <label class="addApp-form-label"><i class="addApp-form-tips">*</i>延期原因</label>
+                            <input class="addApp-form-input" type="text" [(ngModel)]="delayApply.delayReason">
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+            <!--延期支票信息-->
+            <div class="addApply-base money">
+                <div>
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">延期支票信息</span>
+                        <iq-file-upload
+                            upType="0"
+                            [url]="fileUploadApi"
+                            [allowedFileType]="['xls']"
+                            [text]="'延期支票EXCEL导入'"
+                            (onSuccess)="onFileCallBack($event)"
+                            class="float-right"
+                            style="margin: 8px 0px 0 0;"
+                        ></iq-file-upload>
+                        <button
+                            type="button"
+                            class="m-btn-text mr10 float-right"
+                            style="color: #57b9f8;"
+                            (click)="downloadDelayTemplate()"
+                        >
+                            模板下载
+                        </button>
+                    </div>
+                </div>
+                <div class="addApp-base-infor">
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="gridtable">
+                            <tr>
+                                <th>序号</th>
+                                <th>支票号</th>
+                                <th>支票金额</th>
+                                <th>客户代码</th>
+                                <th>客户名称</th>
+                                <th>出票日期（支票到期日）</th>
+                                <th>延期入账时间</th>
+                                <th>延期天数</th>
+                                <th>合同编号</th>
+                                <th>
+                                    <i
+                                        class="iqon-add"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="增加支票项"
+                                        (click)="addtr()"
+                                    ></i>
+                                </th>
+                            </tr>
+                            <tr
+                                *ngFor="
+                                    let item of invoiceList;
+                                    let idx = index
+                                "
+                            >
+                                <td>{{ idx + 1 }}</td>
+                                <td>
+                                    <div>{{ item.invoiceNum }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.invoiceAmount }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.customCode }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.customName }}</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{
+                                            item.checkoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <my-datepicker
+                                        [(ngModel)]="item.delayEnterDate"
+                                        (ngModelChange)="calDelayDays(item)"
+                                    ></my-datepicker>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="item.delayDays >= 10">
+                                        <div>
+                                            <b
+                                                ><font style="color:red">{{
+                                                    item.delayDays
+                                                }}</font></b
+                                            >
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.delayDays < 10">
+                                        <div>{{ item.delayDays }}</div>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <div>{{ item.contractNum }}</div>
+                                </td>
+                                <td>
+                                    <i
+                                        class="iqon-minimize"
+                                        style="cursor: pointer;color:#57b9f8"
+                                        title="删除支票"
+                                        (click)="deltr(idx)"
+                                    ></i>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addApp-up-file">
+                <span class="file-head">附 件</span>
+                <div
+                    class="addApp-file-details"
+                    style="max-width: 91%; margin-left: 28px;"
+                >
+                    <ul>
+                        <li *ngFor="let item of attachList">
+                            <i class="iqon-enclosure"></i> {{ item.fileName }}
+                            <i
+                                class="iqon-close2"
+                                (click)="onRemoveFile(item)"
+                            ></i>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="addApp-upload-file"
+                                ><i class="iqon-enclosure"></i>上传附件<input
+                                    id="sellerFile"
+                                    type="file"
+                                    ng2FileSelect
+                                    [uploader]="upLoadECFile"
+                                    (change)="onUploadFiles(upLoadECFile)"
+                            /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="addApply-base money">
+                <div class="m-list-head">
+                    <span class="m-dialog-head-change">审批人信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div class="addApp-base-list">
+                        <li class="addApp-form-item w-full" style="margin:0;">
+                            <label class="addApp-form-label"
+                                >事业部审批人</label
+                            >
+                            <div class="addApp-form-right">
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="deptApprover"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </div>
+                        </li>
+
+                        <ng-container *ngIf="bigTen">
+                            <li
+                                class="addApp-form-item w-full"
+                                style="margin:0;"
+                                *ngFor="let item of approverList"
+                            >
+                                <label class="addApp-form-label">{{
+                                    item.nodeName
+                                }}</label>
+                                <div class="addApp-form-right">
+                                    <div
+                                        class="m-user-info"
+                                        user-image
+                                        [hasClose]="false"
+                                        [user]="person0"
+                                        *ngFor="let person0 of item.personList"
+                                    ></div>
+                                </div>
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="!bigTen">
+                            <li
+                                class="addApp-form-item w-full"
+                                style="margin:0;"
+                                *ngFor="let item of approverList"
+                            >
+                                <label
+                                    class="addApp-form-label"
+                                    *ngIf="item.nodeName == '风险岗审批人'"
+                                    >{{ item.nodeName }}</label
+                                >
+                                <div
+                                    class="addApp-form-right"
+                                    *ngIf="item.nodeName == '风险岗审批人'"
+                                >
+                                    <div
+                                        class="m-user-info"
+                                        user-image
+                                        [hasClose]="false"
+                                        [user]="person0"
+                                        *ngFor="let person0 of item.personList"
+                                    ></div>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="applyId != ''">
+                <db-wfhistory
+                    [wfHistoryData]="wfData.wfHistoryData"
+                ></db-wfhistory>
+            </ng-container>
+        </div>
+
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                    <button
+                        class="m-btn-confirm"
+                        type="button"
+                        (click)="submit()"
+                    >
+                        提交
+                    </button>
+                    <!-- <button *ngIf="isClick" class="m-btn-disable">
+                        提交中...
+                    </button> -->
+                <button class="m-btn-sketch" type="button" (click)="close()">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

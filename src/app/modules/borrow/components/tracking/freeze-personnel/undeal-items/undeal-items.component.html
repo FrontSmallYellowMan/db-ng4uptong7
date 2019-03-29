@@ -1,0 +1,140 @@
+<div class="g-hdp" style="overflow:scroll;">
+    <div class="m-overclass">
+        <div class="m-contclass">
+            <h1 class="apply-tit-h1" style="font-size:16px">冻结人员未清项</h1>
+             <div class="m-scan-body" >
+            <!--div class=" m-noresult " [ngClass]="{ 'hide':poList && poList.length> 0}">
+                <div class="m-noresult-msg">
+                    <i class="iqon-query"></i>
+                    <p class="m-noresult-notice">
+                        暂无相关数据
+                    </p>
+
+                </div>
+            </div-->
+           
+                <div class="m-scan-result" [ngClass]="{'hide':poList && poList.length == 0}">
+                    <div style="width: 100%;padding-top:10px" *ngIf="unclearItem">
+                        <div class="m-table m-table1">
+                            <table cellpadding="0" cellspacing="0" width="100%" style="line-height: 45px;text-align: center;">
+                                <tr>
+                                    <td width="8%">
+                                        <p>申请人</p>
+                                    </td>
+                                    <td align="left" width="22%"> {{unclearItem.applyUserName||'/'||unclearItem.applyItCode}}</td>
+                                    <td width="8%">
+                                        <p>申请时间</p>
+                                    </td>
+                                    <td align="left" width="22%">{{unclearItem.borrowDate|iqDate:'YYYY-MM-DD'}}</td>
+                                    <td width="8%">
+                                        <p>联系方式</p>
+                                    </td>
+                                    <td align="left">{{unclearItem.contactPhone}}</td>
+                                </tr>
+                                <tr>
+
+                                    <td width="8%">
+                                        <p>平台</p>
+                                    </td>
+                                    <td align="left" width="22%"> {{unclearItem.platformName}}
+                                    </td>
+                                    <td width="8%">
+                                        <p>本部名称</p>
+                                    </td>
+                                    <td align="left" width="22%">{{unclearItem.baseDeptName}}</td>
+                                    <td width="8%">
+                                        <p>事业部</p>
+                                    </td>
+                                    <td align="left"> {{unclearItem.subDeptName}}</td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                        <ul class="table-uls" [ngClass]="{'hide':poList && poList.length == 0}">
+
+                            <li class="table-list" *ngFor="let po of poList;index as i">
+                                <div class="table-list-header">
+                                    <div class="list-info">
+                                        <div>
+                                            <p>预留号</p><span>{{po.unClearItem.reservationNo}}</span></div>
+                                        <div>
+                                            <p>本部</p><span>{{po.unClearItem.baseDeptName}}</span></div>
+                                        <div>
+                                            <p>事业部</p><span>{{po.unClearItem.subDeptName}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="list-info">
+                                        <div>
+                                            <p>借用属性</p><span>{{po.unClearItem.borrowAttributeName}}</span></div>
+                                        <div>
+
+                                            <p>借用类型</p><span>{{po.unClearItem.borrowTypeName}}</span></div>
+                                        <div>
+                                            <p>借用客户</p><span>{{po.unClearItem.borrowCustomerName}}</span></div>
+                                    </div>
+                                    <div class="list-info">
+                                        <div>
+                                            <p>借用日期</p><span>{{po.unClearItem.borrowDate|iqDate:'YYYY-MM-DD'}}</span></div>
+                                        <div>
+
+                                            <p>预计归还日期</p><span>{{po.unClearItem.giveBackDay|iqDate:'YYYY-MM-DD'}}</span></div>
+                                        <div>
+                                            <p>超期天数</p><span>{{po.unClearItem.overdueDays}}</span></div>
+                                    </div>
+                                    <div class="list-info">
+                                        <div>
+                                            <p>项目名称</p><span>{{po.unClearItem.projectName}}</span></div>
+                                        <div>
+
+                                            <p>送达方地址</p><span>{{po.unClearItem.deliveryAddress}}</span></div>
+                                    </div>
+
+
+
+                                    <div style="width: 100%;padding-top:10px">
+                                        <table class="m-info-table" style="width:98%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">序号</th>
+                                                    <th width="10%">物料编号</th>
+                                                    <th width="15%">物料描述</th>
+                                                    <th width="10%">批次</th>
+                                                    <th width="10%">单位</th>
+                                                    <th width="10%">借用数量</th>
+                                                    <th width="10%">已归还数量</th>
+                                                    <th width="10%">未归还数量</th>
+                                                    <th width="10%">单价</th>
+                                                    <th width="10%">总价</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let material of po.unclearMaterialItemList;index as j">
+                                                <tr>
+                                                    <td>{{j+1}}</td>
+                                                    <td>{{material.meterialNo}}</td>
+                                                    <td>{{material.meterialMemo}}</td>
+                                                    <td>{{material.batch}}</td>
+                                                    <td>{{material.unit}}</td>
+                                                    <td>{{material.count}}</td>
+                                                    <td>{{material.rtnCount}}</td>
+                                                    <td>{{material.count-material.rtnCount}}</td>
+                                                    <td>{{material.price}}</td>
+                                                    <td>{{material.totalAmount}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns" style="text-align: center">
+                    <button class="m-btn-confirm" (click)="goBack()">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

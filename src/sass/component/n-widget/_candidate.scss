@@ -1,0 +1,67 @@
+// 求职申请信息表
+.m-candidate{
+  padding-bottom: 30px;
+  background-color: #fff;
+  overflow: hidden;
+
+  .m-can-head{
+    margin: 25px auto 13px;
+    width: 900px;
+    @extend %clearfix;
+
+    >h3{
+      margin: 0 13px;
+      float: left;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    >span{
+      float: right;
+      font-size: 16px;
+      color: $def-main-color;
+    }
+  }
+
+  .m-can-table{
+    margin: 0 auto;
+    width: 900px;
+
+    .table{
+      border: 2px solid #686868;
+      >tbody>tr{
+        &:last-child{
+          height: 60px;
+        }
+
+        >td{
+          padding-left: 15px;
+        }
+      }
+    }
+
+    .m-can-category{
+      vertical-align: middle;
+      width: 110px;
+      font-weight: bold;
+      border-right: 2px solid #999;
+      background-color: rgba(111, 154, 212, .2);
+    }
+
+    .m-can-item{
+      font-weight: bold;
+      background-color:#f2f2f3;
+    }
+
+    .m-tr-btm{
+      border-bottom: 2px solid #999;
+    }
+  }
+
+  .m-can-btn{
+    text-align: center;
+
+    .m-btn-confirm{
+      margin-right: 15px;
+    }
+  }
+}

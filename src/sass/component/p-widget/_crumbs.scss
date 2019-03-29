@@ -1,0 +1,59 @@
+/* 面包屑导航 */
+
+.m-crumbs{
+  display: inline-block;
+
+  >ul>li{
+    display: inline-block;
+
+    &::after{
+      content: "/";
+      display: inline-block;
+      margin: 0 5px;
+      color: $def-font2-color;
+    }
+
+    &:last-child::after{
+      content:"";
+    }
+
+    &:last-child>a{
+      color: $def-font1-color;
+      font-weight: bold;
+    }
+
+    >a{
+      display: inline-block;
+      font-weight: 500;
+      color: $def-font2-color;
+    }
+
+  }
+
+}
+.m-crumb {
+  display: inline-block;
+  > ul > li {
+    display: inline-block;
+    &::after {
+      content: "-";
+      display: inline-block;
+      margin: 0 5px;
+      color: #a8b1bd;
+    }
+    > a {
+      display: inline-block;
+      font-weight: 500;
+      color: #a8b1bd;
+    }
+    &:last-child {
+      &::after {
+        content: '';
+      }
+      > a {
+        color: #4a4a4a;
+        font-weight: bold;
+      }
+    }
+  }
+}

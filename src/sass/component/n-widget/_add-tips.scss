@@ -1,0 +1,28 @@
+//新增温馨提示
+.m-add-tips {
+  width: 500px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  //box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  .m-add-form {
+    padding: 10px 25px 0;
+    .m-form-item {
+      .tip-message {
+        height: 90px;
+        border-radius: 3px;
+      }
+      .m-scan-item > input {
+        &:first-child {
+          width: 110px;
+        }
+        &:last-child {
+          width: 90px;
+          margin-left: 10px;
+        }
+      }
+    }
+    .m-warn-tip{
+      color: #ea6269;
+    }
+  }
+}

@@ -1,0 +1,153 @@
+<div>
+    <add-NAOrder *ngIf="newNAShow"
+         (onCompleteAddNA)="onCompleteAddNA($event)"></add-NAOrder>
+    <div class="btn-content" *ngIf="_NDType=='hasNA'">
+        <div class="input-box">
+            <span>库存地：</span>
+            <input type="text" maxlength=4 ngModel [(ngModel)]="batchParameter.storageLoc">
+        </div>
+        <div class="input-box">
+            <span>系数：</span>
+            <input type="text" only-number ngModel [(ngModel)]="batchParameter.discount">
+        </div>
+        <button class="m-btn-confirm min-btn" (click)="batchModify()">批量修改</button>
+    </div>
+    <div class="btn-content">
+        <div class="right">
+            <button class="m-btn-confirm min-btn" *ngIf="_NDType=='hasNA'" (click)="addNA()">添加NA单物料</button>
+            <button class="m-btn-confirm min-btn" (click)="deleteList()">批量删除</button>
+            <button class="m-btn-confirm min-btn" *ngIf="_NDType=='directND'" (click)="downloadTpl()">excel导入模板</button>
+            <iq-file-upload class="min-btn" upType="0" [url]="fileUploadApi" *ngIf="_NDType=='directND'"
+                [allowedFileType]="['xls']" [showModel]="false" [text]="'批量上传'" (onSuccess)="uploadPurchase($event)"></iq-file-upload>
+            <button class="m-btn-confirm min-btn" (click)="showOrder()">查看采购订单</button>
+        </div>
+    </div>
+    <div class="addApp-ch-before" style="height:100%;">
+        <form #purchaseListForm="ngForm">
+            <table class="m-info-table">
+                <thead>
+                    <tr>
+                        <td style="width:35px"></td>
+                        <td style="width:60px"></td>
+                        <td class="material-number-w"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="NAOrderNumber-w"></td>
+                        <td></td>
+                        <td class="w40"></td>
+                    </tr>
+                    <tr class="m-infor-tr">
+                        <th colspan="17">
+                            <span class="head-cont">物料数量合计 {{ numAmount }}</span>
+                            <span class="head-cont">折扣前合计金额 {{ _purchaseData.preDiscount | number:"1.2"}}</span>
+                            <span class="head-cont">折扣后合计金额 {{ _purchaseData.afterDiscount | number:"1.2"}}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="wp1">
+                            <input type="checkbox" name="demoall" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                                (onIndeterminate)="CheckIndeterminate($event)" (onCount)="getNum($event)">
+                        </th>
+                        <th class="add-w-b60">序号</th>
+                        <th><i class="addApp-form-tips">*</i>物料编号</th>
+                        <th>物料描述</th>
+                        <th><i class="addApp-form-tips">*</i>数量</th>
+                        <th><i class="addApp-form-tips">*</i>成本价</th>
+                        <th><i class="addApp-form-tips">*</i>系数</th>
+                        <th><i class="addApp-form-tips">*</i>报关单价</th>
+                        <th>折扣后报关单价</th>
+                        <th>报关总价</th>
+                        <th>折扣后报关总价</th>
+                        <th>库存地</th>
+                        <th>需求跟踪号</th>
+                        <th>批次</th>
+                        <th><i class="addApp-form-tips">*</i>对应NA订单号</th>
+                        <th>发货存储地点</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _purchaseData.procurementList;index as i">
+                        <td style="width:35px" class="wp1"><input name="check{{i}}" type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td>
+                        <td class="m-text-center add-w-b60">{{ i+1 }}</td>
+                        <td class="material-number-w">
+                            {{ item.MaterialNumber }}
+                        </td>
+                        <td>
+                            {{ item.MaterialDescription }}
+                        </td>
+                        <td *ngIf="_NDType=='hasNA'"><!-- 数量 -->
+                            <input class="m-infor-input" type="text" name="count{{i}}" required [ngClass]="{'m-input-warn':!item.Count&&isSubmit}"
+                            ngModel [(ngModel)]="item.Count" (ngModelChange)="numChange(i)" [numberRange]="item.Count" [maxRange]="item.ResidualQuantity">
+                        </td>
+                        <td *ngIf="_NDType=='directND'"><!-- 数量 -->
+                            {{ item.Count }}
+                        </td>
+                        <td><!-- 成本价 -->
+                            {{ item.CostPrice }}
+                        </td>
+                        <td *ngIf="_NDType=='hasNA'"><!-- 系数 -->
+                            <input class="m-infor-input" type="text" name="discount{{i}}" required [ngClass]="{'m-input-warn':!item.Discount&&isSubmit}"
+                            ngModel [(ngModel)]="item.Discount" only-number (ngModelChange)="discountChange(i,false)">
+                        </td>
+                        <td *ngIf="_NDType=='directND'"><!-- 系数 -->
+                            {{ item.Discount | number:"1.2"}}
+                        </td>
+                        <td><!-- 报关单价 -->
+                            {{ item.CustomsPrice | number:"1.2"}}
+                        </td>
+                        <td><!-- 折扣后报关单价 -->
+                            {{ item.CustomsPriceAfterDiscount | number:"1.2"}}
+                        </td>
+                        <td><!-- 报关总价 -->
+                            {{ item.CustomsSumPrice | number:"1.2"}}
+                        </td>
+                        <td><!-- 折扣后报关总价 -->
+                            {{ item.CustomsSumPriceAfterDiscount | number:"1.2"}}
+                        </td>
+                        <td *ngIf="_NDType=='hasNA'"><!-- 库存地 -->
+                            <input class="m-infor-input" type="text" minlength=4 maxlength=4 
+                            [ngClass]="{'m-input-warn':item.StorageLocation && item.StorageLocation.length != 4 && isSubmit}"
+                            name="storageLocation{{i}}" ngModel [(ngModel)]="item.StorageLocation">
+                        </td>
+                        <td *ngIf="_NDType=='directND'"><!-- 库存地 -->
+                            {{ item.StorageLocation }}
+                        </td>
+                        <td *ngIf="_NDType=='hasNA'"><!-- 需求跟踪号 -->
+                            <input class="m-infor-input" type="text" name="traceno{{i}}" maxlength=10 pattern="^[A-Za-z0-9]+$"
+                                ngModel [(ngModel)]="item.TrackingNumber" (blur)="materialTraceno(i,item.TrackingNumber)">
+                        </td>
+                        <td *ngIf="_NDType=='directND'"><!-- 需求跟踪号 -->
+                            {{ item.TrackingNumber }}
+                        </td>
+                        <td><!-- 批次 -->
+                            {{ item.Batch }}
+                        </td>
+                        <td class="NAOrderNumber-w"><!-- 对应NA订单号 -->
+                            {{ item.NA_ERPOrderNumber}}
+                        </td>
+                        <td><!-- 发货存储地点 -->
+                            {{ item.DeliveryStoreLocation }}
+                        </td>
+                        <td style="width:39.5px">
+                            <a class="m-text-center addApp-reduce" (click)="delProcurementItem(i)">-</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="btn-content" *ngIf="_NDType=='directND'">
+        <button class="m-btn-confirm min-btn large-btn margin-btm" (click)="checkNDList(false)">ND单与NA单核对批次和物料</button>
+        <button class="m-btn-confirm min-btn margin-btm" (click)="checkNDList(true)">核对NA单号</button>
+    </div>
+</div>

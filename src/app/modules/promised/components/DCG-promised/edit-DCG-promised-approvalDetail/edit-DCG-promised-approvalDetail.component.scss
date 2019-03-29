@@ -1,0 +1,240 @@
+
+.m-edit-approvalDetail{
+  
+  margin:80px auto 0;
+  width: 81%;
+  h4{
+      margin: 20px auto;
+      font-size: 16px;
+  }
+  .m-commonly-btn{
+      margin: 20px auto;
+      text-align: center;
+  }
+  .m-edit-approvalDetail-form{
+      width: 45%;
+      margin-left: 45px;
+      position: relative;
+      height: 30px;
+      .m-edit-approvalDetail-form-title{
+          display: inline-block;
+          padding:0 10px 0 0;
+          font-weight: bold;
+      }
+  }
+}
+
+.m-edit-approvalDetail-content{
+  padding:10px 0 10px 0;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+ .m-edit-approvalDetail-form{  
+      width: 45%;    
+  }
+
+}
+
+.m-edit-approvalDetail-content1{
+  padding:0px 0 20px 0;
+  background-color: #fff;
+  margin: 15px auto 0;
+  
+  .m-edit-approvalDetail-form{
+      width: 47%;
+      float: left;
+      //display: inline;
+      margin: 10px 0 0 21px; 
+      text-align: left;
+      .m-edit-approvalDetail-form-title{
+          padding:0 10px 0 0;
+          font-weight: bold;
+          width: 110px;
+          text-align: right;
+          vertical-align: top;
+      }
+  }
+
+  .m-edit-approvalDetail-failUpLoad{
+    width: 100%;
+    float: left;
+    //display: inline;
+    margin: 10px 0 0 21px; 
+    text-align: left;
+    display: table;
+    .m-edit-approvalDetail-failUpLoad-title{
+        padding:0 10px 0 0;
+        font-weight: bold;
+        width: 110px;
+        display: inline-block;
+        vertical-align: top;
+        line-height: 30px;
+        text-align: right;
+    }
+}
+}
+
+.m-edit-approvalDetail-select-style1{
+  display: inline-block;
+  width: 75%;
+  text-align: left;
+  span{
+    padding: 0 10px 0 2px;
+  }
+}
+.m-edit-approvalDetail-padding{
+  padding:0 0 0 20px;
+}
+.m-edit-approvalDetail-title{
+  color: #76BAF2; 
+  border-bottom: 1px solid #EEEFF4;
+  margin: 0px auto 0px;
+  clear: both;
+}
+.m-edit-approvalDetail-title h5{
+  padding: 15px 0 15px 20px;
+  margin: 0;
+}
+
+.inline-style{
+  display: inline-block;
+}
+
+.m-form-need{
+   color:red;
+   font-size: 13px;
+}
+
+.m-edit-approvalDetail-input{
+  width: 75%;
+  display: inline-block;
+}
+
+.m-edit-approvalDetail-yuan{
+  position: relative;
+}
+
+.m-edit-approvalDetail-yuan span{
+  display: block;
+  position: absolute;
+  top:10px;
+  right: 15px;
+}
+
+.m-edit-approvalDetail-tips{
+  text-align: right;
+}
+
+.m-edit-approvalDetail-marginStyle{
+  padding:0 0 0 58px;
+}
+.m-edit-approvalDetail-form-titles{
+  position: relative;
+  //top: 2px;
+}
+
+.m-select{
+.iqon-xia{
+  top:10px!important;
+}
+  select{
+    height:30px!important;
+  }
+}
+
+.m-enclosure{
+border:none!important;
+line-height: 25px!important;
+
+li{
+    padding: 0!important;
+    border-bottom: none!important;
+}
+}
+
+.m-user-ename{
+  color: #AAB1BC;
+}
+
+.m-supplier-apply-left{
+  float: left;
+  margin: 0 0 0 20px;
+}
+
+.apply-p-right{
+width: 170px;
+margin-left: 20px;
+position: absolute;
+right: 26px;
+height: 100%;
+overflow-y: auto;
+}
+
+:host/deep/.apply-opinion{//审批意见重写样式
+padding: 0px 0 20px 0;
+background-color: #fff;
+margin: 15px auto 15px;
+overflow: hidden; 
+
+.m-exm-item{
+  text-align: center;
+}
+
+.m-exm-advice{
+  padding: 0 20px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  border-bottom: 1px solid #e1e3eb;
+  color: #76BAF2;
+  font-weight: 500;
+  text-align: left;
+}
+
+textarea{
+  width: 97%;
+  margin: 15px auto 0;
+}
+}
+
+:host/deep/.m-exm-history li{
+height: 25px!important;
+}
+
+.m-edit-promised-ncp-form-row {
+  width: 49%;
+  margin-top: 10px;
+  position: relative;
+  text-align: right;
+  
+  .m-edit-promised-ncp-form-title {
+    display: inline-block;
+    padding: 0 10px 0 0;
+    font-weight: bold;
+  }
+}
+
+.m-promised-div{
+  height: 30px;
+  span{
+    padding: 0 0 0 10px;
+  }
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+// :host/deep/.m-btn-more-big{
+//   display: none;
+// }
+
+.m-button-disabled{
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+

@@ -1,0 +1,203 @@
+<!-- 编辑页 -->
+<div *ngIf="isEdit">
+<ul class="addApp-base-list" style="margin-top:10px">
+  
+<!-- 2018-11-20 新增逻辑，调用销售合同自定义字段，去掉现有重复字段 -->
+  <!-- <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">项目名称</label>
+      <input class="addApp-form-input" type="text" name="ProjectName" placeholder="-请填写项目名称" [(ngModel)]="purchaseProjectInfoContent.ProjectName" trim maxlength="50">
+    </div>
+  </li> -->
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">
+        <i class="addApp-form-tips">*</i>客户名称</label>
+      <input class="addApp-form-input" type="text" name="ERPNumberAndCustomName" placeholder="-请填写客户名称" style="width:62%;margin-right:10px" [(ngModel)]="ERPNumberAndCustomName" trim (blur)="getCustomName()" [ngClass]="{'m-input-warn':!ERPNumberAndCustomName}">
+      <button type="button" class="m-search-button" (click)="showCustomModal()">查询</button>
+    </div>
+
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">
+        <i class="addApp-form-tips"></i>最终客户名称</label>
+      <input class="addApp-form-input" placeholder="-请填写最终客户名称" name="FinalCustomName" [(ngModel)]="purchaseProjectInfoContent.FinalCustomName" trim maxlength="50">
+    </div>
+  </li>
+
+  <!-- <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">
+        <i class="addApp-form-tips"></i>毛利率</label>
+      <input class="addApp-form-input" type="text" name="Rate" placeholder="-请填写毛利率" [(ngModel)]="purchaseProjectInfoContent.Rate" trim trimReg="/[a-zA-Z?!@#$%^&*()\u4E00-\u9FA5，。,;:'`/]*/g" maxlength="5">
+      <span style="line-height:31px;">%</span>
+    </div>
+  </li> -->
+
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">
+        <i class="addApp-form-tips"></i>客户应收账款</label>
+      <span class="padSpan">{{purchaseProjectInfoContent.CustomAmount|number:"1.2"}}</span>
+    </div>
+  </li>
+
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label">
+        <i class="addApp-form-tips"></i>客户超期欠款</label>
+      <span class="padSpan">{{purchaseProjectInfoContent.CustomAmountOver|number:"1.2"}}</span>
+    </div>
+  </li>
+
+  <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips">*</i>项目销售金额</label>
+          <input class="addApp-form-input" type="text" name="ProjectSalesAmount" placeholder="-请填写项目销售金额" [(ngModel)]="purchaseProjectInfoContent.ProjectSalesAmount" only-number [ngClass]="{'m-input-warn':!purchaseProjectInfoContent.ProjectSalesAmount}">        
+      </div>
+    </li>
+
+  <!-- 2018-11-20 新增逻辑，调用销售合同自定义字段，去掉现有重复字段 -->
+  <!-- <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">
+          <i class="addApp-form-tips"></i>是否CSP</label>
+        <label class="label-radio" style="line-height: 31px;margin-left:12px">
+          <input type="radio" name="CSP" icheck value=true [(ngModel)]="purchaseProjectInfoContent.CSP"> 是
+        </label>
+        <label class="label-radio" style="line-height: 31px">
+          <input type="radio" name="CSP" icheck value=false [(ngModel)]="purchaseProjectInfoContent.CSP"> 否
+        </label>
+      </div>
+    </li> -->
+
+</ul>
+
+
+    <div class="addApp-form-item">
+      <label class="addApp-form-label" style="width:9%">
+        <i class="addApp-form-tips" *ngIf="istoerp"></i>付款条款</label>
+      <textarea name="PayItem" rows="3" class="my-textarea" placeholder="-请填写付款条款" [(ngModel)]="purchaseProjectInfoContent.PayItem" maxlength="300"></textarea>
+    </div>
+
+
+   <!-- 2018-11-20 新增逻辑，调用销售合同自定义字段，去掉现有重复字段 -->
+    <!-- <div class="addApp-form-item" style="margin-top:10px;">
+      <label class="addApp-form-label" style="width:9%">
+        <i class="addApp-form-tips"></i>产品类型</label>
+      <div class="m-content-box">
+        <span class="m-span" *ngFor="let item of productTypeList;index as i">
+          <input type="checkbox" icheck value="item.value" [(ngModel)]="item.checked" (ngModelChange)="getProductType()">
+          <span class="m-span-content">{{item.name}}</span>
+        </span>
+      </div>
+
+    </div> -->
+    <div class="clearfix" style="width:98%;margin-top:10px;">
+      <db-customerform [Data]="purchaseProjectInfoContent.ProjectInfo"></db-customerform>    
+   </div>
+
+  </div>
+
+  <!-- 查看页 -->
+  <div *ngIf="!isEdit" style="padding:0 25px;">
+      <ul class="addApp-base-list" style="margin-top:10px">
+
+          <!-- <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">项目名称</label>
+              <span class="padSpan">{{purchaseProjectInfoContent.ProjectName}}</span>   
+            </div>
+          </li> -->
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                客户名称</label>
+               <span class="padSpan">{{purchaseProjectInfoContent.ERPNumber+' '+purchaseProjectInfoContent.CustomName}}</span>
+            </div>
+        
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                最终客户名称</label>
+              <span class="padSpan">
+                {{purchaseProjectInfoContent.FinalCustomName}}
+              </span>
+            </div>
+          </li>
+          <!-- <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                毛利率</label>
+              <span class="padSpan">{{purchaseProjectInfoContent.Rate}}%</span>
+            </div>
+          </li> -->
+
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                客户应收账款</label>
+              <span class="padSpan">{{purchaseProjectInfoContent.CustomAmount|number:"1.2"}}</span>
+            </div>
+          </li>
+        
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                客户超期欠款</label>
+              <span class="padSpan">{{purchaseProjectInfoContent.CustomAmountOver|number:"1.2"}}</span>
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">项目销售金额</label>
+                  <span class="padSpan">
+                    {{purchaseProjectInfoContent.ProjectSalesAmount}}
+                  </span>
+            </div>
+          </li>
+          <!-- <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">
+                是否CSP</label>
+              <label class="label-radio" style="line-height: 31px;margin-left:12px">
+                <input type="radio" name="CSP" icheck value=true [(ngModel)]="purchaseProjectInfoContent.CSP" [disabled]="true"> 是
+              </label>
+              <label class="label-radio" style="line-height: 31px">
+                <input type="radio" name="CSP" icheck value=false [(ngModel)]="purchaseProjectInfoContent.CSP" [disabled]="true"> 否
+              </label>
+            </div>
+          </li> -->
+        
+        </ul>
+        
+        
+            <div class="addApp-form-item" style="clear:both">
+              <label class="addApp-form-label" style="width:13%">
+                付款条款</label>
+              <div class="my-textarea-content">{{purchaseProjectInfoContent.PayItem}}</div>
+            </div>
+        
+        
+        
+            <!-- <div class="addApp-form-item" style="margin-top:10px;">
+              <label class="addApp-form-label" style="width:9%">
+                产品类型</label>
+              <div class="m-content-box">
+                <span class="m-span" *ngFor="let item of productTypeList;index as i" [ngClass]="{'isHide':!isEdit&&!item.checked}">              
+                  <input type="checkbox" icheck value="item.value" [(ngModel)]="item.checked" (ngModelChange)="getProductType()" [disabled]="true">
+                  <span class="m-span-content">{{item.name}}</span>
+                </span>
+              </div>
+        
+            </div> -->
+
+            <!-- 自定义表单 -->
+            <div class="clearfix">
+               <db-customerform [readonly]=true [Data]="purchaseProjectInfoContent.ProjectInfo" style="width:100%"></db-customerform>    
+            </div>
+  </div>
+  

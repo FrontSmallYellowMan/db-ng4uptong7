@@ -1,0 +1,101 @@
+<div class="addApp-base-infor">
+  <more-message-show *ngIf="moreMessageShow" (meterialBack)="meterialBack($event)" [modalDataChild]=modalDataChild (showMoreMessageBack)="showMoreMessageBack($event)"></more-message-show>
+  <ul class="addApp-base-list">
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">外部发票号</label>
+        <div class="m-search">
+          <i class="iqon-query cursor" id="queryExternalinvoiceno" #queryExternalinvoiceno (click)="getInvoice(queryExternalinvoiceno)"></i>
+          <input class="addApp-form-input" type="search" [(ngModel)]=externalinvoicenoValue (focus)="changModalInput($event)">
+        </div>
+      </div>
+    </li>
+    <!--<demo-modal-auto-shown [moreMessageShow] = eMessageShow></demo-modal-auto-shown>-->
+    <li>
+      <div class="addApp-form-item">
+        <label class="addApp-form-label">订单号</label>
+        <div class="m-search">
+          <i class="iqon-query cursor" id="queryOrderno" #queryOrderno (click)="getInvoice(queryOrderno)"></i>
+          <input class="addApp-form-input" type="search" [(ngModel)]=ordernoValue (focus)="changModalInput($event)">
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="addApp-ch-before">
+  <table class="m-info-table">
+    <thead>
+      <tr class="m-infor-tr">
+        <th class="add-w-b60 add-w-b601">共{{invoiceArr.length}}条</th>
+        <th colspan="10" class="m-text-center change">冲红前</th>
+      </tr>
+      <tr class="m-infor-trr">
+        <th class=' add-w-b60 m-text-center'>序号</th>
+        <th class="m-infor-td m-text-center">客户编号</th>
+        <th>客户名称</th>
+        <th>原订单号</th>
+        <th>系统发票号</th>
+        <th>外部发票号</th>
+        <th>原发票日期</th>
+        <th>金额/元</th>
+        <th>原始收复基准日</th>
+        <th>原清账号</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="m-infor-trr" *ngFor="let item of invoiceArr;index as i">
+        <td class="m-text-center add-w-b60">{{i+1}}</td>
+        <td>{{item.originalcustomercode}}</td>
+        <td>{{item.originalcustomer}}</td>
+        <td>{{item.orderno}}</td>
+        <td>{{item.internalinvoiceno}}</td>
+        <td>{{item.externalinvoiceno}}</td>
+        <td>{{item.invoicedate}}</td>
+        <td>{{item.originalmoney}}</td>
+        <td>{{item.originalreceiptdate}}</td>
+        <td>{{item.originalcomplexaccount}}</td>
+        <td><a class="m-text-center addApp-reduce" (click)="removeItems(invoiceArr,item)" style="cursor: pointer">-</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--冲红后 -->
+<div class="addApp-ch-after">
+  <table class="m-info-table">
+    <thead>
+      <tr class="m-infor-tr">
+        <th class="add-w-b60 add-w-b601">共{{invoiceArr.length}}条</th>
+        <th colspan="3" class="m-text-center change">冲红后</th>
+        <th class="m-text-center change">特殊说明</th>
+        <th class="m-text-center change">财务</th>
+      </tr>
+      <tr class="m-infor-trr">
+        <th class="add-w-b60 m-text-center">序号</th>
+        <th class="m-infor-td m-text-center">客户编号(冲名称时填写)</th>
+        <th>客户名称</th>
+        <th>金额/元(冲金额时填写)</th>
+        <th>付款账期(延过账期时填写)</th>
+        <th>清账号</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of invoiceArr" style="padding-bottom: 2px;">
+      <tr class="m-infor-trr">
+        <!--*ngIf="(nameType==true)||(billTypeId=='priceType')"-->
+        <td class="m-text-center add-w-b60"></td>
+        <td>
+          <input class="m-infor-input" type="text" *ngIf="nameType==true" [(ngModel)]="item.customercode" (blur)="getPostCustomName(item.customercode,item)">
+        </td>
+        <td>
+          <div *ngIf="nameType==true">{{item.customer}}</div>
+        </td>
+        <td>
+          <!-- <div *ngIf="billTypeId=='priceType'">{{item.money}} </div> -->
+          <div *ngIf="billTypeId=='priceType'">{{returnMoney}}</div>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

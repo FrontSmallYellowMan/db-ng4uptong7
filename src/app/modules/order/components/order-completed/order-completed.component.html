@@ -1,0 +1,80 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+</div>
+<div class="m-overclass">
+  <loading [show]="loading"></loading>
+  <div class="m-list-menu">
+    <!-- <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="highSearchShow=true">
+        <i class="iqon-highsearch"></i> 高级搜索
+      </div>
+    </div> -->
+    <!-- 高级搜索 -->
+    <!-- <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="highSearchShow = false">
+      收起高级搜索
+    </div> -->
+    <div class="m-search-more">
+      <div class="form">
+        <div class="m-search-item">
+          <label>关键字查询</label>
+          <input [(ngModel)]="query.InputCondition" name="keyword" (keyup.enter)="search()" placeholder="搜索合同编号,客户名称,申请人..." type="text">
+        </div>
+        <div class="m-search-item m-search-data">
+          <label>申请日期</label>
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start m-data-box">
+              <my-datepicker [(ngModel)]="query.CreatedTimeStart" [EndDate]="query.CreatedTimeEnd" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>
+            </div> ~
+            <div class="m-datepicker-end m-data-box">
+              <my-datepicker [(ngModel)]="query.CreatedTimeEnd" [StartDate]="query.CreatedTimeStart" format="YYYY-MM-DD" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+        </div>
+        <div class="m-search-btn">
+          <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+          <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 物料数据缺省 -->
+  <div class="m-noresult" *ngIf="default">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <!-- <p class="m-p-notice">快来点击右上角“新建合同物料”按钮，开始新建物料吧</p> -->
+    </div>
+  </div>
+
+  <!-- 物料数据列表 -->
+  <div class="m-card-cont" *ngIf="!default" style="overflow-x:auto">
+    <table class="table table-hover table-list" style="table-layout:auto">
+      <thead>
+        <tr>
+          <th>合同编号</th>
+          <th>订单号</th>
+          <th>公司名称</th>
+          <th>订单类型</th>
+          <th>订单金额</th>
+          <th>创建时间</th>
+          <th>销售员</th>
+          <th>运输信息</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listSalesOrder;index as i;">
+          <td [title]="item.MainContractCode"><span (click)="salesOrderView(item)" class="clickText">{{item.MainContractCode?item.MainContractCode:'点击查看'}}</span></td>
+          <td [title]="item.ERPOrderCode">{{item.ERPOrderCode}}</td>
+          <td [title]="item.CustomerName">{{item.CustomerName}}</td>
+          <td [title]="item.OrderTypeName">{{item.OrderTypeName}}</td>
+          <td [title]="item.SalesAmountTotal">{{(item.SalesAmountTotal || 0) | iqNumber:'1.2-2'}}</td>
+          <td [title]="item.CreateTime">{{item.CreateTime}}</td>
+          <td title="{{item.SalesName}}/{{item.SalesITCode}}">{{item.SalesName}}/{{item.SalesITCode}}</td>
+          <td class="operate"><span (click)="getDelivery(item)">查看</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  </div>
+</div>

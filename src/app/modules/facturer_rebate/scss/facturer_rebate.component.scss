@@ -1,0 +1,11 @@
+@import '../../../../sass/base/variables';
+
+.pipeline-container{
+    width: 100%;
+    min-width: 1200px;
+    height: calc(100vh - 61.5px);
+    position: absolute;
+    top: 61.5px;
+    bottom: 0;
+    overflow: auto;
+}

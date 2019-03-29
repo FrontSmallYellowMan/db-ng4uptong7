@@ -1,0 +1,29 @@
+.tree-style{
+    margin: 0px 0 0 6px;
+    padding:0 0 0 10px;
+    line-height: 25px;
+    cursor:pointer;
+    border-left: 1px dotted #ccc;
+    font-size: 14px;
+    color: #666;
+    
+}
+
+.tree-style li:hover{
+   // background-color: #FFFDF3;
+}
+
+.sign-style{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 5px 0 0;
+}
+
+.showbg{
+    background-color: #FFFDF3;
+    
+}
+
+.tree-title:hover{
+    color: #65C2F1;
+}

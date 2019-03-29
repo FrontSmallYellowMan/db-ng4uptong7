@@ -1,0 +1,183 @@
+.rule-main{
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2100;
+  background-color: #fff;
+  position: absolute;
+  transition: all .5s linear;
+  width: 650px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.rule-modal {
+  width: 650px;
+  max-height: 520px;
+  
+
+  table {
+    width: 94%;
+    margin: 10px auto 20px;
+
+    .a_point {
+      cursor: pointer;
+    }
+
+    tbody {
+      display: block;
+      // height: 280px;
+      // overflow: auto;
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border: none;
+      }
+      
+      td:nth-child(1){
+          width: 10%;
+      }
+
+      td{
+          border-top: none;
+      }
+    }
+
+    thead{
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+  }
+
+  .rule-modal-title {
+    margin: 10px auto 0;
+    width: 100%;
+    font-size: 16px;
+    color:dimgray;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 10px 20px;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.rule-modal-close{
+  cursor: pointer;
+  transition: all 0.3s linear;
+  color:#ccc; 
+  &:hover{
+    color: red;
+    transition: all 0.3s linear;
+  }
+}
+
+.m-search{
+  width: 94%;
+  margin: 15px auto;
+  display: flex;
+  justify-content: space-between;
+  input{
+    height: 35px;
+    width: 82%;
+  }
+
+  button{
+    width: 15%;
+  }
+}
+
+.m-hide{
+  display: none;
+}
+
+.m-default{
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  i{
+    padding-right: 10px;
+  }
+}
+
+}
+
+:host/deep/.page{
+  margin: 20px auto;
+  .page-wrap{
+    .page-size{
+      display: none;
+    }
+    .page-all{
+      display: none;
+    }
+  
+    .page-go{
+      display: none;
+    }
+  }
+}
+
+.rule-model-alreadySelectPerson{
+  width: 0;
+  transition: all .5s linear;
+  background-color: #F5F7FA;
+  height: 520px;
+  transition: all .5s linear;
+  opacity: 0;
+
+  .rule-modal-alreadySelectPerson-title{
+    margin: 10px auto 0;
+    width: 100%;
+    font-size: 16px;
+    color:dimgray;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.rule-model-alreadySelectPerson-content{
+  height: 410px;
+  overflow-y: auto;
+  width: 89%;
+  margin: 10px auto;
+
+  span{
+    background-color: rgb(212, 227, 240);
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 10px;
+    border-radius: 3px;
+    margin: 10px 10px 0 0;
+  }
+
+  i{
+    margin: 0 0 0 10px;
+    cursor: pointer;
+    &:hover{
+      color: rgb(211, 54, 15);
+    }
+  }
+}
+
+.m-align{
+  text-align: center;
+}
+
+}
+
+// 列表动画
+.rule-main-animation {
+  transition: all .5s linear;
+  width: 1000px;
+}
+
+// 已选列表动画
+.rule-modal-alreadySelectPerson-showAnimation {
+  transition: all .5s linear;
+  opacity: 1;
+  width: 350px;
+}
+

@@ -1,0 +1,52 @@
+<div class="erporderChange-form-approval erporderChange-tips" *ngFor="let item of approvalDataConfigure; index as i">
+
+  <!-- 事业部审批人显示为选人组件 -->
+  <ng-container  *ngIf="item.NodeName.search('事业部')!==-1&&item.IsOpened">
+    <p class="erporderChange-form-title" style="position: relative;top: -10px;">
+      <span class="m-form-need" *ngIf="item.IfRequired">*</span>{{item.NodeName}}</p>
+      <div class="approverList">
+         <iq-person-select [(ngModel)]="item.selectApprover" [max]="1" (ngModelChange)="getApprovalPerson($event,i)" name="'Approver'+i"></iq-person-select>
+      </div>
+    </ng-container>
+
+    <!-- 库房冲红审批人 -->
+    <ng-container  *ngIf="item.NodeName.search('库房冲红')!==-1&&item.IsOpened">
+        <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+            <span class="m-form-need" *ngIf="item.IfRequired">*</span>{{item.NodeName}}</p>
+            <div class="erporderChange-select-style1 m-height37 m-select" *ngIf="item.selectApprover.length===0" style="padding:0 0 0 20px;">
+                <div class="m-user-approverSelect" (click)="showStorangeRCWApproverList()" style="padding:5px;"><i class="iqon-add"></i>添加</div>
+            </div>
+            <div class="erporderChange-select-style1 m-select m-height37" *ngIf="item.selectApprover.length>0" style="padding:0 0 0 20px;">
+              <div user-image [hasClose]="false" [user]="storageRCWPerson" *ngFor="let storageRCWPerson of item.selectApprover" class="m-approver-width"></div>
+              <div class="m-approver-change" (click)="showStorangeRCWApproverList()"><i class="iqon-eachother"></i><span>替换</span></div>
+            </div>
+    </ng-container>
+
+     <!-- 库房冲红审批人 -->
+     <ng-container  *ngIf="item.NodeName.search('采购经理')!==-1&&item.IsOpened">
+      <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="item.IfRequired">*</span>{{item.NodeName}}</p>
+       
+          <div class="erporderChange-select-style1 m-select m-height37" style="padding:0 0 0 20px;">
+            <div user-image [hasClose]="false" [user]="approver" *ngFor="let approver of item.ApproverList" class="m-approver-width"></div>
+          </div>
+  </ng-container>
+    
+    <!-- 其他审批人 -->
+    <ng-container *ngIf="item.NodeName.search('库房冲红')==-1&&item.NodeName.search('采购经理')==-1&&item.NodeName.search('事业部')==-1&&item.IsOpened">
+        <p class="erporderChange-form-title" >
+            <span class="m-form-need" *ngIf="item.IfRequired">*</span>{{item.NodeName}}</p>
+            <div class="approverList m-select" style="width:25%;">
+              <i class="iqon-xia"></i>
+              <select name="'Approver'+i" [(ngModel)]="item.selectApprover" (ngModelChange)="getApprovalPersonSelect(item.selectApprover,i)" [compareWith]="compareFn">
+                <option [ngValue]="[]">-请选择</option>
+                <option [ngValue]="approver" *ngFor="let approver of item.ApproverList;index as approverIndex">{{approver.UserName+' '+approver.ITCode?.toLowerCase()}}</option>
+              </select>
+            </div>
+    </ng-container>
+
+    
+
+
+
+</div>

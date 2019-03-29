@@ -1,0 +1,30 @@
+<div class="apply-opinion">
+  <div class="m-exm-item">
+    <p class="m-exm-advice">审批意见</p>
+    <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="opinions"></textarea>
+  </div>
+</div>
+<!--审批提交按钮 -->
+<div class="apply-submitBtn">
+  <div class="m-exm-btn">
+    <button class="m-btn-agree apply-agree" (click)="onApproval()">同意</button>
+    <button class="m-btn-text" (click)="goBack()">返回</button>
+  </div>
+</div>
+
+<!--信息提示框-->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="z-index:8000; margin-top:150px;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        提示信息
+        <button type="button" class="close pull-right" aria-label="Close" (click)="smModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding:20px 0; text-align:center; font-size:18px;">
+        {{message}}
+      </div>
+    </div>
+  </div>
+</div>

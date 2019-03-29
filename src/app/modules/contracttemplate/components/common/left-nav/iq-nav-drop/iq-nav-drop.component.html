@@ -1,0 +1,29 @@
+<!--component html goes here -->
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <li class="nav-item iq-nav-dropdown" *ngFor='let demo of Demos '>
+          <a class="nav-link iq-nav-dropdown-toggle">
+            <i class="icon-puzzle"></i>{{demo.name}}
+          </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item" *ngFor='let isArr of demo.isArr '>
+              <a class="nav-link" routerLinkActive="active" routerLink="./list">
+                <i class="icon-puzzle"></i>{{isArr}}
+              </a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="./list">
+                <i class="icon-puzzle"></i>二级菜单1.2
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" routerLink="./list">
+                <i class="icon-puzzle"></i>二级菜单1.3
+              </a>
+            </li> -->
+          </ul>
+      </li>
+    </ul>
+  </nav>
+</div>

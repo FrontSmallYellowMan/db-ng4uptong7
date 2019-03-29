@@ -1,0 +1,32 @@
+/*管理员列表*/
+.m-admin-list{
+  background: #fff;
+
+  .admin-list{
+    padding: 10px 15px 15px;
+  }
+}
+
+.m-function-list{
+  background:#fff;
+
+  .function-list{
+    padding: 10px 15px 15px;
+
+    .table-list>tbody>tr>td{
+      padding:0 8px;
+    }
+      
+    .m-user-info{
+      display: inline-block;
+      margin-right: 20px;
+      height: auto;
+      line-height: auto;
+
+      >img{
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
+}

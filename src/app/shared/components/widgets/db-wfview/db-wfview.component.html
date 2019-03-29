@@ -1,0 +1,18 @@
+<div class="m-step-progress2 clearfix">
+    <div
+        *ngFor="let item of _wfProgressData"
+        title="{{ item?.NodeApprovers }}"
+        class="m-apply-step-pro"
+        [class.m-apply-process]="item.isCurrent"
+        [class.m-apply-finish]="item.IsAlready"
+    >
+        <i *ngIf="!item.isCurrent" class="iqon-right"></i>
+        <i
+            *ngIf="item.isCurrent"
+            class="iqon-flage m-approverLinkPoint"
+            (click)="getApproverLink(item.InstanceID)"
+        ></i>
+        <span title="{{ item.NodeName }}">{{ item.NodeName }}</span>
+        <div class="m-apply-users">{{ item?.NodeApprovers }}</div>
+    </div>
+</div>

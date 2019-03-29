@@ -1,0 +1,223 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left">
+            <h1 *ngIf="isView" class="apply-tit-h1">支票换票查看</h1>
+            <h1 *ngIf="!isView" class="apply-tit-h1">支票换票审批</h1>
+            <!-- 基础信息 -->
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >基础信息</span
+                    >
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-p-infor m-clearfix">
+                    <div class="m-exm-item" style="float:none">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">表单号</div>
+                                <div class="m-exm-cont">{{ applyId }}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请时间</div>
+                                <div
+                                    class="m-exm-cont"
+                                    *ngIf="changeList.length > 0"
+                                >
+                                    {{
+                                        applyDate
+                                            | iqDate: "YYYY-MM-DD HH:mm:ss"
+                                    }}
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <!--<div class="m-user-info-small">
+                                        <span class="m-user-name">{{change.applyItCode}}/{{change.applyUserName}}</span>
+                                    </div>-->
+                                    <div
+                                        class="m-user-info-small"
+                                        *ngIf="changeList.length > 0"
+                                    >
+                                        <div
+                                            class="m-user-info1"
+                                            user-image
+                                            [hasClose]="false"
+                                            [user]="userInfo"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">联系电话</div>
+                                <div class="m-exm-cont">{{ mobile }}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">部门</div>
+                                <div class="m-exm-cont">{{ department }}</div>
+                            </li>
+                            <!--<li class="m-exm-half">
+                                <div class="m-exm-label">事业部审批人</div>
+                                <div class="m-exm-cont">{{change.deptApprovers}}</div>
+                            </li>-->
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">换票原因</div>
+                                <div
+                                    class="m-exm-cont"
+                                    title="{{ changeReason }}"
+                                    style="width:350px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
+                                >
+                                    {{ changeReason }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--撤票支票信息-->
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >支票换票信息</span
+                    >
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="apply-finance-l">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>原支票号</th>
+                                <th>新支票号</th>
+                                <th>新支票到期日</th>
+                                <th>出票人账号</th>
+                                <th>出票人银行</th>
+                                <th>新支票金额</th>
+                                <th>原支票金额</th>
+                                <th>原支票到期日</th>
+                                <th>公司代码</th>
+                                <th>公司名称</th>
+                                <th>客户编码</th>
+                                <th>客户名称</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let item of changeList; let idx = index"
+                            >
+                                <td>{{ idx + 1 }}</td>
+                                <td>
+                                    <div>{{ item.oldApplyId.ticketNum }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.newTicketNumber }}</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{
+                                            item.newCheckoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div
+                                        style="word-break:break-all;word-wrap:break-word"
+                                    >
+                                        {{ item.newCheckoutAccount }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>{{ item.newCheckoutBank }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.newTicketAmount }}</div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{ item.oldApplyId.ticketAmount }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        {{
+                                            item.oldApplyId.checkoutDate
+                                                | iqDate: "YYYY-MM-DD"
+                                        }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>{{ item.oldApplyId.payee }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ item.oldApplyId.payeeName }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ change.customCode }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ change.customName }}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--流程记录-->
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+            <!--流程按钮-->
+            <!--<db-wfapproval *ngIf="!isView&&!isADP" [saveId6Flag]="saveId6Flag" [appParms]="appParms" (onSave)="saveBill()"></db-wfapproval>-->
+            <!--流程按钮-->
+            <!--<wfapproval *ngIf="!isView&&!isADP"  [saveId6Flag]="saveId6Flag"  [appParms]="appParms" (onSave)="saveBill($event)"></wfapproval>
+            <div class="addApp-sub-btns"  *ngIf="isView" style="text-align: center">
+                        <button class="m-btn-sketch" type="button" (click)="close()">返回</button>
+            </div>-->
+            <div class="apply-opinion" *ngIf="!isView">
+                <div class="m-exm-item">
+                    <p class="m-exm-advice">审批意见</p>
+                    <textarea
+                        class="m-textarea"
+                        placeholder="请填写审批意见......"
+                        [(ngModel)]="opinions"
+                    ></textarea>
+                </div>
+            </div>
+            <!--审批提交按钮 -->
+            <div class="apply-submitBtn">
+                <div class="m-exm-btn">
+                    <ng-container *ngIf="!isView">
+                        <button
+                            class="m-btn-agree apply-agree"
+                            (click)="agree()"
+                        >
+                            同意
+                        </button>
+                        <button
+                            class="m-btn-refuse apply-refuse"
+                            (click)="reject()"
+                            style="color:aliceblue"
+                        >
+                            驳回
+                        </button>
+                    </ng-container>
+                    <!-- <ng-container *ngIf="isClick&&!isView">
+                        <button  class="m-btn-disable">{{agreeValue}}</button>
+                        <button  class="m-btn-disable">{{rejectValue}}</button>
+                     </ng-container> -->
+                    <button
+                        class="m-btn-text"
+                        [disabled]="isClick"
+                        (click)="close()"
+                    >
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--审批图-->
+        <div class="apply-p-right">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container m-order-number">
+    <div class="modal-header m-list-head">
+        <span style="font-size:12px;">选择付款条件</span>
+        <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+        <div class="m-search-all">
+            <div class="m-search">
+                <i class="iqon-query" (click) = "search()"></i>
+                <input name="keyWord" (keyup.enter) = "search()" [(ngModel)] = "keyWord" placeholder="搜索付款条件代码,付款条件..." type="text">
+            </div>
+        </div>
+        <div class="m-order-table">
+            <loading [show]="loading"></loading>
+            <ul class="m-shipTo-head">
+                <li>&nbsp;</li>
+                <li>付款条件代码</li>
+                <li>付款条件</li>
+            </ul>
+            <div class="m-shipTo-body">
+                <ul  *ngFor = "let item of paymentList;index as i">
+                    <li><input type="checkbox" (onChange) = "selected(item)" icheck [(ngModel)]="item.checked"></li>
+                    <li title = "{{item.PaymentCode}}">{{item.PaymentCode || "&nbsp;"}}</li>
+                    <li title = "{{item.PaymentText}}">{{item.PaymentText || "&nbsp;"}}</li>
+                </ul>
+            </div>
+        </div>
+        <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+    <div class="modal-footer">
+        <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+        <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+    </div>
+</div>

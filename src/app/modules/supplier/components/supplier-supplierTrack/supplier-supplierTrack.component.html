@@ -1,0 +1,134 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+  <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addData()">
+    <i class="iqon-add"></i>新建供应商跟踪</button>
+</div>
+
+<div class="m-overclass">
+  <!-- 搜索条件 -->
+
+  <div class="m-supplierTrack-search">
+    <div class="m-supplier-search-item">
+      <label>本部</label>
+      <input type="text" placeholder="-请填写本部" maxlength="20" trim [(ngModel)]="query.BBMC">
+    </div>
+    <div class="m-supplier-search-item">
+      <label>事业部</label>
+      <input type="text" placeholder="-请填写事业部" maxlength="20" trim [(ngModel)]="query.SYBMC">
+    </div>
+    <div class="m-supplier-search-item">
+      <label>供应商状态</label>
+      <div class="m-select">
+        <i class="iqon-xia"></i>
+        <select name="VendorState" [(ngModel)]="query.VendorState">
+          <option value="1">有效</option>
+          <option value="2">超期</option>
+          <option value="3">无效</option>
+          <option value="99">全部</option>
+        </select>
+      </div>
+    </div>
+    <div class="m-supplier-search-item">
+      <label>供应商</label>
+      <input type="text" placeholder="-请填写供应商编号/名称" maxlength="20" trim [(ngModel)]="query.Vendor">
+    </div>
+    <div class="m-supplier-search-item">
+      <label>公司代码</label>
+      <div class="m-supplier-search-item-package">
+        <iq-select class="iqSelect" name="Company" [(ngModel)]="query.CompanyCode" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+          listApi="InitData/GetPageDataCompany" (onSelect)="getCompany($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"></iq-select>
+      </div>
+    </div>
+    <div class="m-supplier-search-item">
+      <label>付款类型</label>
+      <div class="m-select">
+        <i class="iqon-xia"></i>
+        <select name="VendorState" [(ngModel)]="query.PayType">
+          <option value=null disabled selected>-请选择</option>
+          <option value="1">应付</option>
+          <option value="2">预付</option>
+        </select>
+      </div>
+    </div>
+    <div class="m-supplier-search-item-datepicker">
+      <label>协议有效期</label>
+      <div class="m-supplier-search-item-package">
+        <div class="m-datepicker-start">
+          <my-datepicker [(ngModel)]="query.BeginDate" format="YYYY-MM-DD" [EndDate]="query.EndDate" PlaceHolder="-请选择开始日期" name="BeginDate"
+            [disabled]="isUnSelectDate"></my-datepicker>
+        </div>
+        <span>~</span>
+        <div class="m-datepicker-end">
+          <my-datepicker [(ngModel)]="query.EndDate" format="YYYY-MM-DD" [StartDate]="query.BeginDate" PlaceHolder="-请选择结束日期" name="EndDate"
+            [disabled]="isUnSelectDate"></my-datepicker>
+        </div>
+        <div class="m-datepicker-auto">
+          <input type="checkbox" icheck name="AutoRenewal" [(ngModel)]="query.AutoRenewal" (ngModelChange)="lockMydatepicker()" #checkbox>
+          <span>自动续签</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="m-search-btn">
+      <button type="button" class="m-btn-confirm research" (click)="search()" style="width:80px;">搜索</button>
+      <button type="button" class="m-btn-default resets" (click)=reset() style="width: 80px; margin-left:10px;">重置</button>
+    </div>
+
+  </div>
+
+  <!-- 供应商跟踪缺省页面 -->
+  <div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'hideStyle':isHide}">
+    <div class="m-noresult-msg">
+      <i class="iqon-query"></i>
+      <p class="m-noresult-notice">暂无相关数据</p>
+      <p class="m-p-notice">点击“新建供应商跟踪”新建数据吧~</p>
+    </div>
+  </div>
+
+  <!-- 供应商跟踪数据列表 -->
+  <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+    <div class="table-auto-content">
+      <table class="table table-hover table-list" style="table-layout:fixed">
+        <thead>
+          <tr>
+            <th class="wp5">序号</th>
+            <th class="wp15">供应商名称</th>
+            <th class="wp10">本部</th>
+            <th class="wp10">事业部</th>
+            <th style="width:18%">公司代码</th>
+            <th class="wp10">协议有效期</th>
+            <th style="width:8%">付款类型</th>
+            <th class="wp10">帐期</th>
+            <th class="wp5">财年</th>
+            <th class="wp10">询价接口人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of searchList;index as i">
+            <td>{{list.No}}</td>
+            <td [title]="list.Vendor"><span class="clickText" (click)="getDetail(list.TrackId)">{{list.Vendor}}</span></td>
+            <td>{{list.BBMC}}</td>
+            <td [title]="list.SYBMC">{{list.SYBMC}}</td>
+            <td [title]="list.CompanyCode">{{list.CompanyCode}}</td>
+            <td>{{list.ValidityOfAgreement|iqDate:"YYYY-MM-DD"}}</td>
+            <td>{{list.PayType|supplierPipe:"supplierTrackPayType"}}</td>
+            <td *ngIf="!list.PTText" [title]="list.PaymentTerm">{{list.PaymentTerm|supplierPipe:"supplierTrackPaymentTerm"}}</td>
+            <td *ngIf="list.PTText" [title]="list.PTText">{{list.PTText}}</td>
+            <td>{{list.FiscalYear}}
+              <span *ngIf="list.FiscalYear">月</span>
+            </td>
+            <td [title]="list.AskPriceInterfacePerson">{{list.AskPriceInterfacePerson}}</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+
+
+</div>

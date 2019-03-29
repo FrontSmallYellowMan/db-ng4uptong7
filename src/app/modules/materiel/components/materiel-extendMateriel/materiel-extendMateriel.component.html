@@ -1,0 +1,8 @@
+<div class="m-boardtop clearfix">
+    <div class="m-boardmenu">
+      <a routerLinkActive="active" routerLink="/mate/m-em/m-em-apply/a">我的申请<span class="m-num hide"></span></a>
+      <a routerLinkActive="active" routerLink="/mate/m-em/m-em-approval/e">我的审批<span class="m-num" *ngIf="notApproval">{{notApproval}}</span></a>
+    </div>
+    <button class="m-btn-success" (click)="addData()"><i class="iqon-add"></i>新增扩展物料</button>
+  </div>
+  <router-outlet></router-outlet>

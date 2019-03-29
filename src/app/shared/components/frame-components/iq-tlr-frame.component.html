@@ -1,0 +1,30 @@
+<!-- <iq-header></iq-header>
+<div>
+  <div style="position:absolute;height:100%;">
+    <div class="g-list">
+      <router-outlet name="left"></router-outlet>
+    </div>
+  </div>
+  <div class="g-right">
+    <router-outlet></router-outlet>
+  </div>
+
+</div> -->
+<div style="min-width:1200px;">
+  <iq-header></iq-header>
+  <div class="g-hdp">
+      <div class="g-list m-home-page">
+        <router-outlet name="left"></router-outlet>
+      </div>
+      <div class="m-home-page">
+        <div class="g-right" style="overflow-x:hidden;">
+          <!-- <div style="padding-bottom:61.5px;height:100%;"> -->
+            <!-- <div class="tt"></div> -->
+            <router-outlet></router-outlet>
+
+        </div>
+      </div>
+
+  </div>
+</div>
+

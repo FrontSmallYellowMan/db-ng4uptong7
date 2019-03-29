@@ -1,0 +1,128 @@
+<div class="m-overclass">
+    <div class="m-list-menu" >
+        <ul class="m-state" (click)="onTab($event)">
+          <li class="active" data-state="myExamine">待我审批</li>
+          <li data-state="endExamine">我已审批</li>
+          <li data-state="sFinish">全部</li>
+        </ul>
+  
+      <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+        <div class="m-search-high" (click)="openSearch()">
+          <i class="iqon-highsearch"></i>
+          高级搜索
+        </div>
+      </div>
+  
+      <!-- 高级搜索 -->
+      <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+        收起高级搜索
+      </div>
+      <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+        <form #form = "ngForm">
+          
+          <div class="m-search-item">
+            <label>平台</label>
+            <input type="text" name="Platform" [(ngModel)]="approvalListData.Platform" placeholder="-请填写平台">
+          </div>
+  
+          <div class="m-search-item">
+              <label>工厂</label>
+              <!-- <div class="m-select-width-style1">
+                 <my-select [(ngModel)]="allFactory" tabName="1" [placeHolder]="'-请选择工厂'" name="Factory"></my-select>  
+              </div> -->
+              <input type="text" name="Factory" [(ngModel)]="approvalListData.Factory" placeholder="-请填写工厂" maxlength="4">              
+            </div>
+  
+          
+  
+            <div class="m-search-item m-search-clear">
+              <label>申请人</label>
+              <input type="text" name="ApplyName" [(ngModel)]="approvalListData.ApplyName" placeholder="-请填写申请人">
+            </div>
+  
+            <div class="m-search-item">
+              <label>审批环节</label>
+  
+              <div class="m-select m-select-width">
+                <i class="iqon-xia"></i>
+                <select name="Approval" id="" [(ngModel)]="approvalListData.ApproveSection" (ngModelChange)=changeFontColor() [ngClass]="{'font-color':isChangeColor}">
+                  <option value="" disabled selected class="font-color">-请选择审批环节</option>
+                  <option value="1">本部审批</option>
+                  <option value="2">采购运控审批</option>
+                  <option value="3">财务审批</option>
+                  <option value="4">物流器材会计审批</option>
+                  <option value="5">销售订单号反填</option>
+              </select>
+              </div>
+            </div>
+            <div class="m-search-item m-search-items" style="margin-left:-6.5%">
+              <label>申请日期</label>
+              <!-- <my-datepicker></my-datepicker> -->
+              <div class="m-datepicker-comb">
+                <div class="m-datepicker-start">
+                  <my-datepicker [(ngModel)]="approvalListData.BeginDate" format="YYYY-MM-DD" [EndDate]="approvalListData.EndDate" PlaceHolder="-请选择开始日期" name="BeginDate"></my-datepicker>
+                </div> ~ 
+                <div class="m-datepicker-end">
+                  <my-datepicker [(ngModel)]="approvalListData.EndDate" format="YYYY-MM-DD" [StartDate]="approvalListData.BeginDate" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+                </div>
+              </div>
+          </div>
+          <div class="m-search-btn">
+            <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+            <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <!-- 物料数据缺省 -->
+    <div class="m-noresult" [ngClass]="{'hideStyle':isHide}">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+      </div>
+    </div>
+  
+    <!-- 物料数据列表 -->
+    <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+      <div class="table-auto-content">
+      <table class="table table-hover table-list" style="table-layout:auto">
+        <thead>
+          <tr>
+              <th class="wp5">序号</th>
+              <th class="wp10">申请单编号</th>
+              <th class="wp10">申请日期</th>
+              <th class="wp5">申请人</th>
+              <th class="wp10">本部</th>
+              <th class="wp10">事业部</th>
+              <th class="wp10">平台</th>
+              <th class="wp10">工厂</th>
+              <th class="wp10">物料凭证号</th>
+              <th class="wp10">当前环节名称</th>
+              <th class="wp10">当前环节审批人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of searchList;let i=index">
+            <td class="wp5">{{(query.PageNo-1)*query.PageSize+i+1}}</td>
+            <td class="wp10"><span class="clickText" (click)="getDetail(list.ID,list.CopyLink)">{{list.ChangeNo}}</span></td>
+            <td class="wp10">{{list.ApplyTime|iqDate:"YYYY-MM-DD"}}</td>
+            <td class="wp5">{{list.ApplyName}}</td>
+            <td class="wp10">{{list.BBMC}}</td>
+            <td class="wp10">{{list.SYBMC}}</td>
+            <td class="wp10">{{list.Platform}}</td>
+            <td class="wp10">{{list.Factory}}</td>
+            <td class="wp10">{{list.MaterialVouncher}}</td>          
+            <td class="wp10">{{list.ApplicationState}}</td>
+            <td class="wp10">{{list.ApproveName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+      <div class="page">
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,213 @@
+<div class="addApply-base">
+  <div class="m-list-head m-dialog-head-change">
+    <span>
+      <i class="m-nuber-tag" *ngIf="num > 1">{{currentIndex+1}}</i>送达方与销售物料信息</span>
+    <!-- 送达方为多送达方时，可删除 -->
+    <span *ngIf="num > 1" class="float-r" style="margin-right:23px;padding:0 5px;" (click)="delSelf()">删除</span>
+    <iq-file-upload upType="0" [url]="fileUploadApi" [allowedFileType]="['xls']" [text]="'上传物料信息'" [upLoadData]="upLoadData" (onSuccess)="onFileCallBack($event)"
+      [showModel]="false" class="float-r" style="height: 30px;margin-top: 6px;display: inline-block;"></iq-file-upload>
+    <span class="m-dialog-head-change float-r" style="margin-right:20px;" (click)="loadFile()">下载物料模版</span>
+  </div>
+  <div class="addApp-base-infor">
+    <div class="addApp-base-list">
+      <ul class="m-shipTo-info">
+        <li>送达方编码
+          <span>{{partyInfo.Deliverinfo.SDFCode}}</span>
+        </li>
+        <li>送达方名称
+          <span>{{partyInfo.Deliverinfo.SDFName}}</span>
+        </li>
+        <li>送达方地址
+          <span>{{fullAddress || partyInfo.Deliverinfo.SDFAddress}}</span>
+        </li>
+        <li>签收地址
+          <span>{{partyInfo.Deliverinfo?.SignatureMethod}}</span>
+        </li>
+        <!-- <li style="width:10%;text-align: right;"><span class="m-shipTo-edit" (click)="changeInfo()">编辑</span></li> -->
+        <li style="text-align: right; width:100%">
+          <span class="m-shipTo-edit" (click)="empty()" style="width:8%">清空物料</span>
+          <span class="m-shipTo-edit" (click)="changeInfo()" style="width:8%">编辑</span>
+          <span class="m-shipTo-edit" *ngIf="orderTypeId == '0002'||paymentTermsCode=='0001'&&(orderTypeId == '0005'||orderTypeId == '0011')" (click)="selectAdvance()" style="width:8%">选择预收款</span>
+        </li>
+      </ul>
+      <div class="m-order-table" [ngClass]="{'m-border-botom':partyInfo.MaterialList.length>0}">
+        <ul class="m-table-head" [ngClass]="{'longW': num == 1 }">
+          <li>序号</li>
+          <li>
+            <i class="addApp-form-tips">*</i>ERP商品编码</li>
+          <li>
+            <i class="addApp-form-tips">*</i>商品名称</li>
+          <li>
+            <i class="addApp-form-tips">*</i>数量</li>
+          <li>
+            <i class="addApp-form-tips">*</i>金额</li>
+          <li>返款</li>
+          <li>销售总额</li>
+          <li>
+            <i class="addApp-form-tips" *ngIf="orderTypeId==='0005'||orderTypeId==='0011'">*</i>库存地</li>
+          <li>
+            <i class="addApp-form-tips">*</i>工厂</li>
+          <li>
+            <i class="addApp-form-tips"></i>批次</li>
+          <li>发货方式</li>
+          <li>备注</li>
+          <li>销售单位</li>
+          <!-- 送达方为多送达方时，可转移 -->
+          <li *ngIf="num > 1" style="width:45px;">转移</li>
+          <li class="m-info-btn" (click)="addMaterial()" [ngClass]="{'m-pr-0':num > 1}">+</li>
+        </ul>
+        <div class="m-table-body">
+          <ul *ngFor="let item of partyInfo.MaterialList;index as i" [ngClass]="{'longW': num == 1 }">
+            <li>{{i + 1}}</li>
+            <ng-container *ngIf="!item.isEdit">
+              <li (click)="editMaterial(item)">{{item.MaterialCode}}</li>
+              <li (click)="editMaterial(item)" [title]="item.MaterialName">{{item.MaterialName}}</li>
+              <li>
+                <input class="m-infor-input" type="text" (ngModelChange)="changeQuantity(item)" [(ngModel)]="item.Quantity" style="padding-right:0"
+                  min="0" [ngClass]="{'m-input-warn': item.Quantity === 0 && isSubmit}">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" (blur)="amountFormatP(item)" [(ngModel)]="item.Price">
+              </li>
+              <li *ngIf="rebateAmount == 1.00">
+                <input class="m-infor-input" type="text" (blur)=" amountFormatR(item)" [(ngModel)]="item.RebateAmount">
+              </li>
+              <li *ngIf="rebateAmount != 1.00" [title]="item.RebateAmount">
+                <!-- 为了选中的返款也进行变化 start -->
+                <span style="display:none" *ngIf='constRebateAmount!=rebateAmount'>{{amountFormatP(item)}}</span>
+                <!-- 为了选中的返款也进行变化 end-->
+                {{(item.RebateAmount || 0) | iqNumber:'1.2-2'}}
+              </li>
+              <li [title]="item.TotalPrice">{{(item.TotalPrice || 0) | iqNumber:'1.2-2'}}</li>
+              <li [title]="item.StorageLocation" (click)="editMaterial(item)">{{item.StorageLocation}}</li>
+              <li [title]="item.Factory" (click)="editMaterial(item)">{{item.Factory}}</li>
+              <li [title]="item.Batch" (click)="editMaterial(item)" [title]="item.Batch">{{item.Batch}}</li>
+              <li>
+                <div class="m-select">
+                  <i class="iqon-xia"></i>
+                  <select [(ngModel)]="item.ConsignmentModeID">
+                    <option value="">-请选择</option>
+                    <option *ngFor="let item of deliveryTypeList" [ngValue]="item.ConsignmentModeID">{{item.Name}}</option>
+                  </select>
+                </div>
+              </li>
+              <li (click)="editMaterial(item)" [title]="item.Remark  || ''">{{item.Remark}}</li>
+              <li (click)="editMaterial(item)" [title]="item.SalesUnit  || ''">{{item.SalesUnit}}</li>
+            </ng-container>
+            <ng-container *ngIf="item.isEdit">
+              <li>
+                <input (blur)="erpCodePattern(item,i)" class="m-infor-input" type="text" [(ngModel)]="item.MaterialCode" [ngClass]="{'m-input-warn': item.MaterialCode==''&& (isValidMaterial || isSubmit)}">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" [(ngModel)]="item.MaterialName" [ngClass]="{'m-input-warn': item.MaterialName==''&& (isValidMaterial || isSubmit)}">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" (change)="changeQuantity(item)" [(ngModel)]="item.Quantity" style="padding-right:0"
+                  min="0" [ngClass]="{'m-input-warn': item.Quantity === 0 && (isValidMaterial || isSubmit)}">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" (blur)="amountFormatP(item)" [(ngModel)]="item.Price">
+              </li>
+              <li *ngIf="rebateAmount == 1.00">
+                <input class="m-infor-input" type="text" (blur)="amountFormatR(item)" [(ngModel)]="item.RebateAmount">
+              </li>
+              <li *ngIf="rebateAmount != 1.00" [title]="item.RebateAmount">
+                {{(item.RebateAmount || 0) | iqNumber:'1.2-2'}}
+              </li>
+              <li [title]="item.TotalPrice">{{(item.TotalPrice || 0) | iqNumber:'1.2-2'}}</li>
+              <li>
+                <input class="m-infor-input" type="text" maxlength="4" (blur)="checkStorage(item)" [(ngModel)]="item.StorageLocation">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" maxlength="4" (blur)="checkFactory(item)" [(ngModel)]="item.Factory" [ngClass]="{'m-input-warn': item.Factory==''&& (isValidMaterial || isSubmit)}"
+                  maxlength="4">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" (blur)="checkBatch(item,item.Batch)" [(ngModel)]="item.Batch">
+              </li>
+              <li>
+                <div class="m-select">
+                  <i class="iqon-xia"></i>
+                  <select [(ngModel)]="item.ConsignmentModeID">
+                    <option value="">-请选择</option>
+                    <option *ngFor="let item of deliveryTypeList" [ngValue]="item.ConsignmentModeID">{{item.Name}}</option>
+                  </select>
+                </div>
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" [(ngModel)]="item.Remark" [ngClass]="{'m-input-warn': false}">
+              </li>
+              <li>
+                <input class="m-infor-input" type="text" [(ngModel)]="item.SalesUnit" [ngClass]="{'m-input-warn': false}">
+              </li>
+            </ng-container>
+            <li *ngIf="num > 1" style="width:45px;" (click)="materialChange(item,i)">
+              <i class="iqon-eachother m-dialog-head-change" style="font-size:14px;vertical-align: middle;"></i>
+            </li>
+            <li class="m-info-btn" (click)="delMaterial(partyInfo.MaterialList,i)">-
+              <!--<span>删除该行</span>-->
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 为了选中的返款也进行变化 start -->
+      <span style="display:none" *ngIf='constRebateAmount!=rebateAmount'>{{amountFormatAll()}}</span>
+      <!-- 为了选中的返款也进行变化 end-->
+      <!-- 厂商直发不用下面提示 -->
+      <div style="margin-top:10px;width:100%;">
+        <span class="m-input-notice" *ngIf="rebateAmount==1.00" style="float:right;">物料返款最大返款率不得超过百分之三十</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 预收款列表 -->
+  <div class="m-PrePayment-table" *ngIf="(orderTypeId == '0002')&&prePaymentList?.length>0">
+    <div>预收款信息</div>
+    <table class="m-info-table table-hover" style="table-layout:fixed">
+      <thead>
+        <tr>
+          <th class="wp10">核销凭证号</th>
+          <th width="20%">客户名称</th>
+          <th>客户编码</th>
+          <th>公司代码</th>
+          <th>凭证日期</th>
+          <th>业务范围</th>
+          <th>金额</th>
+          <th>凭证行项目号</th>
+          <th width="20%">项目文件</th>
+          <th style="text-align:center">操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of prePaymentList;index as i">
+          <td>
+              {{item.SHEET_NO}}
+          </td>
+          <td width="20%">{{item.KHMC}}</td>
+          <td>
+              {{item.KHDM}}
+          </td>
+          <td>{{item.GSDM}}</td>
+          <td>
+              {{item.TICKET_DATE}}
+          </td>
+          <td>{{item.YWFWDM}}</td>
+          <td title="{{(item.AMOUNT || 0) |iqNumber:'1.2-2'}}">
+              {{(item.AMOUNT || 0) |iqNumber:'1.2-2'}}
+          </td>
+          <td>{{item.BUZEI}}</td>
+          <td width="20%" [title]="item.SGTXT" >
+            <div class="m-td-nowarp">
+            {{item.SGTXT}}
+          </div>
+          </td>
+          <td style="text-align:center"><i class="iqon-dustbin m-hand" (click)="deleatePrePaymentList(i)"></i></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

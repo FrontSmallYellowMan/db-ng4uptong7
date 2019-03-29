@@ -1,0 +1,61 @@
+.ec-component-buyer{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 51%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-width: 300px;
+    background: #fff;
+    z-index: 9999;
+    .ec-component-buyer-header{
+        padding: 0 20px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        background-color: #fff;
+        border-bottom: 1px solid #e1e3eb;
+        font-weight: 500;
+        i{
+            float: right;
+            line-height: 50px;
+            color: #d2d8e0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+    .ec-component-buyer-body{
+        padding: 0 15px 15px;
+        overflow: auto;
+        .ec-component-buyer-body-search{
+            margin: 10px auto 15px;
+            width: 98%;
+            min-width: 500px;
+            input{
+                width: 75%;
+                line-height: 35px;
+                height: 35px;
+                border-radius: 3px;
+            }
+            button{
+                text-align: center;
+                height: 35px;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                transition: all .7s;
+                font-size: 14px;
+                overflow: hidden;
+                background: linear-gradient(275deg,#3495f6,#42c2f7);
+                line-height: 35px;
+                width: 22%;
+            }
+            button:hover {
+                opacity: 0.85;
+            }
+            button:focus {
+                outline: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<div class="modal fade" bsModal #alertModal="bs-modal" (click)="hideDialog()" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-sm" (click)="stopClick($event)">
+
+    <!--成功-->
+    <div class="m-alert-success" *ngIf="options.type == 'success'">
+      <button type="button" class="close" (click)="hideDialog()">
+          <i class="iqon-close"></i>
+        </button>
+      <p>{{options.title}}</p>{{options.message}}
+    </div>
+
+    <!--失败-->
+    <div class="m-alert-warn" *ngIf="options.type == 'fail'">
+      <button type="button" class="close" (click)="hideDialog()">
+          <i class="iqon-close"></i>
+        </button>
+      <p>{{options.title}}</p>{{options.message}}
+    </div>
+
+    <!--警告-->
+    <div class="m-alert-msg" *ngIf="options.type == 'warn'">
+      <button type="button" class="close" (click)="hideDialog()">
+          <i class="iqon-close"></i>
+        </button>
+      <p>{{options.title}}</p>{{options.message}}
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #confirmModal="bs-modal" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-sm">
+    <div class="m-alert-confirm">
+      <p>{{options.message}}</p>
+      <button class="m-btn-confirm" (click)="hideDialog(true)">确定</button>
+      <button class="m-btn-cancel" (click)="hideDialog(false)">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #promptModal="bs-modal" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-sm">
+    <div class="m-alert-confirm" style="width: auto;height: auto;padding: 0 20px 20px;">
+      <p style="line-height: 60px;">{{options.message}}</p>
+      <textarea class="m-textarea" autoheight [(ngModel)]="promptvalue" type="text" name="promptvalue" style="margin-bottom: 15px;"></textarea>
+      <button class="m-btn-confirm" (click)="hideDialog(promptvalue)">确定</button>
+      <button class="m-btn-cancel" (click)="hideDialog(false)">取消</button>
+    </div>
+  </div>
+</div>

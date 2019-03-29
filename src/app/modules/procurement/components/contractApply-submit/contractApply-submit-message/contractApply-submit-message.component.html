@@ -1,0 +1,210 @@
+<form #contractApplyForm="ngForm">
+    <ul class="addApp-base-list">
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">模板名称</label>
+                <iq-select class="iqSelect" [(ngModel)]="TemplateName" name="TemplateName" ngModel [showIndex]="templateShowIndex" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                    listApi="PurchaseManage/GetMyTemplate" (onSelect)="getTemplate($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent',SYB:bizdivision}"></iq-select>
+            </div>
+        </li>
+    </ul>
+    <ul class="addApp-base-list" style="margin-top:0">
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>我方主体</label>
+                <iq-select class="iqSelect" required name="company" ngModel [(ngModel)]="contractApplyMessage.company" [modalShow]="true"
+                    [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" listApi="InitData/GetPageDataCompany"
+                    (onSelect)="CompanyChange($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.company && isSubmit">请选择我方主体</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>工厂</label>
+                <input class="addApp-form-input" maxlength="4" required name="factory" ngModel type="text" [attr.placeHolder]="factoryPlaceStr"
+                    [(ngModel)]=contractApplyMessage.factory (blur)="factoryCheck(contractApplyMessage.factory)">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.factory && isSubmit">请填写工厂</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>供应商</label>
+                <iq-select class="iqSelect" required name="vendor" ngModel [(ngModel)]="contractApplyMessage.vendor" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+                    [enterShowList]="false" (onSelect)="VendorChange($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择"
+                    [disabled]="!contractApplyMessage.companycode||!contractApplyMessage.factory" [queryParams]="{queryStr:'querycontent',companycode:contractApplyMessage.companycode}"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.vendor && isSubmit">请选择供应商</p>
+        </li>
+        <li class="add-supplier-btn">
+            <i (click)="toAddSupplier()"></i>
+        </li>
+        <li *ngIf="isTenStart">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>对方业务范围</label>
+                <input class="addApp-form-input" name="vendorbizscope" ngModel type="text" [(ngModel)]=contractApplyMessage.vendorbizscope
+                    maxlength="4" placeHolder="请输入xx01" (blur)="checkVendorbizscope(contractApplyMessage.vendorbizscope)">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.vendorbizscope && isSubmit">请填写对方业务范围</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>税率</label>
+                <ng-select class="addApp-form-input m-select-box" required name="taxrate" ngModel [items]="selectInfo.taxrate" placeholder="请选择"
+                    (selected)="getTaxrate($event)" [(ngModel)]=activeTaxrate></ng-select>
+            </div>
+            <!-- 去掉选择国外供应商时的税率锁定 -->
+            <!-- <div class="addApp-form-item">
+                    <label class="addApp-form-label"><i class="addApp-form-tips">*</i>税率</label>
+                    <ng-select class="addApp-form-input m-select-box" required name="taxrate" ngModel [items]="selectInfo.taxrate" placeholder="请选择"
+                       (selected)="getTaxrate($event)" [(ngModel)]=activeTaxrate [disabled]="taxrateDisabled"></ng-select>
+                </div> -->
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.taxratecode && isSubmit">请选择税率</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>币种</label>
+                <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.currency" required name="currency" ngModel (selected)="getCurrency($event)"
+                    placeholder="请选择" [active]=avtiveCurrency [(ngModel)]=avtiveCurrency></ng-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.currencycode && isSubmit">请选择币种</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>预计销售时间</label>
+                <my-datepicker class="addApp-form-input addApp-form-time" [(ngModel)]="contractApplyMessage.preselldate" required format="YYYY-MM-DD"
+                    name="preselldate" PlaceHolder="-请选择日期" ngModel (ngModelChange)="sendData()" [StartDate]="presellStartDate"></my-datepicker>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.preselldate && isSubmit">请选择预计销售时间</p>
+        </li>
+        <li *ngIf="!isRMB">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>外币总金额</label>
+                <span class="padSpan">{{contractApplyMessage.foreigncurrencymoney | number:"1.2"}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>未税总金额</label>
+                <span class="padSpan">{{contractApplyMessage.excludetaxmoney | number:"1.2"}}</span>
+            </div>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>含税总金额</label>
+                <span class="padSpan">{{contractApplyMessage.taxinclusivemoney | number:"1.2"}}</span>
+            </div>
+        </li>
+        <li *ngIf="contractApplyMessage.VendorCountry==1">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>交货条件</label>
+                <ng-select class="addApp-form-input m-select-box w43" [items]="selectInfo.deliveryCondition" required name="deliveryCondition"
+                    ngModel (selected)="getCondition($event)" placeholder="国际贸易条件" [active]="avtiveDeliveryCondition" [(ngModel)]="avtiveDeliveryCondition"></ng-select>
+                <ng-select class="addApp-form-input m-select-box w43" [items]="selectInfo.deliveryLocation" required name="deliveryLocation"
+                    ngModel (selected)="getLocation($event)" placeholder="国际贸易地点" [active]="avtiveDeliveryLocation" [(ngModel)]="avtiveDeliveryLocation"></ng-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="(!contractApplyMessage.internationaltradelocation 
+                || !contractApplyMessage.internationaltradeterms) && isSubmit">请选择交货条件</p>
+        </li>
+        <li *ngIf="contractApplyMessage.VendorCountry==1">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>收货人</label>
+                <ng-select class="addApp-form-input m-select-box" [items]="selectInfo.deliveryPeople" required name="receiver" ngModel (selected)="getReceiverPeople($event)"
+                    placeholder="请选择" [active]="avtiveDeliveryPeople" [(ngModel)]="avtiveDeliveryPeople"></ng-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.receiver && isSubmit">请选择收货人</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips" *ngIf="istoerp">*</i>需求跟踪号</label>
+                <input class="addApp-form-input" type="text" name="tracenoF" maxlength=10 pattern="^[A-Za-z0-9]+$" [(ngModel)]=contractApplyMessage.traceno
+                    (blur)="sendtraceno(contractApplyMessage.traceno)">
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="istoerp && !contractApplyMessage.traceno && isSubmit">请填写需求跟踪号</p>
+        </li>
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips" *ngIf="istoerp">*</i>付款条款</label>
+                <iq-select class="iqSelect" name="paymentterms" ngModel [(ngModel)]="contractApplyMessage.paymentterms" [showIndex]="paymentShowIndex"
+                    [dataModal]="{item: ['data','rows'],pager:['data','pager'],title:['data','columns']}" listApi="vendor/paymentclause"
+                    placeHolder="-请选择" [queryParams]="{queryStr:'SearchTxt'}" (onSelect)="getPaymenttermsAndCode($event)"></iq-select>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="istoerp && !contractApplyMessage.paymentterms && isSubmit">请选择付款条款</p>
+        </li>
+
+        <!-- 新增字段 -->
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips"></i>厂商PO号</label>
+                <input class="addApp-form-input" type="text" trim name="Po" [(ngModel)]=contractApplyMessage.Po (blur)="getPo()" trim trimReg="/[^\w;$]*/g"
+                    maxlength="300">
+            </div>
+            <!-- <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.Po && isSubmit">请填写厂商PO号</p> -->
+        </li>
+
+        <li>
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>发货方式</label>
+                <ng-select class="addApp-form-input m-select-box" [items]="sendTypeList" required name="sendType" ngModel placeholder="-请选择"
+                    [active]="avtiveSendType" [(ngModel)]="avtiveSendType" (selected)="getSendType($event)"></ng-select>
+            </div>
+
+            <p class="m-p-warn procu-warn" *ngIf="!contractApplyMessage.SendType && isSubmit">请选择发货方式</p>
+        </li>
+
+        <li class="contractinfo-li">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>是否分批采购</label>
+                <label class="label-radio">
+                    <input type="radio" name="IsPartial" #IsPartial="ngModel" [(ngModel)]="contractApplyMessage.IsPartial" required value=true icheck (onClick)="getIsPartialc()">是
+                </label>
+                <label class="label-radio">
+                    <input type="radio" name="IsPartial" #IsPartial="ngModel" [(ngModel)]="contractApplyMessage.IsPartial" required value=false icheck (onClick)="getIsPartialc()">否
+                </label>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="IsPartial.invalid && isSubmit">请选择是否分批采购</p>
+        </li>
+
+        <li class="contractinfo-li">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label">
+                    <i class="addApp-form-tips">*</i>是否提交合同用印</label>
+                <label class="label-radio">
+                    <input type="radio" name="IsHaveContractInfo" ngModel [(ngModel)]="contractApplyMessage.IsHaveContractInfo" required value="true"
+                        icheck [disabled]="_haveContractIsDisable" (onClick)="clickIsHaveContractInfo($event)"> 是
+                </label>
+                <label class="label-radio">
+                    <input type="radio" name="IsHaveContractInfo" ngModel [(ngModel)]="contractApplyMessage.IsHaveContractInfo" required value="false"
+                        icheck [disabled]="_haveContractIsDisable" (onClick)="clickIsHaveContractInfo($event)"> 否
+                </label>
+            </div>
+            <p class="m-p-warn procu-warn" *ngIf="contractApplyMessage.IsHaveContractInfo==null && isSubmit">请选择是否提交合同用印</p>
+        </li>
+
+        <!-- 新增字段 -->
+        <li style="width: 100%;">
+            <div class="addApp-form-item">
+                <label class="addApp-form-label" style="width:8%">
+                    <i class="addApp-form-tips"></i>特殊情况说明</label>
+                <textarea rows="3" [(ngModel)]="contractApplyMessage.Remark" name="Remark" placeholder="-请填写特殊情况说明" (blur)="getRemark()"></textarea>
+            </div>
+        </li>
+
+    </ul>
+</form>

@@ -1,0 +1,66 @@
+.modal-dialog {
+    width: 900px;
+}
+.message {
+    .message-item {
+        float: left;
+        width: 33%;
+        span {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+    }
+}
+.m-order-table {
+    border: none;
+    .table {
+        margin-bottom: 0px;
+        tr>td {
+            border-bottom: 1px solid #d2d8e0;
+        }
+    }
+    thead tr>th.wp1,tbody tr>td.wp1 {
+        width: 5%;
+    }
+    thead th{
+        border:1px solid #d2d8e0;
+        font-weight: bold;
+    }
+    thead td{
+        background: #fff;
+    }
+    thead tr>th.wp20,tbody tr>td.wp20 {
+        width: 20%;
+    }
+    tbody{
+        border-bottom: 1px solid #d2d8e0;
+        border-right: 1px solid #d2d8e0;
+    }
+    thead{
+        table-layout: fixed;
+    }
+}
+.wp15{
+    width: 15%!important;
+}
+.wp10{
+    width: 10%!important;
+}
+.w93{
+    width: 93px!important;
+    width: 83px\0!important;
+}
+.m-info-table > tbody > tr > td{
+    border-right:none;
+}
+.mix{
+    width: 100px\0!important;
+}
+@media (min-width: 992px){
+    .col-md-4 {
+        width: 30%;
+    }
+    .col-md-4:first-child{
+        width: 40%;
+    }
+}

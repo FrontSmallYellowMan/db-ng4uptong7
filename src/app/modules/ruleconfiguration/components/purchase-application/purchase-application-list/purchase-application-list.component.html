@@ -1,0 +1,87 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+  <button type="button" class="m-btn-success g-fr" (click)="addPurchaseConfig()" style="margin-top: 7px;"><i class="iqon-add"></i>新建采购申请规则</button>
+</div>
+
+<div class="m-overclass">
+  <!--缺省页开始-->
+  <div class="m-apply" (click)="addPurchaseConfig()" *ngIf="!isSearched&&isHide">
+    <!-- <loading [show]="loading"></loading> -->
+    <div class="m-apply-circle">
+      <i class="iqon-plus-circle"></i>
+      <span>新建采购申请规则</span>
+    </div>
+  </div>
+  <!--缺省页结束-->
+  <!--内容页开始-->
+  <div class="m-contclass" [ngClass]="{'hide': !isSearched&&isHide}">
+    <div class="m-search-box">
+
+      <div class="m-search-item">
+        <label>本部</label><input type="text" placeholder="-请填写本部名称" [(ngModel)]="query.BBMC" (keyup.enter)="search()">
+      </div>
+
+      <div class="m-search-item">
+        <label>事业部</label><input type="text" placeholder="-请填写事业部名称" [(ngModel)]="query.BusinessCode" (keyup.enter)="search()">
+      </div>
+
+      <div class="m-search-item">
+        <label>规则名称</label><input type="text" placeholder="-请填写规则名称" [(ngModel)]="query.RoleName" (keyup.enter)="search()">
+      </div>
+
+      <div class="m-search-item m-search-button" style="width:150px;text-align:right">
+        <button class="m-btn-confirm" (click)="search()">搜索</button>
+        <button class="m-btn-default" (click)="reset()">重置</button>
+      </div>
+    </div>
+    
+    <!--搜索结果缺省页开始-->
+    <div class="m-noresult" *ngIf="isSearched&&isHide">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">
+          很抱歉，没有找到与“
+          <span *ngIf="query.BBMC">{{query.BBMC}}</span><span *ngIf="query.BusinessCode&&query.BBMC">、</span>
+          <span *ngIf='query.BusinessCode'>{{query.BusinessCode}}</span>
+          <span *ngIf="query.RoleName&&query.BusinessCode">、</span><span *ngIf="query.RoleName">{{query.RoleName}}</span>
+          ”有关的信息
+        </p>
+        <p class="m-p-notice">温馨提示：请检查您输入的搜索条件是否正确</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--搜索结果缺省页结束-->
+
+<div class="m-table-right" [ngClass]="{'hide': isHide}" style="margin-top: 0;">
+  <!-- <loading [show]="loading"></loading> -->
+  <table class="table table-hover table-list">
+    <thead>
+      <tr>
+          <th style="width:5%">序号</th>
+          <th style="width:33%">规则名称</th>
+          <th style="width:10%">本部</th>
+          <th style="width:20%">事业部名称</th>
+          <th style="width:10%">创建日期</th>
+          <th style="width: 22%;text-align:center">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of searchList;index as i" (click)="getDetail(item.RoleID,i,'edit')">
+        <td  style="width:5%">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+        <td style="width:33%" [title]="item.RoleName">{{item.RoleName}}</td>
+        <td style="width:10%">{{item.BBMC}}</td>
+        <td style="width:20%">{{item.BusinessCode}}</td>
+        <td style="width:10%">{{item.Createtime|iqDate:'YYYY-MM-DD'}}</td>
+        <td class="m-list-button" style="width:22%" stopParentClick>
+          <button type="button" (click)="deteleList(item.RoleID)" [disabled]="item.RoleStatus===1" [class.btnDisabled]="item.RoleStatus===1">删除</button>
+          <button type="button" (click)="setRuleState(item.RoleID,1)" [disabled]="item.RoleStatus===1" [class.btnDisabled]="item.RoleStatus===1">启用</button>
+          <button type="button" (click)="setRuleState(item.RoleID,0)" [disabled]="item.RoleStatus===0" [class.btnDisabled]="item.RoleStatus===0">停用</button>
+          <button type="button" class="m-copyBtn" (click)="getDetail(item.RoleID,i,'copy')"><i class="iqon-papers"></i>复制</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  <!--内容页结束-->
+</div>

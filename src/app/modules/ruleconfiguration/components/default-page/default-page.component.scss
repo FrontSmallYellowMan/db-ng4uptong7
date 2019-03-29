@@ -1,0 +1,21 @@
+@import '../../../../../sass/base/util';
+.m-overclass{
+  padding: 15px 20px;
+
+  .m-apply-circle{
+    cursor: default;
+   
+    i{
+      transform: translateX(0);
+      transition: all 0.5s linear;
+    }
+
+  }
+
+  .animation{
+    i{
+      transform: translateX(-20%);
+      transition: all 0.5s linear;
+    }
+  }
+}

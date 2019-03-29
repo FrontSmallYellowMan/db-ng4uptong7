@@ -1,0 +1,28 @@
+<table class="table table-hover" style="width: 80%;">
+  <tbody>
+    <tr>
+      <td style="width: 10%;"></td>
+      <td style="width: 26%;">付款时间</td>
+      <td style="width: 26%;">服务期间</td>
+      <td style="width: 26%;">付款金额</td>
+      <td style="width: 10%;" *ngIf="isEdit"><i class="iqon-add" (click)="addItem()"></i></td>
+    </tr>
+    <tr *ngFor="let item of paymentDetails; index as i;">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.PayTime }}</td>
+      <td>{{ item.TermOfService }}</td>
+      <td>{{ item.PayMoney }}</td>
+      <td *ngIf="isEdit"><i (click)="delItem(i)" class="iqon-close"></i></td>
+    </tr>
+    <tr *ngIf="((paymentDetails && paymentDetails.length == 0) || isAdd) && isEdit">
+      <td style="line-height: 35px;">
+        <span *ngIf="paymentDetails && paymentDetails.length == 0">1</span>
+        <span *ngIf="paymentDetails && paymentDetails.length > 0">{{paymentDetails.length + 1}}</span>
+      </td>
+      <td><input type="text" placeholder="-请输入付款时间" [(ngModel)]="newItem.PayTime"></td>
+      <td><input type="text" placeholder="-请输入服务期间" [(ngModel)]="newItem.TermOfService"></td>
+      <td><input type="text" placeholder="-请输入付款金额" [(ngModel)]="newItem.PayMoney"></td>
+      <td style="line-height: 35px;"><i class="iqon-right-bold" (click)="saveItem()"></i></td>
+    </tr>
+  </tbody>
+</table>

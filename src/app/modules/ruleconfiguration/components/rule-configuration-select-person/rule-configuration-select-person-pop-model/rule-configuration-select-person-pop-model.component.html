@@ -1,0 +1,65 @@
+<!--弹出框-->
+
+<div class="rule-main" [ngClass]="{'rule-main-animation':selectPersonList.length>0}">
+
+<div class="rule-modal">
+
+  <div class="rule-modal-title">
+      <div>{{showModelData?.compontentTitle}}</div>
+      <div class="rule-modal-close"><i class="iqon-close" (click)="cancle()"></i></div>
+  </div>
+
+  <div class="m-search">
+    <input type="text" name="querycontent" placeholder="-请填写搜索内容" [(ngModel)]="approverQueryData.queryStr" (keyup.enter)="search()">
+    <button type="button" class="m-btn-confirm" (click)="search()">搜索</button>
+  </div>
+
+    <table class="m-info-table" style="table-layout:fixed" *ngIf="approverList.length>0">
+      <thead>
+        <tr>
+          <th style="width:5%">
+            <input allcheck="ruleConfigurantionSelectPersonAllChild" [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox" name="">
+          </th>
+          <th style="width:10%">姓名</th>
+          <th style="width:20%">ItCode</th>
+          <th style="width:65%">所属部门</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr *ngFor="let item of approverList;index as i;">
+          <td style="width:5%">
+            <input type="checkbox" icheck [(ngModel)]="item.checked" name="" allcheckChild="ruleConfigurantionSelectPersonAllChild" (ngModelChange)="getSelectPerson(i)">
+          </td>
+          <td style="width:10%">{{ item.UserName }}</td>
+          <td style="width:20%">{{ item.ITCode }}</td>
+          <td style="width:65%">{{ item.DeptName }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 搜索缺省页 -->
+    <div *ngIf="approverList.length===0" class="m-default"><i class="iqon-search-error"></i>暂无搜索内容</div>
+
+    <div class="page" [ngClass]="{'m-hide':approverList.length===0}">
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+
+</div>
+
+<!-- 已选列表 -->
+<div class="rule-model-alreadySelectPerson" [ngClass]="{'rule-modal-alreadySelectPerson-showAnimation':selectPersonList.length>0}">
+  
+  <div class="rule-modal-alreadySelectPerson-title">
+      <div>已选列表</div>
+  </div>
+
+  <div class="rule-model-alreadySelectPerson-content">
+    <span *ngFor="let item of selectPersonList; index as i">{{item.UserName}}/{{item.ITCode}} <i class="iqon-close-b" (click)="removeRerson(i)"></i></span>
+  </div>
+
+  <div class="m-align"><button type="button" class="m-btn-confirm" (click)="confirm()">确定</button></div>
+
+</div>
+
+</div>

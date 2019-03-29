@@ -1,0 +1,394 @@
+// 我的申请，默认缺省状态 xuewp
+
+.m-apply {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 79vh;
+  border-radius: 2px;
+  background-color: #ffffff;
+
+  .m-apply-circle {
+    @extend %absolute-center;
+    width: 120px;
+    height: 150px;
+    @include border-radius();
+    text-align: center;
+    cursor: pointer;
+
+    i {
+      display: block;
+      font-size: 100px;
+      line-height: 100px;
+      color: #5ec3ae;
+      margin-bottom: 20.5px;
+    }
+
+    span {
+      font-size: 15px;
+      color: #5ec3ae;
+      margin-top: 20.5px;
+    }
+  }
+
+}
+
+// 名片申请 -- 印制／审批
+.m-apply-exm {
+  padding: 30px 0 20px;
+  max-width: 900px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+    color: $def-font1-color;
+  }
+
+  .m-apply-exmbox {
+    padding: 20px 25px;
+    margin-top: 15px;
+    background-color: #ffffff;
+    line-height: 24px;
+    color: #4A4A4A;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .m-form-item{
+      width: 48%;
+    }
+    .m-form-item-w100{
+      width: 100%;
+    }
+    .m-approval{
+      width: 100%;
+    }
+    .m-approval-msg {
+      font-weight: normal;
+      color: #000;
+    }
+    .m-user-info {
+      margin-left: -6px;
+      margin-right: 30px;
+    }
+    .m-user-change {
+      margin-left: 0;
+    }
+
+    .iradio_square-blue {
+      margin-right: 5px;
+    }
+    label {
+      font-weight: normal;
+      margin-right: 30px;
+      color: #4A4A4A;
+    }
+  }
+
+  .m-cart-btn {
+    margin-top: 15px;
+    button{
+      margin-right: 15px;
+      &.m-btn-cancel{
+        width: 85px;
+        height: 45px;
+      }
+      &.m-btn-cancel2{
+        text-align: left;
+      }
+      &.m-btn-tempsave{
+        vertical-align: top;
+        width: 84px;
+        height: 45px;
+        padding: 0;
+        min-width: 84px;
+      }
+    }
+  }
+
+}
+
+//名片审批 -- 二级审批
+.m-apply-exm2 {
+  width: 900px;
+  padding: 30px 0 20px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+    color: $def-font1-color;
+  }
+
+  .m-step2{
+    margin-top: 20px;
+  }
+  .m-form-head{
+    @extend %clearfix;
+    margin-top: 20px;
+
+    >p{
+      float: left;
+      line-height: 20px;
+      font-size: 12px;
+    }
+
+    >a{
+      float: right;
+      color: $def-font1-color;
+      text-decoration: underline;
+    }
+  }
+
+  .m-exm{
+    margin-top: 15px;
+
+    .m-exm-item{
+      margin-bottom: 15px;
+      padding: 20px 27px;
+      width: 900px;
+      background-color:#fff;
+
+      .m-exm-record{
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .m-exm-advice{
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      ul{
+        @extend %clearfix;
+
+        >li{
+          position: relative;
+          float: left;
+          width: 100%;
+          min-height: 38px;
+
+          .m-exm-label{
+            position: absolute;
+            vertical-align: middle;
+            width: 75px;
+            font-weight: bold;
+            word-wrap: break-word;
+          }
+
+          .m-exm-cont{
+            display: inline-block;
+            vertical-align: middle;
+            padding-left: 75px;
+            width: 100%;
+            word-wrap: break-word;
+
+            .light-color-text{
+              color: $def-font2-color;
+            }
+          }
+
+          .m-exm-time{
+            margin-left: 20px;
+          }
+          .m-exm-remark{
+            margin-left: 30px;
+          }
+
+          .normal-weight-text{
+            margin-top: 12px;
+            font-weight: normal;
+          }
+        }
+
+        .m-exm-half{
+          width: 50%;
+        }
+      }
+
+      .m-exm-history>li{
+        height: auto;
+      }
+
+      .m-exm-history>li .m-exm-cont{
+        width: 400px;
+
+        .m-user-info-small{
+          display: inline-block;
+          margin: 10px;
+        }
+      }
+    }
+
+    .m-card-preview{
+      margin: 0 auto;
+      width: 410px;
+      height: 236px;
+      border: 1px solid $def-link1-color;
+    }
+  }
+
+  .m-exm-btn{
+    text-align: center;
+    >button{
+      margin-right: 15px;
+      &.m-btn-agree{
+        width: 160px;
+      }
+      &.m-btn-refuse{
+        width: 100px;
+      }
+      &.m-btn-tempsave{
+        vertical-align: top;
+        width: 84px;
+        height: 45px;
+        padding: 0;
+        min-width: 84px;
+      }
+    }
+    .m-dropdown{
+      display: inline-block;
+      width: 120px;
+      vertical-align: bottom;
+      margin-right: 20px;
+      button{
+        width: 100%;
+      }
+      .m-dropdown-option{
+        width: 100%;
+        margin-top: 5px;
+      }
+    }
+  }
+
+}
+//名片审批 -- 二级审批 -- 手机端页面
+.m-header-phone{
+  position: relative;
+  height: 60px;
+  text-align: center;
+  background-color:$def-main-color;
+  color: #fff;
+  font-size: 18px;
+
+  .iqon-list{
+    position: absolute;
+    left: 20px;
+    top: 21px;
+  }
+
+  p{
+    line-height: 60px;
+  }
+}
+.m-apply-exm-phone {
+  width: 100%;
+  overflow: hidden;
+
+  h3 {
+    margin: 34px 0 15px 15px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #4A4A4A;
+  }
+
+  .m-step2{
+    position: relative;
+    left: -338px;
+    width: 900px;
+  }
+
+  .m-form-head{
+    @extend %clearfix;
+    margin: 20px 0 10px;
+
+    >p{
+      float: left;
+      padding-left:15px;
+      line-height: 20px;
+      font-size: 12px;
+    }
+
+    >a{
+      display: none;
+    }
+  }
+
+  .m-exm{
+    width: 100%;
+
+    .m-exm-item{
+      margin: 15px;
+      padding: 20px;
+      background-color:#fff;
+
+      .m-exm-record{
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .m-exm-advice{
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+
+      ul{
+        @extend %clearfix;
+
+        >li{
+          float: left;
+          margin: 10px 0;
+          width: 100%;
+
+          .m-exm-label{
+            display: inline-block;
+            width: 75px;
+            font-weight: bold;
+          }
+
+          .m-exm-cont{
+            display: inline-block;
+            width: 70%;
+            vertical-align: middle;
+            .m-user-info-small{
+              display: inline-block;
+              margin: 10px;
+            }
+
+            .light-color-text{
+              color: $def-font2-color;
+            }
+          }
+
+          .m-exm-remark,.m-exm-time{
+            display: block;
+            margin: 10px 0 0 80px;
+          }
+
+          .normal-weight-text{
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+
+  .m-exm-btn{
+    text-align: center;
+
+    .m-btn-agree,.m-btn-refuse{
+      width: 80px;
+      height: 45px;
+    }
+
+    .m-dropdown{
+      display: inline-block;
+      vertical-align: bottom;
+      width: 100px;
+      height: 45px;
+    }
+  }
+
+}

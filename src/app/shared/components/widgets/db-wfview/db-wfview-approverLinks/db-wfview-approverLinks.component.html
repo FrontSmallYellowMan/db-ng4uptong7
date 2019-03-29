@@ -1,0 +1,29 @@
+<div class="m-approverLinks-box">
+  <loading [show]="loading"></loading>
+  <div class="m-approverLinks-title">
+    <h4>当前审批环节信息</h4>
+    <i class="iqon-close2" (click)="close()"></i>
+  </div>
+
+  <table class="table m-table-content">
+    <thead>
+      <tr>
+        <th>流程环节</th>
+        <th>审批人ItCode</th>
+        <th>审批人姓名</th>
+        <th>创建时间</th>
+        <th>审批链接</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of approverLinksList;index as i">
+        <td>{{item.temp_node_name}}</td>
+        <td>{{item.auditITCode}}</td>
+        <td>{{item.auditName}}</td>
+        <td>{{item.createdTime}}</td>
+        <td [title]="item.taskTableURL" (click)="copyLink(item.taskTableURL)">复制</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,0 +1,502 @@
+<div class="ri-red-apply">
+  <div class="red-apply-title">
+    <h5>退换货申请</h5>
+  </div>
+  <form #redApplyForm="ngForm">
+    <loading [show]="loading"></loading>
+    <button style="display:none" onkeydown="if(event.keyCode==13) return false;"></button>
+    <!--基础信息-->
+    <div class="red-apply-content">
+
+      <div class="apply-content-title">
+        <h5>基础信息</h5>
+      </div>
+      <div class="apply-content-main clearfix">
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>电话</label></div>
+          <div class="c-input-wrap">
+            <input type="text" placeholder="-请输入联系电话" required name="phone" [(ngModel)]="applyData.apply.phone" #phone="ngModel" [ngClass]="{'m-input-warn':(phone.touched || redApplyForm.submitted) && phone.invalid}">
+          </div>
+          <div class="c-input-msg" *ngIf="(phone.touched || redApplyForm.submitted) && phone.invalid">
+            <span *ngIf="phone.errors?.required">-请输入联系电话</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><label>成本中心</label></div>
+          <div class="c-input-wrap" style="padding: 0 10px;">
+            {{ applyData.apply.costcenter }}
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>公司</label></div>
+          <div class="c-input-wrap">
+            <select-search-company name="company" [(ngModel)]="selectedCompany" [optionList]="baseDataSource.companys" (onSelecte)="onSelecteCompany(selectedCompany)"></select-search-company>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>业务范围</label></div>
+          <div class="c-input-wrap">
+            <select-search-biz name="biz" [(ngModel)]="selectedBiz" [optionList]="baseDataSource.businesses" (onSelecte)="onSelecteBiz(selectedBiz)"></select-search-biz>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>发票类型</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="invoicetype" [(ngModel)]="applyData.apply.invoicetypecode" #invoicetype="ngModel" (ngModelChange)="onInvoiceTypeChange($event)"
+                [ngClass]="{'m-select-warn':(invoicetype.touched || redApplyForm.submitted) && invoicetype.invalid}">
+              <option value="">-请选择</option>
+              <option *ngFor="let item of baseDataSource.invoicetypes" [ngValue]="item.invoicetypecode">{{item.invoicetype}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(invoicetype.touched || redApplyForm.submitted) && invoicetype.invalid">
+            <span *ngIf="invoicetype.errors?.required">-请选择发票类型</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>所属平台</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="platform" [(ngModel)]="applyData.apply.platformcode" #platform="ngModel" (ngModelChange)="onPlatFormChange($event)"
+                [ngClass]="{'m-select-warn':(platform.touched || redApplyForm.submitted) && platform.invalid}">
+              <option value="">-请选择</option>
+              <option *ngFor="let item of baseDataSource.platforms" [ngValue]="item.platformcode">{{item.platform}}</option>
+            </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(platform.touched || redApplyForm.submitted) && platform.invalid">
+            <span *ngIf="platform.errors?.required">-请选择所属平台</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title"><span class="c-form-need">*</span><label>冲退类型</label></div>
+          <div class="c-input-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="revisetype" [(ngModel)]="applyData.apply.revisetypecode" (ngModelChange)="onRevisetypeChange(applyData.apply.revisetypecode)"
+                #revisetype="ngModel" [ngClass]="{'m-select-warn':(revisetype.touched || redApplyForm.submitted) && revisetype.invalid}">
+                <option value="">-请选择</option>
+                <option *ngFor="let item of baseDataSource.returntypes" [ngValue]="item.revisetypecode">{{item.revisetype}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="c-input-msg" *ngIf="(revisetype.touched || redApplyForm.submitted) && revisetype.invalid">
+            <span *ngIf="revisetype.errors?.required">-请选择冲退类型</span>
+          </div>
+        </div>
+        <div class="c-form-item">
+          <div class="c-input-title" style="width: 33%;"><span class="c-form-need">*</span><label>是否需要我方上门取货</label></div>
+          <div class="c-input-wrap c-select-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select required name="homepickup" [(ngModel)]="applyData.apply.homepickup"
+                #homepickup="ngModel" [ngClass]="{'m-select-warn':(homepickup.touched || redApplyForm.submitted) && homepickup.invalid}">
+                <option value="">-请选择</option>
+                <option value=0>是</option>
+                <option value=1>否</option>
+              </select>
+            </div>
+          </div>
+          <div class="c-input-title" style="width: 16%;"><span class="c-form-need" *ngIf="applyData.apply.homepickup === '0'">*</span><label>运输类型</label></div>
+          <div class="c-input-wrap c-select-wrap">
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="transittype" [(ngModel)]="applyData.apply.transittype"
+                #transittype="ngModel" [ngClass]="{'m-select-warn':redApplyForm.submitted && applyData.apply.homepickup == 0 && applyData.apply.transittype === ''}">
+                <option value="">-请选择</option>
+                <option value="0">市内</option>
+                <option value="1">外埠</option>
+              </select>
+            </div>
+          </div>
+          <div class="c-input-msg-homepickup" *ngIf="(homepickup.touched || redApplyForm.submitted) && homepickup.invalid">
+            <span *ngIf="homepickup.errors?.required">-请选择是否需要我方上门取货</span>
+          </div>
+          <div class="c-input-msg-transittype" *ngIf="redApplyForm.submitted && applyData.apply.homepickup == 0">
+            <span *ngIf="transittype.errors?.required">-请选择运输类型</span>
+          </div>
+        </div>
+        <!--小类-->
+        <div class="c-form-item-small clearfix" *ngIf="applyData.apply.revisetypecode && childrenRedtypes.length>0">
+          <div class="small-item" *ngFor="let item of childrenRedtypes;">
+            <div *ngIf="applyData.apply.revisetypecode == '700'">
+              <input type="checkbox" [name]="item.revisetype" [(ngModel)]="item.checked" (ngModelChange)="onChildrenRevisetypeChange($event,item)" icheck>
+              <label>{{ item.revisetype }}</label>
+            </div>
+            <div *ngIf="applyData.apply.revisetypecode == '800'">
+              <input type="radio" [id]="'radio'+item.revisetypecode" name="childrenrevisetype" [(ngModel)]="item.checked" (ngModelChange)="onChildrenRevisetypeChange($event,item)" icheck>
+              <label>{{ item.revisetype }}</label>
+            </div>
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title"><label>说明原因</label></div>
+          <div class="c-input-wrap">
+            <textarea rows="1" class="m-textarea" name="reason" [(ngModel)]="applyData.apply.reason"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--财务信息-->
+    <div class="red-apply-content">
+
+      <div class="apply-content-title">
+        <h5>财务信息</h5>
+      </div>
+      <div class="apply-content-main mater-detail-content clearfix">
+        <!--查询条件-->
+        <div class="invoice-search clearfix">
+          <div class="apply-invoice-search clearfix">
+            <div class="search-title"><label>外部发票号</label></div>
+            <div class="search-content m-search">
+              <div class="m-search-2">
+                <i class="iqon-query i-search" (click)="getInvoiceByExternalNo(externalno.value)"></i>
+                <input type="text" name="externalno" #externalno placeholder="-请输入外部发票号">
+              </div>
+            </div>
+          </div>
+          <div class="apply-invoice-search clearfix">
+            <div class="search-title"><label>订单号</label></div>
+            <div class="search-content m-search">
+              <div class="m-search-2">
+                <i class="iqon-query i-search" (click)="getInvoiceByOrderNo(orderno.value)"></i>
+                <input type="text" name="orderno" #orderno placeholder="-请输入订单号">
+              </div>
+            </div>
+          </div>
+          <!--DOA类  可批量上传-->
+          <div class="apply-invoice-batchupload" *ngIf="isDOA">
+              <button class="btn btn-info custom">excel导入</button>
+              <a class="btn btn-info custom" [href]="DOAImportTemplateAddress" target="_blank">模板下载</a>
+              <input type="file" name="uploaderinvoice" ng2FileSelect multiple [uploader]="uploadInvoice" (change)="onBatchUploadInvoice(uploadInvoice)"/>
+          </div>
+        </div>
+        <!--冲红前-->
+        <div class="invoice-before">
+          <div class="invoice-before-total">
+            共{{ applyData.invoice.length }}条
+          </div>
+          <table class="m-info-table">
+            <thead>
+              <tr class="m-infor-tr table-head-tr1">
+                <th colspan="11" class="m-text-center change">冲红前</th>
+              </tr>
+              <tr>
+                <th class='m-text-center' style="width:30px;">序号</th>
+                <th class="m-text-center">客户编号</th>
+                <th class="m-text-center">客户名称</th>
+                <th class="m-text-center">原订单号</th>
+                <th class="m-text-center">系统发票号</th>
+                <th class="m-text-center">外部发票号</th>
+                <th class="m-text-center">原发票日期</th>
+                <th class="m-text-center" style="width: 110px;">金额/元</th>
+                <th class="m-text-center">原始收付基准日</th>
+                <th class="m-text-center">原清账号</th>
+                <th class="m-text-center"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="applyData.invoice.length == 0">
+                <td colspan="11" style="text-align: left;padding-left: 10px!important;">无记录</td>
+              </tr>
+              <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                <td class="m-text-center">{{ i + 1 }}</td>
+                <td class="m-text-center">{{ item.originalcustomercode }}</td>
+                <td class="m-text-center">{{ item.originalcustomer }}</td>
+                <td class="m-text-center">{{ item.orderno }}</td>
+                <td class="m-text-center">{{ item.internalinvoiceno }}</td>
+                <td class="m-text-center">{{ item.externalinvoiceno }}</td>
+                <td class="m-text-center">{{ getDataYYYYMMDD(item.invoicedate) }}</td>
+                <td class="m-text-center">{{ myToFixed(item.originalmoney) }}</td>
+                <td class="m-text-center">{{ getDataYYYYMMDD(item.originalreceiptdate) }}</td>
+                <td class="m-text-center">{{ item.originalcomplexaccount }}</td>
+                <td style="vertical-align: middle;">
+                  <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="deleteInvoiceItem(item, i)">-</a>
+                  <div class="bubble-tips">
+                    <span class="triangle-style"></span>
+                    <div class="bubble-content">
+                      删除该行
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--冲红后-->
+        <div class="invoice-after">
+          <div class="invoice-after-total">
+            共{{ applyData.invoice.length }}条
+          </div>
+          <table class="m-info-table">
+            <thead>
+              <tr class="m-infor-tr table-head-tr1">
+                <th colspan="4" class="m-text-center change">冲红后</th>
+                <th class="m-text-center change">特殊说明</th>
+                <th class="m-text-center change">财务</th>
+              </tr>
+              <tr>
+                <th class="m-text-center" style="width:30px;">序号</th>
+                <th class="m-text-center">客户编号</th>
+                <th class="m-text-center">客户名称</th>
+                <th class="m-text-center">金额/元</th>
+                <th class="m-text-center">付款账期</th>
+                <th class="m-text-center">清账号</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="applyData.invoice.length == 0">
+                <td colspan="6" style="text-align: left;padding-left: 10px!important;">无记录</td>
+              </tr>
+              <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                <td class="m-text-center">{{ i + 1 }}</td>
+                <td class="m-text-center">{{ item.originalcustomercode }}</td>
+                <td class="m-text-center">{{ item.originalcustomer }}</td>
+                <td class="m-text-center">{{ myToFixed(item.originalmoney) }}</td>
+                <td class="m-text-center"></td>
+                <td class="m-text-center"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!--冲退明细-->
+    <div class="red-apply-content">
+      <div class="apply-content-title">
+        <h5>冲退明细</h5>
+      </div>
+      <div class="apply-content-main" *ngIf="materialList.length == 0">
+        无记录
+      </div>
+      <div class="apply-content-main clearfix" *ngIf="materialList.length > 0">
+        <div class="material-detail-tab">
+
+          <div class="material-detail-tabtitle">
+            <ul class="clearfix">
+              <li *ngFor="let item of materialList; index as i;" [ngClass]="{'active':item?.active}" (click)="clickTab(i)">{{ item?.internalinvoiceno }}</li>
+            </ul>
+          </div>
+          <div class="material-detail-tabcontent">
+            <div *ngFor="let tabitem of materialList; index as tabitemi;">
+              <!--退货类型-->
+              <div *ngIf="materialType === 1 && tabitem.active">
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th class='m-text-center' style="width: 70px; vertical-align: middle;">行项目号</th>
+                      <th class="m-text-center" style="width: 80px;">物料号</th>
+                      <th class="m-text-center" style="width: 215px;">物料描述</th>
+                      <th class="m-text-center" style="width: 70px;">数量</th>
+                      <th class="m-text-center" style="width: 70px;">退货数量</th>
+                      <th class="m-text-center" style="width: 80px;">工厂</th>
+                      <th class="m-text-center" style="width: 80px;">库存地</th>
+                      <th class="m-text-center" style="width: 90px;"><span class="material-col-need">*</span>退入库存地</th>
+                      <th class="m-text-center" style="width: 80px;">批次</th>
+                      <th class="m-text-center" style="width: 80px;">销售额</th>
+                      <th class="m-text-center" style="width: 80px;">返款金额</th>
+                      <th class="m-text-center" style="width: 80px;">交货单号</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="tabitem.tableList == 0">
+                      <td colspan="12" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                    </tr>
+                    <tr *ngFor="let item of tabitem.tableList; index as i;">
+                      <td class='m-text-center'>{{ item.projcode }}</td>
+                      <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                      <td class="m-text-left">{{ item.originaldescription }}</td>
+                      <td class="m-text-center">{{ item.num }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'returnnum' + item.projcode" [(ngModel)]="item.returnnum" #returnnum="ngModel" pattern="^[0-9]\d*$" [ngClass]="{'m-input-warn':returnnum.invalid}" (blur)="checkReturnNum(tabitemi, i)"></td>
+                      <td class="m-text-center">{{ item.factory }}</td>
+                      <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                      <td class="m-text-center"><input required type="text" placeholder="四位字符" [name]="'returnstoragelocation' + item.projcode" [(ngModel)]="item.returnstoragelocation" maxlength="4" pattern="[0-9a-zA-Z]{4}" #returnstoragelocation="ngModel" [ngClass]="{'m-input-warn':returnstoragelocation.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center">{{ item.originalbatchno }}</td>
+                      <td class="m-text-center">{{ item.originalmoney }}</td>
+                      <td class="m-text-center">{{ item.originalbackmoney }}</td>
+                      <td class="m-text-center">{{ item.deliveryno }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!--换货类型-->
+              <div *ngIf="materialType === 2 && tabitem.active">
+                <div class="material-tabletitle-info clearfix">
+                  <div class="c-input-title"><label>运输方式：</label></div>
+                  <div class="c-input-wrap c-select-wrap">
+                    <div class="m-select">
+                      <i class="iqon-xia"></i>
+                      <select name="TransitMode" [(ngModel)]="applyData.invoice[tabitemi].TransitModeCode" (ngModelChange)="transitModeChange($event,tabitem.internalinvoiceno)">
+                        <option value="">-请选择</option>
+                        <option *ngFor="let item of baseDataSource.transitmodes" [ngValue]="item.TransitModeCode">{{item.TransitMode}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="c-input-title"><label>送货地址：</label></div>
+                  <div class="c-input-wrap c-select-wrap">
+                    <div class="m-select">
+                      <i class="iqon-xia"></i>
+                      <select name="detailaddress" [(ngModel)]="applyData.invoice[tabitemi].detailaddress" (ngModelChange)="detailaddressModeChange($event)">
+                        <option value="">-请选择</option>
+                        <option *ngFor="let item of temporaryAddressDataSource" [ngValue]="item.detailaddress">{{item.detailaddress}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button class="m-btn-confirm" type="button" (click)="editTemporaryAddress()">编辑地址</button>
+                  <button class="m-btn-confirm" type="button" (click)="addTemporaryAddress()">添加临时地址</button>
+                </div>
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th class='m-text-center' style="width: 60px; vertical-align: middle;">行项目号</th>
+                      <th class="m-text-center" style="width: 80px;">物料号</th>
+                      <th class="m-text-center">物料描述</th>
+                      <th class="m-text-center" style="width: 65px;">数量</th>
+                      <th class="m-text-center" style="width: 50px;">工厂</th>
+                      <th class="m-text-center" style="width: 55px;">库存地</th>
+                      <th class="m-text-center" style="width: 90px;"><span class="material-col-need">*</span>退入库存地</th>
+                      <th class="m-text-center" style="width: 105px;">要求发货库存地</th>
+                      <th class="m-text-center" style="width: 90px;">批次</th>
+                      <th class="m-text-center" style="width: 110px;">要求发货批次</th>
+                      <th class="m-text-center" style="width: 55px;">销售额</th>
+                      <th class="m-text-center" style="width: 70px;">返款金额</th>
+                      <th class="m-text-center" style="width: 70px;">交货单号</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="tabitem.tableList == 0">
+                      <td colspan="12" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                    </tr>
+                    <tr *ngFor="let item of tabitem.tableList; index as i;">
+                      <td class='m-text-center'>{{ item.projcode }}</td>
+                      <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                      <td class="m-text-left">{{ item.originaldescription }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'num' + item.projcode" [(ngModel)]="item.num" #num="ngModel" pattern="^[0-9]\d*$" [ngClass]="{'m-input-warn':num.invalid}" (blur)="checkNum(tabitemi, i)"></td>
+                      <td class="m-text-center">{{ item.factory }}</td>
+                      <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                      <td class="m-text-center"><input type="text" required placeholder="四位字符" [name]="'returnstoragelocation' + item.projcode" [(ngModel)]="item.returnstoragelocation" maxlength="4" pattern="[0-9a-zA-Z]{4}" [ngClass]="{'m-input-warn':returnstoragelocation.invalid}" #returnstoragelocation="ngModel" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center"><input type="text" placeholder="四位字符" [name]="'specifystoragelocation' + item.projcode" [(ngModel)]="item.specifystoragelocation" maxlength="4" pattern="[0-9a-zA-Z]{4}" #specifystoragelocation="ngModel" [ngClass]="{'m-input-warn':specifystoragelocation.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center">{{ item.originalbatchno }}</td>
+                      <td class="m-text-center"><input type="text" [name]="'batchno' + item.projcode" [(ngModel)]="item.batchno" #batchno="ngModel" pattern="^[A-Za-z0-9]+$" [ngClass]="{'m-input-warn':batchno.invalid}" (blur)="myToUpCase(tabitemi, i)"></td>
+                      <td class="m-text-center">{{ item.money }}</td>
+                      <td class="m-text-center">{{ item.backmoney }}</td>
+                      <td class="m-text-center">{{ item.deliveryno }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+            </div>
+
+          </div>
+
+        </div>
+        <!--检查项-->
+        <div class="c-form-item-custom clearfix" style="margin-top:15px;">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>检验项目:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入检验项目" required name="checkbill" [(ngModel)]="applyData.apply.checkbill" #checkbill="ngModel" [ngClass]="{'m-input-warn':(checkbill.touched || redApplyForm.submitted) && checkbill.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>外包装检查:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入外包装检查" required name="outerpackagecheck" [(ngModel)]="applyData.apply.outerpackagecheck" #outerpackagecheck="ngModel" [ngClass]="{'m-input-warn':(outerpackagecheck.touched || redApplyForm.submitted) && outerpackagecheck.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>机器外观检查:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入机器外观检查" required name="appearancecheck" [(ngModel)]="applyData.apply.appearancecheck" #appearancecheck="ngModel" [ngClass]="{'m-input-warn':(appearancecheck.touched || redApplyForm.submitted) && appearancecheck.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>电性能检查:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入电性能检查" required name="electroniccheck" [(ngModel)]="applyData.apply.electroniccheck" #electroniccheck="ngModel" [ngClass]="{'m-input-warn':(electroniccheck.touched || redApplyForm.submitted) && electroniccheck.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>附件检查:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入附件检查" required name="attachmentcheck" [(ngModel)]="applyData.apply.attachmentcheck" #attachmentcheck="ngModel" [ngClass]="{'m-input-warn':(attachmentcheck.touched || redApplyForm.submitted) && attachmentcheck.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>质检结论:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入质检结论" required name="checkconlusion" [(ngModel)]="applyData.apply.checkconlusion" #checkconlusion="ngModel" [ngClass]="{'m-input-warn':(checkconlusion.touched || redApplyForm.submitted) && checkconlusion.invalid}">
+          </div>
+        </div>
+        <div class="c-form-item-custom clearfix">
+          <div class="c-input-title c-check-info c-check-title"><span class="c-form-need">*</span><label>备注:</label></div>
+          <div class="c-input-wrap c-check-info c-check-wrap">
+            <input type="text" placeholder="-请输入备注" required name="checkremark" [(ngModel)]="applyData.apply.checkremark" #checkremark="ngModel" [ngClass]="{'m-input-warn':(checkremark.touched || redApplyForm.submitted) && checkremark.invalid}">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--附件信息-->
+    <div class="red-apply-content">
+      <div class="apply-content-title">
+        <h5>附件信息</h5>
+      </div>
+      <div class="apply-content-main">
+        <div class="apply-content-title-message">我承诺上传的附件与原件一致，并将原件提交给财务留存</div>
+        <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+          text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+      </div>
+    </div>
+
+    <!--审批人信息-->
+    <div class="red-apply-content">
+      <div class="apply-content-title">
+        <h5>审批人信息</h5>
+      </div>
+      <div class="apply-content-main">
+        <ul class="approver-node-list">
+          <li class="approver-node clearfix">
+            <div class="approver-node-title">
+              <label>事业部一级</label><i style="color: #ff4d4d">*</i>
+            </div>
+            <div class="approver-node-content">
+              <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of applyData.apply.ApproveUsers['bizDivisionFirst']"
+                  user-image [user]="item" [hasClose]="true" (onClose)="removeOne('first',item,i)"></div>
+              <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow('first')"><i class="iqon-add"></i>添加</div>
+            </div>
+          </li>
+          <li class="approver-node clearfix" *ngIf="isrezty">
+              <div class="approver-node-title">
+                <label>事业部二级</label><i style="color: #ff4d4d">*</i>
+              </div>
+              <div class="approver-node-content">
+                <div class="m-user-info" style="margin-right: 30px;min-width: 150px;" *ngFor="let item of applyData.apply.ApproveUsers['bizDivisionSecond']"
+                  user-image [user]="item" [hasClose]="true" (onClose)="removeOne('second',item,i)"></div>
+                <div class="m-user-change" style="min-width: 190px;padding-left: 5px;" (click)="onApproverSelectModalShow('second')"><i class="iqon-add"></i>添加</div>
+              </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--审批历史记录-->
+    <div class="red-app-history">
+      <db-wfhistory [wfHistoryData]="wfHistory" *ngIf="wfHistory"></db-wfhistory>
+    </div>
+
+    <!--按钮-->
+    <div class="red-apply-footer">
+      <button class="m-btn-agree" type="button" name="applysubmit" [disabled]="isSubmited" (click)="onSubmit($event)">提交</button>
+      <button class="m-btn-refuse m-btn-common" type="button" name="applysave" [disabled]="isSaving" (click)="onSaveApplyData()">保存草稿</button>
+      <button class="m-btn-cancel" type="button" (click)="cancle()">返回</button>
+    </div>
+  </form>
+</div>

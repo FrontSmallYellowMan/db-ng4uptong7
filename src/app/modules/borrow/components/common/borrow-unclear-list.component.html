@@ -1,0 +1,105 @@
+<div class="modal">
+    <div
+        class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow"
+        style="background-color:#f3f3f3"
+    >
+        <div class="modal-header m-dialog-head">
+            <span>未清项列表</span>
+            <i class="iqon-close" (click)="hide()"></i>
+        </div>
+        <div class="m-content-right" style="overflow:scroll;height:400px;">
+            <div
+                class="table-list"
+                *ngFor="let item of unClearItemList; index as i"
+                style="padding-left:40px;padding-top:20px;background-color:#fff"
+            >
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="96%">
+                        <tr>
+                            <th>预留号</th>
+                            <td width="38%">
+                                {{ item.unClearItem.reservationNo }}
+                            </td>
+                            <th>借用客户</th>
+                            <td>
+                                <div class="ui-select-match">
+                                    {{
+                                        item.unClearItem.borrowCustomerName ==
+                                        "string"
+                                            ? ""
+                                            : item.unClearItem
+                                                  .borrowCustomerName
+                                    }}
+                                </div>
+                            </td>
+                            <th>项目名称</th>
+                            <td>
+                                <div class="ui-select-match">
+                                    {{
+                                        item.unClearItem.projectName == "string"
+                                            ? ""
+                                            : item.unClearItem
+                                                  .borrowCustomerName
+                                    }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>借用日期</th>
+                            <td class="days">
+                                {{
+                                    item.unClearItem.borrowDate
+                                        | iqDate: "YYYY-MM-DD"
+                                }}
+                            </td>
+                            <th>超期天数</th>
+                            <td class="days">{{ item.expireddays }} 天</td>
+                            <th>预计归还日期</th>
+                            <td>
+                                {{
+                                    item.unClearItem.giveBackDay
+                                        | iqDate: "YYYY-MM-DD"
+                                }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tables">
+                    <table class="m-info-table" width="96%">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="35%">物料描述</th>
+                                <th width="8%">批次</th>
+                                <th width="8%">单位</th>
+                                <th width="8%">数量</th>
+                                <th width="13%">金额</th>
+                                <th width="15%">借用在途库</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="
+                                    let item1 of item.unclearMaterialItemList;
+                                    index as j
+                                "
+                            >
+                                <td class="m-text-center add-w-b60">
+                                    {{ j + 1 }}
+                                </td>
+                                <td>{{ item1.meterialNo }}</td>
+                                <td>{{ item1.meterialMemo }}</td>
+                                <td>{{ item1.batch }}</td>
+                                <td>{{ item1.unit }}</td>
+                                <td>{{ item1.count }}</td>
+                                <td>{{ item1.totalAmount }}</td>
+                                <td>{{ item1.onwayStore }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

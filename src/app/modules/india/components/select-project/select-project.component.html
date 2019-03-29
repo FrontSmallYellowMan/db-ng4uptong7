@@ -1,0 +1,45 @@
+<div class="ec-component-buyer">
+  <loading [show]="loading"></loading>
+  <div class="ec-component-buyer-header">
+    项目信息<i class="iqon-close" (click) = "close()"></i>
+  </div>
+  <div class="ec-component-buyer-body">
+    <div class="ec-component-buyer-body-search clearfix">
+      <div class="search-input clearfix">
+        <div class="search-input-title">销售员</div>
+        <div class="search-input-control"><input type="text" placeholder="-请输入姓名/itcode" name="BuyerName" [(ngModel)]="query.SellerItCode"></div>
+      </div>
+      <div class="search-input clearfix">
+        <div class="search-input-title">项目名称</div>
+        <div class="search-input-control"><input type="text" placeholder="-请输入项目名称" name="projectname" [(ngModel)]="query.ProjectName"></div>
+      </div>
+      <div class="search-input clearfix">
+        <div class="search-input-title">厂商PO</div>
+        <div class="search-input-control"><input type="text" placeholder="-请输入厂商PO" name="po" [(ngModel)]="query.PO"></div>
+      </div>
+      <div class="search-btn">
+        <a (click)="getList(query,'clickSearchBtn')">查询</a>
+        <a (click)="reset()">重置</a>
+      </div>
+    </div>
+    <div class="ec-component-buyer-body-result" *ngIf="currentPageItems && currentPageItems.length > 0">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>项目名称</td>
+                    <td>客户名称</td>
+                    <td>厂商PO号</td>
+                </tr>
+                <tr *ngFor="let item of currentPageItems" (click)="onSelected(item)">
+                    <td class="td-serchUser-1">{{ item.ProjectName }}</td>
+                    <td class="td-serchUser-2"> {{ item.CustomName }}</td>
+                    <td class="td-serchUser-3">{{ item.PO }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <div class="ec-component-buyer-footer" *ngIf="currentPageItems && currentPageItems.length > 0">
+    <iq-pager [data]="pagerData" (onChange)="getList(query)"></iq-pager>
+  </div>
+</div>

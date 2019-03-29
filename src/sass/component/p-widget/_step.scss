@@ -1,0 +1,147 @@
+/* 申请步骤-类型1 */
+.m-step{
+  @extend %clearfix;
+  .m-apply-step{
+    float: left;
+    padding: 20px 15px;
+    width: 180px;
+    border-bottom: 3px solid $def-color1;
+
+    .m-apply-num{
+      display: inline-block;
+      margin-right: 12px;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      font-size: 14px;
+      background-color: $def-color1;
+      color: #fff;
+      border-radius: 50%;
+    }
+
+    .iqon-right{
+      display: none;
+    }
+
+    >span{
+      font-size: 12px;
+      color: $def-color1;
+    }
+  }
+
+  /* 已完成步骤 */
+  .m-apply-finish{
+    border-bottom: 3px solid #dcebf5;
+
+    .m-apply-num{
+      background-color: $def-main-color;
+    }
+
+    .iqon-right{
+      display: inline-block;
+      color: $def-main-color;
+    }
+
+    >span{
+      color: $def-font1-color;
+    }
+  }
+
+  /* 正在进行 */
+  .m-apply-process{
+    border-bottom: 3px solid $def-assist1-color;
+
+    .m-apply-num{
+      background-color: $def-assist1-color;
+    }
+
+    >span{
+      color: $def-font1-color;
+    }
+  }
+}
+
+/* 申请步骤-类型2 */
+.m-step2{
+  @extend %clearfix;
+
+  .m-apply-step{
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 180px;
+
+    &::after{
+      content: "";
+      display: block;
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: $def-color1;
+      z-index: 1;
+    }
+
+    .m-step-members{
+      position: absolute;
+      top: 80px;
+      left: 26px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 0 7.5px 0 rgba(0, 0, 0, 0.15);
+      border: solid 1px #e1e3eb;
+      z-index: 50;
+
+      &::after{
+        content: "";
+        display: block;
+        @extend %horizontal-center;
+        top: -20px;
+        border-style: solid;
+        border-width: 10px;
+        border-color: transparent transparent #fff;
+      }
+
+      .m-user-info-small{
+        display: block;
+        margin-bottom: 7px;
+      }
+    }
+
+    >i{
+      display: block;
+      position: relative;
+      margin: 0 auto 10px;
+      text-align: center;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      color: #fff;
+      background-color: $def-color1;
+      @include border-radius();
+      z-index: 2;
+    }
+
+  }
+
+  .m-apply-finish{
+    &::after{
+      background-color: #dcebf5;
+    }
+    >i{
+      background-color: $def-main-color;
+    }
+  }
+
+  .m-apply-process{
+    &::after{
+      background-color: $def-assist1-color;
+    }
+    >i{
+      background-color: $def-assist1-color;
+    }
+  }
+}

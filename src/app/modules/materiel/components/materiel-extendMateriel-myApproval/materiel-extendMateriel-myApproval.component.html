@@ -1,0 +1,137 @@
+<div class="m-overclass">
+
+  <div class="m-list-menu">
+    <ul class="m-state" (click)="onTab($event)">
+      <li class="active" data-state="sExamine">待我审批</li>
+      <li data-state="sFinish">我已审批</li>
+      <li data-state="sAll">全部</li>
+    </ul>
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i>
+        高级搜索
+      </div>
+    </div>
+
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <div class="m-search-form">
+
+        <div class="m-search-input">
+          <div class="em-flex">
+            <label>物料编号</label>
+            <input type="text" placeholder="-请填写物料编号" [(ngModel)]="approvalQuery.MaterialCode">
+          </div>
+          <div class="em-flex">
+            <label>扩展方式</label>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select [(ngModel)]="approvalQuery.ExtendType" name="country">
+                <option value="" selected disabled>-请选择扩展方式</option>
+                <option value="0">扩展工厂</option>
+                <option value="1">扩展批次</option>
+                <option value="2">扩展库存地</option>
+              </select>
+            </div>
+          </div>
+          <div class="em-flex">
+            <label>申请人</label>
+            <input type="text" placeholder="-请填写申请人" [(ngModel)]="approvalQuery.ApplyName" style="width:77.5%">
+          </div>
+          <div class="em-flex m-search-flex">
+            <label>申请日期</label>
+            <div class="m-datepicker-comb">
+              <div class="m-datepicker-start">
+                <my-datepicker [(ngModel)]="approvalQuery.BeginDate" format="YYYY-MM-DD" [EndDate]="approvalQuery.EndDate" PlaceHolder="-请选择开始日期"></my-datepicker>
+              </div>
+              ~
+              <div class="m-datepicker-end">
+                <my-datepicker [(ngModel)]="approvalQuery.EndDate" format="YYYY-MM-DD" [StartDate]="approvalQuery.BeginDate" PlaceHolder="-请选择结束日期"></my-datepicker>
+              </div>
+            </div>
+          </div>
+
+          <div class="m-search-btn">
+            <button class="m-btn-confirm" (click)="search()">搜索</button>
+            <button class="m-btn-default" (click)="reset()">重置</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--缺省页开始-->
+  <div class="m-apply" (click)="addApply()" [ngClass]="{'hide': isSearch || materielList.length > 0}">
+    <loading [show]="loading"></loading>
+    <div class="m-apply-circle">
+      <i class="iqon-plus-circle"></i>
+      <span>新建扩展物料</span>
+    </div>
+  </div>
+  <!--缺省页结束-->
+
+  <!--内容页开始-->
+  <div class="m-contclass" [ngClass]="{'hide': !isSearch && materielList.length == 0}">
+
+    <!--搜索结果缺省页开始-->
+    <div class="m-noresult" [ngClass]="{'hide': !isSearch || materielList.length > 0}">
+      <loading [show]="loading"></loading>
+      <div class="m-noresult-msg">
+        <i class="iqon-approvalQuery"></i>
+        <p class="m-noresult-notice">
+          很抱歉，搜索结果为空
+        </p>
+        <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+      </div>
+    </div>
+    <!--搜索结果缺省页结束-->
+    <div class="m-card-cont" [ngClass]="{'hide': isSearch && materielList.length == 0}">
+      <loading [show]="loading"></loading>
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <!-- <th class="wp5"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th> -->
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+              <th class="wp10">序号</th>
+              <th class="wp25">申请单编号</th>
+              <th class="wp20">申请人</th>
+              <th class="wp20">申请日期</th>
+              <th>扩展方式</th>
+              <th>状态</th>
+              <!-- <th class="operate wp10">操作</th> -->
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+              <th class="list-edit" colspan="3">已选{{checkedNum}}项
+                <button type="button" (click)="deleteMateriel(materielList)">删除</button>
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of materielList;index as i">
+            <!-- <td class="wp5"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked"></td> -->
+            <td class="wp10">{{(pagerData.pageNo-1)*pagerData.pageSize + i + 1}}</td>
+            <td class="wp25"><span class="clickText" (click)="editMateriel(item.ExtendNo,item.CopyLink)">{{item.ExtendNo}}</span></td>
+            <td class="wp20">{{item.ApplyName}}</td>
+            <td class="wp20">{{item.CreateTime | iqDate: 'YYYY-MM-DD'}}</td>
+            <td>{{item.ExtendType|applyStatus:"extendMode"}}</td>
+            <td>{{item.TaskState}}</td>
+            <!-- <td class="operate wp10">
+                  <span (click)="editMateriel(item.SerialNumber)">编辑</span>
+                  <span (click)="deleteMateriel(item.SerialNumber)">删除</span>
+                </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+  <!--内容页结束-->
+</div>

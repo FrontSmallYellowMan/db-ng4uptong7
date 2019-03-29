@@ -1,0 +1,42 @@
+.m-list-head{
+  padding-left:25px;
+}
+.addApp-form-box{
+    display: flex;
+}
+.addApp-form-right{
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 15px;
+    line-height: 32px;
+}
+.addApp-form-item .addApp-form-label{
+  width:10%;
+}
+/deep/ .m-user-info{
+    float: left;
+    min-width:180px;
+    margin-right:40px;
+}
+/deep/ .m-user-info .m-user-noimg{
+    line-height: 28px;
+}
+.m-select{
+    span{
+        position: absolute;
+        top: 0px;
+        right: -14px;
+        color: #a8b1bd;
+        z-index: 10;
+        border-radius: 0 5px 5px 0;
+        color: #f5f7fa;
+        background-color: #000;
+        opacity: 0.5;
+        width: 15px;
+        text-align: center;
+        height: 35px;
+        line-height: 35px;
+        cursor: pointer;
+    }
+}

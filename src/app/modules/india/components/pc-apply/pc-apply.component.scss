@@ -1,0 +1,258 @@
+.contract{
+    margin: 80px auto 0;
+    width: 80%;
+    .contract-title{
+        margin: 20px auto;
+        font-size: 16px;
+        color: #151515;
+    }
+    .c-content{
+        width: 100%;
+        border-radius: 3px;
+        background-color: #ffffff;
+        margin-bottom: 15px;
+        .c-content-title{
+            width: 100%;
+            padding-top: 19.5px;
+            padding-left: 25.5px;
+            padding-bottom: 19.5px;
+            text-align: left;
+            font-size: 14px;
+            color: #57b9f8;
+            border-bottom: 1px solid #e1e3eb;
+        }
+        .c-content-main{
+            width: 100%;
+            border-radius: 3px;
+            background-color: #FFF;
+            font-size: 12px;
+            color: #151515;
+            padding: 10px 30px;
+            .c-form-item-custom{
+                width: 100%;
+                float: left;
+                .c-input-title{
+                        float: left;
+                        line-height: 50px;
+                        padding-right: 10px;
+                        text-align: right;
+                        width: 12%;
+                        .c-form-need{
+                            color: red;
+                            padding-right: 3px;
+                        }
+                    }
+                    .c-input-wrap{
+                        float: left;
+                        width: 88%;
+                        padding: 5px 0;
+                        text-align: left;
+                        position: relative;
+                        .m-textarea{
+                            height: 80px;
+                        }
+                        .c-wrap-chain{
+                            float: left;
+                            padding: 7px 0;
+                        }
+                        .c-wrap-line{
+                            width: 20px;
+                            border: 1px solid #e1e3eb;
+                        }
+                        .c-wrap-chain-text{
+                            width: 28%;
+                        }
+                        .c-wrap-chain-line{
+                            padding: 3px 2px;
+                        }
+                    }
+            }
+            .c-form-item{
+                    width: 50%;
+                    float: left;
+                    .c-input-title{
+                        float: left;
+                        line-height: 50px;
+                        padding-right: 10px;
+                        text-align: right;
+                        width: 23%;
+                        .c-form-need{
+                            color: red;
+                            padding-right: 3px;
+                        }
+                    }
+                    .c-input-wrap{
+                        float: left;
+                        width: 77%;
+                        text-align: left;
+                        position: relative;
+                        padding: 5px 0;
+                        .c-wrap-account{
+                            float: left;
+                            width: 50%;
+                            input{
+                                margin-left: 10px;
+                                width: 94%;
+                            }
+                        }
+                    }
+                    .c-wrap-out{
+                        height: 50px;
+                        line-height: 50px;
+                    }
+            }
+            .c-form-item-file{
+                width: 100%;
+                float: left;
+                margin-top: 5px;
+                .c-file-title{
+                    text-align: center;
+                    float: left;
+                    padding-right: 10px;
+                    width: 12.5%;
+                }
+                .c-file-wrap{
+                    float: left;
+                    width: 75%;
+                    text-align: left;
+                    position: relative;
+                    padding: 5px 0;
+                    border: 1px solid #e1e3eb;
+                    border-radius: 5px;
+                }
+            }
+            .c-form-item-sealfile{
+                width: 100%;
+                float: left;
+                .c-sealfile-title{
+                    line-height: 45px;
+                    text-align: center;
+                    float: left;
+                    padding-right: 10px;
+                    width: 12.5%;
+                }
+                .c-sealfile-wrap{
+                    float: left;
+                    width: 75%;
+                    text-align: left;
+                    position: relative;
+                    padding: 5px 0;
+                }
+            }
+        }
+                
+    }
+    .contract-history{
+        width: 100%;
+        margin-top: 15px;
+    }
+    .m-select .iqon-xia {
+        position: absolute;
+        right: 10px;
+        color: #a8b1bd;
+        z-index: 1;
+    }
+    .m-user-info {
+        position: relative;
+        padding: 0 6px;
+        height: 50px;
+        cursor: pointer;
+        line-height: 50px;
+        width: 150px;
+    }
+    .m-user-change {
+        display: inline-block;
+        color: #e1e3eb;
+        line-height: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 11px;
+        left: 151px;
+    }
+    .c-content-footer{
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 35px;
+        padding-top: 15px;
+        .m-btn-common{
+            margin-left: 15px;
+        }
+        .m-btn-cancel{
+            background-color: #f3f3f3;;
+            text-align: center;
+            border: none;
+            border-radius: 3px;
+            transition: all .7s;
+            font-size: 14px;
+            overflow: hidden;
+            display: inline-block;
+            height: 45px;
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .m-btn-default{
+            height: 45px;
+        }
+    }
+}
+.m-select-warn{
+    border: 1px solid #ea6269;
+}
+textarea:hover, textarea:focus {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid #009DD9;
+}
+
+.table thead > tr > th{
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.table.table-bordered>tbody>tr>td{
+    border-bottom: 1px solid #ddd;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    cursor: pointer;
+}
+.table-bordered{
+    border-bottom: 0;
+}
+.table thead {
+    font-size: 16px;
+    color: #777;
+}
+.modal-body{
+    padding:0 15px !important;
+}
+.c-input-wrap-search{
+    position: relative;
+    button{
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        height: 35px;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        transition: all .7s;
+        font-size: 14px;
+        overflow: hidden;
+        background: linear-gradient(275deg,#3495f6,#42c2f7);
+        line-height: 35px;
+        min-width: 80px;
+    }
+    button:hover {
+        opacity: 0.85;
+    }
+    button:focus {
+        outline: none;
+    }
+}
+.m-textarea-warn{
+    border: 1px solid #ea6269;
+}

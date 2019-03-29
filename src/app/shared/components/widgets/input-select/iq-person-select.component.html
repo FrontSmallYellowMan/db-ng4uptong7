@@ -1,0 +1,18 @@
+<div class="person-select m-approval">
+  <div class="m-user-members">
+    <div class="m-user-info" user-image (onClose)="removeOne(item)" [hasClose]="true" [user]="item" *ngFor="let item of list">
+    </div>
+    <div class="m-user-change" (click)="popoverselect.show($event)">
+      <ng-container *ngIf="max!=0 && list.length>=max" >
+      <i class="iqon-eachother"></i>替换
+      </ng-container>
+      <ng-container *ngIf=" !max || list.length<max" >
+      <i class="iqon-add"></i>添加
+      </ng-container>
+    </div>
+    <iq-popover-select #popoverselect
+     [hasButton]="max!=1" (onButton)="openSelect($event)"
+     (onChoose)="chooseOne($event)" (onFocus)="focus()"
+     [queryObservable]="queryObservable" (onQuery)="query($event)"></iq-popover-select>
+  </div>
+</div>

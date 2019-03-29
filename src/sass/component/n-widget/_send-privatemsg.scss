@@ -1,0 +1,93 @@
+/* 发私信 */
+.m-send-privatemsg {
+  width: 630px;
+  background-color: #ffffff;
+  padding: 0 15px;
+  .m-send-head {
+    padding: 15px 0 10px;
+    > i {
+      display: inline-block;
+      vertical-align: middle;
+      &:first-child {
+      }
+      width: 20px;
+      height: 20px;
+      margin-right: 20px;
+      background-color: #57b9f8;
+      &:last-child {
+        width: 21px;
+        height: 15px;
+        background-color: #ea6269;
+
+      }
+    }
+  }
+  .m-send-content {
+    width: 500px;
+    border-radius: 3px;
+    border: solid 1px #e1e3eb;
+    border-top: 7px solid #21b68b;
+    padding: 0 15px;
+    .m-send-contenthd {
+      height: 50px;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .m-send-contentinfo {
+      height: 165px;
+      border-bottom: 1px solid #eeeeee;
+      padding: 10px 0;
+      .m-send-contentinfolis{
+        padding-bottom: 5px;
+        .m-send-label {
+          display: inline-block;
+          color: #a8b1bd;
+          width: 95px;
+        }
+        .m-send-approver{
+          display: inline-block;
+          i{
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #25b4b0;
+          }
+          .m-send-eng{
+            color:#a8b1bd;
+          }
+        }
+      }
+    }
+    .m-send-detail{
+      height: 35px;
+      line-height: 35px;
+      text-align: center;
+      font-size: 14px;
+      color: #57b9f8;
+    }
+  }
+  .m-send-mes{
+    border: none;
+    font-size: 14px;
+  }
+  .m-send-bttom{
+    margin-top: 35px;
+    width: 100%;
+    >div{
+      float: right;
+      .m-send-grytip{
+        display: inline-block;
+        color: #a8b1bd;
+      }
+      .m-btn-send{
+        width: 86px;
+        height: 45px;
+        border-radius: 3px;
+        background-color: #57b9f8;
+        border: solid 1px #57b9f8;
+        margin-left: 15px;
+        color: #ffffff;
+        font-size: 14px;
+      }
+    }
+  }
+}

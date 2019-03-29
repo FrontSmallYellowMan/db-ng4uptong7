@@ -1,0 +1,41 @@
+.m-cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998;
+  background: rgba(0,0,0,.3);
+}
+.m-option{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 51%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  background: #fff;
+  z-index: 9999;
+
+  .m-search{
+    margin: 10px 15px 0;
+    width: 30%;
+    min-width: 200px;
+  }
+
+  .m-option-list{
+    padding: 0 15px 15px;
+    max-height: 450px;
+    overflow: auto;
+
+    .table thead > tr > th{
+      line-height: 40px;
+    }
+
+    .table-list > tbody > tr {
+      height: 30px;
+      
+    }
+  }
+}
+

@@ -1,0 +1,11 @@
+<div class="m-dropdown g-fr">
+    <button class="m-btn-success"><i class="iqon-add-bold"></i>{{dataCreat.title}}</button>
+    <ul class="m-dropdown-option m-dropdown-move">
+        <li *ngFor="let item of dataCreat.list;index as i">
+            <i class="iqon-direct-right"></i>
+            <a *ngIf="item.unClick" style="color:#fff" (click)="getAlert(item.alert)">{{item.label}}</a>
+            <a *ngIf="!item.unClick" [routerLink]="item.url" target="_blank" style="color:#fff">{{item.label}}</a>
+        </li>
+    </ul>
+</div>
+

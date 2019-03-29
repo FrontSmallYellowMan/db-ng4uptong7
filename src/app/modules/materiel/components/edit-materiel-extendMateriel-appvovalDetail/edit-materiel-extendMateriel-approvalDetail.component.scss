@@ -1,0 +1,266 @@
+.m-wrap{
+  margin: 0 0 0 100px;
+  padding-bottom: 30px;
+  width: 75%;
+
+  h3{
+    margin-bottom: 15px;
+    padding-top: 30px;
+    font-size: 16px;
+  }
+
+  .m-extend{
+    padding: 0 25px;
+    height: 60px;
+    line-height: 60px;
+    background: #fff;
+
+    .m-extend-radio{
+      display: inline-block;
+      margin-left: 30px;
+
+      >span{
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .m-nodata{
+    position: relative;
+    margin: 15px 0;
+    width: 100%;
+    height: 300px;
+    background: #fff;
+
+    .m-nodata-center{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 180px;
+      height: 185px;
+      text-align: center;
+      
+      .iqon-close{
+        display: inline-block;
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        font-size: 40px;
+        border-radius: 50%;
+        color: #fff;
+        background: #57b9f8;
+      }
+
+      .line1{
+        margin: 25px 0 20px;
+        font-size: 20px;
+      }
+
+      .line2{
+        color: #a8b1bd;
+        font-size: 16px;
+      }
+    }
+    
+  }
+
+  .m-table{
+    .m-table-btn{
+      margin: 10px 0 15px;
+      text-align: right;
+
+      .m-btn-text{
+        color: #57b9f8;
+      }
+
+      /deep/ .m-fileupload{
+        vertical-align: middle;
+      }
+    }
+
+    >form{
+      padding: 15px 25px;
+      background: #fff;
+
+      .m-materiel-code{
+        margin-bottom: 15px;
+        .m-input-wrap{
+          margin: 0 5px 0 15px;
+          width: 370px;
+        }
+
+        .m-btn-confirm{
+          width: 78px;
+        }
+      }
+
+      .table{
+        table-layout:fixed;
+        border-collapse: collapse;
+        font-size:12px;
+        width: 100%;
+
+        thead{
+          background: #f5f7fa;
+        }
+
+        tbody>tr>td{
+          padding: 4px;
+          vertical-align: middle;
+          height: 20px;
+          line-height: 20px!important;
+        }
+
+        th{
+          border-right:1px solid #ddd;
+        }
+
+        .operate{
+          text-align: center;
+          
+          >span{
+            color: #57b9f8;
+            cursor: pointer;
+
+            &.disabled{
+              color: #ccc;
+              cursor: not-allowed;
+            }
+          }
+        }
+
+        .m-table-listRoll{
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+        }
+
+      }
+    }
+  }
+
+  .m-btn{
+    margin-top: 15px;
+    text-align: center;
+
+    button[disabled]{
+      background: #d2d8e0;
+      cursor: not-allowed;
+    }
+  }
+
+}
+
+.m-tips-font{
+  color: red;
+  padding:0 0 0 10px;
+}
+
+.m-extendMateriel-userInformation{
+  width:100%;
+  background-color:#fff;
+  padding: 20px 0 0;
+  margin:0 auto 15px;
+
+  h5{
+    color: #57b9f8;
+    padding:0 0 15px 25px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .m-applyUse{
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    padding: 15px 25px;
+  }
+
+  .m-itcode-color{
+    color:#ccc;
+  }
+
+}
+
+.m-extendMateriel-table{
+  border-top:none!important;
+
+  tr:first-child td{
+    border-top:none!important;
+  }
+
+}
+
+.m-width-scorll-th{
+  width:303px!important;
+  width:465px\0!important;
+}
+
+.m-table-scorll{
+  width: 100%;
+  max-height: 290px;
+  overflow: auto;
+
+  .m-width-scorll{
+    width:297px!important;
+    width:448px\0!important;
+  }
+}
+
+.apply-p-right{
+	width: 180px;
+    margin-left: 20px;
+    position: absolute;
+    right: 60px;
+    height: 100%;
+    overflow-y: auto;
+    top:120px;
+}
+
+.m-edit-materile-history{
+  margin-top:15px;
+}
+
+.m-div-margin{
+  margin: 15px auto 0;
+}
+
+:host/deep/.apply-opinion{
+  background-color: #fff;
+  text-align: center;
+
+  .m-exm-advice{
+    text-align: left;
+    color: #57b9f8;
+    font-size: 14px;
+    padding:15px 0 13px 25px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .m-textarea{
+    width: 96%;
+    margin: 15px auto;
+  }
+}
+
+:host/deep/.m-exm-history li{
+  height: 20px!important;
+}
+
+:host/deep/.approval-buttons{
+  margin: 15px auto 0;
+}
+
+:host/deep/.loading-container{
+
+  .loading-backdrop{
+    z-index: 1000!important;
+  }
+
+  .loading{
+    z-index:1001!important;
+  }
+}
+

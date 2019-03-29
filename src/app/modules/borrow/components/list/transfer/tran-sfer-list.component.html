@@ -1,0 +1,87 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-boardmenu">
+            <a href="javascript:;" [ngClass]="{'active':applyFlag==='1'}" (click)="applyOrApprove('1')">我的申请</a>
+            <a href="javascript:;" [ngClass]="{'active':applyFlag==='2'}" (click)="applyOrApprove('2')">我的审批<span class="m-num">{{waitForApprovalNum}}</span></a>
+
+        </div>
+        <button class="m-btn-main-2 g-fr" style="margin-top: 7px;background-color: #4cc9a7;" (click)="newApply()">+新建申请</button>
+    </div>
+
+
+    <div class="m-list-menu" *ngIf="applyFlag==='1'">
+        <ul class="m-state">
+
+            <li [ngClass]="{'active':applyPage==='apply1'}" (click)="changeapplytype('apply1')">审批中</li>
+            <li [ngClass]="{'active':applyPage==='apply3'}" (click)="changeapplytype('apply3')">已完成</li>
+            <li [ngClass]="{'active':applyPage==='apply0'}" (click)="changeapplytype('apply0')">全部</li>
+            <li [ngClass]="{'active':applyPage==='apply4'}" (click)="changeapplytype('apply4')">草稿</li>
+        </ul>
+    </div>
+    <div class="m-list-menu" *ngIf="applyFlag==='2'">
+        <ul class="m-state">
+            <li [ngClass]="{'active':applyPage==='approval1'}" (click)="changeapplytype('approval1')">待我审批</li>
+            <li [ngClass]="{'active':applyPage==='approval2'}" (click)="changeapplytype('approval2')">我已审批</li>
+            <li [ngClass]="{'active':applyPage==='approval3'}" (click)="changeapplytype('approval3')">全部</li>
+        </ul>
+    </div>
+    <!--为页面刷新添加 20171220-->
+    <div [ngClass]="{'hide':true}">
+        <button type="button" id="searchBtn" (click)="search()"></button>
+    </div>
+
+
+
+    <div class="m-table-right" *ngIf="!isShowMes">
+        <table class="table table-hover table-list" style="table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th>申请单号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='approvalSort()'></i></th>
+                    <th>子申请单号</th>
+                    <th>原申请人</th>
+                    <th>现申请人</th>
+                    <th *ngIf="applyPage!=='apply4' && applyPage!=='apply3' && applyPage!=='approval1'">当前环节</th>
+                    <th *ngIf="applyPage!=='apply4' && applyPage!=='apply3' && applyPage!=='approval1'">当前处理人</th>
+                    <th>申请日期<i class="iqon-order" (click)='approvalSort()'></i></th>
+                    <th *ngIf="applyPage==='apply4'">操作</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tranSferList">
+                    <td (click)="goDetail(item.id,query.flowStatus)" title="{{item.brwTransId}}">{{item.brwTransId}}</td>
+                    <td (click)="goDetail(item.id,query.flowStatus)" title="{{item.brwSubTransId}}">{{item.brwSubTransId}}</td>
+                    <td (click)="goDetail(item.id,query.flowStatus)">{{item.oPersonName}}</td>
+                    <td (click)="goDetail(item.id,query.flowStatus)">{{item.nPersonName}}</td>
+                    <td *ngIf="applyPage!=='apply4' && applyPage!=='apply3' && applyPage!=='approval1'" (click)="goDetail(item.id,query.flowStatus)">{{item.flowCurrNodeName}}</td>
+                    <td *ngIf="applyPage!=='apply4' && applyPage!=='apply3' && applyPage!=='approval1'" (click)="goDetail(item.id,query.flowStatus)">{{item.currApprAuthors}}</td>
+
+                    <td (click)="goDetail(item.id,query.flowStatus)">{{item.applyDate|iqDate:'YYYY-MM-DD'}}</td>
+                    <td *ngIf="applyPage==='apply4'"><span (click)="editForm(item.id)">编辑</span>
+                        <span (click)="deleteApply(item.id)">删除</span></td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="page">
+            <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+        </div>
+    </div>
+
+
+
+    <div class="m-home-default" *ngIf="isShowMes">
+        <div class="m-scan">
+            <div class="m-scan-body">
+                <div class="m-scan-default">
+                    <div class="m-scan-logo">
+                        <i class="iqon-apply"></i>
+                    </div>
+                    <h3>{{tipMessage}}</h3>
+                    <h4>{{detailMessage}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

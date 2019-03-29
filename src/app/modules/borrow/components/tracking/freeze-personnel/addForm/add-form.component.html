@@ -1,0 +1,19 @@
+<div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+  <div class="modal-header m-dialog-head">
+    <span>新建冻结人员信息</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <form #form="ngForm">
+      <div class="m-form-item-w100 m-approval" style="padding:0 25px 15px;">
+          <p class="m-form-label">冻结人<span class="m-form-need">*</span></p>
+          <div class="m-user-members">
+            <iq-person-select #forminput name="person" #person="ngModel"  required [(ngModel)]="person.info" [max]="1" (ngModelChange)="changePerson(person.info)" ngDefaultControl></iq-person-select>
+          </div>
+          <p class="m-warn-tip" *ngIf="(person.touched || form.submitted) && person.invalid">请选择要冻结的人员</p>
+      </div>
+      <div class="m-add-btn">
+        <button class="m-btn-confirm" (click)="save($event)">确定</button>
+        <button type="button" class="m-btn-cancel" (click)="hide()">取消</button>
+      </div>
+  </form>
+</div>

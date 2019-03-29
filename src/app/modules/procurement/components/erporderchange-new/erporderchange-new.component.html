@@ -1,0 +1,444 @@
+<form #form="ngForm">
+  <loading [show]="loading"></loading>
+  <div class="erporderChange">
+
+    <h4>{{pageTitle}}</h4>
+
+    <!-- 基本信息 -->
+    <div class="erporderChange-content1 clearfix">
+
+      <div class="erporderChange-title">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>申请日期</p>
+        <div class="m-select erporderChange-select-style1">
+          {{erpOrderChangeData.AddTime|iqDate:"YYYY-MM-DD"}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">申请人</p>
+        <div class="m-select erporderChange-select-style1">
+          <div class="m-user-info-small">
+            <div user-image [hasClose]="false" [user]="userInfo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>需求跟踪号</p>
+        <div class="m-select erporderChange-select-style1">
+          <input type="text" name="TrackingNumber" #TrackingNumber='ngModel' [(ngModel)]='erpOrderChangeData.TrackingNumber' placeholder="-请填写的需求跟踪号"
+            style="width:77%" [ngClass]="{'m-input-warn':TrackingNumber.invalid && (TrackingNumber.touched||isSubmit)}" required
+            maxlength="20" trim trimReg="/(^[\s?><@#$%^&*]*)|([\s?><@#$%^&*]*$)/g" (blur)="testTrackingNumber(erpOrderChangeData.TrackingNumber)">
+          <button type="button" class="m-btn-default" (click)="searchERPList(erpOrderChangeData.TrackingNumber)">查询</button>
+        </div>
+        <p class="m-p-warn" style="padding:0 77px 0 0" *ngIf="TrackingNumber.invalid && (TrackingNumber.touched||isSubmit)">请填写需求跟踪号</p>
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>事业部</p>
+        <div class="m-select erporderChange-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="SYBMC" id="" [required]="isSubmit" [(ngModel)]="erpOrderChangeData.SYBMC" #SYBMC="ngModel" [ngClass]="{'m-select-warn':SYBMC.invalid&&(SYBMC.touched||isSubmit),'selectPlaceHolderColor':erpOrderChangeData.SYBMC===null}">
+            <option value="null" selected disabled>-请选择事业部</option>
+            <option [value]="item.BusinessUnitName" *ngFor="let item of departmentList">{{item.BusinessUnitName}}</option>
+          </select>
+        </div>
+        <p class="m-p-warn" style="line-height:20px;" *ngIf="SYBMC.invalid&&(SYBMC.touched||isSubmit)">请选择事业部</p>
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips" style="top:5px;">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>ERP订单编号
+          <br>(修改前)</p>
+        <div class="m-select erporderChange-select-style1" style="top:-10px;">
+          {{erpOrderChangeData.OriginalERPOrderNo}}
+        </div>
+        <!-- <p class="m-p-warn" style="line-height:20px;" *ngIf="!supplierData.phone && (Phone.touched||isSubmit)">请填写联系方式</p>         -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>ERP订单编号
+          <br>(修改后)</p>
+        <div class="m-select erporderChange-select-style1" style="top:-10px;">
+          {{erpOrderChangeData.ERPOrderNo}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="ContractID.invalid&& (ContractID.touched||isSubmit)">请填写合同编号</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>订单总金额
+          <br>(修改前)</p>
+        <div class="m-select erporderChange-select-style1 m-input-width" style="top:-10px;">
+          {{erpOrderChangeData.OriginalOrderAmount|number:"1.2"}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>订单总金额
+          <br>(修改后)</p>
+        <div class="m-select erporderChange-select-style1" style="top:-10px;">
+          {{erpOrderChangeData.OrderAmount|number:"1.2"}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+      </div>
+
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>是否采购冲红</p>
+        <div class="m-select erporderChange-select-style1 m-input-width">
+          <input type="radio" icheck name="IsRedInvoice" #IsRedInvoice="ngModel" [(ngModel)]="erpOrderChangeData.IsRedInvoice" value=1>
+          <span>是</span>
+          <input type="radio" icheck name="IsRedInvoice" #IsRedInvoice="ngModel" [(ngModel)]="erpOrderChangeData.IsRedInvoice" value=0>
+          <span>否</span>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need">*</span>是否修改
+          <br>物料明细</p>
+        <div class="m-select erporderChange-select-style1" style="vertical-align: top;">
+          <input type="radio" icheck name="IsChangeMaterial" #IsChangeMaterial="ngModel" [(ngModel)]="erpOrderChangeData.IsChangeMaterial" value=1>
+          <span>是</span>
+          <input type="radio" icheck name="IsChangeMaterial" #IsChangeMaterial="ngModel" [(ngModel)]="erpOrderChangeData.IsChangeMaterial" value=0>
+          <span>否</span>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+      </div>
+
+      <div class="erporderChange-textarea">
+        <p class="erporderChange-form-title erporderChange-form-titles" style="vertical-align: top;">
+          <span class="m-form-need">*</span>修改项目描述</p>
+        <div class="m-select erporderChange-textarea-content">
+          <textarea name="ItemDescription" row=1 required [(ngModel)]="erpOrderChangeData.ItemDescription" #ItemDescription='ngModel'
+            [ngClass]="{'m-textarea-warn':ItemDescription.invalid&& (ItemDescription.touched||isSubmit)}" style='width:calc(100% - 2em)'
+            placeholder="-请填写修改项目描述"></textarea>
+        </div>
+        <p class="m-p-warn" *ngIf="ItemDescription.invalid&& (ItemDescription.touched||isSubmit)" style="padding:0 26px 0 0">请填写修改项目描述</p>
+      </div>
+
+
+      <div class="erporderChange-upLoad-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles" style="top:9px">
+          <span class="m-form-need" *ngIf="isUpLoadFile">*</span>附件</p>
+        <div class="m-select erporderChange-select-style1" style="vertical-align: top;width:88.5%">
+          <iq-file-upload upType="1" [url]="upFileApiLink" (onSuccess)="fileUploadSuccess($event)" [hasUploaded]="alreadyfilelUpLoadList"
+            (onDeleteItem)="deleteUploadFile($event)"></iq-file-upload>
+        </div>
+        <p class="m-p-warn m-fileUpload-warn-tips" *ngIf="isUpLoadFile&&erpOrderChangeData.AccessoryList.length===0&&alreadyfilelUpLoadList.length===0&&filelUpLoadList.length===0">请上传附件</p>
+      </div>
+
+
+    </div>
+
+
+    <!--采购信息-->
+    <div class="erporderChange-content1 clearfix">
+
+      <div class="erporderChange-title">
+        <h5>采购信息</h5>
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>币种</p>
+        <div class="m-select erporderChange-select-style1 m-input-width">
+
+          <i class="iqon-xia"></i>
+          <select name="CurrencyCode" #CurrencyCode="ngModel" [(ngModel)]="erpOrderChangeData.CurrencyCode" (ngModelChange)="onChangeCurrency(erpOrderChangeData.CurrencyCode)">
+            <option value="" selected disabled>-请选择</option>
+            <option [value]="item.currencycode" *ngFor="let item of currencyList">{{item.currencycode}} {{item.currencyname}}</option>
+          </select>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>工厂</p>
+        <div class="m-select erporderChange-select-style1">
+          <input type="text" placeholder="-请填写工厂" trim [(ngModel)]="erpOrderChangeData.FactoryCode" name="FactoryCode" #FactoryCode="ngModel" [ngClass]="{'m-input-warn':FactoryCode.invalid&&(FactoryCode.touched||isSubmit)}" (ngModelChange)="erpKeyDataChangeFn()" conversionCase savePlace=4>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+      </div>
+
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>税码</p>
+        <div class="m-select erporderChange-select-style1 m-input-width">
+          <i class="iqon-xia"></i>
+          <select name="TaxFileNumber" #TaxFileNumber="ngModel" [(ngModel)]="erpOrderChangeData.TaxFileNumber" (ngModelChange)="erpKeyDataChangeFn()">
+            <option value="" selected disabled>-请选择</option>
+            <option [value]="item.taxcode" *ngFor="let item of taxList">{{item.taxcode}} {{item.taxratename}}</option>
+          </select>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>供应商</p>
+        <div class="m-select erporderChange-select-style1" [title]="erpOrderChangeData.OriginalVendor">
+          <iq-select required name="SupplierCodeSAP" #SupplierCodeSAP="ngModel" [(ngModel)]="allSupplierCodeSAP" [modalShow]="true"
+            [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" [enterShowList]="false"
+            (onSelect)="SupplierCodeSAPVerify($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"
+            showIndex='10'></iq-select>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+      </div>
+
+      <div class="erporderChange-form erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles">
+          <span class="m-form-need"></span>汇总号</p>
+        <div class="m-select erporderChange-select-style1">
+          <input type="text" placeholder="-请填写汇总号" trim [(ngModel)]="erpOrderChangeData.SumNo" name="SumNo" #SumNo="ngModel" maxlength="20"
+            [ngClass]="{'m-input-warn':SumNo.invalid&&(SumNo.touched||isSubmit)}">
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+      </div>
+
+
+    </div>
+
+
+
+    <!--修改物料明细-->
+    <div class="erporderChange-content1 clearfix" *ngIf="erpOrderChangeData.IsChangeMaterial==1">
+
+      <div class="erporderChange-title">
+        <h5>修改物料明细
+          <span class="m-title-font">是否创建新的采购订单
+            <input type="radio" icheck name="Is2ERP" [(ngModel)]="erpOrderChangeData.Is2ERP" value=1 [disabled]="notAllowEdit" (ngModelChange)="getIs2ERP()">
+            <span>是</span>
+            <input type="radio" icheck name="Is2ERP" [(ngModel)]="erpOrderChangeData.Is2ERP" value=0 [disabled]="notAllowEdit" (ngModelChange)="getIs2ERP()">
+            <span>否</span>
+          </span>
+
+          <span class="batch-modify">
+            <label>库存地：</label><input type="text" trim name="batchModifyStorageLocation" [(ngModel)]="batchModifyStorageLocation" maxlength="4">
+            <label>批次：</label><input type="text" trim name="batchModifyBatch" [(ngModel)]="batchModifyBatch" conversionCase>
+            <button class="m-btn-confirm min-btn batch-button-color" style="width:70px;" (click)="batchModify()">批量修改</button>
+          </span>
+
+          <div class="m-button-model">
+            <button class="m-btn-confirm min-btn" (click)="deleteList()" type="button">重置</button>
+            <button class="m-btn-confirm min-btn" (click)="downloadTpl()" type="button">excel导入模板</button>
+            <iq-file-upload class="min-btn" upType="0" [url]="materialListfileUploadApi" [upLoadData]="upLoadData" [allowedFileType]="['xls']"
+              [showModel]="false" [text]="'批量上传'" (onSuccess)="getUploadFileMaterialList($event)"></iq-file-upload>
+          </div>
+
+        </h5>
+      </div>
+
+      <div class="m-erporderchange-table">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="wp1">行项目</th>
+              <th style="width:10%">
+                <span class="m-form-need">*</span>物料编号</th>
+              <th style="width:22%">物料描述</th>
+              <th style="width:5%">
+                <span class="m-form-need">*</span>数量</th>
+              <th>
+                <span class="m-form-need">*</span>未税单价</th>
+              <th style="width:6%">
+                <span class="m-form-need">*</span>库存地</th>
+              <th>
+                <span class="m-form-need">*</span>批次</th>
+              <th>
+                <span class="m-form-need">*</span>需求跟踪号</th>
+              <th style="width:16%">
+                <span class="m-form-need"></span>销售合同号</th>
+              <th style="cursor: pointer;width:40px;text-align:center;">
+                <i class="iqon-jia m-jia-jian-button" (click)="addMaterial()" title="增加物料"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of materialList;index as i;" [ngClass]="{'m-delete-line':item.IsDeleted||item.IsERPDeleted}">
+              <!-- 可编辑 -->
+              <ng-container *ngIf="!item.IsDeleted&&!item.IsERPDeleted">
+                <td>{{item.ItemNo}}</td>
+                <td>
+                  <input type="text" [name]="i+'MaterialNumber'+item.tableId" [attr.name]="i+'MaterialNumber'+item.tableId"
+                    [(ngModel)]="item.MaterialNumber" #MaterialNumber="ngModel" [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' trim pattern="[\w-]*" [ngClass]="{'m-input-warn':MaterialNumber.invalid && (MaterialNumber.touched||isSubmit)}" (blur)="getMaterialContent(i)">
+                </td>
+                <td>
+                  <p class="m-p-warp">{{item.MaterialDescription}}</p>
+                </td>
+                <td>
+                  <input type="text" [name]="i+'Count'+item.tableId" [attr.name]="i+'Count'+item.tableId" only-number onlyNumberSeveralDigits='0'
+                    [(ngModel)]="item.Count" #Count="ngModel" [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' (ngModelChange)="sumAmount()" [ngClass]="{'m-input-warn':Count.invalid && (Count.touched||isSubmit)}" (blur)="restPriceAndCount(i)">
+                </td>
+                <td>
+                  <input type="text" [name]="i+'Price'+item.tableId" [attr.name]="i+'Price'+item.tableId" only-number [(ngModel)]="item.Price"
+                  [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' #Price="ngModel" (ngModelChange)="sumAmount()" [ngClass]="{'m-input-warn':Price.invalid && (Price.touched||isSubmit)}" (blur)="restPriceAndCount(i)">
+                </td>
+                <td>
+                  <input type="text" [name]="i+'StorageLocation'+item.tableId" [attr.name]="i+'StorageLocation'+item.tableId"
+                    maxlength="4" trim [(ngModel)]="item.StorageLocation" [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' #StorageLocation="ngModel" [ngClass]="{'m-input-warn':StorageLocation.invalid && (StorageLocation.touched||isSubmit)}">
+                </td>
+                <td>
+                  <input type="text" [name]="i+'Batch'+item.tableId" [attr.name]="i+'Batch'+item.tableId" trim [(ngModel)]="item.Batch"
+                  [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' #Batch="ngModel" [ngClass]="{'m-input-warn':Batch.invalid && (Batch.touched||isSubmit)}" conversionCase>
+                </td>
+                <td>
+                  <input type="text" [name]="i+'TrackingNo'+item.tableId" [attr.name]="i+'TrackingNo'+item.tableId" trim [(ngModel)]="item.TrackingNo"
+                  [required]='!item.IsDeleted&&!item.IsERPDeleted&&erpOrderChangeData.IsChangeMaterial==1' #TrackingNo="ngModel" [ngClass]="{'m-input-warn':TrackingNo.invalid && (TrackingNo.touched||isSubmit)}">
+                </td>
+                <td>
+                  <select [name]="i+'SC_Code'+item.tableId" [attr.name]="i+'SC_Code'+item.tableId" [(ngModel)]="item.SC_Code"
+                    #SCCode="ngModel" (ngModelChange)="getMainContractCode(i)">
+                    <option value=null disabled selected>-请选择</option>
+                    <option [value]="item.SC_Code" *ngFor="let item of contracts">{{item.MainContractCode}}</option>
+                  </select>
+                </td>
+                <td class="m-td-jian">
+                  <i class="iqon-jian m-jia-jian-button" (click)="deleteMaterial(i)"></i>
+                </td>
+              </ng-container>
+
+              <!-- 已删除时，不可编辑 -->
+              <ng-container *ngIf="item.IsDeleted||item.IsERPDeleted">
+                  <td>{{item.ItemNo}}</td>
+                  <td>
+                    {{item.MaterialNumber}}
+                  </td>
+                  <td>
+                    <p class="m-p-warp">{{item.MaterialDescription}}</p>
+                  </td>
+                  <td>
+                    {{item.Count}}
+                  </td>
+                  <td>
+                    {{item.Price}}
+                  </td>
+                  <td>
+                    {{item.StorageLocation}}
+                  </td>
+                  <td>
+                   {{item.StorageLocation}}
+                  </td>
+                  <td>
+                    {{item.TrackingNo}}
+                   </td>
+                  <td>
+                    {{item.MainContractCode}}
+                  </td>
+                  <td class="m-td-jian">
+                    已删除
+                  </td>
+              </ng-container>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!--审批历史记录-->
+    <div class="m-edit-approvalDetail-content1" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <!--审批历史记录 end-->
+
+    <!-- 审批人信息 -->
+    <div class="erporderChange-content1">
+      <div class="erporderChange-title">
+        <h5>审批人信息</h5>
+      </div>
+
+      <!-- <div class="erporderChange-form-approval erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-title" style="position: relative;top: -10px;">
+          <span class="m-form-need">*</span>事业部审批人</p>
+        <div class="erporderChange-select-style1 m-height37 m-select">
+            <iq-person-select [(ngModel)]="allApproverListData[0].list" [max]="1" (ngModelChange)="getApprovalPerson($event)" name="SYBApprove"></iq-person-select>
+        </div>
+      </div>
+
+      <div class="erporderChange-form-approval erporderChange-tips" *ngIf="allApproverListData[1].isApproval">
+        <p class="erporderChange-form-title erporderChange-form-title" style="position: relative;top: -10px;">
+          <span class="m-form-need">*</span>二级审批人</p>
+        <div class="erporderChange-select-style1 m-height37 m-select">
+            <iq-person-select [(ngModel)]="allApproverListData[1].list" [max]="1" (ngModelChange)="getApprovalPerson($event)" name="SYBApprove"></iq-person-select>
+        </div>
+      </div>
+
+      <div class="erporderChange-form-approval erporderChange-tips" *ngIf="allApproverListData[2].isApproval">
+        <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+          <span class="m-form-need" >*</span>采购经理</p>
+          <div class="erporderChange-select-style1 m-select m-height37">
+              <div user-image [hasClose]="false" [user]="item" *ngFor="let item of allApproverListData[2].list;let i=index" class="m-approver-width"></div>
+          </div>
+      </div>
+
+      <div class="erporderChange-form-approval erporderChange-tips">
+        <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+          <span class="m-form-need">*</span>采购员改单</p>
+          <div class="erporderChange-select-style1 m-select m-height37" >
+              <div user-image [hasClose]="false" [user]="item" *ngFor="let item of allApproverListData[3].list;let i=index" class="m-approver-width"></div>
+          </div>
+      </div>
+
+      <div class="erporderChange-form-approval erporderChange-tips" *ngIf="allApproverListData[4].isApproval">
+        <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+          <span class="m-form-need"></span>库房冲红</p>
+          <div class="erporderChange-select-style1 m-height37 m-select" *ngIf="allApproverListData[4].list.length===0">
+              <div class="m-user-approverSelect" (click)="showStorangeRCWApproverList()" style="padding:5px;"><i class="iqon-add"></i>添加</div>
+          </div>
+          <div class="erporderChange-select-style1 m-select m-height37" *ngIf="allApproverListData[4].list.length>0">
+            <div user-image [hasClose]="false" [user]="item" *ngFor="let item of allApproverListData[4].list;let i=index" class="m-approver-width"></div>
+            <div class="m-approver-change" (click)="showStorangeRCWApproverList()"><i class="iqon-eachother"></i><span>替换</span></div>
+          </div>
+      </div>
+
+      <div class="erporderChange-form-approval erporderChange-tips" *ngIf="allApproverListData[5].isApproval">
+          <p class="erporderChange-form-title erporderChange-form-titles m-promised-title">
+            <span class="m-form-need"></span>采购员删单</p>
+            <div class="erporderChange-select-style1 m-select m-height37">
+                <div user-image [hasClose]="false" [user]="item" *ngFor="let item of allApproverListData[5].list;let i=index" class="m-approver-width"></div>
+            </div>
+        </div> -->
+
+        <!-- 重构审批人 -->
+        <erporderchange-approver #erporderchangeApprover [(formDetail)]="erpOrderChangeData" (approverValid)="getApproverValid($event)"></erporderchange-approver>
+
+    </div>
+    <!-- 审批人信息 end-->
+
+
+    <!-- <div class="m-commonly-btn">
+      <button class="m-btn-confirm m-btn-margin" (click)="save(1)" type="button">提交</button>
+      <button class="m-btn-default m-btn-tempsave" (click)="save(0)" type="button">暂存</button>
+      <button class="m-btn-cancel2 m-btn-width" (click)="cancle()" type="button">取消</button>
+    </div> -->
+
+    <div class="addApp-submit-btn">
+      <div class="addApp-sub-btns">
+        <button class="m-btn-confirm" type="button" (click)="save(1)">提交</button>
+        <button class="m-btn-more-big" type="button" (click)="save(0)">暂存</button>
+        <a (click)="cancle()"><button class="m-btn-addAppback" type="button">取消</button></a>
+      </div>
+    </div>
+
+  </div>
+
+
+</form>

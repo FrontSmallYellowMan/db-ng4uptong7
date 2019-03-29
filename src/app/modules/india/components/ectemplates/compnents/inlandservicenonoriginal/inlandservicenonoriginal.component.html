@@ -1,0 +1,466 @@
+<loading [show]="loading"></loading>
+<div class="ec-template">
+    <div class="ec-template-header">
+        <div class="ec-template-header-title">
+            销售合同
+        </div>
+        <span class="ec-template-header-code39"></span>
+    </div>
+    <form #form="ngForm" novalidate>
+        <div class="ec-template-body">
+            <!--卖方 买方-->
+            <div class="ec-template-body-area">
+                <div class="area-seller clearfix">
+                    <div class="area-title"><i class="i-required">* </i>卖方:</div>
+                    <div class="area-content">
+                        <select-search-company id="selectsearchseller" name="seller" [(ngModel)]="selectedSeller" [disabled]="isView" [isSubmit]="isSubmit" [optionList]="selectDataSource?.CompanyList" (onSelecte)="onSelecteCompany(selectedSeller)"></select-search-company>
+                    </div>
+                    <div class="area-content-eccode">
+                        合同编号：{{formData.BaseData.EC_Code}}
+                    </div>
+                </div>
+                <div class="area-buyer clearfix">
+                    <div class="area-title"><i class="i-required">* </i>买方:</div>
+                    <div class="area-content">
+                        <input type="text" placeholder="-请输入客户名称" name="BuyerName" #domElement required [(ngModel)]="formData.BaseData.BuyerName" [readonly]="buyerNameInputEnabled || isView" #BuyerName="ngModel" [ngClass]="{'area-content-input': !isView, 'm-input-warn':BuyerName.invalid && (BuyerName.touched||isSubmit)}">
+                        <a (click)="showBuyerModal()" *ngIf="!isView">查询</a>
+                    </div>
+                </div>
+                <div class="text-indent2em">
+                    鉴于买卖双方就本合同所涉产品销售事宜已经书面签署《框架合作协议》(包括补充协议和最高额保证合同等)，且本协议作为《框架合作协议》之附件，是《框架合作协议》不可分割的一部分。
+                </div>
+                <div class="text-indent2em">
+                    根据《中华人民共和国合同法》及其他有关法律、法规之规定，买卖双方经过平等协商，确认根据下列条款订立本合同，以资共同遵照执行。
+                </div>
+            </div>
+            <!--一、服务内容-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">一、服务内容</div>
+                <div class="ec-template-body-area-content">
+                    卖方为
+                    <div id="supplier" class="area-content-supplier" [ngClass]="{'area-content-supplier-warn':!formData.BaseData.SupplierCodeSAP && isSubmit}">
+                        <iq-select name="SupplierCodeSAP" #SupplierCodeSAP="ngModel" [(ngModel)]="allSupplierCodeSAP" [modalShow]="true"
+                        [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}" [enterShowList]="false"
+                        (onSelect)="SupplierCodeSAPVerify($event)" listApi="InitData/GetPageDataVendorFromERP" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"
+                        showIndex='10' [disabled]="isView"></iq-select>
+                    </div>
+                    原厂商的代理商，代理销售
+                    <input type="text" class="supplier-copy" placeholder="-代理商" name="SupplierName1" [(ngModel)]="formData.BaseData.SupplierName" readonly>
+                    原厂商的服务；
+                </div>
+                <div class="ec-template-body-area-content">
+                    买方愿意通过卖方购买<input type="text" class="supplier-copy" placeholder="-代理商" name="SupplierName2" [(ngModel)]="formData.BaseData.SupplierName" readonly>
+                    原厂商（以下简称原厂商）的服务。<br>见附件一<br>买方指定的最终用户信息：
+                </div>
+                <div class="ec-template-body-area-content">
+                    <div class="area-enduser">
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户中文名称：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户中文名称" name="FinalUserName_CN" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserName_CN"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户英文名称：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户英文名称" name="FinalUserName_EN" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserName_EN"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户联系人：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户联系人" name="FinalUserContact" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserContact"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户中文地址：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户中文地址" name="FinalUserAddress_CN" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserAddress_CN"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户英文地址：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户英文地址" name="FinalUserAddress_EN" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserAddress_EN"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户联系电话：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户联系电话" name="FinalUserTel" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserTel"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终用户传真号：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终用户传真号" name="FinalUserFax" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserFax"></div>
+                        </div>
+                        <div class="area-enduser-info clearfix">
+                            <div class="enduser-title">最终电子邮件地址：</div>
+                            <div class="enduser-content"><input type="text" placeholder="-最终电子邮件地址" name="FinalUserEmail" [readonly]="isView" [(ngModel)]="formData.BaseData.FinalUserEmail"></div>
+                        </div>
+                    </div>
+                    <div class="text-indent2em">注：买方向卖方采购该服务时，须按上表填写最终用户信息。买方保证以上最终用户信息真实有效，如因买方提供的信息不准确或不真实而引起法律纠纷以及服务使用受限或其他任何瑕疵，则产生的相关经济损失和法律责任全部由买方自行承担。如厂商要求，买方承诺将最终用户合同文件副本提供给卖方或厂商, 且对该文件的真实性负责。</div>
+                </div>
+            </div>
+            <!--二、服务价格-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">二、服务价格</div>
+                <div class="ec-template-body-area-content">
+                    本合同总金额共计：￥
+                    <input type="text" #domElement only-number required placeholder="-请输入合同金额" class="contract-total-money" name="TotalMoney" [readonly]="isView" [(ngModel)]="formData.BaseData.TotalMoney" (blur)="onBlurTotalMoney()" #TotalMoney="ngModel" [ngClass]="{'m-input-warn':TotalMoney.invalid && (TotalMoney.touched||isSubmit)}">
+                    元（大写：
+                    <input type="text" placeholder="-合同金额大写" class="contract-total-money-uppercase" name="TotalMoneyUpper" [(ngModel)]="formData.BaseData.TotalMoneyUpper" readonly>
+                    ）。
+                </div>
+            </div>
+            <!--三、服务形式-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">三、服务形式</div>
+                <div class="ec-template-body-area-content">
+                    见附件一。
+                </div>
+            </div>
+            <!--四、服务期限及相关信息-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">四、服务期限及相关信息</div>
+                <div class="ec-template-body-area-content">
+                    （1）服务期限：本合同项下的服务起始截止期限为
+                    <div id="servicetime" class="area-content-servicetime" [ngClass]="{'m-select-warn':!formData.BaseData.ServiceStartTime && isSubmit}">
+                        <my-datepicker name="ServiceStartTime" PlaceHolder="-请选择日期" [isDisabled]="isView" [(ngModel)]="formData.BaseData.ServiceStartTime" [EndDate]="formData.BaseData.ServiceEndTime" (ngModelChange)="onServiceStartTimeChange()"></my-datepicker>
+                    </div>
+                    起至
+                    <div class="area-content-servicetime" [ngClass]="{'m-select-warn':!formData.BaseData.ServiceEndTime && isSubmit}">
+                        <my-datepicker name="ServiceEndTime" PlaceHolder="-请选择日期" [isDisabled]="isView" [(ngModel)]="formData.BaseData.ServiceEndTime" [StartDate]="formData.BaseData.ServiceStartTime" (ngModelChange)="onServiceEndTimeChange()"></my-datepicker>
+                    </div>
+                    止（如没有具体服务期限的，则以完成本合同附件一所示服务内容为准）。
+                </div>
+                <div class="ec-template-body-area-content area-content-servicecontent">
+                    （2）服务地址：
+                    <input type="text" class="servicecontent-address" placeholder="-服务地址" name="ServiceAddress" [readonly]="isView" [(ngModel)]="formData.BaseData.ServiceAddress" required #ServiceAddress="ngModel" [ngClass]="{'m-input-warn':ServiceAddress.invalid && (ServiceAddress.touched||isSubmit)}">
+                </div>
+                <div class="ec-template-body-area-content area-content-servicecontent">
+                    （3）服务联系人：双方确定，在本合同有效期内，买方指定
+                    <input type="text" class="servicecontent-contracts" placeholder="-服务联系人" name="ServiceContacts" [readonly]="isView" [(ngModel)]="formData.BaseData.ServiceContacts" required #ServiceContacts="ngModel" [ngClass]="{'m-input-warn':ServiceContacts.invalid && (ServiceContacts.touched||isSubmit)}">
+                    为买方服务联系人。买方变更服务联系人的，应当及时以书面形式通知卖方。未及时通知并影响本合同履行或造成损失的，应当承担相应责任。
+                </div>
+            </div>
+            <!--五、付款条款-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">五、付款条款</div>
+                <div class="ec-template-body-area-content">
+                    1．对于甲乙双方交接发票、结算票据事宜，双方一致认同：买方取得发票并不代表买方服务款已付清，服务款已付清是以买方服务款全部到达卖方指定账户为标准。买方付款后如未能收到发票的，应在付款之日起10个工作日内向卖方索要，逾期不索要的，视为买方已收到发票，发票税率：
+                    <input icheck type="radio" id="Payment_InvoiceTaxRate1" name="Payment_InvoiceTaxRate" [disabled]="isView" [(ngModel)]="formData.BaseData.Payment_InvoiceTaxRate" value="6">6%
+                    <input icheck type="radio" id="Payment_InvoiceTaxRate2" name="Payment_InvoiceTaxRate" [disabled]="isView" [(ngModel)]="formData.BaseData.Payment_InvoiceTaxRate" value="16">16%
+                </div>
+                <!--付款方式 选择-->
+                <div class="ec-template-body-area-content">
+                    2．付款方式： 买方选择下面第
+                    <div class="m-select" id="paymenttype">
+                        <i class="iqon-xia"></i>
+                        <select [disabled]="isView" required name="PaymentType" [(ngModel)]="formData.BaseData.PaymentType" #PaymentType="ngModel" [ngClass]="{'m-input-warn':PaymentType.invalid && (PaymentType.touched||isSubmit)}">
+                            <option value="">-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.PaymentType" [ngValue]="item.id">{{item.text}}</option>
+                        </select>
+                    </div>
+                    种付款方式付款。
+                </div>
+                <!--付款方式 （1）-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[0]['id'] || formData.BaseData.PaymentType == ''">
+                    （1）本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_Ticket_EffectiveDay" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_Ticket_EffectiveDay" #PayTypeTicketEffectiveDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[0]['id'] && !formData.BaseData.PayType_Ticket_EffectiveDay && (PayTypeTicketEffectiveDay.touched||isSubmit)}">日内，买方交付给卖方一张自本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_Ticket_Day" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_Ticket_Day" #PayTypeTicketDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[0]['id'] && !formData.BaseData.PayType_Ticket_Day && (PayTypeTicketDay.touched||isSubmit)}">日的
+                    <div class="m-select">
+                        <i class="iqon-xia"></i>
+                        <select [disabled]="isView" name="PayType_Ticket_TypeID" (ngModelChange)="onPayType($event)" [(ngModel)]="formData.BaseData.PayType_Ticket_TypeID" #PayTypeTicketType="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[0]['id'] && !formData.BaseData.PayType_Ticket_TypeID && (PayTypeTicketType.touched||isSubmit)}">
+                            <option value=null>-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.TicketTypeList" [ngValue]="item.TT_ID">{{item.TT_Name}}</option>
+                        </select>
+                    </div>
+                    用于支付本合同项下的全部款项（以款到卖方账户为准），
+                    <div class="m-select">
+                        <i class="iqon-xia"></i>
+                        <select disabled name="PayType_Ticket_TypeID1" [(ngModel)]="formData.BaseData.PayType_Ticket_TypeID">
+                            <option value=null>-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.TicketTypeList" [ngValue]="item.TT_ID">{{item.TT_Name}}</option>
+                        </select>
+                    </div>金额：
+                    <input type="text" class="contract-total-money" placeholder="-合同金额" name="TicketTotalMoney" [(ngModel)]="formData.BaseData.TotalMoney" readonly>元（大写：
+                    <input type="text" class="contract-total-money-uppercase" placeholder="-合同金额大写" name="TicketTotalMoneyUpper" [(ngModel)]="formData.BaseData.TotalMoneyUpper" readonly>）。同时，买方保证自本合同生效之日起
+                    <input type="text" class="contract-paytype-percent" name="PayType_Ticket_Day" [(ngModel)]="formData.BaseData.PayType_Ticket_Day" readonly>日内付清合同款项。
+                </div>
+                <!--付款方式 （2）-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[1]['id'] || formData.BaseData.PaymentType == ''">
+                    （2）买方于本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_Transfer_Day" [readonly]="isView" #PayTypeTransferDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[1]['id'] && !formData.BaseData.PayType_Transfer_Day && (PayTypeTransferDay.touched||isSubmit)}" [(ngModel)]="formData.BaseData.PayType_Transfer_Day">日内付清合同款项。
+                </div>
+                <!--付款方式 （3）-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[2]['id'] || formData.BaseData.PaymentType == ''">
+                    （3）本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_OP_SigDay" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_OP_SigDay" #PayTypeOPSigDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[2]['id'] && !formData.BaseData.PayType_OP_SigDay && (PayTypeOPSigDay.touched||isSubmit)}">日内，买方向卖方支付合同总价款
+                    <input type="text" class="contract-paytype-percent" name="PayType_OP_Ratio" [(ngModel)]="formData.BaseData.PayType_OP_Ratio" [readonly]="isView" (blur)="onBlurOPRatio()">％（
+                    <input type="text" class="contract-total-money" name="PayType_OP_Money" [(ngModel)]="formData.BaseData.PayType_OP_Money" [readonly]="formData.BaseData.PayType_OP_Ratio || isView">元）作为预付款，剩余合同款项在交付（开通）服务或服务起始之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_OP_Day" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_OP_Day" #PayTypeOPDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[2]['id'] && !formData.BaseData.PayType_OP_SigDay && (PayTypeOPDay.touched||isSubmit)}">日内全部付清。
+                </div>
+                <!--付款方式 （4）-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[3]['id'] || formData.BaseData.PaymentType == ''">
+                    （4）本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_PP_EffectiveDay" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_PP_EffectiveDay" #PayTypePPEffectiveDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[3]['id'] && !formData.BaseData.PayType_PP_EffectiveDay && (PayTypePPEffectiveDay.touched||isSubmit)}">日内，买方向卖方支付合同总价款
+                    <input type="text" class="contract-paytype-percent" name="PayType_PP_Ratio" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_PP_Ratio" (blur)="onBlurPPRatio()">％（
+                    <input type="text" class="contract-total-money" name="PayType_PP_Money" [(ngModel)]="formData.BaseData.PayType_PP_Money" [readonly]="formData.BaseData.PayType_PP_Ratio">元）作为预付款，在服务交付（开通）前，买方交付给卖方一张自本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_PP_Day" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_PP_Day" #PayTypePPDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[3]['id'] && !formData.BaseData.PayType_PP_Day && (PayTypePPDay.touched||isSubmit)}">日的
+                    <div class="m-select">
+                        <i class="iqon-xia"></i>
+                        <select [disabled]="isView" name="PayType_PP_TicketID" (ngModelChange)="onPayType($event)" [(ngModel)]="formData.BaseData.PayType_PP_TicketID" #PayTypePPTicketID="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[3]['id'] && !formData.BaseData.PayType_PP_TicketID && (PayTypePPTicketID.touched||isSubmit)}">
+                            <option value=null>-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.TicketTypeList" [ngValue]="item.TT_ID">{{item.TT_Name}}</option>
+                        </select>
+                    </div>用于支付本合同项下的剩余款项（以款到卖方账户为准），
+                    <div class="m-select">
+                        <i class="iqon-xia"></i>
+                        <select disabled name="PayType_PP_TicketID1" [(ngModel)]="formData.BaseData.PayType_PP_TicketID">
+                            <option value=null>-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.TicketTypeList" [ngValue]="item.TT_ID">{{item.TT_Name}}</option>
+                        </select>
+                    </div>金额：
+                    <input type="text" class="contract-total-money" placeholder="-合同金额" name="payTypePPTotalMoney" [(ngModel)]="payTypePPTotalMoney" readonly>元（大写：
+                    <input type="text" class="contract-total-money-uppercase" placeholder="-合同金额大写" name="payTypePPTotalMoneyUppercase" [(ngModel)]="payTypePPTotalMoneyUppercase" readonly>）。同时，买方保证自本合同生效之日起
+                    <input type="text" class="contract-paytype-percent" name="PayType_PP_Day1" [(ngModel)]="formData.BaseData.PayType_PP_Day" readonly>日内付清合同款项。
+                </div>
+                <!--付款方式 （5）-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[4]['id'] || formData.BaseData.PaymentType == ''">
+                    （5）买方于本合同生效之日起
+                    <input type="text" largest-three-integer class="contract-paytype-percent" name="PayType_Full_Day" [readonly]="isView" [(ngModel)]="formData.BaseData.PayType_Full_Day" #PayTypeFullDay="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[4]['id'] && !formData.BaseData.PayType_Full_Day && (PayTypeFullDay.touched||isSubmit)}">日内向卖方支付合同款项，卖方在收到买方全部款项后向买方（或买方指定的最终用户）交付（开通）或提供服务。
+                </div>
+                <!--付款方式 （6） 条款-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[5]['id'] || formData.BaseData.PaymentType == ''">
+                    （6）本合同生效后, 买方向卖方按以下付款方式分期付款,卖方分期向买方提供增值税服务
+                    <div class="m-select">
+                        <i class="iqon-xia"></i>
+                        <select [disabled]="isView" name="PayType_OP2_TicketID" (ngModelChange)="onPayType($event)" [(ngModel)]="formData.BaseData.PayType_OP2_TicketID" #PayTypeOP2TicketID="ngModel" [ngClass]="{'m-input-warn': formData.BaseData.PaymentType == selectDataSource?.PaymentType[5]['id'] && !formData.BaseData.PayType_OP2_TicketID && (PayTypeOP2TicketID.touched||isSubmit)}">
+                            <option value=null>-请选择</option>
+                            <option *ngFor="let item of selectDataSource?.TicketTypeList" [ngValue]="item.TT_ID">{{item.TT_Name}}</option>
+                        </select>
+                    </div>发票。
+                </div>
+                <!--付款方式 （6） 付款方式分期-->
+                <div class="ec-template-body-area-content" *ngIf="formData.BaseData.PaymentType == selectDataSource?.PaymentType[5]['id'] || formData.BaseData.PaymentType == ''">
+                    <db-paymentdetail [isEdit]="!isView" [validRequired]="formData.BaseData.PaymentType == selectDataSource?.PaymentType[5]['id']" [paymentDetails]="formData.PaymentDetails"></db-paymentdetail>
+                </div>
+            </div>
+            <!--六、验收与异议-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">六、验收与异议</div>
+                <div class="ec-template-body-area-content">
+                    <div class="text-indent2em">
+                        （1）双方同意：自本合同约定的服务起始之日，由原厂商直接向最终用户交付（开通）服务。原厂商直接向最终用户交付（开通）服务的行为，视为卖方向买方交付（开通）服务的行为。
+                    </div>
+                    <div class="text-indent2em">
+                        （2）鉴于本合同约定的是原厂商提供的服务，买方确认：原厂商交付（开通）服务即视为卖方完全履行本合同约定义务；即使买方（或买方指定最终用户）在本合同服务期限内未知晓服务的存在或未真实享受服务均视为买方（或买方指定最终用户）放弃享受服务的权利；买方承诺不论何种情况均按照本合同第四条约定支付合同款项。
+                    </div>
+                    <div class="text-indent2em">
+                        （3）如买方（或买方指定最终用户）对原厂商交付（开通）的服务有异议的，买方应在本合同约定的原厂商交付（开通）服务之日起 3 日内，以书面形式向卖方提出；若无异议，买方确认在原厂商交付（开通）服务之日起 3 日内向卖方出具《服务确认函》。买方逾期未提出书面异议或未出具《服务确认函》的，均视为卖方交付的服务符合合同约定，买方已验收合格。
+                    </div>
+                </div>
+            </div>
+            <!--七、违约责任-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">七、违约责任</div>
+                <div class="ec-template-body-area-content">
+                    <div class="text-indent2em">
+                        1．买方逾期付款的，自逾期之日起30日（不含30日）内，每日须按逾期支付款项金额千分之一的标准向卖方支付违约金。买方逾期30日仍未付清合同款项的，买方除需向卖方支付本合同总金额的20%作为违约金外还应赔偿卖方因此产生的全部损失，同时，卖方保留解除本合同的权利。
+                    </div>
+                    <div class="text-indent2em">
+                        2．若因买方提供的最终用户信息不准确而引起的任何法律纠纷和由此导致的任何赔偿责任，由买方自行承担，买方仍须按照本合同约定履行付款义务。
+                    </div>
+                    <div class="text-indent2em">
+                        3．卖方逾期交付（开通）或提供服务的，每日按逾期交付（开通）服务金额千分之一的标准向买方支付违约金，但卖方所支付的违约金不超过逾期交付金额的10%。
+                    </div>
+                    <div class="text-indent2em">
+                        4．买方未能按照本合同约定履行付款义务，卖方提请司法机关处理的，买方承诺承担卖方因此而产生的所有律师委托代理费用和其他实现债权的费用。
+                    </div>
+                    <div class="text-indent2em">
+                        5. 如因厂商原因，致使卖方无法按本合同约定向买方提供服务的，视为本合同目的不能实现；本合同解除后，卖方退还买方已支付款项，且不承担任何责任。
+                    </div>
+                    <div class="text-indent2em">
+                        若本合同发生原厂商审计的情形，买方需对其提供的配合资料及文件负责，如因买方提供的资料及文件不真实或不符合原厂商审计要求导致卖方被拒绝下单、延期下单、原厂商处罚等情况致使卖方备货延期、不能下单成功或遭受损失的，买方同意卖方不承担违约责任；且由此产生的任何赔偿责任均由买方承担，赔偿责任包括但不限于：最终用户索赔、原厂商审计处罚卖方等。
+                    </div>
+                    <div class="text-indent2em">
+                        7. 若因原厂商的原因致使卖方逾期交付（开通）服务的，买方同意卖方不承担违约责任。
+                    </div>
+                    <div class="text-indent2em">
+                        8. 由于买方依据本合同向原厂商定购的服务是卖方专为买方而准备的，非因卖方原因买方拒绝接受符合合同约定的原厂商服务（包括买方中途退订服务），视为买方单方违约，买方除应向卖方支付其拒绝接受部分（或中途退订服务部分）服务的全部价款外，还应承担本合同总金额的20%作为违约金并赔偿卖方因此产生的损失。买方已交付预付款的，预付款不予退还。
+                    </div>
+                    <div class="text-indent2em">
+                        9. 由于原厂的销售政策不允许压单（压单：指在服务使用的最终用户还没有签署正式采购类合同文件前，买方向卖方签订采购类合同文件的情况），因此买方和卖方签订本合同时，买方承诺本合同中向卖方所定购服务的最终用户已经与买方签订了正式的采购类合同文件购买本合同约定之服务，否则买方应承担因此给卖方带来的损失及引发的一切赔偿责任。
+                    </div>
+                    <div class="text-indent2em">
+                        10. 买方逾期付款的，卖方有权拒绝向买方（或买方指定的最终用户）交付（开通）服务或暂停服务，直至买方付清服务款项后方可交付（开通）服务或恢复服务。暂停服务或逾期交付（开通）服务造成的期限缺失不予顺延和补充，同时卖方不承担任何违约责任。
+                    </div>
+                </div>
+            </div>
+            <!--八、保密-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">八、保密</div>
+                <div class="ec-template-body-area-content text-indent2em">
+                    双方对本合同以及在本合同签订、履行过程中知悉的对方资料和信息，除该方作出相反的书面说明外，均应视为该方的商业秘密，未经该方书面同意不得向任何第三方泄露。任何一方因违反保密义务而给另一方造成损失的应负相应的赔偿责任。无论本合同是否解除或终止，本条款持续有效。
+                </div>
+            </div>
+            <!--九、不可抗力-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">九、不可抗力</div>
+                <div class="ec-template-body-area-content">
+                    <div class="text-indent2em">
+                        1．本合同中，不可抗力是指不能预见、不能避免并不能克服的客观情况，包括：战争、火灾、洪水、台风、地震、政策变化或其它人力不可抗拒之事件。不可抗力因素可能出现在服务开通、交付或提供过程中，出现上述不可抗力后，卖方立即通知买方。
+                    </div>
+                    <div class="text-indent2em">
+                        2．卖方因不可抗力造成服务逾期开通、交付或提供的，卖方不承担任何责任。
+                    </div>
+                    <div class="text-indent2em">
+                        3．双方的任何一方由于不可抗力的原因不能履行合同时，应及时通知对方，并应在上述事件消除后15日内提供有关主管部门的证明。
+                    </div>
+                </div>
+            </div>
+            <!--十、争议解决方式-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">十、争议解决方式</div>
+                <div class="ec-template-body-area-content">
+                    <div class="text-indent2em">
+                        1.本合同的成立、履行、解释，以及因本合同产生或与本合同相关的争议的解决等事项均适用中华人民共和国内地法律。
+                    </div>
+                    <div class="text-indent2em">
+                        2.争议解决方式。
+                    </div>
+                    <div class="text-indent2em">
+                        <input icheck type="radio" id="DisputeDealtType1" name="DisputeDealtType" [disabled]="!isRisk" [(ngModel)]="formData.BaseData.DisputeDealtType" value="01">
+                        （1）因本合同、《框架合作协议》的签署、解释、履行产生争议时，双方应先协商解决；协商不成时，任意一方均可向卖方住所地有管辖权的人民法院提起诉讼。
+                    </div>
+                    <div class="text-indent2em">
+                        <input icheck type="radio" id="DisputeDealtType2" name="DisputeDealtType" [disabled]="!isRisk" [(ngModel)]="formData.BaseData.DisputeDealtType" value="001">
+                        （1）因本合同、《框架合作协议》的签署、解释、履行产生争议时，双方应先协商解决；协商不成时，任意一方均可向合同签订地有管辖权的人民法院提起诉讼本合同签订地为：
+                    </div>
+                    <div class="area-content-disputedealtype">
+                        <div class="area-content-disputedealtype-city">
+                            <select-search-city class="select-search-custom" name="disputedealtcity" [disabled]="!isRisk" [(ngModel)]="selectedCityItem" [optionList]="selectDataSource?.city" (onSelecte)="onSelecteCity(selectedCityItem)"></select-search-city>市
+                        </div>
+                        <div class="area-content-disputedealtype-district">
+                            <select-search-district class="select-search-custom" name="disputedealtdistrict" [disabled]="!isRisk" [(ngModel)]="selectedDistrictItem" [optionList]="selectDataSource?.searchResultByCityCodeDistrict" (onSelecte)="onSelecteProvince(selectedDistrictItem)"></select-search-district>区（县）。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--十一、合同效力、变更-->
+            <div class="ec-template-body-area">
+                <div class="ec-template-body-area-title">十一、合同效力、变更</div>
+                <div class="ec-template-body-area-content">
+                    <div class="text-indent2em">
+                        1. 本合同自双方加盖公章或合同专用章之日起生效。
+                    </div>
+                    <div class="text-indent2em">
+                        2. 本合同一式4份，双方各执2份，具有同等法律效力。本合同传真件有效。
+                    </div>
+                    <div class="text-indent2em">
+                        3．本合同系双方当事人反复讨论协商一致的结果，各方充分理解合同内容，意思表示真实、有效。本合同不属于任何一方提供的制式文本，所有条款不属于格式条款，即使存在或可能被认定为一方的制式文本或格式条款的情形，另一方在此声明放弃以此抗辩的权利。
+                    </div>
+                    <div class="text-indent2em">
+                        4．本合同生效后，买卖双方均不得随意变更或解除合同。
+                    </div>
+                    <div class="text-indent2em">
+                        5．特别约定：
+                    </div>
+                    <div class="text-indent2em">
+                        （1）本合同及其附件构成双方之间就本合同项下之合作所达成的全部意思表示，并替代双方以前或执行本合同过程中所做的任何口头交流、电子邮件或声明。
+                    </div>
+                    <div class="text-indent2em">
+                        （2）如果卖方在合同签订后发现买方或买方的关联公司对卖方或卖方的关联公司有超期欠款的，卖方可中止（或终止）履行本合同。
+                    </div>
+                </div>
+            </div>
+            <!--合同底部 买方 卖方信息-->
+            <div class="ec-template-body-area">
+                <div class="contract-buyerinfo-sellerinfo">
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">卖方：</div>
+                            <div class="info-item-seller-content">{{ formData.BaseData.SellerName }}</div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">买方：</div>
+                            <div class="info-item-buyer-content">{{ formData.BaseData.BuyerName }}</div>
+                        </div>
+                    </div>
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">地址：</div>
+                            <div class="info-item-seller-content">{{ formData.BaseData.SellerAddress }}</div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">地址：</div>
+                            <div class="info-item-buyer-content">
+                                <input type="text" class="info-item-text" required placeholder="-买方地址" name="BuyerAddress" [readonly]="isView" [(ngModel)]="formData.BaseData.BuyerAddress" #BuyerAddress="ngModel" [ngClass]="{'m-input-warn':BuyerAddress.invalid && (BuyerAddress.touched||isSubmit)}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">电话：</div>
+                            <div class="info-item-seller-content">
+                                <input type="text" class="info-item-text" required placeholder="-卖方电话" name="SellerTelephone" [readonly]="isView" [(ngModel)]="formData.BaseData.SellerTelephone" #SellerTelephone="ngModel" [ngClass]="{'m-input-warn':SellerTelephone.invalid && (SellerTelephone.touched||isSubmit)}">
+                            </div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">电话：</div>
+                            <div class="info-item-buyer-content">
+                                <input type="text" class="info-item-text" required placeholder="-买方电话" name="BuyerTelephone" [readonly]="isView" [(ngModel)]="formData.BaseData.BuyerTelephone" #BuyerTelephone="ngModel" [ngClass]="{'m-input-warn':BuyerTelephone.invalid && (BuyerTelephone.touched||isSubmit)}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">开户银行：</div>
+                            <div class="info-item-seller-content">{{ formData.BaseData.SellerBankName }}</div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">开户银行：</div>
+                            <div class="info-item-buyer-content">
+                                <input type="text" class="info-item-text" required placeholder="-买方开户银行" name="BuyerBankName" [readonly]="isView" [(ngModel)]="formData.BaseData.BuyerBankName" #BuyerBankName="ngModel" [ngClass]="{'m-input-warn':BuyerBankName.invalid && (BuyerBankName.touched||isSubmit)}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">账号：</div>
+                            <div class="info-item-seller-content">{{ formData.BaseData.SellerBankNo }}</div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">账号：</div>
+                            <div class="info-item-buyer-content">
+                                <input type="text" class="info-item-text" required placeholder="-买方账号" name="BuyerBankNo" [readonly]="isView" [(ngModel)]="formData.BaseData.BuyerBankNo" #BuyerBankNo="ngModel" [ngClass]="{'m-input-warn':BuyerBankNo.invalid && (BuyerBankNo.touched||isSubmit)}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item clearfix">
+                        <div class="info-item-seller clearfix">
+                            <div class="info-item-seller-title">日期：</div>
+                            <div class="info-item-seller-content" [ngClass]="{'m-select-warn':!formData.BaseData.ContractTime && isSubmit}">
+                                <my-datepicker PlaceHolder="-请选择日期" name="ContractTime" [isDisabled]="isView" [(ngModel)]="formData.BaseData.ContractTime" (ngModelChange)="onContractTimeChange()"></my-datepicker>
+                            </div>
+                        </div>
+                        <div class="info-item-buyer clearfix">
+                            <div class="info-item-buyer-title">日期：</div>
+                            <div class="info-item-buyer-content">{{ formData.BaseData.ContractTime }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--合同底部 附件信息-->
+            <div class="ec-template-body-area body-area-file clearfix">
+                <div class="body-area-file-title">上传附件:</div>
+                <div class="body-area-file-content" *ngIf="!isView">
+                    <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles" text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+                </div>
+                <div class="body-area-file-content" *ngIf="isView">
+                    <ul>
+                        <li class="file-content-main-accessory file-content-item" *ngFor="let item of formData.Accessories"><a (click)="downLoadFile(item.AccessoryURL)">{{ item.AccessoryName }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="ec-template-footer">
+        <button *ngIf="isRisk" class="m-btn-assist-1" (click) = "onSave('risksave')">保存</button>
+        <button *ngIf="isView" class="m-btn-more-big" (click) = "onBack()">返回</button>
+        <button *ngIf="!isView" class="m-btn-prev" (click) = "onPrev()">上一步</button>
+        <button *ngIf="!isView" class="m-btn-next" (click) = "onNext()">下一步</button>
+        <button *ngIf="!isView" class="m-btn-more-big" (click) = "onSave('save')">暂存</button>
+        <button *ngIf="!isView" class="m-btn-more-big" (click) = "onPreview()">预览</button>
+        <button *ngIf="!isView" class="m-btn-more-big" (click) = "onSaveTemplate()">保存模板</button>
+    </div>
+</div>

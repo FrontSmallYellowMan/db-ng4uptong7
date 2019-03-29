@@ -1,0 +1,150 @@
+<loading [show]="loading"></loading>
+<div class="rp-list">
+  <div class="rp-list-search clearfix">
+    <div class="search-item">
+      <div class="search-title"><label>我方法人体:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.ContractSubject">
+            <option value="">-请选择法人体</option>
+            <option *ngFor="let item of companyData" [ngValue]="item.companycode">{{item.company}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>客户名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入客户名称\编号" [(ngModel)]="query.KH">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同编号:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入合同编号" [(ngModel)]="query.ContractCode">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>还款日期:</label></div>
+      <div class="search-input">
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择开始日期" [(ngModel)]="query.StartTime" [EndDate]="query.EndTime"></my-datepicker>
+        </div>
+        <div class="inputs-date inputs-date-line">~</div>
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择结束日期" [(ngModel)]="query.EndTime" [StartDate]="query.StartTime"></my-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>平台:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.SSPT">
+            <option value="">-请选择平台</option>
+            <option *ngFor="let item of platformData" [ngValue]="item.FlatName">{{item.FlatName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>销售员:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入销售员\ItCode" [(ngModel)]="query.ZWMC">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>欠款类型:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="all" name="Type" [(ngModel)]="query.Type" value="0"><label for="all">全部欠款</label>
+        <input icheck type="radio" id="warn" name="Type" [(ngModel)]="query.Type" value="1"><label for="warn">预警欠款</label>
+        <input icheck type="radio" id="out" name="Type" [(ngModel)]="query.Type" value="2"><label for="out">超期欠款</label>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>欠款金额:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="normal" name="CQJE" [(ngModel)]="query.CQJE" value="0"><label for="normal">不限</label>
+        <input icheck type="radio" id="1hd" name="CQJE" [(ngModel)]="query.CQJE" value="1"><label for="1hd">100万以下</label>
+        <input icheck type="radio" id="13b" name="CQJE" [(ngModel)]="query.CQJE" value="2"><label for="13b">100万-300万</label>
+        <input icheck type="radio" id="3u" name="CQJE" [(ngModel)]="query.CQJE" value="3"><label for="3u">大于300万</label>
+      </div>
+    </div>
+  </div>
+  <div class="rp-list-content" style="top: 200px;">
+    <div class="search-button clearfix">
+      <div class="list-statistics-info">
+        <div class="list-statistics-info-title">欠款清单</div>
+        <div class="list-statistics-info-content">您有欠款{{listData?.totalCount}}，总金额{{listData?.AllCQMoney}}元，其中超期欠款<span>{{listData?.SumCQCount}}</span>笔，合计{{listData?.SumCQMoney}}元，请尽快跟进还款进度并完成还款!</div>
+      </div>
+      <div class="list-search-button">
+        <button (click)="search(query)">查询</button>
+        <button (click)="reset()">重置</button>
+        <button (click)="importResultData(query)">导出查询结果</button>
+        <button (click)="pressDebt()">催办选中的欠款</button>
+      </div>
+    </div>
+    <div class="rp-list-content-table" *ngIf="listData?.arrearlist.length > 0">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th style="width: 40px;">
+              <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)">
+            </th>
+            <th style="width: 130px;">合同编号</th>
+            <th style="width: 100px;">客户名称</th>
+            <th style="width: 100px;">我方法人体</th>
+            <th style="width: 50px;">本部</th>
+            <th style="width: 90px;">事业部</th>
+            <th style="width: 60px;">销售员</th>
+            <th style="width: 50px;">平台</th>
+            <th style="width: 70px;">欠款金额</th>
+            <th style="width: 80px;" (click)="sortCurrentTableData()">还款日期<i class="iqon-order"></i></th>
+            <th style="width: 50px;">超期天数</th>
+            <th style="width: 40px;">坏账</th>
+            <th style="width: 50px;">跟进次数</th>
+            <th style="width: 50px;">是否催办</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData?.arrearlist; index as i;">
+            <td>
+              <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked" (ngModelChange)="onCheckedChange(item)" [name]="'checkbox'+i">
+            </td>
+            <td>{{ item.ContractCode }}</td>
+            <td [title]="item.KHMC" style="white-space: normal;">{{ item.KHMC }}</td>
+            <td [title]="item.GSName" style="white-space: normal;">{{ item.GSName }}</td>
+            <td [title]="item.SYBMC" style="white-space: normal;">{{ item.SYBMC }}</td>
+            <td [title]="item.YWFL" style="white-space: normal;">{{ item.YWFL }}</td>
+            <td>{{ item.ZWMC }}</td>
+            <td>{{ item.SSPT }}</td>
+            <td>{{ item.QKJE }}</td>
+            <td>{{ item.CREDITDATE }}</td>
+            <td [class.colred]="item.CQTS > 0">{{ item.CQTS }}</td>
+            <td [title]="item.HZZBJ">{{ item.HZZBJ }}</td>
+            <td class="operate">
+              <span *ngIf="item.FUCount > 0" (click)="routerFollowup('/receivepayment/followup',item)">{{ item.FUCount }}</span>
+              <span *ngIf="item.FUCount == 0" (click)="routerFollowup('/receivepayment/followup',item)">0</span>
+            </td>
+            <td>
+              <span *ngIf="item.CBBS && item.CBBS != '0'">是</span>
+              <span *ngIf="!item.CBBS || item.CBBS== null || item.CBBS== '0'">否</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="search(query)"></iq-pager>
+    </div>
+    <div class="rp-list-content-null" *ngIf="!listData || listData?.arrearlist.length == 0">
+      <div class="m-noresult" style="margin-top:10px">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">输入新的查询条件试试吧~</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

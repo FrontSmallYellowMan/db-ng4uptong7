@@ -1,0 +1,90 @@
+<loading [show]="loading"></loading>
+<div class="editSupplierExtendClass-tips">
+  
+  <!-- 扩展 -->
+  <div class="m-supplier-extend" *ngIf="isShow==='extend'">
+    <div class="m-supplier-title">
+      <h5>扩展</h5>
+      <i class="iqon-close" (click)="cancel()"></i>
+    </div>
+
+    <div class="extendComponyTitle">
+      <h4>欲扩展公司</h4>
+      <span *ngIf="!companyTitle&&isSubmit" style="color:red;padding: 18px 0 0;">请选择供应商</span>
+    </div>
+    
+    <div class="m-supplier-select">    
+      <!-- <ng-select class="addApp-form-input m-select-box" required name="taxrate" ngModel [items]="selectInfo.taxrate" placeholder="请选择"
+      (selected)="getTaxrate($event)" [(ngModel)]=activeTax [disabled]="TaxrateFlag"></ng-select> -->
+      <iq-select class="iqSelect" required name="Company" ngModel [(ngModel)]="companyTitle" [modalShow]="true" [dataModal]="{item: ['Data','pagedata'],pager:['Data','pager'],title:['Data','title']}"
+      listApi="InitData/GetPageDataCompany" (onSelect)="getCompany($event)" placeHolder="-请选择" [queryParams]="{queryStr:'querycontent'}"></iq-select>
+    </div>
+
+    <div class="m-supplier-button">
+      <button class="m-btn-confirm" (click)="extendSupplier()">确定</button>
+      <button class="m-btn-cancel" (click)="cancel()">取消</button>
+    </div>
+
+  </div>
+
+  <!-- 分类 -->
+  <div class="m-supplier-class" *ngIf="isShow==='class'">
+
+    <div class="m-supplier-title">
+      <h5>分类</h5>
+      <i class="iqon-close" (click)="cancel()"></i>
+    </div>
+
+    <h4>供应商分类</h4>
+    <div class="m-supplier-radio">
+      <input type="radio" icheck name="classnamecode" value="0" [(ngModel)]="classnamecode"><span>核心</span>
+      <input type="radio" icheck name="classnamecode" value="1" [(ngModel)]="classnamecode"><span>非核心</span>
+      <input type="radio" icheck name="classnamecode" value="2" [(ngModel)]="classnamecode"><span>新产品</span>
+      <span style="color:red" *ngIf="!classnamecode&&isSubmit">请选择供应商分类</span>
+    </div>
+
+    <div class="m-BU-title">
+      <h4 style="padding-bottom:0">请选择事业部</h4>
+      <span style="color:red" *ngIf="selectBD.length===0&&isSubmit">请选择事业部</span>
+    </div>
+      
+    <div class="m-supplier-BU-search">
+      <input type="text" placeholder="请搜索本部/事业部" [(ngModel)]="businessUnit.SearchTxt" (keyup.enter)="searchBusinessUnit()">
+      <button class="m-btn-confirm m-supplier-search-btn" (click)="searchBusinessUnit()" >搜索</button>
+    </div>
+    
+    <div class="m-supplier-class-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="wp1">请选择</th>
+            <th class="wp5">本部</th>
+            <th>事业部</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of searchList;index as i">
+            <td>
+              <input icheck type="checkbox" name="" [(ngModel)]="list.checked" (ngModelChange)="getSelectItem(list.checked,i)" >
+            </td>
+            <td>{{list.BBMC}}</td>
+            <td>{{list.SYBMC}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="edit-page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+
+    <div class="m-supplier-button">
+        <button class="m-btn-confirm" (click)="submitSupplierClass()">确定</button>
+        <button class="m-btn-cancel" (click)="cancel()">取消</button>
+      </div>
+
+  </div>
+  
+
+</div>
+

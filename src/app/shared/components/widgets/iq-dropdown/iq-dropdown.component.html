@@ -1,0 +1,16 @@
+<div class="select-search" #selectSearch>
+  <div class="select-modal" (click)="toggle()" [ngStyle]="{'color': selectedItem ? '#4a4a4a' : '#888','background': disabled ? '#eee' : '#fff','cursor': disabled ? 'not-allowed' : 'pointer','border-color': required && !selectedItem ? '#ea6269' : '#e1e3eb'}">
+    {{selectedItem || placeHolder}}
+    <i class="iqon-xia"></i>
+  </div>
+  <div class="search-modal" [ngClass]="{'hide': !optionShow}">
+    <div class="search-wrap" *ngIf="!noSearch">
+      <input [(ngModel)]="keyWord" (keyup)="search(keyWord)" class="m-input" type="text" name="search" placeholder="-请输入搜索条件">
+    </div>
+    <div class="option-wrap">
+      <ul class="option-list">
+        <li *ngFor="let item of optionList;index as i" (click)="chooseItem(item, i)">{{item}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

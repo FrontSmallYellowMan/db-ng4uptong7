@@ -1,0 +1,10 @@
+<div  #datebox class="datepicker-con">
+    <div class="card" (click)="toggleDatePicker()">
+        <pre class="card-block card-header"> <span *ngIf="dt" [ngStyle]="{'color': placeHolder ? '#888' : '#4a4a4a'}">{{placeHolder? placeHolder: dt | iqDate:'YYYY-MM-DD'}}</span></pre>
+    </div>
+    <div class="datepicker" [ngClass]="{'datepicker-hide':!isShow}">
+        <datepicker [(ngModel)]="dt" [minDate]="minDate"
+         [showWeeks]="false" [dateDisabled]="dateDisabled"
+          (selectionDone)="selectOne($event)"></datepicker>
+    </div>
+</div>

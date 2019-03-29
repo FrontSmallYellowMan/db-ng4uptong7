@@ -1,0 +1,869 @@
+<div class="content-auto">
+    <div class="addApply-container" style="padding-top: 62px">
+        <!--标题-->
+        <nav class="nav">{{ name }}</nav>
+        <!--基本信息-->
+        <div
+            *ngIf="borrowApplyFormData.borrowApply.flowStatus != 5"
+            class="m-basic-info"
+        >
+            <h2>基本信息</h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th width="6%">申请人</th>
+                        <td width="38%" class="user">
+                            <!-- 
+                          <div style="float: left;" *ngIf="baseUserIsShow==true">
+                            <span class="m-user-mark"></span>
+                            <span>{{borrowApplyFormData.borrowApply.applyUserName}}</span> 
+                            <span class="m-ft-col">{{borrowApplyFormData.borrowApply.applyItCode}}</span>
+                          </div> -->
+                            <div class="m-user-members" style="float: left;">
+                                <iq-person-select
+                                    list="[]"
+                                    required
+                                    [(ngModel)]="person"
+                                    [max]="1"
+                                    (ngModelChange)="changePerson(person)"
+                                    ngDefaultControl
+                                ></iq-person-select>
+                            </div>
+                            <span class="refer" (click)="openUnClearItems()"
+                                >查询未清项</span
+                            >
+                        </td>
+                        <th width="6%">联系方式</th>
+                        <td width="38%">
+                            <input
+                                class="form-control"
+                                type="text"
+                                style="font-size:12px;"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.applyUserTel
+                                "
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>员工编号</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.applyUserNo }}
+                        </td>
+                        <th>成本中心编号</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.costcenterCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>本部</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.baseDeptName }}
+                        </td>
+                        <th>平台</th>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.platformName
+                                "
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >事业部
+                        </th>
+                        <td>
+                            <select
+                                class="form-control borrowSelect"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.subDeptName
+                                "
+                                required
+                                (change)="borrowsybchange($event)"
+                            >
+                                <option value="">-请选择</option>
+                                <option
+                                    *ngFor="let item of businessDepts"
+                                    [value]="item"
+                                    [selected]="
+                                        item ==
+                                        borrowApplyFormData.borrowApply
+                                            .subDeptName
+                                    "
+                                >
+                                    {{ item }}
+                                </option>
+                            </select>
+                        </td>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >业务范围编号
+                        </th>
+                        <td>
+                            <select
+                                class="form-control borrowSelect"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply
+                                        .businessScope
+                                "
+                                required
+                            >
+                                <option value="">-请选择</option>
+                                <option
+                                    *ngFor="let item of businessScopeDepts"
+                                    [value]="item.businessScopeCode"
+                                    [selected]="
+                                        item.businessScopeCode ===
+                                        borrowApplyFormData.borrowApply
+                                            .businessScope
+                                    "
+                                >
+                                    {{ item.businessScopeCode }}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >工厂
+                        </th>
+                        <td>
+                            <input
+                                type="text"
+                                value=""
+                                class="form-control"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.factory
+                                "
+                                (change)="
+                                    transFacotry(
+                                        borrowApplyFormData.borrowApply
+                                    )
+                                "
+                                maxlength="4"
+                                minlength="4"
+                                required
+                            />
+                        </td>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用属性
+                        </th>
+                        <td>
+                            <!--<select class="form-control borrowSelect" #borrowAttributeCode [(ngModel)]="borrowApplyFormData.borrowApply.borrowAttributeCode" ng-options="item.code as item.name for item in borrowAttrOpts"  (ngModelChange)="borrowAttrChange($event)" required >-->
+                            <select
+                                class="form-control borrowSelect"
+                                #borrowAttributeCode
+                                (change)="borrowAttrChange($event)"
+                                required
+                                >-->
+                                <option value="undefined">-请选择</option>
+                                <option
+                                    *ngFor="let item of borrowAttrOpts"
+                                    [value]="item.code"
+                                    [selected]="
+                                        item.code ==
+                                        borrowApplyFormData.borrowApply
+                                            .borrowAttributeCode +
+                                            '_' +
+                                            item.name
+                                    "
+                                    >{{ item.name }}</option
+                                >
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用类型
+                        </th>
+                        <td>
+                            <select
+                                class="form-control borrowSelect"
+                                (change)="borrowTypeChange($event)"
+                                required
+                            >
+                                <option value="undefined">-请选择</option>
+                                <option
+                                    *ngFor="let item1 of borrowTypeOpts"
+                                    [value]="item1.code"
+                                    [selected]="
+                                        item1.code ==
+                                        borrowApplyFormData.borrowApply
+                                            .borrowTypeCode +
+                                            '_' +
+                                            item1.name
+                                    "
+                                    >{{ item1.name }}</option
+                                >
+                            </select>
+                            <!--<ng-select class="" [items]="borrowTypeOpts" placeholder="请选择"></ng-select>-->
+                        </td>
+                        <th>项目名称</th>
+                        <td>
+                            <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.projectName
+                                "
+                                maxlength="40"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用客户名称
+                        </th>
+                        <td>
+                            <input
+                                type="text"
+                                value=""
+                                class="form-control"
+                                (change)="changeBorrowCustomer($event)"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply
+                                        .borrowCustomerName
+                                "
+                            />
+                        </td>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用日期
+                        </th>
+                        <td class="days">
+                            <!--<input type="text" value="">-->
+                            <my-datepicker
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.borrowDate
+                                "
+                                [StartDate]="checkBorrowDate"
+                                (ngModelChange)="dataChange('start')"
+                                PlaceHolder="-请选择日期"
+                            ></my-datepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用天数
+                        </th>
+                        <td class="days">
+                            <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply
+                                        .borrowDayCount
+                                "
+                                (ngModelChange)="dataChange('days')"
+                            />
+                            <span>天</span>
+                        </td>
+                        <th>预计归还日期</th>
+                        <td class="days">
+                            <!--<iq-datepicker placeHolder="请选择日期" [(ngModel)]="borrowApplyFormData.borrowApply.giveBackDay" (onChange) = "getDate($event,borrowApplyFormData.borrowApply.giveBackDay)" (onClose)="getDate($event,borrowApplyFormData.borrowApply.giveBackDay)"  closeOnSelect="true"></iq-datepicker>-->
+                            <my-datepicker
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.giveBackDay
+                                "
+                                (ngModelChange)="dataChange('end')"
+                                (onChange)="
+                                    getDate(
+                                        $event,
+                                        borrowApplyFormData.borrowApply
+                                            .giveBackDay
+                                    )
+                                "
+                                PlaceHolder="-请选择日期"
+                                name="giveBackDay"
+                                [disabled]="true"
+                            ></my-datepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >交货方式
+                        </th>
+                        <td>
+                            <div class="ui-select-match">
+                                <select
+                                    class="form-control borrowSelect"
+                                    (change)="deliveryTypeChange($event)"
+                                    required
+                                >
+                                    <option value="undefined">-请选择</option>
+                                    <option
+                                        *ngFor="let item1 of deliveryTypeOpts"
+                                        [value]="item1.code"
+                                        [selected]="
+                                            item1.code ==
+                                            borrowApplyFormData.borrowApply
+                                                .deliveryType +
+                                                '_' +
+                                                item1.name
+                                        "
+                                        >{{ item1.name }}</option
+                                    >
+                                </select>
+                            </div>
+                        </td>
+                        <th *ngIf="canOperatingBorrow == true">经营性借用</th>
+                        <td *ngIf="canOperatingBorrow == true" class="flex">
+                            <p>
+                                <input
+                                    icheck
+                                    name="stock"
+                                    [(ngModel)]="
+                                        borrowApplyFormData.borrowApply
+                                            .operatingBorrow
+                                    "
+                                    type="radio"
+                                    value="1"
+                                    class="ng-untouched ng-pristine ng-valid"
+                                /><label>是</label>
+                            </p>
+                            <p>
+                                <input
+                                    icheck
+                                    name="stock"
+                                    type="radio"
+                                    [(ngModel)]="
+                                        borrowApplyFormData.borrowApply
+                                            .operatingBorrow
+                                    "
+                                    value="0"
+                                    class="ng-untouched ng-pristine ng-valid ng-no"
+                                /><label>否</label>
+                            </p>
+                        </td>
+                        <!--<td *ngIf="canOperatingBorrow==false" class="flex">
+                      <p><input icheck name="stock" type="radio" [(ngModel)]="borrowApplyFormData.borrowApply.operatingBorrow"  value="0" class="ng-untouched ng-pristine ng-valid ng-no"><label>否</label></p>
+                    </td>-->
+                    </tr>
+                    <tr>
+                        <th>借用说明</th>
+                        <td>
+                            <textarea
+                                class="form-control"
+                                rows="2"
+                                [(ngModel)]="
+                                    borrowApplyFormData.borrowApply.borrowMemo
+                                "
+                                maxlength="140"
+                            ></textarea>
+                            <!-- <input type="text" class="borrowSelect" class="form-control" [(ngModel)]="borrowApplyFormData.borrowApply.borrowMemo" maxlength=140> -->
+                        </td>
+                        <ng-container *ngIf="saleRole == true">
+                            <th>借用总金额</th>
+                            <td>
+                                {{
+                                    borrowApplyFormData.borrowApply
+                                        .borrowTotalAmount
+                                }}元
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >借用依据
+                        </th>
+                        <td>
+                            <borrow-file
+                                style="padding:6px"
+                                (upflie)="attachmentList($event)"
+                                [accessoryExamine]="borrowAttachmentList"
+                                style="width:100%;"
+                            ></borrow-file>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div
+            class="m-basic-info"
+            *ngIf="borrowApplyFormData.borrowApply.flowStatus == 5"
+        >
+            <h2>基本信息<i class="iqon-fold"></i></h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th width="6%">申请人</th>
+                        <td width="38%">
+                            <span class="m-user-mark">{{
+                                borrowApplyFormData.borrowApply.applyItCode
+                            }}</span>
+                            <span>{{
+                                borrowApplyFormData.borrowApply.applyUserName
+                            }}</span>
+                            <span class="m-ft-col">{{
+                                borrowApplyFormData.borrowApply.applyItCode
+                            }}</span>
+                        </td>
+                        <th width="6%">代办人</th>
+                        <td width="38%">
+                            <!--<span class="m-user-mark1">春艳</span>
+                            <span>卢春燕</span>
+                            <span class="m-ft-col">caihl</span>-->
+                            <div class="m-user-info-small">
+                                <div
+                                    class="m-user-info"
+                                    user-image
+                                    [hasClose]="false"
+                                    [user]="createUserInfo"
+                                ></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>申请时间</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply.applyDate
+                                    | iqDate: "YYYY-MM-DD"
+                            }}
+                        </td>
+                        <th>联系方式</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.applyUserTel }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>员工编号</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.applyUserNo }}
+                        </td>
+                        <th>成本中心编号</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.costcenterCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>本部</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.baseDeptName }}
+                        </td>
+                        <th>平台</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.platformName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>事业部</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.subDeptName }}
+                        </td>
+                        <th>业务范围编号</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.businessScope }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>工厂</th>
+                        <td>{{ borrowApplyFormData.borrowApply.factory }}</td>
+                        <th>借用属性</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply
+                                    .borrowAttributeName
+                            }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>借用类型</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.borrowTypeName }}
+                        </td>
+                        <th>项目名称</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.projectName }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>借用客户名称</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply
+                                    .borrowCustomerName
+                            }}
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>借用日期</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply.borrowDate
+                                    | iqDate: "YYYY-MM-DD"
+                            }}
+                        </td>
+                        <th>借用天数</th>
+                        <td>
+                            {{ borrowApplyFormData.borrowApply.borrowDayCount }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>预计归还日期</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply.giveBackDay
+                                    | iqDate: "YYYY-MM-DD"
+                            }}
+                        </td>
+                        <th>交货方式</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply.deliveryTypeName
+                            }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>经营性借用</th>
+                        <td>
+                            {{
+                                borrowApplyFormData.borrowApply
+                                    .operatingBorrow == 0
+                                    ? "否"
+                                    : "是"
+                            }}
+                        </td>
+                        <ng-container *ngIf="saleRole == true">
+                            <th>借用总金额</th>
+                            <td>
+                                {{
+                                    borrowApplyFormData.borrowApply
+                                        .borrowTotalAmount
+                                }}
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <th>借用说明</th>
+                        <td class="msgTd" colspan="3">
+                            {{ borrowApplyFormData.borrowApply.borrowMemo }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>借用依据</th>
+                        <td colspan="3">
+                            <a
+                                *ngFor="
+                                    let item of borrowApplyFormData.borrowApply
+                                        .attachmentList
+                                "
+                                href="javascript:;"
+                                (click)="loadFile(item.filePath)"
+                                style="margin-right:20px;"
+                                ><i class="iqon-enclosure"></i
+                                >{{ item.fileName }}</a
+                            >
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--标题-->
+        <nav class="nav1 nav">
+            <span>物料与运输信息</span>
+            <!--<button class="m-btn-confirm">上传Excel文件</button>-->
+        </nav>
+        <!--物料与运输信息1-->
+        <div
+            class="m-material-info1"
+            *ngFor="let item of borrowApplyFormData.transportPoList; index as i"
+        >
+            <h2>
+                物料与运输信息{{ i + 1 }}
+                <button
+                    type="button"
+                    *ngIf="borrowApplyFormData.borrowApply.flowStatus != 5"
+                    (click)="delTransport(i)"
+                >
+                    删除
+                </button>
+            </h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th width="6%">
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >库存地
+                        </th>
+                        <td width="38%" class="days">
+                            <j-iq-select
+                                [(ngModel)]="item.transport.inventory"
+                                name="inventory"
+                                java="true"
+                                [dataModal]="{
+                                    item: ['data', 'rows'],
+                                    title: ['data', 'columns'],
+                                    pager: ['data', 'pager']
+                                }"
+                                listApi="borrow/platforminv/popplatform"
+                                [queryParams]=""
+                                placeHolder="-请选择-   "
+                            ></j-iq-select>
+
+                            <!--span class="" style="float:right;font-size:14px;color:#57b9f8;" (click)="openInventoryList(i)">查询库存地</span>
+                            <<select class="form-control borrowSelect" required (change)="paltforminvChange($event,item)">
+                            <option value=undefined>-请选择</option>
+                            <option *ngFor="let item1 of platforminv" [value]="item1.inventory+'_'+item1.inventoryName"  
+                            [selected]="item1.inventory==item.transport.inventory"
+                            >{{item1.inventoryName}}</option>
+                        </select>
+                        </div>-->
+                        </td>
+                        <ng-container *ngIf="saleRole == true">
+                            <th width="6%">借用金额</th>
+                            <td width="38%">
+                                <div class="ui-select-match">
+                                    {{ item.transport.borrowAmount }}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="!saleRole">
+                            <th width="6%"></th>
+                            <td width="38%"></td>
+                        </ng-container>
+                    </tr>
+                    <tr *ngIf="hideTransportInfo == false">
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >期望到货日期
+                        </th>
+                        <td class="days">
+                            <my-datepicker
+                                [(ngModel)]="item.transport.arrivalDate"
+                                [StartDate]="
+                                    borrowApplyFormData.borrowApply.borrowDate
+                                "
+                                PlaceHolder="-请选择日期"
+                                name="borrowDate"
+                                (onChange)="
+                                    backDateChange(item.transport.arrivalDate)
+                                "
+                            ></my-datepicker>
+                        </td>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >运输方式
+                        </th>
+                        <td class="days">
+                            <select
+                                class="form-control borrowSelect"
+                                required
+                                (change)="transportTypeChange(item, $event)"
+                            >
+                                <option value="undefined">-请选择</option>
+                                <option
+                                    *ngFor="
+                                        let item1 of transportTypesOpts;
+                                        index as i
+                                    "
+                                    [value]="item1.code"
+                                    [selected]="
+                                        item1.code ==
+                                        item.transport.transportCode +
+                                            '_' +
+                                            item1.name
+                                    "
+                                    >{{ item1.name }}</option
+                                >
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="hideTransportInfo == false">
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >送货地址
+                        </th>
+                        <td class="flex">
+                            <select
+                                class="form-control deliveryAddressSelect"
+                                style="height: 34px; padding: 6px 12px;font-size: 12px;line-height: 1.42857143;border: 1px solid #e1e3eb;border-radius: 4px;"
+                                (change)="deliveryAddressesChange(item, $event)"
+                                required
+                                width="40%"
+                                [name]="'item' + i"
+                            >
+                                <option value="undefined">-请选择</option>
+                                <option
+                                    *ngFor="let item1 of deliveryAddresses"
+                                    [value]="item1.deliveryAddressId"
+                                    [selected]="
+                                        item1.deliveryAddressId ==
+                                        item.transport.deliveryAddressId +
+                                            '_' +
+                                            item1.deliveryAddress
+                                    "
+                                    >{{ item1.deliveryAddress }}</option
+                                >
+                            </select>
+                            <div
+                                class="btns1"
+                                style="margin-left: 0px;width: 160px;min-width: 160px;"
+                            >
+                                <button
+                                    type="button"
+                                    (click)="
+                                        editTimeMap(
+                                            item.transport.deliveryAddressId
+                                        )
+                                    "
+                                >
+                                    编辑
+                                </button>
+                                <button type="button" (click)="showTimeMap()">
+                                    添加收货地址
+                                </button>
+                            </div>
+                        </td>
+                        <th>
+                            <i class="addApp-form-tips addApp-form-tips1">*</i
+                            >运输起点
+                        </th>
+                        <td>
+                            <input
+                                type="text"
+                                required
+                                class="form-control"
+                                [(ngModel)]="item.transport.startTransport"
+                            />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <show-location
+                *ngIf="showLocation"
+                (missData)="missData($event)"
+                [customerName]="
+                    borrowApplyFormData.borrowApply.borrowCustomerName
+                "
+                [addressId]="addressId"
+                (addressData)="changeBorrowCustomer($event)"
+            ></show-location>
+            <div class="tables">
+                <table class="m-info-table">
+                    <thead>
+                        <tr class="m-infor-tr">
+                            <th class="m-text-center" width="5%">序号</th>
+                            <th width="8%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >物料编号
+                            </th>
+                            <th width="35%">物料描述</th>
+                            <th width="8%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >批次
+                            </th>
+                            <th width="8%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >单位
+                            </th>
+                            <th width="8%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >数量
+                            </th>
+                            <th width="23%">工厂</th>
+                            <th width="5%" class="m-text-center">
+                                <i
+                                    class="iqon-add-bold adds"
+                                    (click)="addMateriel(item)"
+                                ></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item1 of item.materielList; index as j">
+                            <td class="m-text-center add-w-b60">{{ j + 1 }}</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    [(ngModel)]="item1.meterialNo"
+                                    (blur)="meterialNoChange(item1)"
+                                />
+                            </td>
+                            <td>{{ item1.meterialMemo }}</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    [(ngModel)]="item1.batch"
+                                    (change)="transUpper(item1)"
+                                    (blur)="getMaterialPrice(item1)"
+                                />
+                            </td>
+                            <td>
+                                <input type="text" [(ngModel)]="item1.unit" />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    [(ngModel)]="item1.count"
+                                    (change)="materielChange(item)"
+                                />
+                            </td>
+                            <td>{{ item1.factory }}</td>
+                            <td class="m-text-center">
+                                <i
+                                    class="iqon-jian adds"
+                                    (click)="delMateriel(item, j)"
+                                ></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--物料与运输信息2-->
+        <!--增加运输信息-->
+        <div
+            *ngIf="borrowApplyFormData.borrowApply.flowStatus != 5"
+            class="m-add-info"
+            style="margin-top:15px;"
+        >
+            <p (click)="addTransport($event)">+ 增加运输信息</p>
+        </div>
+        <!--提交-->
+        <div class="addApp-sub-btns">
+            <button
+                class="m-btn-confirm"
+                *ngIf="currAppFlag"
+                type="button"
+                (click)="postBorrowApplySubmit($event)"
+            >
+                提交
+            </button>
+            <button
+                class="m-btn-sketch"
+                *ngIf="currAppFlag"
+                type="button"
+                (click)="clickSaveBorrowApply($event)"
+            >
+                暂存
+            </button>
+            <button
+                [disabled]="isDisable"
+                class="m-btn-cancel2"
+                type="button"
+                (click)="backPage($event)"
+            >
+                取消
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="m-boardtop clearfix">
+    <iq-breadcrumb></iq-breadcrumb>
+    <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addData()"><i class="iqon-add"></i>新建供应商</button>
+  </div>
+  
+  <div class="m-overclass">
+      <div class="m-list-menu" >
+        <ul class="m-state" (click)="onTab($event)">
+          <li class="active" data-state="sExamine">审批中</li>
+          <li data-state="sFinish">已完成</li>
+          <li  data-state="sAll">全部</li>
+          <li data-state="sTemp">草稿</li>
+        </ul>
+    
+        <!-- 搜索 -->
+        <div class="m-at-search">
+          <div class="m-search">
+            <div class="m-search-2">
+              <i class="iqon-query i-search" (click)="searchData()"></i>
+              <input type="text" name="SearchTxt" #SearchTxt="ngModel" placeholder="搜索供应商号/供应商名称" [(ngModel)]="queryMyApply.SearchTxt" (keyup.enter)="searchData()">
+              <!-- <p class="m-p-warn" *ngIf="Keyword.invalid && (Keyword.touched||isSearch)">请填写搜索供应商号或者供应商名称</p> -->
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+    
+      <!-- 物料数据缺省 -->
+      <div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'hideStyle':isHide}">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">点击“新建供应商”新建数据吧~</p>
+        </div>
+      </div>
+    
+      <!-- 物料数据列表 -->
+      <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+    
+          <div class="table-auto-content">
+            <table class="table table-hover table-list" style="table-layout:auto">
+              <thead>
+                <tr>
+                  <th class="wp5" *ngIf="queryMyApply.ApproveSection==='0'||queryMyApply.ApproveSection==='3'"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                      (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+                  <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+                    <th class="wp5">序号</th>
+                    <th>申请编号</th>
+                    <th>申请单类型</th>
+                    <th class="wp30">供应商名称</th>
+                    <th>申请时间</th>
+                  </ng-container>
+                  <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                    <th class="list-edit" colspan="5">已选{{checkedNum}}项<button type="button" (click)="deleteList(searchList)">删除</button></th>
+                  </ng-container>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let list of searchList;let i=index" >
+                  <td class="wp5" stopParentClick *ngIf="queryMyApply.ApproveSection==='0'||queryMyApply.ApproveSection==='3'"><input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="list.checked" name="" [disabled]="list.wfstatus!='0'&&list.wfstatus!='7'"></td>
+                  <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+                  <td><span (click)="getDetail(list.vendorid,list.modifyid,list.cateType,list.wfstatus)" class="clickText">{{list.applicationcode}}</span></td>
+                  <td>{{list.cateType}}</td>
+                  <td [title]="list.vendor"><div style="width:300px; overflow:hidden; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">{{list.vendor}}</div></td>
+                  <td>{{list.addtime|iqDate:"YYYY-MM-DD"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+        <div class="page">
+          <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>      
+        </div>
+        
+      </div>
+    </div>
+    

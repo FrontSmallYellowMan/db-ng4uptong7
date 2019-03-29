@@ -1,0 +1,141 @@
+<loading [show]="loading"></loading>
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+  <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addData()">
+    <i class="iqon-add"></i>新建供应商</button>
+  <button type="button" class="m-btn-default g-fr m-btn-download" style="margin-top: 7px;" (click)="getSupplierList(supplierList.SearchTxt)">下载数据</button>
+
+</div>
+
+<!-- 列表页 -->
+<div class="m-supplierList">
+
+  <!-- 搜索&&扩展&&分类&&同步 功能按钮 -->
+  <div class="m-operation">
+    
+    <button class="m-supplierManage-top-button m-btn-confirm" [disabled]="notSelect" [ngClass]="{'notClickButton':notSelect}"
+    (click)="extendClassSupplier('extend')" type="button">扩展</button>
+    <button class="m-supplierManage-top-button m-btn-confirm" [disabled]="notSelect" [ngClass]="{'notClickButton':notSelect}"
+    (click)="extendClassSupplier('class')" type="button" *ngIf="supplierRole===1">分类</button>
+    <button class="m-supplierManage-top-button m-btn-confirm" [disabled]="notSelect" [ngClass]="{'notClickButton':notSelect}"
+    type="button" (click)="syncroSupplier()" *ngIf="supplierRole===1">同步</button>
+    <button class="m-supplierManage-top-button m-btn-confirm" [disabled]="notSelect" [ngClass]="{'notClickButton':notSelect}"
+    type="button" (click)="deleteSupplier()" *ngIf="supplierRole===1">删除</button>
+
+      <!-- 高级搜索 -->
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+        <div class="m-search-high" (click)="openSearch()">
+          <i class="iqon-highsearch"></i>
+          高级搜索
+        </div>
+      </div>
+  
+      <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+        收起高级搜索
+      </div>
+      <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+          <form #form="ngForm">
+  
+          <div class="m-search-item">
+            <label>本部</label>
+            <input type="text" name="Platform" placeholder="-请填写本部" [(ngModel)]="supplierList.BBMC" [disabled]="supplierRole===2" [ngClass]="{'inpit-disabled-style':supplierRole===2}" trim>
+          </div>
+  
+          <div class="m-search-item">
+            <label>事业部</label>
+            <input type="text" name="Factory" placeholder="-请填写事业部" [(ngModel)]="supplierList.SYBMC" [disabled]="supplierRole===2" [ngClass]="{'inpit-disabled-style':supplierRole===2}" trim>
+          </div>
+  
+          <div class="m-search-item">
+            <label>分类</label>
+            <div class="m-select">
+              <i class="iqon-xia"></i>
+              <select name="Class" [(ngModel)]="supplierList.ClassNameCode">
+                <option value="" disabled selected>-请选择</option>
+                <option value="0">核心</option>
+                <option value="1">非核心</option>
+                <option value="2">新产品</option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="m-search-item m-search-clear">
+            <label>供应商名称</label>
+            <input type="text" name="ApplyName" placeholder="-请填写供应商号/名称" [(ngModel)]="supplierList.SearchTxt" trim trimReg="/(^\s*)|(\s*$)/g">
+          </div>
+  
+  
+          <div class="m-search-btn">
+            <button type="button" class="m-btn-confirm research" (click)="searchData()">搜索</button>
+            <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+          </div>
+
+        </form>
+      </div>
+
+
+    </div>
+
+    <!-- 供应商缺省页面 -->
+    <div class="m-noresult m-supplier-noresult m-apply" [ngClass]="{'isHide':isSearchResult}" style="overflow:hidden">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+        <p class="m-p-notice">点击“新建供应商”建立相关数据吧~</p>
+      </div>
+    </div>
+
+    <!--搜索结果显示-->
+    <div class="m-card-cont" [ngClass]="{'isHide':!isSearchResult}">
+      <div class="table-auto-content">
+        <table class="table table-hover table-list" style="table-layout:fixed">
+          <thead>
+            <tr>
+              <th class="wp5">
+                <input allcheck="demoall" [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event"
+                  (onIndeterminate)="CheckIndeterminate($event)" icheck type="checkbox" name="fullChecked" (ngModelChange)="topButtonControl()">
+              </th>
+              <th class="wp10">供应商编号</th>
+              <th style="width:14%">供应商名称</th>
+              <th class="wp10">供应商类型</th>
+              <th class="wp15">增值税号或统一
+                <br>社会信用代码</th>
+              <th class="wp15">注册地址</th>
+              <th class="wp10">本部名称</th>
+              <th class="wp10">事业部名称</th>
+              <th style="width:6%">分类</th>
+              <th style="text-align:center;" class="wp10">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let list of searchList;let i=index">
+              <td stopParentClick>
+                <input allcheckChild="demoall" [(ngModel)]="list.checked" icheck type="checkbox" name="demoall" (ngModelChange)="getSelectList(list.checked,list.vendorid,i)"
+                  [disabled]="list.IsModify!=0">
+              </td>
+              <td><span class="clickText" (click)="getDetail(list.vendorid)">{{list.vendorno}}</span></td>
+              <td [title]="list.vendor">{{list.vendor}}</td>
+              <td>{{list.vendorcountry|supplierPipe}}</td>
+              <td [title]="list.valueaddedtaxno">{{list.valueaddedtaxno}}</td>
+              <td [title]="list.registeredaddress">{{list.registeredaddress}}</td>
+              <td>{{list.BBMC}}</td>
+              <td>{{list.SYBMC}}</td>
+              <td [title]="list.ClassName">{{list.ClassName}}</td>
+              <td stopParentClick *ngIf="list.IsModify===0" style="text-align:center;width:6%">
+                <button class="m-supplier-button-modify" (click)="changeSupplier(list.vendorid)" type="button">修改</button>
+              </td>
+              <td stopParentClick *ngIf="list.IsModify!=0" style="color:#999;text-align:center;">修改中</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="page">
+        <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+      </div>
+    </div>
+
+</div>

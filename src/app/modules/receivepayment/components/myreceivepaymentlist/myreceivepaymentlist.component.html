@@ -1,0 +1,96 @@
+<loading [show]="loading"></loading>
+<div class="rp-list">
+  <div class="rp-list-search clearfix">
+    <div class="search-item">
+      <div class="search-title"><label>所属公司:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.corpCode">
+            <option value="">-请选择所属公司</option>
+            <option *ngFor="let item of companyData" [ngValue]="item.companycode">{{item.company}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>科目编号:</label></div>
+      <div class="search-input">
+        <select-search-banksubject id="selectsearchbanksubject" name="banksubject" [(ngModel)]="selectedBankSubject" [optionList]="banksubjectData" (onSelecte)="onSelecteBankSubject(selectedBankSubject)"></select-search-banksubject>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>客户名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入客户名称\编号" [(ngModel)]="query.custCode">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>到款日期:</label></div>
+      <div class="search-input">
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择开始日期" [(ngModel)]="query.startDate" [EndDate]="query.EndDate"></my-datepicker>
+        </div>
+        <div class="inputs-date inputs-date-line">~</div>
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择结束日期" [(ngModel)]="query.EndDate" [StartDate]="query.startDate"></my-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rp-list-content">
+    <div class="rp-list-content-menu m-list-menu">
+      <ul class="m-state">
+        <li [class.active]="query.ClaimState === 0" (click)="tabSearch(0)">全部</li>
+        <li [class.active]="query.ClaimState === 1" (click)="tabSearch(1)">未认领</li>
+        <li [class.active]="query.ClaimState === 2" (click)="tabSearch(2)">已认领</li>
+      </ul>
+    </div>
+    <div class="search-button clearfix" style="width: 45%;float: left;height: 42px;line-height: 42px;">
+      <div class="list-search-button" style="width:100%;">
+        <button (click)="search(query)">查询</button>
+        <button (click)="reset()">重置</button>
+      </div>
+    </div>
+    <div class="rp-list-content-table" *ngIf="listData?.Bills.length > 0">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th>核销系统编号</th>
+            <th>客户编号</th>
+            <th style="width: 180px;">客户名称</th>
+            <th style="width: 180px;">所属公司</th>
+            <th (click)="sortCurrentTableData()">到款日期<i class="iqon-order"></i></th>
+            <th>到款金额</th>
+            <th style="width: 180px;">科目名称</th>
+            <th>摘要</th>
+            <!--<th class="operate">操作</th>-->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData?.Bills">
+            <td>{{ item.RecordNo }}</td>
+            <td>{{ item.CustCode }}</td>
+            <td [title]="item.CustName">{{ item.CustName }}</td>
+            <td [title]="item.CorpName">{{ item.CorpName }}</td>
+            <td>{{ item.ArriveDate }}</td>
+            <td>{{ item.Amount }}</td>
+            <td [title]="item.BankName">{{ item.BankName }}</td>
+            <td>{{ item.Remark }}</td>
+            <!--<td class="operate"><span>进行核销</span></td>-->
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="search(query)"></iq-pager>
+    </div>
+    <div class="rp-list-content-null" *ngIf="listData?.Bills.length == 0">
+      <div class="m-noresult" style="margin-top:10px">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">输入新的查询条件试试吧~</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

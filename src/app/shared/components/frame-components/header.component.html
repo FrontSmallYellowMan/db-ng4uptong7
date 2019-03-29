@@ -1,0 +1,44 @@
+<header class="g-hd">
+    <!--  -->
+        <div class="m-logo">
+                <a routerLink="/">
+        <div class="m-logoimg"></div>
+    </a> 
+            <span><db-headtitle></db-headtitle></span>
+        </div>
+    <!-- -->
+    <div class="m-nav">
+        <div class="m-notice" [routerLink]="['/approval/']">
+            <i class="iqon-msg"></i>
+            <div class="m-num index-todotaskcount">{{toDoTaskCount}}</div>
+        </div>
+        <div class="m-tip" [routerLink]="['/index/index-my-message']">
+            <i class="iqon-notice"></i>
+            <div class="m-num index-unreadercount">{{unReaderCount}}</div>
+        </div>
+        <div class="m-user">
+            <img src="assets/default-user.png">
+            <ul class="m-dropdown-option m-user-menu" style="width:150px;text-align:center;text-indent:0;">
+            <!-- <li>
+              <ul class="m-user-attendance">
+                <li><span class="m-p-tip">09:00</span>（3月21日）首次打卡</li>
+                <li [routerLink]="['/invoice/set/']" >3月缺勤&nbsp;<span class="m-p-warn">1</span>&nbsp;条</li>
+                <li>年假<span class="m-p-tip">5</span>天/年，已休<span class="m-p-tip">1.12</span>天</li>
+              </ul>
+            </li>
+            <li>WWW流量额度（已用/全部）：<span class="m-p-tip">128.90/200.0</span>元</li>
+            <li>我的申请</li>
+            <li>协同办公平台</li>
+            <li [routerLink]="['/login/']">退出</li> -->
+            <li><span class="m-p-tip">{{localUserInfo?.UserName}}</span>（{{localUserInfo?.ITCode}}）</li>
+            <li (click)="logout()">退出</li>
+          </ul>
+        </div>
+    </div>
+    <!--<div class="m-search">
+        <div class="m-search-2">
+            <i class="iqon-query"></i>
+            <input type="text" name="" placeholder="搜索合同，销售单...">
+        </div>
+    </div>-->
+</header>

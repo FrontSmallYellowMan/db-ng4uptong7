@@ -1,0 +1,28 @@
+<div class="g-hdp">
+
+    <div class="g-list">
+        <div class="m-user-nav">
+            <ul class="m-usertree">
+                <li routerLinkActive="active">
+                    <a routerLink="/supplier/supplier-sm"> 供应商管理</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="/supplier/supplier-mApply/a"> 我的申请</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="/supplier/supplier-mApproval/e"> 我的审批</a>
+                    <span class="m-num" style="margin-top:5px" *ngIf="approvalNumber!=0">{{approvalNumber}}</span>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="/supplier/supplier-track/">供应商跟踪</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="g-right">
+        <router-outlet></router-outlet>
+    </div>
+
+
+</div>

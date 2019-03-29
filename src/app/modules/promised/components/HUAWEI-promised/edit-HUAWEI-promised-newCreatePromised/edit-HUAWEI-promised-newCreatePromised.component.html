@@ -1,0 +1,312 @@
+<form [formGroup]="HUAWEIform">
+
+  <div class="m-edit-promised-ncp">
+
+    <h4>{{pageTitle}}</h4>
+
+    <!-- 基本信息 -->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">申请人</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <div class="m-user-info-small">
+            <div user-image [hasClose]="false" [user]="userInfo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>平台</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="" id="" formControlName="PlatformID" [ngClass]="{'m-select-warn':HUAWEIform.get('PlatformID').invalid&&(HUAWEIform.get('PlatformID').touched||isSubmit)}" [required]="requiredTypeForm?.isPlatform">
+            <option value="" selected disabled>-请选择</option>
+            <option [value]="item.platformcode" *ngFor="let item of listPlatform">{{item.platform}}</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('PlatformID').invalid&&(HUAWEIform.get('PlatformID').touched||isSubmit)">请选择平台</p>
+        <!-- <p class="m-p-warn" style="line-height:20px;" *ngIf="!supplierData.phone && (Phone.touched||isSubmit)">请填写联系方式</p>         -->
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need">*</span>承诺销售员</p>
+        <div class="m-select m-edit-promised-ncp-select-style1" style="height:37px;">
+          <iq-person-select [(ngModel)]="promisedSalesPerson" required [max]="1" (onChange)="getSelePerson($event)" name="PromisedSalesperson"
+            [ngModelOptions]="{standalone: true}" #PromisedSalesperson="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-selectPerson-warn" *ngIf="PromisedSalesperson.invalid && (PromisedSalesperson.touched||isSubmit)">请选择承诺销售员</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>承诺销售员所属
+          <br>事业部</p>
+        <div class="m-select m-edit-promised-ncp-select-style1 m-promised-title">
+          {{commitmentData.SalesDeparment}}
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isAgent">*</span>代理商名称</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写代理商名称" trim trimReg="/(^\s*)|(\s*$)/g" maxlength="100" formControlName="AgentName" [ngClass]="{'m-input-warn':HUAWEIform.get('AgentName').invalid&&(HUAWEIform.get('AgentName').touched||isSubmit)}" [required]="requiredTypeForm?.isAgent">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('AgentName').invalid&&(HUAWEIform.get('AgentName').touched||isSubmit)">请填写代理商名称</p>       
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isContractName">*</span>项目名称</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写项目名称" trim trimReg="/(^\s*)|(\s*$)/g" maxlength="200" formControlName="ContractName" [ngClass]="{'m-input-warn':HUAWEIform.get('ContractName').invalid&&(HUAWEIform.get('ContractName').touched||isSubmit)}" [required]="requiredTypeForm?.isContractName">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('ContractName').invalid&&(HUAWEIform.get('ContractName').touched||isSubmit)">请填写项目名称</p>               
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isContractID">*</span>{{requiredTypeForm?.Code==='0011'?'希望发货日期':'合同编号'}}</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" [placeholder]="requiredTypeForm?.Code==='0011'?'-请填写希望发货日期':'-请填写合同编号'" trim maxlength="40" formControlName="ContractID" [ngClass]="{'m-input-warn':HUAWEIform.get('ContractID').invalid&&(HUAWEIform.get('ContractID').touched||isSubmit)}" [required]="requiredTypeForm?.isContractID">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('ContractID').invalid&&(HUAWEIform.get('ContractID').touched||isSubmit)">{{requiredTypeForm?.Code==='0011'?'请填写希望发货日期':'请填写合同编号'}}</p>                      
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isContractMoney">*</span>{{requiredTypeForm?.Code==='0019'?'特殊运输金额':'合同金额'}}</p>
+        <div class="m-select m-edit-promised-ncp-select-style1 m-input-width">
+          <input type="text" [placeholder]="requiredTypeForm?.Code==='0019'?'-请填写特殊运输金额':'-请填写合同金额'" only-number formControlName="ContractMoney" pattern="\d+\.[0-9]{2}" [ngClass]="{'m-input-warn':HUAWEIform.get('ContractMoney').invalid&&(HUAWEIform.get('ContractMoney').touched||isSubmit)}" [required]="requiredTypeForm?.isContractMoney">
+          <span>元</span>
+        </div>
+        <p class="m-p-warn" style="padding-right: 30px;" *ngIf="HUAWEIform.get('ContractMoney').invalid&&(HUAWEIform.get('ContractMoney').touched||isSubmit)">请填写金额，保留两位小数</p>
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isYcode">*</span>10Y号</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写10Y号" trim maxlength="20" formControlName="Ycode" [ngClass]="{'m-input-warn':HUAWEIform.get('Ycode').invalid&&(HUAWEIform.get('Ycode').touched||isSubmit)}" [required]="requiredTypeForm?.isYcode">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('Ycode').invalid&&(HUAWEIform.get('Ycode').touched||isSubmit)">请填写10Y号</p>        
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isProductLline">*</span>产品线</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写产品线" trim trimReg="/(^\s*)|(\s*$)/g" maxlength="2000" formControlName="ProductLline" [ngClass]="{'m-input-warn':HUAWEIform.get('ProductLline').invalid&&(HUAWEIform.get('ProductLline').touched||isSubmit)}" [required]="requiredTypeForm?.isProductLline">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('ProductLline').invalid&&(HUAWEIform.get('ProductLline').touched||isSubmit)">请填写产品线</p>                
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isAccountterm">*</span>账期条件</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <input type="text" placeholder="-请填写账期条件" trim trimReg="/(^\s*)|(\s*$)/g" maxlength="200" formControlName="Accountterm" [ngClass]="{'m-input-warn':HUAWEIform.get('Accountterm').invalid&&(HUAWEIform.get('Accountterm').touched||isSubmit)}" [required]="requiredTypeForm?.isAccountterm">
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('Accountterm').invalid&&(HUAWEIform.get('Accountterm').touched||isSubmit)">请填写账期条件</p>                        
+      </div>
+
+      <div class="m-edit-promised-ncp-form m-edit-promised-ncp-tips" *ngIf="requiredTypeForm?.isFksfqrdd">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isFksfqrdd">*</span>付款是否确认
+          <br>订单</p>
+        <div class="m-select m-edit-promised-ncp-select-style1 m-promised-title" >
+          <input type="radio" icheck value="是" formControlName="Fksfqrdd" name="Fksfqrdd" [required]="requiredTypeForm?.isFksfqrdd">
+          <span>是</span>
+          <input type="radio" icheck value="否" formControlName="Fksfqrdd" name="Fksfqrdd" [required]="requiredTypeForm?.isFksfqrdd">
+          <span>否</span>
+          <span class="m-p-warn" style="display:inline-block" *ngIf="HUAWEIform.get('Fksfqrdd').invalid&&(HUAWEIform.get('Fksfqrdd').touched||isSubmit)">请选择付款是否确认订单</span>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!--承诺信息-->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>承诺信息</h5>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>承诺类型</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <i class="iqon-xia"></i>
+          <select name="PromisedType" id="" formControlName="CommitTypeCode" [ngClass]="{'m-select-warn':HUAWEIform.get('CommitTypeCode').invalid&&(HUAWEIform.get('CommitTypeCode').touched||isSubmit)}">
+            <option value="" disabled selected>-请选择</option>
+            <option [value]="item.CommitTypeCode" *ngFor="let item of listCommitmentType" [disabled]="!item.CommitTypeCode">{{item.CommitTypeName}}</option>
+          </select>
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('CommitTypeCode').invalid&&(HUAWEIform.get('CommitTypeCode').touched||isSubmit)">请选择承诺类型</p>        
+      </div>
+
+      <!-- 承诺类型‘0001’显示的子分类 -->
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" *ngIf="HUAWEIform.get('CommitTypeCode').value==='0001'">
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <ul class="m-promised-ul">
+            <li *ngFor="let item of requiredTypeComponent.morePromisedTypeList[0].list;index as i">
+              <input type="checkbox" icheck [name]="code0001+i" [attr.name]="code0001+i" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.isChecked"><span style="padding-left:10px;">{{item.CommitTypeDetailedName}}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="HUAWEIform.get('CommitTypeCode').invalid&&(HUAWEIform.get('CommitTypeCode').touched||isSubmit)">请选择承诺类型</p>         -->
+      </div>
+
+      <!-- 承诺类型‘0002’显示的子分类 -->
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" *ngIf="HUAWEIform.get('CommitTypeCode').value==='0002'">
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <ul class="m-promised-ul">
+            <li *ngFor="let item of requiredTypeComponent.morePromisedTypeList[1].list;index as i">
+              <input type="checkbox" icheck [name]="code0002+i" [attr.name]="code0002+i" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.isChecked"><span style="padding-left:10px;">{{item.CommitTypeDetailedName}}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="HUAWEIform.get('CommitTypeCode').invalid&&(HUAWEIform.get('CommitTypeCode').touched||isSubmit)">请选择承诺类型</p>         -->
+      </div>
+
+      <!-- 承诺类型‘0003’显示的子分类 -->
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips" *ngIf="HUAWEIform.get('CommitTypeCode').value==='0008'">
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <ul class="m-promised-ul">
+            <li *ngFor="let item of requiredTypeComponent.morePromisedTypeList[2].list;index as i">
+              <input type="checkbox" icheck [name]="code0008+i" [attr.name]="code0008+i" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.isChecked"><span style="padding-left:10px;">{{item.CommitTypeDetailedName}}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- <p class="m-p-warn" *ngIf="HUAWEIform.get('CommitTypeCode').invalid&&(HUAWEIform.get('CommitTypeCode').touched||isSubmit)">请选择承诺类型</p>         -->
+      </div>
+
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles">
+          <span class="m-form-need">*</span>承诺达成时间</p>
+        <div class="m-select m-edit-promised-ncp-select-style1">
+          <!-- <my-datepicker [(ngModel)]="commitmentData.CommitDate" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate" [ngModelOptions]="{standalone: true}"></my-datepicker> -->
+          <my-datepicker formControlName="CommitDate" [Required]="HUAWEIform.get('CommitDate').invalid&&(HUAWEIform.get('CommitDate').touched||isSubmit)" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate" [StartDate]="nowDate" (getTimeSuccessCallBack)="alertPromisedDate($event)"></my-datepicker> 
+        </div>
+        <p class="m-p-warn" *ngIf="HUAWEIform.get('CommitDate').invalid&&(HUAWEIform.get('CommitDate').touched||isSubmit)">请选择承诺达成时间</p>        
+        
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles" style="vertical-align:top;">
+          <span class="m-form-need">*</span>承诺原因</p>
+        <div class="m-edit-promised-ncp-select-style1">
+          <textarea name="" id="" cols="80" rows="10" [placeholder]="requiredTypeForm?.CommitMattersPlaceholder?requiredTypeForm?.CommitMattersPlaceholder:'-请填写承诺原因'" formControlName="CommitMatters" [ngClass]="{'m-textarea-warn':HUAWEIform.get('CommitMatters').invalid&&(HUAWEIform.get('CommitMatters').touched||isSubmit)}"></textarea>
+        </div>
+        <p class="m-p-warn" style="position: relative;right: -130px;width: 500px;" *ngIf="HUAWEIform.get('CommitMatters').invalid&&(HUAWEIform.get('CommitMatters').touched||isSubmit)">请填写承诺原因</p>                
+      </div>
+
+    </div>
+
+    <!-- 附件信息 -->
+    <div class="m-edit-promised-ncp-content1 clearfix">
+
+      <div class="m-edit-promised-ncp-title">
+        <h5>附件信息</h5>
+      </div>
+      <div class="m-edit-promised-ncp-fileUpLoad">
+        <p class="m-edit-promised-ncp-fileUpLoad-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isfileUpLoad">*</span>上传附件</p>
+        <div class="m-edit-promised-ncp-fileUpLoad-list">
+          <iq-file-upload upType="1" [url]="upFileApiLink" (onSuccess)="fileUploadSuccess($event)" [hasUploaded]="alreadyfilelUpLoadList"
+            (onDeleteItem)="deleteUploadFile($event)"></iq-file-upload>
+        </div>
+        <p class="m-p-warn" style="position: relative;top: -30px;left: 21%;" *ngIf="(filelUpLoadList.length===0&&alreadyfilelUpLoadList.length===0)&&requiredTypeForm?.isfileUpLoad">请至少上传一个附件</p>        
+      </div>
+
+    </div>
+    <!-- 附件信息 end-->
+
+    <!--审批历史记录-->
+    <div class="m-edit-approvalDetail-content1" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <!--审批历史记录 end-->
+
+
+    <!-- 审批人信息 -->
+    <div class="m-edit-promised-ncp-content1">
+      <div class="m-edit-promised-ncp-title">
+        <h5>审批人信息</h5>
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isSYBApprove1">*</span>一级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove1" [max]="1" (ngModelChange)="getApprovalPerson($event,1)" name="SYBApprove1"
+          [ngModelOptions]="{standalone: true}" [required]="requiredTypeForm?.isSYBApprove1" #SYBApprove1="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="SYBApprove1.invalid&&_SYBApprove1.length===0">请选择一级审批人</p>                
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isSYBApprove2">*</span>二级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove2" [max]="1" (ngModelChange)="getApprovalPerson($event,2)" name="SYBApprove2"
+          [ngModelOptions]="{standalone: true}" [required]="requiredTypeForm?.isSYBApprove2" #SYBApprove2="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="SYBApprove2.invalid&&_SYBApprove2.length===0">请选择二级审批人</p>        
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isSYBApprove3">*</span>三级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove3" [max]="1" (ngModelChange)="getApprovalPerson($event,3)" name="SYBApprove3"
+          [ngModelOptions]="{standalone: true}" [required]="requiredTypeForm?.isSYBApprove3" #SYBApprove3="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="SYBApprove3.invalid&&_SYBApprove3.length===0">请选择三级审批人</p>                    
+      </div>
+
+      <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isSYBApprove4">*</span>四级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove4" [max]="1" (ngModelChange)="getApprovalPerson($event,4)" name="SYBApprove4"
+          [ngModelOptions]="{standalone: true}" [required]="requiredTypeForm?.isSYBApprove4" #SYBApprove4="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="SYBApprove4.invalid&&_SYBApprove4.length===0">请选择四级审批人</p>                            
+      </div>
+
+      <!-- <div class="m-edit-promised-ncp-form-row m-edit-promised-ncp-tips">
+        <p class="m-edit-promised-ncp-form-title m-edit-promised-ncp-form-titles m-promised-title">
+          <span class="m-form-need" *ngIf="requiredTypeForm?.isSYBApprove5">*</span>五级审批人</p>
+        <div class="m-edit-promised-ncp-select-style1 m-height37">
+          <iq-person-select [(ngModel)]="_SYBApprove5" [max]="1" (ngModelChange)="getApprovalPerson($event,5)" name="SYBApprove5"
+            [ngModelOptions]="{standalone: true}" [required]="requiredTypeForm?.isSYBApprove5" #SYBApprove5="ngModel"></iq-person-select>
+        </div>
+        <p class="m-p-warn m-approvalPerson-warn" *ngIf="SYBApprove5.invalid&&_SYBApprove5.length===0">请选择五级审批人</p>                                    
+      </div> -->
+
+    </div>
+    <!-- 审批人信息 end-->
+
+    <div class="m-commonly-btn">
+      <button class="m-btn-confirm m-btn-margin" (click)="onSubmit()" type="button">提交</button>
+      <button class="m-btn-default m-btn-tempsave" (click)="save()" type="button">暂存</button>
+      <button class="m-btn-cancel2 m-btn-width" (click)="cancle()" type="button">取消</button>
+    </div>
+
+  </div>
+<!-- <div>
+  {{ HUAWEIform.get('Fksfqrdd').status}}
+</div> -->
+</form>

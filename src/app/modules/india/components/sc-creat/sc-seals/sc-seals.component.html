@@ -1,0 +1,43 @@
+
+<div class="addApply-base money">
+    <div class="m-list-head">
+        <span class="m-dialog-head-change progress-txt">用印信息</span>
+    </div>
+
+    <div class="addApp-base-infor">
+      <ul class="addApp-base-list">
+          <li class="addApp-form-item" style="width:65%">
+              <div class="addApp-form-label" style="width:14%"><i *ngIf = "isEdit" class="addApp-form-tips">*</i><label>印章名称</label></div>
+              <div class="addApp-form-right">
+                <table class="table table-hover table-list">
+                      <tbody>
+                          <tr *ngIf="isEdit&&sealsInfo['SealData'] && sealsInfo.SealData.length==0">
+                              <td></td>
+                              <td class="operate"><span (click) = "addSeals()">添加</span></td>
+                          </tr>
+                          <tr *ngFor="let item of sealsInfo.SealData;index as i; last as isLast">
+                              <td title = "{{item.Name}}">{{item.Name}}</td>
+                              <td class="operate" *ngIf = "isEdit"><span *ngIf = "isLast" (click) = "addSeals()">添加</span><span (click) = "delseals(item)">删除</span></td>
+                          </tr>
+                      </tbody>
+                    </table>
+              </div>
+          </li>
+          <li class="addApp-form-item" *ngIf = "isEdit" style="width:35%">
+              <div class="addApp-form-label" style="width:50%"><label>用印份数</label></div>
+              <div class="addApp-form-right">
+                <input name="count" #count="ngModel" required pattern="^\+?[1-9][0-9]*$" [(ngModel)] = "sealsInfo.PrintCount" (ngModelChange) = "emitData()" type="text" />
+                <p class="m-warn-tip" *ngIf="count.invalid">
+                  <!-- <span *ngIf="count.errors?.required">份数为必填项</span> -->
+                  <span *ngIf="count.errors?.pattern">请正确输入份数</span>
+                </p>
+              </div>
+          </li>
+          <li class="addApp-form-item" style="width:35%" *ngIf = "!isEdit">
+              <div class="addApp-form-label"><label>用印份数</label></div>
+              <div class="addApp-form-right">{{sealsInfo.PrintCount}}</div>
+          </li>
+      </ul>
+    </div>
+</div>
+<!-- <db-sc-seals [sealsInfo] = "SealInfoJson" [platfromid] = "platfromid" [isEdit] = "true" (scSeals)="scSeals($event)"></db-sc-seals> -->

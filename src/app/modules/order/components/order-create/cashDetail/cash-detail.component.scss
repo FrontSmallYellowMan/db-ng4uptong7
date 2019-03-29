@@ -1,0 +1,145 @@
+.m-search-all{
+    height:30px;
+    position: absolute;
+    right: 5px;
+    .m-search{
+        width: 250px;
+        float: right;
+    }
+}
+.m-order-number{
+    z-index: 1045;
+    top:6%;
+    left:18%;
+    width:880px;
+}
+.modal-body{
+    height:480px;
+    padding-top:15px;
+}
+.m-order-table{
+    margin: 15px 0;
+}
+.m-order-table{
+    padding-top:30px;
+    position: relative;
+    .table-head{
+        background-color: #f5f7fa;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        z-index: 9;
+        line-height: 30px;
+        width: 828px;
+        border-bottom: 1px solid #d2d8e0;
+    }
+    .table-body{
+        width: 828px;
+        max-height:390px;
+        overflow-y: auto;
+        ul{
+            height: 30px;
+            border-bottom: 1px solid #d2d8e0;
+        }
+    }
+    li{
+        padding:0 5px;
+        line-height: 30px;
+        float: left;
+        border-left: 1px solid #d2d8e0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:nth-child(1){
+            width:65px;
+            border-left:0;
+        }
+        &:nth-child(2){
+            width:65px;
+        }
+        &:nth-child(3){
+            width:65px;
+        }
+       &:nth-child(4){
+           width:80px;
+       }
+       &:nth-child(5){
+           width:80px;
+       }
+       &:nth-child(6){
+           width:65px;
+       }
+       &:nth-child(7){
+           width:65px;
+       }
+       &:nth-child(8){
+           width:90px;
+       }
+       &:nth-child(9){
+           width:110px;
+       }
+       &:nth-child(10){
+           width:80px;
+       }
+       &:nth-child(11){
+           width:45px;
+       }
+    }
+    &:hover{
+        background-color: #fbfbfb;
+    }
+}
+// .m-order-table  tr{
+//     text-align: left;
+//      th,td{
+//         &:nth-child(1){
+//             width:65px;
+//             border-left:0;
+//         }
+//         &:nth-child(2){
+//             width:65px;
+//         }
+//         &:nth-child(3){
+//             width:65px;
+//         }
+//        &:nth-child(4){
+//            width:80px;
+//        }
+//        &:nth-child(5){
+//            width:80px;
+//        }
+//        &:nth-child(6){
+//            width:65px;
+//        }
+//        &:nth-child(7){
+//            width:65px;
+//        }
+//        &:nth-child(8){
+//            width:90px;
+//        }
+//        &:nth-child(9){
+//            width:110px;
+//        }
+//        &:nth-child(10){
+//            width:80px;
+//        }
+//        &:nth-child(11){
+//            width:45px;
+//        }
+//     }
+// }
+.inline-block{
+    display: inline-block;
+}
+/deep/ input[type=text]{
+    height:30px;
+}
+/deep/ .iqon-calendar-2{
+    display: none;
+}
+/deep/ .my-datepicker{
+    width:120px;
+}
+.m-order-number .modal-footer{
+    margin-top:20px;
+}

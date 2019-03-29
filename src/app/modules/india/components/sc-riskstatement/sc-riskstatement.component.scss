@@ -1,0 +1,75 @@
+.c-form-item-custom{
+    width: 100%;
+    float: left;
+    margin-bottom: 5px;
+    .c-input-title{
+        float: left;
+        line-height: 35px;
+        padding-right: 10px;
+        // text-align: right;
+        width: 13%;
+        .c-form-need{
+            color: red;
+            padding-right: 3px;
+        }
+    }
+    .c-input-wrap{
+        float: left;
+        width: 85%;
+        padding: 5px 0;
+        text-align: left;
+        position: relative;
+        .m-textarea{
+            height: 80px;
+        }
+        .c-wrap-chain{
+            float: left;
+            padding: 7px 0;
+        }
+        .c-wrap-line{
+            width: 20px;
+            border: 1px solid #e1e3eb;
+        }
+        .c-wrap-chain-text{
+            width: 28%;
+        }
+        .c-wrap-chain-line{
+            padding: 3px 2px;
+        }
+    }
+    .c-wrap-out{
+        height: 35px;
+        line-height: 35px;
+    }
+}
+.c-form-item{
+    width: 50%;
+    float: left;
+    margin-bottom: 5px;
+    .c-input-title{
+        float: left;
+        line-height: 35px;
+        padding-right: 10px;
+        // text-align: right;
+        width: 25%;
+        .c-form-need{
+            color: red;
+            padding-right: 3px;
+        }
+    }
+    .c-input-wrap{
+        float: left;
+        width: 75%;
+        text-align: left;
+        position: relative;
+        padding: 5px 10;
+        .c-wrap-account{
+            float: left;
+            width: 50%;
+            input{
+                margin-left: 10px;
+                width: 94%;
+            }
+        }
+    }
+}

@@ -1,0 +1,152 @@
+@import '../../../../sass/base/variables';
+
+.g-hdp .g-list .m-usertree>li{
+  &.active::before{
+    height: 55px;
+  }
+
+  >a{
+    display: block;
+    height: 55px;
+    line-height: 55px;
+    font-size: 14px;
+
+    >i{
+      margin-right: 20px;
+      font-size: 20px;
+      vertical-align: middle;
+      color: $def-main-color;
+    }
+    .iqon-moveto-service{
+      display: inline-block;
+      transform: rotateY(180deg);
+    }
+    .iqon-myplates-alter{
+      display: inline-block;
+      transform: rotateX(180deg);
+    }
+  }
+}
+
+input[type=text].ng-touched.ng-invalid,select.ng-touched.ng-invalid,textarea.ng-touched.ng-invalid{
+  border: 1px solid $def-warn-color!important;
+}
+
+.modal-dialog{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-bottom: 20px;
+  min-width: 300px;
+  background: #fff;
+  z-index: 1042;
+
+  .m-modal-form{
+    padding: 10px 20px;
+  }
+
+  .m-modal-btn{
+    text-align: center;
+  }
+}
+.m-form-label{
+  font-weight:bold;
+  width: 50px;
+}
+.m-datepicker-comb{
+  display: inline-block;
+  width: 300px;
+  display: flex;
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+  }
+}
+
+.m-srs{
+    margin: 0 auto;
+    width:75%;
+    h3 {
+      font-size: 16px;
+      font-weight: normal;
+      color: #4a4a4a;
+    }
+    .m-exm{
+      width: 100%;
+      .m-exm-item{
+        position: relative;
+        width: 100%;
+        .uls{
+          margin-top:0;
+        }
+        ul{
+          margin-top:-20px;
+          li{
+            margin-top:20px;
+            min-height: 0;
+          }
+        }
+      }
+    }
+    
+}
+.m-cnm{
+  .m-commonly-btn{
+    margin: 10px auto 10px;
+    text-align: center;
+    button{
+      margin-left:15px;
+      &:last-child{
+        margin-left: -15px;
+      }
+    }
+  }
+}
+.m-cnm-title{
+  color: #76BAF2;
+  margin: 0 auto;
+  clear: both;
+  &::after{
+    content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50px;
+      width: 100%;
+      border-bottom: 1px solid #EEEFF4;
+  }
+}
+.table{
+  font-size: 12px;
+  white-space: nowrap;
+  margin-bottom: 0;
+  table-layout: auto;
+  >thead>tr>th{
+    border:none;
+  }
+}
+.table-auto-content,.m-card-cont{
+  width: 100%;
+  overflow-x: auto;
+}
+.page{
+  margin-top: 15px;
+}
+.opcitys{
+  opacity: 0;
+}
+.positions{
+  position: absolute;
+  left: 50px;
+  button{
+    margin-left: 40px;
+    padding: 6px 10px;
+    background: #f1f4f6;
+    border: none;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 12px;
+  }
+}

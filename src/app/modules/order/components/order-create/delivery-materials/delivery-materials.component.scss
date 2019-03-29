@@ -1,0 +1,74 @@
+.m-add-shipTo {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+ justify-content: space-between;
+}
+
+.oc-clear-div {
+  height: 10px;
+  background-color: #f3f3f3;
+}
+
+.addApply-base-background{
+  padding: 15px;
+}
+
+.m-order-batchUpload{
+  display: inline-block;
+  background-color: #57b9f8;
+  // transition: all .3s linear;
+  padding: 0 15px;
+  color: #fff!important;
+  border-radius: 5px;
+  margin: 0 10px 0 10px;
+  i{
+    padding: 0 10px 0 0;
+  }
+
+  &:hover {
+    transition: all .3s linear;
+    background-color: rgb(255, 149, 49);
+  }
+}
+
+.m-dialog-head-change{
+  color: #fff!important;
+  margin: 0 10px 0 10px!important;
+  position: relative;
+
+  /deep/.m-fileupload{ 
+    transition: all .3s linear;
+    background-color: #57b9f8!important;
+    color: #fff!important;
+    height: 48px;
+    line-height: 48px;
+    margin: 0 10px 0 0;
+    width: 200px;
+
+    .m-fileupload-text{
+      padding: 0 0 0 28px;
+    }
+
+    &:hover{
+      background-color: rgb(255, 149, 49)!important;
+      transition: all .3s linear;
+    }
+} 
+
+}
+
+.iqon-share-folder{
+   position: absolute;
+   z-index: 10;
+   margin: 16px;
+
+}
+
+

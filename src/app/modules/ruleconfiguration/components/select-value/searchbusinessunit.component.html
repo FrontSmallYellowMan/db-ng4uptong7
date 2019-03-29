@@ -1,0 +1,42 @@
+<loading [show]="loading"></loading>
+<div class="editSupplierExtendClass-tips">
+
+  <!-- 分类 -->
+  <div class="m-supplier-class">
+    <div class="m-supplier-BU-search">
+      <input type="text" placeholder="请搜索本部/事业部" [(ngModel)]="searchBU" (keyup.enter)="search()">
+      <button class="m-btn-confirm m-supplier-search-btn" (click)="search()" >搜索</button>
+    </div>
+    
+    <div class="m-supplier-class-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="wp1">请选择</th>
+            <th class="wp5">本部</th>
+            <th class="wp5">事业部</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of buList;index as i">
+            <td>
+              <input icheck type="checkbox" name="" [(ngModel)]="item.checked" (ngModelChange)="selected(item.checked,i)" >
+            </td>
+            <td>{{item.BBMC}}</td>
+            <td>{{item.SYBMC}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="edit-page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+
+    <div class="m-supplier-button">
+        <button class="m-btn-confirm" (click)="save()">确定</button>
+        <button class="m-btn-cancel" (click)="hide()">取消</button>
+    </div>
+  </div>
+</div>
+

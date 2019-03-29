@@ -1,0 +1,98 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow" [ngClass]="{'wd':pagerData.pageSize> 10}">
+    <div class="modal-header m-dialog-head">
+      <span>支票选择列表</span>
+      <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="m-list-menu" style="height: 30px;">
+
+<div >
+
+<table>
+  <tr>
+    <div class="m-search" style="margin: 10px 20px;width:250px;">
+          <i class="iqon-query" (click)="loadApply()" style="cursor:pointer"></i>
+          <input name="state" placeholder="支票号/客户号" [(ngModel)]="tickNum" type="text" (keyup.enter)="mykeydown()">
+        </div>
+    <td>
+      
+      <label style="line-height: 3;">入账日期</label>
+      </td>
+      <td> <my-datepicker PlaceHolder="-请选择日期" (ngModelChange)="getDate($event,'start')" [(ngModel)]="CreatedTimeStart" [EndDate]="CreatedTimeEnd"></my-datepicker>
+         </td>
+         <td>&nbsp;~ &nbsp;</td>
+         <td>
+             <my-datepicker PlaceHolder="-请选择日期" (ngModelChange)="getDate($event,'end')" [(ngModel)]="CreatedTimeEnd" [StartDate]="CreatedTimeStart"></my-datepicker>
+          
+         </td>
+      </tr>
+</table>
+</div>
+
+
+
+
+    </div>
+    <div class="m-order-table">
+      <table style="width:100%;">
+          <tr>
+            <td style="width:3%">
+              <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event"
+                (onIndeterminate)="CheckIndeterminate($event)">
+            </td>
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+              <td class="text-center" style="width:8%">支票号</td>
+              <td  class="text-center" style="width:9%">支票状态 </td>
+              <td class="text-center" style="width:9%">出票日期</td>
+              <td class="text-center" style="width:10%">支票金额</td>
+              <td class="text-center"  style="width:20%">收款人</td>
+              <td class="text-center" style="width:8%">客户代码</td>
+              <td class="text-center" style="width:20%">客户名称</td>
+              <td class="text-center" style="width:13%">申请人</td>
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+              <td class="list-edit" colspan="8">&nbsp;&nbsp;已选{{checkedNum}}项&nbsp;&nbsp;<button type="button" class="m-btn-del" (click)="save(invoiceApplyList)">确定</button></td>
+            </ng-container>
+          </tr>
+          <tr *ngFor='let item of invoiceApplyList'>
+            <td>
+              <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked">
+            </td>
+            <td class="text-center" >{{item.ticketNum}}</td>
+            <td class="text-center">
+              <ng-container *ngFor='let statusli of invoiceStatus'>
+                <ng-container *ngIf="statusli.code==item.invoiceStatus">
+                  {{statusli.statusName}}
+                </ng-container>
+              </ng-container>
+            </td>
+            <td class="text-center" >{{item.checkoutDate| iqDate:'YYYY-MM-DD' }}</td>
+            <td class="text-right" >{{item.ticketAmount}}</td>
+            <td class="text-center">
+              {{item.payeeName}}
+            </td>
+            <td class="text-center">{{item.customCode}}</td>
+            <td class="text-center">{{item.customName}}</td>
+            <td class="text-center">
+              {{item.applyUserName}}
+              <font style="color:#ccc;font-size:12px;" >{{item.applyItcode}}</font>
+            </td>
+
+          </tr>
+
+      </table>
+    </div>
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .wd {
+    /*
+    overflow: auto;
+    height: 514px;*/
+  }
+</style>

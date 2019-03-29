@@ -1,0 +1,27 @@
+/* 添加供应商 */
+.m-add-provider{
+  width: 360px;
+  height: 265.4px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+
+  .m-dialog-head1{
+    padding: 0 20px 0 25px;
+    height: 50px;
+    border-bottom: 1px solid #e2e2e2;
+  }
+  .m-add-form>.m-add-detail1{
+    width: 310px;
+    height: 45px;
+    line-height: 45px;
+    background-color: #f5f7fa;
+    font-size: 14px;
+    margin-left: 24.5px;
+    margin-top:15px;
+    padding-left: 24.5px;
+    &:first-child{
+      margin-top: 24.5px;
+    }
+  }
+}

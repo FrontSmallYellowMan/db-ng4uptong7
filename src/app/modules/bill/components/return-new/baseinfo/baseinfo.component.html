@@ -1,0 +1,84 @@
+<ul class="addApp-base-list">
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>电话</label>
+      <input class="addApp-form-input" type="text" [(ngModel)]="selectInfo.tel" (blur) = "saveTel(selectInfo.tel)">
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>成本中心</label>
+      <input class="addApp-form-input" type="text" [value]="selectInfo.constCenter" disabled>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>公司</label>
+      <ng-select class="addApp-form-input m-select-box" name="companys" [items]="selectInfo.companys" placeholder="请选择" [active]=personCompanyArr (selected)="selecteCom($event)" ></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>业务范围</label>
+      <ng-select class="addApp-form-input m-select-box" name="businesses" [items]="selectInfo.businesses" placeholder="请选择" [active]=personBus (selected)="selecteBiz($event)"></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>发票类型</label>
+      <ng-select class="addApp-form-input m-select-box" name="invoicetypes" [items]="selectInfo.invoicetypes" placeholder="请选择"  (selected)="selecteInvoice($event)"
+        ></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>所属平台</label>
+      <ng-select class="addApp-form-input m-select-box" name="platforms" [active]=personPlate [items]="selectInfo.platforms" (selected)="selectePlat($event)"
+        placeholder="请选择"></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label" style="line-height: 0;margin-top: -6px;"><i class="addApp-form-tips">*</i>是否需要我方上门取货</label>
+      <ng-select class="addApp-form-input m-select-box" name="platforms" [items]="homepickupList" (selected)="gethomepickup($event)"
+        placeholder="请选择"></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>运输类型</label>
+      <ng-select class="addApp-form-input m-select-box" name="platforms" [items]="transittypeList" (selected)="gettransittype($event)"
+        placeholder="请选择"></ng-select>
+    </div>
+  </li>
+  <li>
+    <div class="addApp-form-item">
+      <label class="addApp-form-label"><i class="addApp-form-tips">*</i>冲退类型</label>
+      <ng-select class="addApp-form-input m-select-box" name="redtypes" [items]="selectInfo.returntypes" (selected)="selected($event)" (selected)="selecteRedtypes($event)"
+        placeholder="请选择"></ng-select>
+    </div>
+  </li>
+</ul>
+<div class="addApp-form-sel" *ngIf="reviseTypeChildren.length>0">
+  <div class="m-change-sel">
+    <ul>
+      <li *ngFor="let item of reviseTypeChildren">
+        <div *ngIf="isCheck">
+          <label> {{item.revisetype}}</label>
+          <input type="checkbox" icheck name="reviseSubType" (onClick)="changeRefundTypeOut(reviseTypeChildren,item.revisetype)" [(ngModel)]="item.slect">
+        </div>
+        <span *ngIf="!isCheck">
+            <label>{{ item.revisetype }}</label>
+            <input type="radio" name="reviseSubType" icheck [value]="item.revisetype" (onClick)="changeRefundTypeOut(reviseTypeChildren,item.revisetype)" >
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="addApp-form-reason">
+  <div class="addAPP-form-rs">
+    <label class="addApp-form-reasonlabel">说明原因</label>
+    <input class="addApp-form-input" type="text" placeholder="说明原因" [(ngModel)]="applyDate.reason" (onBlur)="saveReason(applyDate.reason)">
+  </div>
+</div>

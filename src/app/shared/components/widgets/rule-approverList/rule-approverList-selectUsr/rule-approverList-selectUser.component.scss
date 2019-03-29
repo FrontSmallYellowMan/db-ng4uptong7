@@ -1,0 +1,100 @@
+.pop-approverList{
+  width: 600px;
+  min-height: 300px;
+  transform: translateX(-50%);
+  background-color: #fff;
+  z-index: 1100;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  border-radius: 5px;
+  box-shadow: 1px 1px 30px rgb(59, 59, 59);
+
+  .pop-title{
+    height: 40px;
+    line-height: 40px;
+    color: rgb(109, 109, 109);
+    border-bottom: 1px solid #ccc;
+    display:flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 16px;
+    table-layout: fixed;
+    
+    i{
+      text-align:right;
+      padding: 0 15px 0 0;
+      cursor: pointer;
+      line-height: 40px;
+      transition: all 0.3s linear;
+      &:hover{
+        color: rgb(255, 164, 59);
+        transition: all 0.3s linear;
+      }
+    }
+    
+  }
+
+  //表格样式
+  .m-rule-table{
+    width: 95%;
+    margin: 0px auto;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-spacing: 0;
+    border-collapse: 0;
+    line-height: 20px;
+
+    
+    // tr:first-child{
+      //   background-color: #F5F7FA;
+      // }
+      
+    tr:nth-child(odd){
+        background-color: #FBFBFB;
+    }
+        
+    tr:hover{
+          background-color: rgb(230, 243, 255);
+    }
+    
+    th{
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      border-top:none;
+      padding: 5px;
+      width: 44%;
+      &:last-child{
+        border-right: none;
+      }
+    }
+    td{
+      border-right: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding: 5px;
+      width: 44%;
+      &:last-child{
+        border-right: none;
+      }
+    }
+  }
+
+  .table-box{
+    width: inherit;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .isScoll{
+    width: 101%;
+    width: 102.9%\9;
+    width: 102.9%\0;
+  }
+
+  .m-pop-button{
+    margin: 10px auto 10px;
+    text-align: center;
+  }
+
+}
+

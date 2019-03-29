@@ -1,0 +1,19 @@
+/* input.ng-pristine{
+  border: 1px solid red;
+}
+input.ng-dirty{
+  border: 1px solid green;
+} */
+/* input.ng-touched{
+  border: 1px solid #59aeea!important;
+}
+input.ng-invalid{
+  border: 1px solid $def-warn-color!important;
+} */
+/* input.ng-invalid{
+  border: 1px solid $def-warn-color!important;
+} */
+
+input[type=text].ng-touched.ng-invalid,select.ng-touched.ng-invalid,textarea.ng-touched.ng-invalid{
+  border: 1px solid $def-warn-color!important;
+}

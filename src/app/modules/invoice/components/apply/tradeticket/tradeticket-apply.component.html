@@ -1,0 +1,508 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">{{ name }}</h1>
+            <div class="m-basic-info">
+                <h2>基本信息</h2>
+                <!--选择类型基础信息 -->
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="6%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >申请人
+                            </th>
+                            <td width="38%" class="user">
+                                <iq-person-select
+                                    required
+                                    [(ngModel)]="person"
+                                    (ngModelChange)="changePerson(person)"
+                                    ngDefaultControl
+                                    [max]="1"
+                                ></iq-person-select>
+                            </td>
+                            <th width="6%">联系电话</th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.applyPhone"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">部门名称</th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    readonly
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.applyDeptname"
+                                    readonly
+                                />
+                            </td>
+                            <th width="6%">接收平台</th>
+                            <td width="38%">
+                                <select
+                                    (change)="getPlatForms($event)"
+                                    class="form-control"
+                                >
+                                    <option
+                                        *ngFor="let p of platforms"
+                                        [selected]="
+                                            p.platcode ==
+                                            tradeTicketInfo.platformCode
+                                        "
+                                        value="{{
+                                            p.platcode + '|' + p.platname
+                                        }}"
+                                        >{{ p.platname }}</option
+                                    >
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">欠款公司代码</th>
+                            <td width="38%">
+                                <select
+                                    (change)="getPayee($event)"
+                                    class="form-control"
+                                >
+                                    <option value="">请选择欠款公司代码</option>
+                                    <option
+                                        *ngFor="let p of peyeeList"
+                                        [selected]="
+                                            p.companycode ==
+                                            tradeTicketInfo.payee
+                                        "
+                                        value="{{
+                                            p.companycode + '|' + p.company
+                                        }}"
+                                        >{{ p.companycode }}</option
+                                    >
+                                </select>
+                            </td>
+                            <th width="6%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >业务范围代码
+                            </th>
+                            <td width="38%">
+                                <select
+                                    [(ngModel)]="tradeTicketInfo.businessScope"
+                                    class="form-control"
+                                >
+                                    <option value="">请选择业务范围代码</option>
+                                    <option
+                                        *ngFor="let p of YWFWDMList"
+                                        [selected]="
+                                            p.YWFWDM ==
+                                            tradeTicketInfo.businessScope
+                                        "
+                                        value="{{ p.YWFWDM }}"
+                                        >{{ p.YWFWDM }}</option
+                                    >
+                                    <option
+                                        [selected]="
+                                            '0103' ==
+                                            tradeTicketInfo.businessScope
+                                        "
+                                        value="0103"
+                                        >0103</option
+                                    >
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">付款人</th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.payer"
+                                />
+                            </td>
+                            <th width="6%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >商票号
+                            </th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.tradeNumber"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >商票金额
+                            </th>
+                            <td width="38%" class="user">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.tradeAmount"
+                                />
+                            </td>
+                            <th width="6%">
+                                <i class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >到期日期
+                            </th>
+                            <td width="38%">
+                                <my-datepicker
+                                    PlaceHolder="请选择日期"
+                                    [(ngModel)]="tradeTicketInfo.checkoutDate"
+                                    style="cursor: pointer;width: 115px;vertical-align:middle;height:35px;line-height:35px;"
+                                ></my-datepicker>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">
+                                开户银行<i
+                                    class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >
+                            </th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.bankName"
+                                />
+                            </td>
+                            <th width="6%">
+                                银行账号<i
+                                    class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >
+                            </th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.bankNumber"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="6%">
+                                记账方式<i
+                                    class="addApp-form-tips addApp-form-tips1"
+                                    >*</i
+                                >
+                            </th>
+                            <td width="38%">
+                                <select
+                                    [(ngModel)]="tradeTicketInfo.accType"
+                                    class="form-control"
+                                >
+                                    <option value="">请选择记账方式</option>
+                                    <option value="0">预收</option>
+                                    <option value="1">核销</option>
+                                </select>
+                            </td>
+                            <th width="6%">备注</th>
+                            <td width="38%">
+                                <input
+                                    type="text"
+                                    style="vertical-align:middle;height:35px;line-height:35px;"
+                                    [(ngModel)]="tradeTicketInfo.remark"
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!--延期商票信息-->
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">请填写商票信息：</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="m-info-table" style="width: 98%;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;width:47px;">
+                                        序号
+                                    </th>
+                                    <th style="width:120px;text-align:center">
+                                        <i class="addApp-form-tips">*</i
+                                        >客户代码
+                                    </th>
+                                    <th style="text-align:center">
+                                        <i class="addApp-form-tips">*</i
+                                        >客户名称
+                                    </th>
+                                    <th style="text-align:center">合同编号</th>
+                                    <th style="text-align:center">
+                                        合同总金额
+                                    </th>
+                                    <th style="text-align:center">
+                                        关联欠款金额
+                                    </th>
+                                    <th style="text-align:center">
+                                        系统发票号
+                                    </th>
+                                    <th style="text-align:center">
+                                        核销凭证号
+                                    </th>
+                                    <th style="text-align:center">
+                                        <i class="addApp-form-tips">*</i
+                                        >核销金额
+                                    </th>
+                                    <th
+                                        *ngIf="submitFlag && addFlag"
+                                        width="5%"
+                                        class="m-text-center"
+                                    >
+                                        <i
+                                            class="iqon-add"
+                                            style="cursor: pointer;color:#57b9f8"
+                                            title="增加支票"
+                                            (click)="addTr()"
+                                        ></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="
+                                        let invoiceInfo of tradeTickets;
+                                        let i = index
+                                    "
+                                >
+                                    <td style="text-align:center">
+                                        {{ i + 1 }}
+                                    </td>
+                                    <td style="text-align:center">
+                                        <div class="m-search">
+                                            <i
+                                                class="iqon-query"
+                                                (click)="toQueryCustom(i)"
+                                                style="cursor:pointer"
+                                            ></i>
+                                            <input
+                                                readonly
+                                                class="m-infor-input"
+                                                name="customCode"
+                                                [(ngModel)]="
+                                                    invoiceInfo.customCode
+                                                "
+                                                type="text"
+                                            />
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input
+                                            class="m-infor-input"
+                                            readonly
+                                            type="text"
+                                            name="customName"
+                                            [(ngModel)]="invoiceInfo.customName"
+                                        />
+                                    </td>
+                                    <td style="text-align:center">
+                                        <div class="m-search">
+                                            <i
+                                                class="iqon-query"
+                                                (click)="toQueryContract(i)"
+                                                style="cursor:pointer"
+                                            ></i>
+                                            <input
+                                                readonly
+                                                class="m-infor-input"
+                                                name="contractNum"
+                                                [(ngModel)]="
+                                                    invoiceInfo.contractNum
+                                                "
+                                                type="text"
+                                            />
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input
+                                            class="m-infor-input"
+                                            name="contractAmount"
+                                            [(ngModel)]="
+                                                invoiceInfo.contractAmount
+                                            "
+                                            type="text"
+                                        />
+                                    </td>
+                                    <td style="text-align:center">
+                                        <div class="m-search">
+                                            <i
+                                                class="iqon-query"
+                                                (click)="
+                                                    toQueryDebt(i, invoiceInfo)
+                                                "
+                                                style="cursor:pointer"
+                                            ></i>
+                                            <input
+                                                readonly
+                                                class="m-infor-input"
+                                                name="debtAmount"
+                                                [(ngModel)]="
+                                                    invoiceInfo.debtAmount
+                                                "
+                                                type="text"
+                                            />
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input
+                                            class="m-infor-input"
+                                            type="text"
+                                            name="systicketNum"
+                                            [(ngModel)]="
+                                                invoiceInfo.systicketNum
+                                            "
+                                        />
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input
+                                            class="m-infor-input"
+                                            type="text"
+                                            name="voucherNum"
+                                            [(ngModel)]="invoiceInfo.voucherNum"
+                                        />
+                                    </td>
+                                    <td style="text-align:center">
+                                        <input
+                                            class="m-infor-input"
+                                            type="text"
+                                            name="voucherAmount"
+                                            [(ngModel)]="
+                                                invoiceInfo.voucherAmount
+                                            "
+                                        />
+                                    </td>
+                                    <td
+                                        *ngIf="submitFlag && addFlag"
+                                        style="text-align:center"
+                                    >
+                                        <i
+                                            class="iqon-minimize"
+                                            style="cursor: pointer;color:#57b9f8"
+                                            title="删除商票"
+                                            (click)="deleteInvoice(i)"
+                                        ></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change"
+                        ><i class="addApp-form-tips">*</i>附件：</span
+                    >
+                </div>
+                <div class="addApp-base-infor">
+                    <div class="addApp-up-file">
+                        <!--<h2>附件</h2>-->
+                        <div class="addApp-file-details">
+                            <ul>
+                                <li *ngFor="let item of attachList">
+                                    <i class="iqon-enclosure"></i>
+                                    {{ item.fileName }}
+                                    <i
+                                        class="iqon-close2"
+                                        (click)="onRemoveFile(item)"
+                                    ></i>
+                                </li>
+                                <li>
+                                    <a
+                                        href="javascript:;"
+                                        class="addApp-upload-file"
+                                        ><i class="iqon-enclosure"></i
+                                        >上传附件<input
+                                            id="sellerFile"
+                                            type="file"
+                                            ng2FileSelect
+                                            [uploader]="upLoadECFile"
+                                            (change)="
+                                                onUploadFiles(upLoadECFile)
+                                            "
+                                    /></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="addApply-base">
+                <div class="m-list-head">
+                    <span class="m-dialog-head-change">审批人信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                    <div class="addApp-base-list">
+                        <li
+                            class="addApp-form-item w-full"
+                            style="margin:0;"
+                            *ngIf="tradeTicketInfo.platformCode == '21'"
+                        >
+                            <label class="addApp-form-label">商务审批人</label>
+                            <div class="addApp-form-right">
+                                <div
+                                    class="m-user-info"
+                                    user-image
+                                    [hasClose]="false"
+                                    [user]="p"
+                                    *ngFor="let p of bassinApproveList"
+                                ></div>
+                            </div>
+                        </li>
+                        <li class="addApp-form-item w-full" style="margin:0;">
+                            <label class="addApp-form-label">财务审批人</label>
+                            <div class="addApp-form-right">
+                                <div
+                                    class="m-user-info"
+                                    user-image
+                                    [hasClose]="false"
+                                    [user]="p"
+                                    *ngFor="let p of finaceApproveList"
+                                ></div>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns">
+                    <button
+                        *ngIf="addFlag"
+                        class="m-btn-confirm"
+                        (click)="creatInvoice()"
+                    >
+                        提交
+                    </button>
+                    <button
+                        *ngIf="!addFlag"
+                        class="m-btn-confirm"
+                        (click)="reCreatInvoice()"
+                    >
+                        提交
+                    </button>
+                    <!-- <button *ngIf="!submitFlag" class="m-btn-confirm">提交中...</button> -->
+                    <button
+                        class="m-btn-sketch"
+                        type="button"
+                        (click)="close()"
+                    >
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

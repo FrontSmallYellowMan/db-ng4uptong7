@@ -1,0 +1,41 @@
+<div class="modal">
+    <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow">
+        <div class="modal-header m-dialog-head">
+            <span>库存地列表</span>
+            <i class="iqon-close" (click)="hide()"></i>
+        </div>
+
+        <div class="m-content-right">
+            <i class="iqon-query" (click)="search($event)"></i>
+            <input [(ngModel)]="inventoryNo" (keyup.enter)="search($event)" class="search"  type="text" placeholder="-请输入库存地编号">
+        </div>
+
+        <div class="m-content-right" style="overflow:scroll;height:400px;">
+            <div class="table-list-body">
+                    <div style="width: 100%;padding-top:10px">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr>
+                                    <th class="wp5">序号</th>
+                                    <th class="wp10">库存地编号</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of unInventoryItemList;index as j">
+                                <tr>
+                                    <td>{{j+1}}<input type="checkbox" icheck  [(ngModel)]="item.checked"  (onClick)="checkStoreHouseCode($event,item)"></td>
+                                    <td>{{item.storeHouseCode}}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    </div>
+
+
+        <div class="modal-footer">
+            <button class="m-btn-cancel btn-blue" (click)="save(unInventoryItemList)">确定</button>
+            <button class="m-btn-cancel" (click)="hide(true)">关闭</button>
+        </div>
+    </div>

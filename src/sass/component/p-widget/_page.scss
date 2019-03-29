@@ -1,0 +1,111 @@
+/* 分页 */
+.page{
+    position: relative;
+    text-align: center;
+    
+    .page-wrap {
+        display: inline-block;
+        height: 30px;
+        .page-size,.page-go,.page-all {
+            margin-right: 15px;
+            line-height: 30px;
+        }
+        .page-size {
+            position: absolute;
+            left: 8px;
+            a {
+                color: #4c4c4c;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: none;
+                    color: $def-main-color;
+                }
+            }
+            a.active {
+                color: $def-main-color;
+            }
+        }
+        .page-all{
+            position: absolute;
+            left: 138px;
+        }
+        .page-go {
+            float: left;
+            >input {
+                padding: 0;
+                width: 45px;
+                border: solid 1px #ededed;
+                line-height: 30px;
+                text-align: center;
+                height: 30px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            >button{
+                margin-top: -3px;
+                margin-left: 10px;
+                vertical-align: middle;
+                height: 30px;
+            }
+        }
+        .pagination {
+            float: left;
+            margin: 0;
+            margin-right: 15px;
+            line-height: 30px;
+            ul {
+                padding: 0;
+                margin: 0;
+                li {
+                    float: left;
+                    >a:hover{
+                        background: $def-main-color;
+                        color: #fff;
+                        border: 1px solid $def-main-color;
+                    }
+
+                    i {
+                        display: block;
+                        width: 30px;
+                        height: 30px;
+                        line-height: 30px;
+                        text-align: center;
+                        color: $def-font1-color;
+                        cursor: pointer;
+                        &:hover{
+                            color: #aaa;
+                        }
+                    }
+
+                    .disable>i{
+                        color: #aaa;
+                        cursor: not-allowed;
+                    }
+
+                    &:first-child>a, &:last-child>a{
+                        border: none;
+                        &:hover{
+                            background: none;
+                        }
+                    }
+                }
+            }
+            .active>a {
+                background: $def-main-color;
+                color: #fff;
+                border: 1px solid $def-main-color;
+            }
+            a {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                border: 1px solid #e1e3eb;
+                color: #4A4A4A;
+                text-align: center;
+                cursor: pointer;
+                transition: all .3s;
+            }
+        }
+    }
+}

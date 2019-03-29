@@ -1,0 +1,69 @@
+<div class="sc-list my-order-list">
+  <!--菜单-->
+  <div class="m-list-menu">
+   <div class="m-search-all">
+    <div class="m-search">
+      <input name="name" [(ngModel)]="query.InputCondition" (keyup.enter)="search()" autocomplete='off' placeholder="搜索客户编号，部门编号"
+        type="text" style="width:250px;">
+    </div>
+    <div class="m-returnService-btns" style="text-align:right;">
+        <button class="m-btn-confirm research" type="button" (click)="search()">搜索</button>
+        <button class="m-btn-default resets" type="button" (click)="reset()">重置</button>
+    </div>
+    <div class="sc-list-menu-right">
+      <button class="m-btn-success" type="button" (click)="createExemption()">+ 新建豁免维护条件</button>
+  </div>
+  </div>
+ </div>
+<loading [show]="loading"></loading>
+ <!--表格-->
+ <div class="m-card-cont" *ngIf="!default">
+  <div class="m-order-card">
+   <div class="table-box table-list-others">
+    <table class="table table-hover table-list">
+      <thead style="font-size:12px;">
+        <tr style="height:44px;">
+          <th style="cursor: pointer; width:100px;">豁免审批客户编号</th>
+          <th style="width:100px;">豁免审批客户名称</th>
+          <th style="width:90px">豁免审批开始时间</th>
+          <th style="width:90px;">豁免审批结束时间</th>
+          <th style="width:75px;">豁免审批业务范围</th>
+          <th style="width:90px;">豁免审批欠款金额</th>
+          <th style="width:80px;">编辑人</th>
+          <th style="width:80px;">编辑时间</th>
+          <th style="width:60px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of currentTableData">
+          <td [title]="item.CustomerCode"><span (click)="viewCondition(item.ID)" class="clickText">{{item.CustomerCode}}</span></td>
+          <td [title]="item.CustomerName">{{item.CustomerName}}</td>
+          <td [title]="item.StartDate">{{item.StartDate}}</td>
+          <td [title]="item.EndDate">{{item.EndDate}} </td>
+          <td [title]="item.YWFWDM">{{item.YWFWDM}}</td>
+          <td>{{item.ArrearsAmount===0?'':item.ArrearsAmount}}</td>
+          <td [title]="item.EditorName">{{item.EditorName}}</td>
+          <td [title]="item.EditorTime">{{item.EditorTime}}</td>
+          <td><a href="javascript:void(0)" (click)="deleteCondition(item.ID)">删除</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-footer">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+    </div>
+  </div>
+  </div>
+  <div class="m-home-default" *ngIf="default">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>客户超期豁免条件为空</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

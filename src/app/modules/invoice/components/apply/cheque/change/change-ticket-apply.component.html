@@ -1,0 +1,343 @@
+<div class="content-auto">
+    <div class="addApply-container" style="padding-top: 62px">
+        <h1 class="addApply-tit-h1">新建支票换票申请</h1>
+        <!--基本信息-->
+        <div class="addApply-base">
+            <div class="m-dialog-head">
+                <span class="m-dialog-head-change">基础信息</span>
+            </div>
+            <!--选择类型基础信息 -->
+            <div class="addApp-base-infor">
+                <ul class="addApp-base-list">
+                    <li *ngIf="isReapply">
+                        <div class="addApp-form-item">
+                            <label class="addApp-form-label"
+                                ><i class="addApp-form-tips">*</i>表单号</label
+                            >
+                            <div style="margin:10px 0px 0px 10px">
+                                {{ changeApplyId }}
+                            </div>
+                        </div>
+                    </li>
+                    <li *ngIf="isReapply">
+                        <div class="addApp-form-item">
+                            <label class="addApp-form-label"
+                                ><i class="addApp-form-tips">*</i
+                                >申请时间</label
+                            >
+                            <div style="margin:10px 0px 0px 10px">
+                                {{
+                                    changeApplyDate
+                                        | iqDate: "YYYY-MM-DD HH:mm:ss"
+                                }}
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="addApp-form-item">
+                            <label class="addApp-form-label"
+                                ><i class="addApp-form-tips">*</i>申请人</label
+                            >
+                            <iq-person-select
+                                *ngIf="showbtn"
+                                [(ngModel)]="salePerson"
+                                [max]="1"
+                                (ngModelChange)="changePerson(salePerson)"
+                                ngDefaultControl
+                            ></iq-person-select>
+                            <div class="m-user-info-small" *ngIf="!showbtn">
+                                <div
+                                    class="m-user-members"
+                                    style="float: left;"
+                                >
+                                    <div
+                                        user-image
+                                        [hasClose]="false"
+                                        [user]="salePerson[0]"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="addApp-form-item">
+                            <label class="addApp-form-label"
+                                ><i class="addApp-form-tips">*</i
+                                >联系电话</label
+                            >
+                            <input
+                                class="addApp-form-input"
+                                [disabled]="!showbtn"
+                                type="text"
+                                [(ngModel)]="phone"
+                            />
+                        </div>
+                    </li>
+                    <!--<li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label"><i class="addApp-form-tips"></i>部门</label>
+                                <input class="addApp-form-input" type="text"  [(ngModel)]="deptName" disabled>
+                            </div>
+                        </li>-->
+                </ul>
+                <div class="addApp-form-reason">
+                    <div class="addAPP-form-rs">
+                        <label class="addApp-form-reasonlabel"
+                            ><i class="addApp-form-tips"></i>部门</label
+                        >
+                        <input
+                            class="addApp-form-input"
+                            type="text"
+                            [(ngModel)]="deptName"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                <div class="addApp-form-reason">
+                    <div class="addAPP-form-rs">
+                        <label
+                            class="addApp-form-reasonlabel"
+                            style="margin-left:0px"
+                            ><i class="addApp-form-tips">*</i>换票原因</label
+                        >&nbsp;
+                        <input
+                            class="addApp-form-input"
+                            [disabled]="!showbtn"
+                            type="text"
+                            [(ngModel)]="changeReson"
+                            placeholder="请填写换票原因"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--延期支票信息-->
+        <div class="addApply-base">
+            <div>
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">请选择支票</span>
+                    <iq-file-upload
+                        *ngIf="showbtn"
+                        upType="0"
+                        [url]="fileUploadApi"
+                        [allowedFileType]="['xls']"
+                        [text]="'批量上传'"
+                        (onSuccess)="onFileCallBack($event)"
+                        class="float-right"
+                        style="margin: 8px 10px 0 0;"
+                    ></iq-file-upload>
+                    <button
+                        type="button"
+                        *ngIf="showbtn"
+                        class="m-btn-text mr10 float-right"
+                        style="color: #57b9f8;"
+                        (click)="loadChange()"
+                    >
+                        模板下载
+                    </button>
+                </div>
+            </div>
+            <div class="addApp-base-infor">
+                <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                    <table class="gridtable">
+                        <tr>
+                            <th>序号</th>
+                            <th>原支票号</th>
+                            <th><i class="addApp-form-tips">*</i>新支票号</th>
+                            <th>
+                                <i class="addApp-form-tips">*</i>新支票到期日
+                            </th>
+                            <th><i class="addApp-form-tips">*</i>出票人账号</th>
+                            <th><i class="addApp-form-tips">*</i>出票人银行</th>
+                            <th><i class="addApp-form-tips">*</i>新支票金额</th>
+                            <th>原支票金额</th>
+                            <th>原支票到期日</th>
+                            <th>公司代码</th>
+                            <th>公司名称</th>
+                            <th>客户编码</th>
+                            <th>客户名称</th>
+                            <th *ngIf="showbtn">
+                                <i
+                                    class="iqon-add"
+                                    style="cursor: pointer;"
+                                    title="增加支票项"
+                                    (click)="searchInvoice()"
+                                ></i>
+                            </th>
+                        </tr>
+                        <tr *ngFor="let item of changeList; let idx = index">
+                            <!-- -->
+                            <td>{{ idx + 1 }}</td>
+                            <td>
+                                {{ item.oldTicketNumber
+                                }}<input
+                                    type="hidden"
+                                    name="invoiceApplyId"
+                                    [(ngModel)]="item.invoiceApplyId"
+                                />
+                            </td>
+                            <ng-container *ngIf="showbtn">
+                                <td>
+                                    <input
+                                        maxlength="8"
+                                        type="text"
+                                        name="newTicketNumber"
+                                        [(ngModel)]="item.newTicketNumber"
+                                    />
+                                </td>
+                                <td style="width:125px">
+                                    <my-datepicker
+                                        placeHolder="请选择日期"
+                                        [(ngModel)]="item.newCheckoutDate"
+                                        format="YYYY-MM-DD"
+                                        (ngModelChange)="getDate($event, item)"
+                                    ></my-datepicker>
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="newCheckoutAccount"
+                                        [(ngModel)]="item.newCheckoutAccount"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        name="newCheckoutBank"
+                                        [(ngModel)]="item.newCheckoutBank"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        (blur)="checkFloat(item)"
+                                        type="text"
+                                        name="newTicketAmount"
+                                        [(ngModel)]="item.newTicketAmount"
+                                    />
+                                </td>
+                            </ng-container>
+                            <ng-container *ngIf="!showbtn">
+                                <td>{{ item.newTicketNumber }}</td>
+                                <td>{{ item.newCheckoutDate }}</td>
+                                <td>{{ item.newCheckoutAccount }}</td>
+                                <td>{{ item.newCheckoutBank }}</td>
+                                <td>{{ item.newTicketAmount }}</td>
+                            </ng-container>
+                            <td>
+                                <div>{{ item.ticketAmount }}</div>
+                            </td>
+                            <td>
+                                <div>
+                                    {{
+                                        item.checkoutDate | iqDate: "YYYY-MM-DD"
+                                    }}
+                                </div>
+                            </td>
+                            <td>
+                                <div>{{ item.payee }}</div>
+                            </td>
+                            <td>
+                                <div>{{ item.payeeName }}</div>
+                            </td>
+                            <td>
+                                <div>{{ item.customCode }}</div>
+                            </td>
+                            <td>
+                                <div>{{ item.customName }}</div>
+                            </td>
+                            <td *ngIf="showbtn">
+                                <i
+                                    class="iqon-minimize"
+                                    style="cursor: pointer;"
+                                    title="删除支票"
+                                    (click)="deltr(idx)"
+                                ></i>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--流程记录-->
+        <db-wfhistory
+            *ngIf="isReapply"
+            [wfHistoryData]="wfData.wfHistoryData"
+        ></db-wfhistory>
+        <div class="addApply-base">
+            <div class="m-list-head">
+                <span class="m-dialog-head-change">审批人信息</span>
+            </div>
+            <div class="addApp-base-infor">
+                <div class="addApp-base-list">
+                    <li
+                        class="addApp-form-item w-full"
+                        style="margin:0;"
+                        *ngIf="showbtn"
+                    >
+                        <label class="addApp-form-label"
+                            ><i class="addApp-form-tips">*</i
+                            >事业部审批人</label
+                        >
+                        <div class="addApp-form-right">
+                            <iq-person-select
+                                [max]="1"
+                                required
+                                [(ngModel)]="person"
+                                ngDefaultControl
+                            ></iq-person-select>
+                        </div>
+                    </li>
+                    <li
+                        class="addApp-form-item w-full"
+                        style="margin:0;"
+                        *ngIf="!showbtn"
+                    >
+                        <label class="addApp-form-label"
+                            ><i class="addApp-form-tips">*</i
+                            >事业部审批人</label
+                        >
+                        <div class="addApp-form-right">
+                            <div
+                                class="m-user-info"
+                                user-image
+                                [hasClose]="false"
+                                [user]="person[0]"
+                            ></div>
+                        </div>
+                    </li>
+                    <li class="addApp-form-item w-full" style="margin:0;">
+                        <label class="addApp-form-label">风险审批人</label>
+                        <div class="addApp-form-right">
+                            <div
+                                class="m-user-info"
+                                user-image
+                                [hasClose]="false"
+                                [user]="p"
+                                *ngFor="let p of riskpersons"
+                            ></div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                <!-- <ng-container *ngIf="showbtn"> -->
+                <button class="m-btn-confirm" type="button" (click)="save()">
+                    提交
+                </button>
+                <!-- <button *ngIf="isClick" class="m-btn-disable">提交中...</button> -->
+                <!-- </ng-container> -->
+                <button
+                    [disabled]="!isClick"
+                    class="m-btn-sketch"
+                    type="button"
+                    (click)="close()"
+                >
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+
+        <div class="apply-p-left">
+            <form #myApplyForm="ngForm">
+                <nav>借用转销售申请</nav>
+                <div class="m-basic-info">
+                    <h2>基本信息<i class="iqon-fold"></i></h2>
+                    <div class="m-table m-table1">
+                        <table cellpadding="0" cellspacing="0" width="98%">
+                            <tr>
+                                <td width="10%" class="m-text-weight">预留号</td>
+                                <td width="40%">{{apply.reservationNo}}</td>
+
+                                <td width="10%" class="m-text-weight">申请时间</td>
+                                <td width="40%">{{apply.applyDate|iqDate:'YYYY-MM-DD'}}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="m-text-weight">申请人</td>
+                                <td width="40%">
+                                    <!--div class="m-user-info-small">
+                                        <div class="m-user-members" style="float: left;margin-left:10px;">
+                                            <div user-image [hasClose]="false" [user]="userInfo" *ngIf="notChange"></div>
+                                        </div>
+                                    </div-->
+                                    {{apply.applyUserName}}
+                                    <span class="m-ft-col">{{apply.applyItCode}}</span>
+                                </td>
+                                <td width="10%" class="m-text-weight">联系方式</td>
+                                <td width="40%">{{apply.contactPhone}}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="m-text-weight">员工编号</td>
+                                <td width="40%">{{apply.applyUserNo}}</td>
+
+                                <td width="10%" class="m-text-weight">业务范围编号</td>
+                                <td width="40%">{{apply.businessScope}}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="m-text-weight">本部</td>
+                                <td width="40%">{{apply.baseDeptName}}</td>
+
+                                <td width="10%" class="m-text-weight">事业部</td>
+                                <td width="40%">{{apply.subDeptName}}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="m-text-weight">平台</td>
+                                <td width="40%">{{apply.platformName}}</td>
+                                <td width="10%" class="m-text-weight">工厂</td>
+                                <td width="40%">{{apply.factory}}</td>
+                            </tr>
+                            <tr *ngIf="currNodeId==='node3'">
+                                <td width="10%" class="m-text-weight"><span class="addApp-form-tips">*</span>凭证号（1） </td>
+                                <td width="40%"><input type="text" name="voucherNo1" [(ngModel)]="apply.voucherNo1" #voucherNo1="ngModel"
+                                        required #forminput/>
+                                    <p class="m-warn-tip" *ngIf="(voucherNo1.touched || myApplyForm.submitted) && voucherNo1.invalid">
+                                        <span *ngIf="voucherNo1.errors?.required">凭证号（1）必填</span>
+                                    </p>
+                                </td>
+
+                                <td width="10%" class="m-text-weight"><span class="addApp-form-tips">*</span>凭证号（2）</td>
+                                <td width="40%"> <input type="text" name="voucherNo2" [(ngModel)]="apply.voucherNo2" #voucherNo2="ngModel"
+                                        required #forminput/>
+                                    <p class="m-warn-tip" *ngIf="(voucherNo2.touched || myApplyForm.submitted) && voucherNo2.invalid">
+                                        <span *ngIf="voucherNo2.errors?.required">凭证号（2）必填</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr *ngIf="apply.flowStatus===3">
+                                <td width="10%" class="m-text-weight">凭证号（1）</td>
+                                <td width="40%">{{apply.voucherNo1}}</td>
+                                <td width="10%" class="m-text-weight">凭证号（2）</td>
+                                <td width="40%">{{apply.voucherNo2}}</td>
+                            </tr>
+                            <tr>
+                                <td width="10%" class="m-text-weight">借用客户</td>
+                                <!--td *ngIf="currNodeId==='node3'" width="40%"> <input type="text" name="borrowCustomerName" [(ngModel)]="apply.borrowCustomerName" />
+                                </td-->
+                                <td width="40%">{{apply.borrowCustomerName}}</td>
+                                <td width="10%" class="m-text-weight">交货单号</td>
+                                <td width="40%">{{apply.deliveryNo}}</td>
+                            </tr>
+                            <tr>
+                                <ng-container *ngIf="!salerFlag">
+                                    <td width="10%" class="m-text-weight">总金额</td>
+                                    <td width="40%">{{apply.totalAmount}}</td>
+                                </ng-container>
+                                <td width="10%" class="m-text-weight">销售说明</td>
+                                <td width="40%">{{apply.salesMemo}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="m-basic-info">
+                    <h2>物料信息<i class="iqon-fold"></i></h2>
+                    <div class="apply-p-infor  m-clearfix">
+                        <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                            <table class="m-info-table" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th colspan="8">申请转销售物料</th>
+                                    </tr>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>物料编号</th>
+                                        <th>物料描述</th>
+                                        <th>批次</th>
+                                        <th>单位</th>
+                                        <th>数量</th>
+                                        <th>金额(元)</th>
+                                        <th>借用在途库</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of unclearMaterialItemList;index as i">
+                                        <td width="5%">{{i+1}}</td>
+                                        <td width="10%" class="m-text-center">{{item.meterialNo}}</td>
+                                        <td width="15%">{{item.meterialMemo}}</td>
+                                        <td width="10%" class="m-text-center">{{item.batch}}</td>
+                                        <td width="10%" class="m-text-center">{{item.unit}}</td>
+                                        <td width="10%" class="m-text-center">{{item.count}}</td>
+                                        <td width="10%" class="m-text-center">{{item.totalAmount}}</td>
+                                        <td width="10%" class="m-text-center">{{item.onwayStore}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!--审批记录 -->
+                <div class="m-basic-info">
+                    <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+                </div>
+                <!--div class="m-basic-info">
+                    <jy-wfapproval *ngIf="!isView" [saveId6Flag]="saveId6Flag" [appParms]="appParms" (onSave)="saveBill($event)"></jy-wfapproval>
+                </div-->
+                <div class="m-app-opinion" *ngIf="!isView">
+                    <div class="m-exm-item">
+                        <p class="m-exm-advice">审批意见</p>
+                        <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="remark" name="remark"></textarea>
+                    </div>
+                </div>
+                <div class="apply-submitBtn">
+                    <div class="m-exm-btn">
+                        <!--div class="m-exm-btn"-->
+                        <ng-container *ngIf="!isView">
+                            <button class="m-btn-agree apply-agree" (click)="agree()">同意</button>
+                            <button class="m-btn-refuse apply-refuse" (click)="reject()">驳回</button>
+                        </ng-container>
+                        <button class="m-btn-refuse" type="button" (click)="goback()">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--审批过程 -->
+        <div class="apply-p-right ">
+            <db-wfview #wfview></db-wfview>
+        </div>
+
+    </div>
+</div>

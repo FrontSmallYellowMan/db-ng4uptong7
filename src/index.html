@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+  <meta charset="utf-8">
+  <title>D-BOMS</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+  <iq-root>
+  <style>
+@keyframes loading{
+  0%{transform: scale(0.3);}
+  100%{transform: scale(1.5);}
+}
+ul{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100px;
+  height: 30px;
+}
+li{
+  margin-right: 10px;
+  list-style: none;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: #57b9f8;
+  border-radius: 50%;
+  animation-name: loading;
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.2, 0.65, 0.6, 0.7);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+li:nth-child(1){
+  animation-delay: 0;
+}
+li:nth-child(2){
+  animation-delay: -0.4s;
+}
+li:nth-child(3){
+  animation-delay: -0.8s;
+}
+</style>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+  </iq-root>
+
+</body>
+
+</html>

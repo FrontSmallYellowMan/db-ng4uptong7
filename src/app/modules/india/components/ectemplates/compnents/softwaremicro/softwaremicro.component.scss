@@ -1,0 +1,571 @@
+.contpl {
+    margin: 0 auto;
+    width: 1200px;
+    padding: 0 40px;
+    font-size: 14px;
+    margin-top: 62px;
+    position: relative;
+    top: 8px;
+    .item {
+        margin-bottom: 14px;
+        background: #fff;
+        padding: 12px 25px;
+        border-radius: 8px;
+        .clearfloat::after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+        .clearfloat{zoom:1}
+        .i-required{
+            color: red;
+        }
+        .title{
+            height: 46px;
+            .titleSpan{
+                display: block; 
+                height: 46px;
+                line-height: 46px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .barcode{
+                float: right;
+                margin-top: -25px;
+                text-align: center;
+            }
+        }
+        .content{
+            margin: 20px 25px;
+            h5{
+                display: inline-block;
+                font-size: 16px;
+                font-weight: normal;
+            }
+            input{
+                border-width: 1px;
+                border-style: solid;
+                border-color: #e1e3eb;
+                border-radius: 3px;
+                display:inline-block;
+                vertical-align:middle;
+                padding: 0 7px;
+            }
+            input:focus{
+                border-color: #66afe9;
+                outline: 0;
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+                display:inline-block;
+                vertical-align:middle;
+            }
+            .btn.btn-info.custom {
+                height: 31px;
+                margin-top: -3px;
+                line-height: 18px;
+                margin-left: 4px;
+                width: 88px;
+            }
+            .floatRight{
+                float: right;
+            }
+            .floatLeft{
+                float: left;
+            }
+            .seller .form-control{
+                width: 345px;
+            }
+            .buyer{
+                input{
+                    width: 345px;
+                    margin-left: -5px;
+                }
+                p{
+                    padding: 5px 30px 0px;
+                }
+            }
+            #returnRatio,#specificAmount{
+                width: 100px;
+            }
+            .endUserInfo{
+                width: 70%;
+            }
+            .endUserInfo li{
+                width: 100%;
+                height: 36px;
+                border: 1px solid silver;
+                margin-top: -1px;
+            }
+            .endUserInfoInput{
+                margin: -2px 5px 2px;
+                width: 70%;
+                height: 27px;
+            }
+            .endUserInfoSpan{
+                display: inline-block;
+                width: 25%;
+                text-align: left;
+                border-right: 1px solid silver;
+                height: 35px;
+                line-height: 35px;
+                padding-left: 7px;
+            }
+            .receiveInfo,.DisputeDealtType{
+                width: 18px;
+            }
+            .singleReceiveInfo{
+                width: 100%;
+                position: relative;
+            }
+            .singleReceiveInfo li{
+                width: 100%;
+                margin: 1px 0;
+            }
+            .singleReceiveInfo li input{
+                height: 27px;
+            }
+            .singleReceiveInfo li:nth-child(1) input{
+                width: 580px;
+            }
+            .singleReceiveInfo li:nth-child(2) input{
+                // width: 382px;
+                width: 577px;
+            }
+            .singleReceiveInfo li:nth-child(3) input{
+                width: 255px;
+            }
+            .singleReceiveInfo li:nth-child(4) input{
+                width: 718px;
+            }
+            .single{
+                display: none;
+            }
+            #deliver{
+                width: 350px;
+                height: 27px;
+            }
+            .ticketDay{
+                width: 80px;
+                height: 25px;
+            }
+            .money{
+                width: 132px;
+                height: 25px;
+            }
+            .conCode{
+                margin-left: 345px;
+            }
+            .paymentMethod-six{
+                vertical-align:text-top;
+            }
+            .paymentMethod span{
+                display: inline-block;
+                position: absolute;
+                margin-top: 0px;
+                margin-left: 0px;
+            }
+            .paymentMethod textarea{
+                margin-top: 5px;
+                margin-left: 3em;
+            }
+            .sellerBuyer ul .sellerBuyerInfo{
+                height: 33px;
+                margin-bottom: 7px;
+            }
+            .sellerBuyer ul li>div{
+                float:  left;
+                width: 50%;
+                position: relative;
+            }
+            .sellerBuyer ul li label{
+                display: inline-block;
+                width: 15%;
+            }
+            .sellerBuyer ul li .buyertxt{
+                width: 75%;
+                
+            }
+            .sellerBuyer ul li:nth-child(7){
+                width: 100%;
+            }
+            .sellerBuyer ul li:nth-child(7) label{
+                width: 77px;
+            }
+            .sellerBuyer ul li:nth-child(7) input{
+                width: 30%;
+                display: inline-block;
+            }
+            .operation{
+                width: 575px;
+                margin: 0 auto;
+            }
+            .operation li{
+                text-align: center;
+                height: 45px;
+                line-height: 44px;
+                float: left;
+                margin-left: 15.5px;
+            }
+            .operation li:nth-child(4),.operation li:nth-child(5){
+                padding: 0 10px;
+            }
+            .operation li:hover{
+                cursor: pointer;
+            }
+            .ticket,{
+                display: inline-block;
+                span.btn.btn-default.btn-secondary.form-control.ui-select-toggle {
+                    position: relative;
+                }
+                span.ui-select-match-text.pull-left {
+                    position: absolute;
+                    top: 5px;
+                }
+                span.ui-select-placeholder.text-muted {
+                    margin-top: -1px;
+                    color: black;
+                }
+            }
+
+            .divStreet{
+                padding-left: 330px;
+            }
+
+            .inputStreet {
+              width: 568px;
+              height: 32px;            
+              box-shadow: none;
+              border-radius: 3px;
+              border: 1px solid #e1e3eb;
+              background-color: #F9F9F9;
+           }
+
+
+           .ticket-paytype{
+               display: inline-block;
+           }
+           .ticket-paytype .ui-select-container .form-control{
+                width: 250px;
+                height: 32px;
+                padding: 6px;
+                box-shadow: none;
+                border-radius: 3px;
+                border: 1px solid #e1e3eb;
+            }
+            .ticket .ui-select-container .form-control{
+                width: 158px;
+                height: 32px;
+                padding: 6px;
+                box-shadow: none;
+                border-radius: 3px;
+                border: 1px solid #e1e3eb;
+            }
+
+          
+
+            .ticket .ui-disabled{
+                background-color: #F9F9F9;
+            }
+            .ticketDay[readonly="true"]{
+                cursor: not-allowed;
+            }
+            .multipleAddress{
+                width: 100%;
+                padding: 20px 30px;
+                .iqon-close-m{
+                    cursor: pointer;
+                    margin-left: --5px;
+                }
+            }
+            .batchUpload{
+                position: relative;
+            }
+            .batchUpload input[type=file]{
+                filter:alpha(opacity=0);opacity:0;
+                width: 84px;
+                height: 35px;
+                position: absolute;
+                top: -3px;
+                right: 0;
+            }
+            .batchUpload div{
+                display: inline-block;
+                
+            }
+            .batchUpload div:hover button{
+                color: #fff;
+                background-color: #31b0d5;
+                border-color: #269abc;
+            }
+            .batchUpload a{
+                cursor: pointer;
+                display: inline-block;
+                height: 38px;
+                line-height: 38px;
+                padding-right: 15px;
+            }
+            .batchUpload a:hover{
+                text-decoration: none;
+            }
+            .upload{
+                position: relative;
+            }
+            .upload input[type="file"]{
+                width: 90px;
+            }
+            .files{
+                width: 50%;
+                position: relative;
+            }
+            .files input[type="file"]#sellerFile{
+                filter:alpha(opacity=0);opacity:0;
+                width: 88px;
+                height: 35px;
+                position: absolute;
+                top: -3px;
+                left:0px;
+            }
+        }
+        .code39{
+            display: inline-block;
+            width: 350px;
+            height: 40px;
+        }
+    }
+}
+textarea{
+        border-radius: 2px;
+        border: 1px solid silver;
+        width: 80%;
+        word-break:break-all;
+    }
+    textarea:hover,textarea:focus{
+        width: 80%;
+        border-radius: 2px;
+        border: 1px solid #009DD9;
+    }
+
+
+
+
+
+
+button[disabled], html input[disabled] {
+    cursor: default;
+    background-color: #fbfbfb;
+}
+.row{
+    position: relative;
+    margin: 8px 0;
+}
+.alert-danger{
+    position: absolute;
+    z-index: 9999;
+    padding: 5px;
+}
+.alert-dismissable .close, .alert-dismissible .close {
+    position: relative;
+    top: 0px;
+    right: -2px;
+    color: inherit;
+}
+.buyerName{
+    top: -40px;
+    left: 63px;
+}
+.recipientName{
+    right: -125px;
+    top: -5px;
+}
+.recipientAddress{
+    top: 23px;
+    right: -125px;
+}
+.contactNameAndTel{
+    right: -139px;
+    bottom: 3px;
+}
+.theReceivedType{
+    right: -125px;
+    bottom: -24px;
+}
+.table thead > tr > th{
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+.table.table-bordered>tbody>tr>td{
+    border-bottom: 1px solid #ddd;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    cursor: pointer;
+}
+.table-bordered{
+    border-bottom: 0;
+}
+.table thead {
+    font-size: 16px;
+        color: #777;
+}
+.modal-header{
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+}
+.modal-header-msg{
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 0 0 15px;
+}
+.modal-header-tpl{
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 8px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 5px;
+}
+.modal-body-msg{
+    font-size: 14px;
+    padding: 8px;
+}
+.modal-body-tpl{
+    font-size: 14px;
+}
+.modal-content{
+    // top: 100px;
+    padding:0 10px;
+}
+.modal-content-msg{
+    background-color: white;
+    border-radius: 3px;
+    position: relative;
+    top: 100px;
+}
+.m-btn-success{
+    background: #31b0d5;
+}
+
+.td-serchUser-1{
+    width: 50%;
+}
+.td-serchUser-2{
+    width: 30%;
+}
+.td-serchUser-3{
+    width: 20%;
+}
+.relatedService{
+    position: relative;
+    textarea{
+    border-radius: 2px;
+    border: 1px solid silver;
+    width: 80%;
+    font-size: 14px;
+    line-height: 18px;
+    }
+    textarea:hover,textarea:focus{
+        width: 80%;
+        font-size: 14px;
+        line-height: 18px;
+        border-radius: 2px;
+        border: 1px solid #009DD9;
+    }
+    #relatedservicediv{
+        width: 80%;
+        border: 1px solid #FFF;
+        word-break: break-all;
+        word-wrap: break-word;
+        padding: 2px;
+        line-height: 18px;
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+        display: none;
+    }
+}
+.c-content-footer{
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 35px;
+    padding-top: 15px;
+    .m-btn-common{
+        margin-left: 15px;
+    }
+    .m-btn-cancel{
+        background-color: #f3f3f3;;
+        text-align: center;
+        border: none;
+        border-radius: 3px;
+        transition: all .7s;
+        font-size: 14px;
+        overflow: hidden;
+        display: inline-block;
+        height: 45px;
+        color: #4a4a4a;
+        cursor: pointer;
+    }
+    .m-btn-default{
+        height: 45px;
+    }
+}
+
+.sellerBuyerInfo .my-datepicker{
+    width: 86%;
+    top: -33px;
+    left: 81px;
+    width: 75%;
+    .picker-main{
+        top: -266px;
+    }
+}
+.row{
+    .m-input-item-selcode,.m-input-item-buycode,.m-input-item-costomcode{
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        .m-input-title{
+            float: left;
+            width: 75%;
+            text-align: right;
+        }
+        .m-input-content{
+            width: 25%;
+            float: left;
+        }
+    }
+    .m-input-item-seller{
+        width: 45%;
+        height: 40px;
+        line-height: 40px;
+        .m-input-title,.m-input-content{
+            float: left;
+        }
+        .m-input-title{
+            width: 13%;
+        }
+        .m-input-content{
+            width: 84%;
+            .form-control{
+                width: 100%
+            }
+        }
+    }
+    .m-input-item-buyer{
+        width: 55%;
+        height: 40px;
+        line-height: 40px;
+        .m-input-title,.m-input-content{
+            float: left;
+        }
+        .m-input-title{
+            width: 11%;
+        }
+        .m-input-content{
+            width: 86%;
+            input{
+                width: 80%
+            }
+        }
+    }
+}

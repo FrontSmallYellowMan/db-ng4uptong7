@@ -1,0 +1,59 @@
+<div class="container m-order-number">
+    <div class="modal-header m-list-head">
+        <span>新建合同物料选择</span>
+        <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+
+            <div class="m-search-all">
+                <div class="m-search" style="margin-right:0;width:250px;">
+                    <i class="iqon-query" (click) = "search()"></i>
+                    <input name="name" [(ngModel)] = "postContractData.InputCondition" (keyup.enter)="search()" placeholder="搜索合同编号,客户名称..." type="text">
+                </div>
+            </div>
+            <loading [show]="loadings"></loading>
+            <div class=""  *ngIf='!defauls'>
+                <div class="contract-material-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:135px;">合同编号</th>
+                                <th style="width:135px;">客户名称</th>
+                                <th class="money-right" style="width:120px;">合同金额</th>
+                                <th class="money-right" style="width:120px;">已开金额</th>
+                                <!-- <th>审批状态</th> -->
+                                <th style="width:80px;">销售员</th>
+                                <th style="width:90px;">创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor = "let item of contractList;index as i" (click) = "selected(item.MainContractCode)">
+                                <td title="{{item.MainContractCode}}">{{item.MainContractCode}}</td>
+                                <td title="{{item.BuyerName}}">{{item.BuyerName}}</td>
+                                <td class="money-right" title="{{item.ContractMoney}}">{{(item.ContractMoney || 0) |iqNumber:'1.2-2'}}</td>
+                                <td class="money-right" title="{{item.SalesAmount}}">{{(item.SalesAmount || 0)  |iqNumber:'1.2-2'}}</td>
+                                <!-- <td>审批状态</td> -->
+                                <td title="{{item.SalesITCode}}">{{item.SalesITCode}}</td>
+                                <td title="{{item.CreateTime}}">{{item.CreateTime}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager>
+            </div>
+        <div class="" *ngIf='defauls'>
+            <div class="m-scan">
+                <div class="m-scan-body">
+                    <div class="m-scan-default">
+                        <div class="m-scan-logo">
+                            <i class="iqon-apply"></i>
+                        </div>
+                        <h3>查询合同物料为空</h3>
+                        <!-- <h4>快来点击右上角“新建申请”按钮，开始新建申请吧~</h4> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

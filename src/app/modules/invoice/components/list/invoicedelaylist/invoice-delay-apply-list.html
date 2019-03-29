@@ -1,0 +1,164 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-boardmenu">
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: tabType === '0' }"
+                (click)="changeTab('0')"
+                >我的申请<span class="m-num hide">{{ approvalCount }}</span></a
+            >
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: tabType === '1' }"
+                (click)="changeTab('1')"
+                >我的审批<span class="m-num" *ngIf="approvalCount > 0">{{
+                    approvalCount
+                }}</span></a
+            >
+        </div>
+
+        <div class="m-dropdown g-fr">
+            <button class="m-btn-success" (click)="addsq()">
+                <i class="iqon-add"></i>新建申请
+            </button>
+        </div>
+    </div>
+    <!--搜索-->
+    <div class="m-list-menu" [ngSwitch]="tabType">
+        <ul *ngSwitchCase="'0'" class="m-state">
+            <li
+                [ngClass]="{ active: applyPage == '1' }"
+                (click)="changeapplytype('1', '0')"
+            >
+                审批中
+            </li>
+            <li
+                [ngClass]="{ active: applyPage == '3' }"
+                (click)="changeapplytype('3', '0')"
+            >
+                已完成
+            </li>
+            <li
+                [ngClass]="{ active: applyPage == '99' }"
+                (click)="changeapplytype('99', '0')"
+            >
+                全部
+            </li>
+            <li
+                [ngClass]="{ active: applyPage == '0' }"
+                (click)="changeapplytype('0', '0')"
+            >
+                草稿
+            </li>
+        </ul>
+        <ul *ngSwitchCase="'1'" class="m-state">
+            <li
+                [ngClass]="{ active: applyPage == '1' }"
+                (click)="changeapplytype('1', '1')"
+            >
+                待我审批
+            </li>
+            <li
+                [ngClass]="{ active: applyPage == '3' }"
+                (click)="changeapplytype('3', '1')"
+            >
+                我已审批
+            </li>
+            <li
+                [ngClass]="{ active: applyPage == '99' }"
+                (click)="changeapplytype('99', '1')"
+            >
+                全部
+            </li>
+        </ul>
+        <div class="m-search-all">
+            <div class="m-search">
+                <i
+                    class="iqon-query"
+                    id="searchChange"
+                    (click)="getInvoiceDelayData()"
+                    style="cursor:pointer"
+                ></i>
+                <input
+                    name="state"
+                    id="queryList"
+                    placeholder="支票号/客户名称/合同编码"
+                    [(ngModel)]="invoiceCustomContract"
+                    type="text"
+                    (keyup.enter)="getInvoiceDelayData()"
+                />
+            </div>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="m-table-right" *ngIf="!isShowMes">
+        <table
+            class="table table-hover table-list"
+            style="table-layout: fixed;"
+        >
+            <thead>
+                <tr>
+                    <th style="width:180px">表单号</th>
+                    <th>申请日期</th>
+                    <th>当前环节</th>
+                    <th *ngIf="applyPage != '3'">审批人</th>
+                    <th>客户代码</th>
+                    <th>客户名称</th>
+                    <th>支票数量</th>
+                    <th>支票合计金额</th>
+                    <th *ngIf="applyPage == '0'">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of invoiceList" (click)="goto(item)">
+                    <td>
+                        {{ item["applyId"] }}
+                    </td>
+                    <td>
+                        {{ item.createDate | iqDate: "YYYY-MM-DD" }}
+                    </td>
+
+                    <td>{{ item["flowCurrNodeName"] }}</td>
+                    <td
+                        *ngIf="applyPage != '3'"
+                        title="{{ item.currApprAuthors }}"
+                    >
+                        {{ item.currApprAuthors }}
+                    </td>
+                    <td title="{{ item.customCode }}">{{ item.customCode }}</td>
+                    <td title="{{ item.customName }}">{{ item.customName }}</td>
+                    <td>{{ item["invoiceAmount"] }}</td>
+                    <td>{{ item["totalInvoiceAmount"] }}</td>
+                    <td style="text-align:center" *ngIf="applyPage == '0'">
+                        <a
+                            href="javascript:;"
+                            (click)="
+                                delDraftById(item.id); $event.stopPropagation()
+                            "
+                            >删除</a
+                        >
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="page">
+            <iq-pager
+                [data]="pagerData"
+                (onChange)="onChangePage($event)"
+            ></iq-pager>
+        </div>
+    </div>
+    <div class="m-home-default" *ngIf="isShowMes">
+        <div class="m-scan">
+            <div class="m-scan-body">
+                <div class="m-scan-default">
+                    <div class="m-scan-logo">
+                        <i class="iqon-apply"></i>
+                    </div>
+                    <h3>{{ tipMessage }}</h3>
+                    <h4>{{ detailMessage }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

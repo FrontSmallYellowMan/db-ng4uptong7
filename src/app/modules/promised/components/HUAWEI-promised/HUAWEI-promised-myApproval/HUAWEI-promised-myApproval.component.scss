@@ -1,0 +1,16 @@
+:host/deep/.m-noresult{
+  height: calc(100vh - 190px);
+  margin-top: 10px;
+}
+
+.m-td-warp{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width:120px;
+
+}
+
+:host/deep/.picker-main{
+  right: 0;
+}

@@ -1,0 +1,191 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left"  [ngClass]="{'widthmax':revokedObj?.flowStatus==5 && flowstates=='0'}">
+            <h1 class="apply-tit-h1" *ngIf="readonlyval">支票撤票查看</h1>
+            <h1 class="apply-tit-h1" *ngIf="!readonlyval">支票撤票审批</h1>
+            <!-- 基础信息 -->
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">基础信息</span>
+
+                </div>
+                <div class="apply-p-infor m-clearfix">
+                    <div class="m-exm-item" style="width: 100%;">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">表单号</div>
+                                <div class="m-exm-cont">{{revokedObj?.revokedId}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请时间</div>
+                                <div class="m-exm-cont">{{revokedObj?.createDate | iqDate:'YYYY-MM-DD HH:mm:ss'}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <div class="m-user-info-small">
+                                        <div class="m-user-info1" #sqr user-image [hasClose]="false"></div>
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">电话</div>
+
+                                <div class="m-exm-cont">
+                                    <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                                        <input class="addApp-form-input" type="text" maxlength=11 minlength=6 name="revokedPhone" required [(ngModel)]="revokedPhone">
+                                    </ng-container>
+                                    <ng-container *ngIf="revokedObj?.flowStatus!=5 || flowstates=='myall'">
+                                        {{revokedObj?.revokedPhone}}
+                                    </ng-container>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">部门</div>
+                                <div class="m-exm-cont">{{revokedObj?.revokedDept}}</div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">撤票原因</div>
+                                <div class="m-exm-cont" title="{{revokedObj?.revokedRemark}}" style='width:350px;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;'>
+                                    <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                                        <input class="addApp-form-input" type="text" placeholder="撤票原因" [(ngModel)]="revokedRemark">
+                                    </ng-container>
+                                    <ng-container *ngIf="revokedObj?.flowStatus!=5 || flowstates=='myall'">
+                                        {{revokedObj?.revokedRemark}}
+                                    </ng-container>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--撤票支票信息-->
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">撤票支票信息</span>
+
+                </div>
+                <div class="apply-finance-l">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr>
+                                <th class='m-text-center'>序号</th>
+                                <th class='m-text-center'>支票号</th>
+                                <th class="m-text-center">支票金额</th>
+                                <th class='m-text-center'>客户名称</th>
+                                <th class='m-text-center'>出票日期（支票到期日）</th>
+                                <th class=" m-text-center">合同编码</th>
+                                <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                                    <th class="m-text-center">
+                                        <i class="iqon-add" style="cursor: pointer;color:#57b9f8" title="选择支票信息" (click)="searchInvoice()"></i>
+
+                                    </th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let item of invoicelist;let idx=index'>
+                                <!-- -->
+                                <td>{{idx+1}}</td>
+                                <td>
+                                    <div>{{item.ticketNum}}</div>
+                                </td>
+                                <td>
+                                    <div>{{item.ticketAmount}}</div>
+                                </td>
+                                <td>
+                                    <div>{{item.customName}}</div>
+                                </td>
+                                <td>
+                                    <div>{{item.checkoutDate | iqDate:'YYYY-MM-DD' }}</div>
+                                </td>
+                                <td>
+                                    <div>{{item.contractNum}}</div>
+                                </td>
+                                <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                                    <td class="m-text-center">
+
+                                        <i class="iqon-minimize" style="cursor: pointer;color:#57b9f8" title="删除支票" (click)="deltr(idx)"></i>
+
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                <div class="addApply-base apply-p-base">
+                    <div class="m-list-head">
+                        <span class="m-dialog-head-change">审批人信息</span>
+                    </div>
+                    <div class="addApp-base-infor">
+                        <div class="addApp-base-list">
+
+
+                            <li class="addApp-form-item w-full" style="margin:0;">
+                                <label class="addApp-form-label">事业部审批人</label>
+                                <div class="addApp-form-right">
+                                    <iq-person-select required [(ngModel)]="person" ngDefaultControl [max]="1"></iq-person-select>
+                                </div>
+
+                            </li>
+
+
+
+                            <li class="addApp-form-item w-full" style="margin:0;">
+                                <label class="addApp-form-label">风险岗审批人</label>
+                                <div class="addApp-form-right">
+
+                                    <div class="m-user-info" user-image [hasClose]="false" [user]="person0" *ngFor="let person0 of person1;index as i;"></div>
+
+                                </div>
+
+                            </li>
+
+
+                            <li class="addApp-form-item w-full" style="margin:0;">
+                                <label class="addApp-form-label">财务岗审批人</label>
+                                <div class="addApp-form-right">
+
+
+                                    <div class="m-user-info" user-image [hasClose]="false" [user]="person0" *ngFor="let person0 of person2;index as i;"></div>
+
+                                </div>
+
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!--流程记录-->
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+            <ng-container *ngIf="readonlyval==false">
+                <!--流程按钮-->
+                <ng-container *ngIf="revokedObj?.flowStatus!=5 || flowstates=='myall'">
+                <wfapproval [saveId6Flag]="saveId6Flag" [appParms]="appParms" (onSave)="saveBill($event)"></wfapproval>
+                 </ng-container>
+                 <ng-container *ngIf="revokedObj?.flowStatus==5 && flowstates=='0'">
+                 <div class="addApp-sub-btns" style="text-align: center">
+                    <button class="m-btn-confirm"  type="button" (click)="saveBill('重新发起')">提交</button>
+                   <button class="m-btn-sketch" type="button" (click)="goBack()">关闭</button>
+                </div>
+                 </ng-container>
+            </ng-container>
+            <ng-container *ngIf="readonlyval">
+                <div class="addApp-submit-btn">
+                    <div class="addApp-sub-btns" style="text-align: center">
+                        <button class="m-btn-sketch" type="button" (click)="goBack()">关闭</button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <!--审批图-->
+        <ng-container *ngIf="revokedObj?.flowStatus!=5 || flowstates=='myall'">
+        <div class="apply-p-right">
+            <db-wfview #wfview></db-wfview>
+        </div>
+        </ng-container>
+    </div>

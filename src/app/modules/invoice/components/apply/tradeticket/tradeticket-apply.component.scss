@@ -1,0 +1,162 @@
+table.gridtable {
+    font-family: verdana,arial,sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #d2d8e0;
+    border-collapse: collapse;
+    width: 100%;
+}
+table.gridtable th {
+    background: #fff;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #d2d8e0;
+    text-align: center;
+}
+table.gridtable td {
+    background: #fff;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #d2d8e0;
+    text-align: center;
+}
+.float-right {
+  float:right;
+}
+.addApply-base{
+    margin-bottom: 10px;
+    input[readonly]{
+        background-color: #ffffff;
+    }
+}
+.double-font{
+    line-height: 16px;
+    // margin-top: -8px;
+}
+.addApply-container .addApply-base .addApp-base-infor .addApp-base-list > li{
+    width: 49%;
+    &.w-full{
+        width: 100%;
+    }
+}
+.addApp-form-item {
+    position: relative;
+    .addApp-form-tips{
+        line-height: 0;
+    }
+    .m-warn-tip{
+        position: absolute;
+        left: 18%;
+        top: 36px;
+    }
+    .addApp-form-label{
+        width:16%;
+    }
+}
+.w-full .addApp-form-right{
+    width:91.8%;
+    height:auto;
+}
+.w-full .addApp-form-label{
+    width:7.8%;
+}
+.addApp-form-right{
+    width: 83%;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+.m-user-info {
+    padding: 0 10px;
+    float: left;
+    min-width: 180px;
+    margin-right: 40px;
+}
+.m-info-table{
+    // width: 100%;
+}
+.m-btn-font{
+    line-height: 35px;
+    margin-left: 20px;
+    color: #57b9f8;
+    cursor: pointer;
+}
+.float-r{
+    float: right;
+    cursor: pointer;
+}
+.w360{
+    width:360px;
+}
+.m-add-shipTo{
+    width:180px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.m-sales-money{
+    width:100%;
+    font-size:14px;
+    color: #151515;
+    li{
+        float:left;
+        width:25%;
+        line-height: 35px;
+    }
+}
+.oc-address-ul{
+    padding-left: 3.3%;
+    width: 100%;
+    .addApp-form-label{
+        width:10%;
+    }
+    .m-select{
+        display: inline-block;
+        font-weight: normal;
+        width: 22%;
+        margin-left: 10px;
+    }
+    input{
+        width:30%;
+    }
+}
+/deep/ .loading-container .loading-backdrop{
+    background-color: inherit !important;
+}
+/deep/ .w-full .iradio_square-blue{
+    margin-left: 10px;
+    top: 8px
+}
+.iradio_label{
+    margin-right:35px;
+    line-height: 34px;
+    margin-left: 10px;
+}
+/deep/ .repare-list{
+    min-width: 950px;
+}
+
+.m-input-notice{
+    display: block;
+    color: #a8b1bd;
+    font-size: 12px;
+}
+.m-search .iqon-query{
+    top:5px;
+    line-height: 25px;
+}
+input{
+    margin-top: 5px;
+}
+
+.m-search input{
+    height:25px;
+}

@@ -1,0 +1,58 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">新建冲红申请</h1>
+            <!--基本信息-->
+            <div class="addApply-base">
+                <!-- <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div> -->
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">基础信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="addApp-base-infor">
+                    <iq-baseinfo [urlFlag]=urlFlag (RefundTypeOut)="RefundTypeOut($event)" (changeRedTypeOut)="changeRedTypeOut($event)" (materialSelect)="materialSelect($event)" (redTypeFlagOut)="redTypeFlagOut($event)" (applyDataOut)="applyDataOut($event)" (nameTypeOut)="nameTypeOut($event)"></iq-baseinfo>
+                </div>
+            </div>
+            <!--财务信息-->
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt">财务信息</span>
+                    <i class="iqon-fold"></i>
+                </div>
+                <div class="addApp-base-infor">
+                    <iq-financeinfo [nameType]=nameType (backtabDataList)="backtabDataList($event)" (ReBackTableData)="ReBackTableData($event)" (returnMaterialData)="returnMaterialData($event)"
+                        (backInvoice)="backInvoice($event)" (tabListOut)="tabListOut($event)" [applybusz]=applybusz [billTypeId]=billTypeId [returnMoney]=returnMoney [materialSelected]=materialSelected [changeRedType]=changeRedType [redTypeFlag]=redTypeFlag ></iq-financeinfo>
+                </div>
+            </div>
+            <!--冲退明细-->
+            <div class="addApply-base money" *ngIf="billTypeId=='materielType'||billTypeId=='costType'||billTypeId=='priceType'">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">冲退明细</span>
+                </div>
+                <div class="addApply-detail">
+                    <div class="m-charge-tabs">
+                        <ul>
+                            <li [class.active]=item.active *ngFor="let item of backtabData;let i = index;" (click)="tabActive(item)">{{item.value}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <bill-detail [billTypeId]=billTypeId [urlFlag]=urlFlag (returnBillMoney)="returnBillMoney($event)"
+                 [tabledata]=materialList [invoicenoActive] = invoicenoActive [materialMoney]=materialMoney></bill-detail>
+            </div>
+            <div class="addApply-base money">
+                <my-file (reAccessory)="reAccessory($event)"></my-file>
+                <p style="color:red;padding-left:20px">我承诺上传的附件与原件一致，并将原件提交给财务留存</p>
+            </div>
+        </div>
+        <div class="addApp-submit-btn">
+            <div class="addApp-sub-btns">
+                <button class="m-btn-confirm" type="button" (click)="saveBill();false">提交</button>
+                <button class="m-btn-sketch" type="button" (click)="saveBillDraft();false">保存草稿</button>
+                <a [routerLink]="['/bill']"><button class="m-btn-addAppback">返回</button></a>
+            </div>
+        </div>
+    </div>
+</div>

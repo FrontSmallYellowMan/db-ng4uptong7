@@ -1,0 +1,198 @@
+/* 下拉框组件 */
+
+.form-control{
+  width: 246px;
+  height: 35px;
+  padding: 6px;
+  box-shadow: none;
+  border-radius: 3px;
+  border: 1px solid $def-link1-color;
+}
+
+/* 下拉框 按钮*/
+@mixin btn-more($padding, $height, $font-size){
+  padding: $padding;
+  height: $height;
+  line-height: $height;
+  border-radius: 3px;
+  background-color: #fff;
+  box-shadow: 0.5px 0.9px 4px 0 rgba(124, 124, 124, 0.3);
+  border:  1px solid $btn-border-color;
+  text-align: center;
+  font-size: $font-size;
+  color: $text-color;
+}
+
+.m-btn-more-big{
+  @include btn-more(0 30px, 45px, 14px);
+}
+
+.m-btn-more-mid{
+  @include btn-more(0 30px, 35px, 14px);
+}
+
+.m-btn-more-small{
+  @include btn-more(0 20px, 30px, 12px);
+}
+
+
+/* 下拉框组件 */
+.m-dropdown{
+  position: relative;
+  /*width: 140px;*/
+  display: inline-block;
+
+  &:hover{
+    .m-dropdown-option{
+      transition: all   0.5s;
+      transform: perspective(500px) rotateX(0deg);
+      opacity: 1;
+    }
+  }
+
+  >button>i{
+    margin-left: 5px;
+    font-size: 12px;
+    color: $def-color1;
+  }
+
+  .m-dropdown-option{
+    position:absolute;
+    left: 0;
+    background-color: #fff;
+    border: solid 1px $btn-border-color;
+    opacity: 0;
+    transform-origin: 50% 0;
+    transition: all ease-out 0.5s;
+    transform: rotateX(-90deg);
+    width: 180px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    padding: 10px 0;
+
+    >li{
+      padding: 0 20px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      color: $def-font1-color;
+      @extend %text-ellipsis;
+      cursor: pointer;
+
+    }
+
+  }
+}
+
+/* 模拟下拉框 */
+/* .m-select{
+  position: relative;
+
+  .m-select-btn{
+    display: block;
+    padding: 10px 20px 10px 15px;
+    width: 100%;
+    height: 38px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 18px;
+    background-color: #fff;
+    border: 1px solid $def-link1-color;
+    border-radius: 3px;
+    cursor: pointer;
+
+    .iqon-xia{
+      float: right;
+      line-height: 18px;
+      color: #ccc;
+      transition: all .2s;
+    }
+
+    &:focus{
+      .iqon-xia{
+        transform: rotate(180deg);
+      }
+
+      & + .m-select-opt{
+        display: block;
+      }
+    }
+  }
+  
+  .m-select-opt{
+    display: none;
+    position: absolute;
+    padding: 15px 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid $def-link1-color;
+    z-index: 99;
+
+    >li{
+      padding: 10px 15px;
+      color: $def-font1-color;
+    }
+
+    .selected{
+      background-color: $def-assist2-color;
+    }
+  }
+}
+ */
+/* 下拉框 */
+.m-select{
+  position: relative;
+  background-color: #fff;
+
+  .iqon-xia{
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    color: $def-font2-color;
+    z-index: 1;
+  }
+
+  >select {
+    position: relative;
+    padding: 0 15px;
+    width: 100%;
+    height: 35px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 18px;
+    background-color: transparent;
+    border: 1px solid $def-link1-color;
+    border-radius: 3px;
+    cursor: pointer;
+    z-index: 2;
+
+    /*很关键：将默认的select选择框样式清除*/
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+
+    /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+    &::-ms-expand { display: none; }
+
+    /* >option{   //无效？
+      display: block;
+      padding: 10px 15px;
+      line-height: 35px;
+      color: $def-font1-color;
+    } */
+  }
+
+  >p{
+    position: absolute;
+    top: 35px;
+    left: 0;
+  }
+}
+
+select.m-select-tip{
+  border: 1px solid $def-main-color!important;
+}
+select.m-select-warn{
+  border: 1px solid $def-warn-color!important;
+}

@@ -1,0 +1,291 @@
+
+@import '../../../../../../sass/base/variables';
+/*
+*基本表单页样式
+*区别于原DBOMS样式
+*自用
+*/
+
+.m-main{//整体框架
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 80px;
+  box-sizing:border-box;
+　-moz-box-sizing: inherit;
+　-webkit-box-sizing: inherit;
+
+  h4{//页面标题样式
+    margin: 20px auto;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  input{
+    &::-webkit-input-placeholder {
+      color: #888;
+    } //Chrome,Safari
+    &::-moz-placeholder {
+      color: #888;
+    } //Firefox
+    &:-ms-input-placeholder {
+      color: #888;
+    } //IE10
+  }
+
+  //内容实体样式
+  .m-main-content{
+    width: 100%;
+  }
+
+  .m-form-content{
+    margin-bottom:15px;
+    width: inherit;
+    background-color: #fff;
+
+    .m-form-content-title{
+      font-size:14px;
+      text-align: left;
+      padding: 15px 25px;
+      border-bottom: 1px solid #eeeff4;
+      width: 100%;
+      color:#76baf2;
+      clear: both;
+    }
+
+    //内容元素
+
+    .m-form-content-items{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap:wrap;
+      text-align: left;
+      padding-bottom: 10px;
+    }
+
+    .m-form-content-item{
+      width: 49%;
+      text-align: left;
+      margin: 15px 0 0 0;
+      label{
+       width: 20%;
+       text-align: right;
+       padding: 0 5px 0 0;
+      }
+      
+      input{
+        width: 79%;
+      }
+
+      .m-form-text{
+        width: 79%;
+        display: inline-block;
+        text-align: left;
+        line-height: 35px;
+
+        .m-form-text-span{
+          padding: 0 10px 0 5px;
+        }
+
+        i{
+          color: #9c9c9c;
+          font-style: normal;
+        }
+      }
+
+      .m-form-text-select-small{
+        position: relative;
+        @extend .m-form-text;
+        
+        select{
+          width: 60px;
+          border: 1px solid #e1e3eb;
+          background-color: #fff;
+          border-radius: 3px;
+          padding: 0 5px;
+          appearance:none;
+         -moz-appearance:none;
+         -webkit-appearance:none;
+         &::-ms-expand { 
+           display: none; 
+          }
+        }
+
+        input{
+          width: 14%;
+          padding: 0 5px;
+        }
+
+        .m-form-select-div{
+          display: inline;
+          position: relative;
+          .iqon-xia{
+            position: absolute;
+            right: 8px;
+            top:3px;
+          }
+          .m-iqon-xia-select{
+            right: 4px!important;
+          }
+        }
+
+      }
+
+    }
+
+    .m-form-content-item-connect{
+      width: 100%!important;
+      .m-form-content-item-connect-title{
+        width: 9.5%;
+      }
+      .m-form-component{
+        width: 88%;
+        display: inline-block;
+      }
+
+      .m-ie-hack{
+        position: relative;
+        top: -15px\0; 
+      }
+    }
+
+    .m-requiredMark{
+      color:#ea6269;
+      padding: 0 5px 0 0;
+    }
+
+    .m-input-warn,.m-select-warn{
+      border:1px solid #ea6269;
+    }
+
+    .m-p-warn{
+      color:#ea6269;
+      text-align: right;
+    }
+
+    .m-p-tips{
+      color:#4c81e2;
+      text-align: right;
+    }
+
+  }
+
+
+  .clearfix:before,
+  .clearfix:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+}
+
+//进入动画
+.enterAnimation{
+ transition: all 0.5s linear;
+ transform: translateY(0%);
+ opacity: 1;
+}
+//结束后关闭动画
+.overAnimation{
+ transition: all 0.5s linear;
+ transform: translateY(-50%);
+ opacity: 0;
+}
+
+.m-form-table-box{
+ width: 95%;
+ margin: 0 auto;
+ padding:15px 0; 
+
+  .m-form-table{
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    line-height: 22px;
+    box-sizing: border-box;
+    table-layout: fixed;
+
+    tr:first-child{
+      background-color: #F5F7FA;
+    }
+
+    tr:nth-child(odd){
+      background-color: #FBFBFB;
+    }
+
+    th{
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      padding: 5px;
+      &:nth-last-child(){
+        border-right:none;
+      }
+      &:first-child{
+        text-align: center;
+      }
+    }
+
+    td{
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      padding: 5px;
+      
+      &:nth-last-child(){
+        border-right: none;
+      }
+
+      &:first-child{
+        text-align: center;
+      }
+
+      input{
+        height: 25px;
+      }
+
+    }
+  }
+
+}
+
+.m-button-box{
+  margin: 20px auto;
+  text-align: center;
+  button{
+    margin: 0 5px 0 5px;
+  }
+}
+
+.m-button-save{
+  width: 100px;
+  height: 40px;
+  background: linear-gradient(to bottom,#7FD55B,#00A843);
+  transition: all 0.5s linear;
+  opacity: 1;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+
+  &:hover{
+    opacity: 0.8;
+    transition: all 0.5s linear;
+  }
+}
+
+.m-button-cancle{
+  @extend .m-button-save;
+ background: linear-gradient(to bottom,#03d4f0,#1a89f1);
+}
+
+.m-p-location{
+  text-align: left!important;
+  left:200px;
+  position: absolute;
+  margin-top: -27px;
+}
+
+.moneyPosition{
+  position: absolute;
+  left: -20px;
+}

@@ -1,0 +1,55 @@
+.m-select-person-check-box{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .m-select-person-check-content{
+    width: 85%;
+    text-align:left;
+    line-height: 40px;
+  }
+
+  .m-select-person-check-button{
+     width: 10%;
+     margin-top: 4px;
+     .m-button-width{
+       width: 100%!important;
+       height: 30px!important;
+     }
+  }
+
+  .iqon-person{
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .m-selectApprover{
+    background-color: rgb(227, 241, 255);
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 10px;
+    border-radius: 3px;
+    margin: 0 10px 0 0;
+
+    i{
+      margin: 0 0 0 10px;
+      cursor: pointer;
+      &:hover{
+        color: rgb(211, 54, 15);
+      }
+    }
+  }
+
+}
+
+.m-btn-disabled{
+  background-color: #ccc!important;
+  cursor: not-allowed;
+}
+
+.m-btn-change{
+  background-color: rgb(255, 166, 0);
+  &:hover{
+    background-color: rgb(252, 137, 6);
+  }
+}

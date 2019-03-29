@@ -1,0 +1,23 @@
+.m-wrap{
+  margin: 0 auto;
+  width: 90%;
+
+  .m-list-menu{
+    margin-top: 10px;
+  }
+
+  .m-card-cont{
+    
+    .m-noresult{
+      min-height: calc(100vh - 150px);
+    }
+    
+    .table{
+      table-layout: auto;
+
+      &.table-list>tbody>tr>td{
+        white-space: inherit;
+      }
+    }
+  }
+}

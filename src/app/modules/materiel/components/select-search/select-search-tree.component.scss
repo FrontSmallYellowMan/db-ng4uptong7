@@ -1,0 +1,45 @@
+
+
+.m-cover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    background: rgba(0,0,0,.3);
+  }
+  .tree{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 600px;
+    background: #fff;
+    z-index: 9999;
+  
+    .m-search{
+      margin: 10px 10px 0;
+      width: 30%;
+      min-width: 200px;
+    }
+  
+    .m-option-list{
+      padding: 0 15px 15px;
+  
+      .table thead > tr > th{
+        line-height: 40px;
+      }
+  
+      .table-list > tbody > tr {
+        height: 30px;
+      }
+    }
+  }
+
+  .tree-component{
+      margin: 10px 0 0 0;
+      max-height: 400px;
+      width: 100%;
+      overflow: auto;
+  }

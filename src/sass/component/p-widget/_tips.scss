@@ -1,0 +1,101 @@
+/*信息提示 xuewp*/
+
+.m-tips {
+  position: relative;
+  width: 250px;
+  padding: 16px;
+  background-color: #f5f7fa;
+  border: 1px solid #e1e3eb;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 20px;
+  color: #4a4a4a;
+
+  .iqon-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 11px;
+    color: #CCCCCC;
+    cursor: pointer;
+  }
+}
+
+%m-alert{
+  position: relative;
+  padding: 14px;
+  width: 340px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 26px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 15px 0 rgba(3, 0, 0, 0.15);
+  overflow: hidden;
+
+  &::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+  }
+
+  >p{
+    font-weight: bold;
+  }
+
+  .iqon-close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 11px;
+    color: #ccc;
+    cursor: pointer;
+  }
+}
+.m-alert-warn{
+  @extend %m-alert;
+
+  &::before{
+    background-color: $def-warn-color;
+  }
+}
+.m-alert-success{
+  @extend %m-alert;
+
+  &::before{
+    background-color: #5bc9ab;
+  }
+}
+.m-alert-msg{
+  @extend %m-alert;
+
+  &::before{
+    background-color: $def-main-color;
+  }
+}
+
+.m-alert-confirm{
+  width: 310px;
+  padding: 20px;
+  border-radius: 3px;
+  background-color: #fff;
+  text-align: center;
+
+  >p{
+    line-height: 30px;
+    padding-bottom: 10px;
+    font-size: 15px;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  .m-btn-confirm{
+    margin-right: 15px;
+    width: 78px;
+  }
+}

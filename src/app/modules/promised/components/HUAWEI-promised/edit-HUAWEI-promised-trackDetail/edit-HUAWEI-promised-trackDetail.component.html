@@ -1,0 +1,50 @@
+<div class="m-edit-approvalDetail">
+
+  <h4>查看承诺详情</h4>
+
+  <!-- 基本信息 -->
+  <edit-HUAWEI-basicDetail [(HUAWEIFormData)]="HUAWEIData" [status]="myApplyOrMyApproval" [approvalStatus]="taskState"></edit-HUAWEI-basicDetail>
+
+
+  <!--承诺信息-->
+  <edit-HUAWEI-promisedDetail [(HUAWEIFormData)]="HUAWEIData" [status]="myApplyOrMyApproval" [approvalStatus]="taskState"></edit-HUAWEI-promisedDetail>
+
+  <!--附件信息-->
+  <div class="m-edit-approvalDetail-content1 clearfix">
+
+    <div class="m-edit-approvalDetail-title">
+      <h5>其他信息</h5>
+    </div>
+
+    <div class="m-edit-approvalDetail-failUpLoad">
+      <p class="m-edit-approvalDetail-failUpLoad-title">
+        <span class="m-form-need"></span>附件信息</p>
+      <div class="m-select m-edit-approvalDetail-select-style1">
+        <ul class="m-enclosure">
+          <li class="uploaded" *ngFor="let item of HUAWEIData.AttachmentList; index as i">
+            <i class="iqon-enclosure"></i>
+            <span class="filename" (click)="seeFileUpLoad(item.AccessoryURL)">
+              {{item.AccessoryName}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="m-commonly-btn" *ngIf="commitmentData.ReachStatus=='未达成'||commitmentData.ReachStatus=='部分达成'||commitmentData.ReachStatus=='冻结'">
+    <button class="m-btn-warn" (click)="getReachState('是')" [disabled]='isDisabled' [ngClass]="{'m-disabled':isDisabled}">特批达成</button>
+    <button class="m-btn-success" (click)="onReach()"  [disabled]='isDisabled' [ngClass]="{'m-disabled':isDisabled}">达成承诺</button>
+    <button class="m-btn-confirm" (click)="getReachState('冻结')" [disabled]='isDisabled' [ngClass]="{'m-disabled':isDisabled}">冻结</button>
+    <button class="m-btn-cancel" (click)="getReachState('未达成')">解除冻结</button>
+    <button class="m-btn-cancel2 m-btn-width" (click)="cancle()">关闭</button>
+  </div>
+
+  <div class="m-commonly-btn" *ngIf="commitmentData.ReachStatus==='已达成'||commitmentData.ReachStatus==='特批达成'">
+    <button type="button" class="m-btn-cancel" (click)="cancle()">关闭</button>
+  </div>
+
+
+</div>

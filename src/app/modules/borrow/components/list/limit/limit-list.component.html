@@ -1,0 +1,134 @@
+<div class="m-home-pageR clearfix">
+  <div class="m-boardtop clearfix">
+    <div class="m-boardmenu">
+      <a href="javascript:;" [ngClass]="{'active':applyFlag==='1'}" (click)="applyOrApprove('1')">我的申请</a>
+      <a href="javascript:;" [ngClass]="{'active':applyFlag==='2'}" (click)="applyOrApprove('2')">我的审批<span class="m-num">{{waitForApprovalNum}}</span></a>
+    </div>
+    <button *ngIf="canApply" class="m-btn-main-2 g-fr" style="margin-top: 7px;" (click)="newApply()">+新建申请</button>
+    <button class="m-btn-2 g-fr" style="margin-top: 7px;background-color: #57b9f8;" (click)="export()">Excel导出</button>
+
+  </div>
+  <div class="m-list-menu">
+    <ul class="m-state" *ngIf="applyFlag==='1'">
+      <li [ngClass]="{'active':applyPage==='apply1'}" (click)="changeapplytype('apply1')">审批中</li>
+      <li [ngClass]="{'active':applyPage==='apply3'}" (click)="changeapplytype('apply3')">已完成</li>
+      <li [ngClass]="{'active':applyPage==='apply'}" (click)="changeapplytype('apply')">全部</li>
+      <li [ngClass]="{'active':applyPage==='apply0'}" (click)="changeapplytype('apply0')">草稿</li>
+    </ul>
+
+    <ul class="m-state" *ngIf="applyFlag==='2'">
+      <li [ngClass]="{'active':applyPage==='approval1'}" (click)="changeapplytype('approval1')">待我审批</li>
+      <li [ngClass]="{'active':applyPage==='approval3'}" (click)="changeapplytype('approval3')">我已审批</li>
+      <li [ngClass]="{'active':applyPage==='approval0'}" (click)="changeapplytype('approval0')">全部</li>
+    </ul>
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i> 高级搜索
+      </div>
+
+    </div>
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <form #form="ngForm" class="clearfix">
+        <div class="m-table m-table1">
+          <table cellpadding="0" cellspacing="0" width="100%" style="line-height: 45px;text-align: center;">
+            <tr>
+              <td width="5%" *ngIf="applyFlag==='2'"><label>申请人</label></td>
+              <td width="22%" *ngIf="applyFlag==='2'"><input type="text" placeholder="-请填写" [(ngModel)]="params.applyUserNo" name="applyUserNo" /> </td>
+              <td width="5%" *ngIf="params.isBaseStr==='0'"><label>本部</label></td>
+              <td width="5%" *ngIf="params.isBaseStr==='1'"><label>事业部</label></td>
+              <td width="22%" *ngIf="params.isBaseStr!==''"><input type="text" placeholder="-请填写" [(ngModel)]="params.deptName" name="deptName">
+              </td>
+              <td width="5%"><label>维度</label></td>
+              <td width="14%" style="text-align:left"><input icheck type="radio" class="radio" name="gender" [(ngModel)]="params.isBaseStr" value="0" #radio1>本部
+                <input icheck type="radio" class="radio" name="gender" [(ngModel)]="params.isBaseStr" value="1" #radio2>                事业部
+              </td>
+              <td width="8%">
+                <label>申请日期</label></td>
+              <td>
+                <div class="m-datepicker-comb">
+                  <div class="m-datepicker-start">
+                    <my-datepicker [(ngModel)]="params.staDate" [EndDate]="params.endDate" PlaceHolder="-请选择开始日期" name="staDate"></my-datepicker>
+                  </div> ~
+                  <div class="m-datepicker-end">
+                    <my-datepicker [(ngModel)]="params.endDate" [StartDate]="params.staDate" PlaceHolder="-请选择结束日期" name="endDate"></my-datepicker>
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="m-search-btn">
+          <button class="m-btn-cancel btn-blue" (click)="search()" id="searchBtn">搜索</button>
+          <button class="m-btn-cancel" (click)="clearSearch()">重置</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- 没有列表缺省 -->
+  <div class="m-home-default" [ngClass]="{'hide':borrowAmountData && borrowAmountData.length > 0}">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>{{tipMessage}}</h3>
+          <h4>{{detailMessage}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--表格-->
+  <div class="m-table-right" [ngClass]="{'hide':borrowAmountData && borrowAmountData.length === 0}">
+    <table class="table table-hover table-list" style="table-layout: fixed;">
+      <thead>
+        <tr>
+          <th>申请单号</th>
+          <th>申请维度</th>
+          <th>本部</th>
+          <th>事业部</th>
+          <th>当前常规额度</th>
+          <th *ngIf="applyFlag==='2'">申请人</th>
+          <th *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval1'">当前环节</th>
+          <th *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval1'">当前处理人</th>
+          <th>申请日期</th>
+          <th *ngIf="applyPage==='apply0'">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of borrowAmountData">
+          <td (click)="goDetail(item.id)"  title="{{item.applyNo}}"><span>{{item.applyNo}}</span></td>
+          <td (click)="goDetail(item.id)"><span *ngIf="item.applyDimension==='0'">本部</span>
+            <span *ngIf="item.applyDimension==='1'">事业部</span>
+          </td>
+          <td (click)="goDetail(item.id)"><span>{{item.baseDeptName}}</span>
+          </td>
+          <td (click)="goDetail(item.id)"><span>{{item.deptName}}</span>
+
+
+            <td (click)="goDetail(item.id)"><span>{{item.currentAmount}}万元</span></td>
+            <td *ngIf="applyFlag==='2'" [routerLink]="['/borrow/approve/limit-rc',{id:item.id}]" title="{{item.applyUserName}}/{{item.applyItCode}}"><span>{{item.applyUserName}}/{{item.applyItCode}}</span></td>
+
+            <td (click)="goDetail(item.id)" *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval1'"
+              title="{{item.flowCurrNodeName}}"><span>{{item.flowCurrNodeName}}</span></td>
+            <td (click)="goDetail(item.id)" *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval1'"
+              title="{{item.currApprAuthors}}"><span>{{item.currApprAuthors}}</span></td>
+            <td (click)="goDetail(item.id)"><span>{{item.applyDate|iqDate:'YYYY-MM-DD'}}</span></td>
+            <td *ngIf="applyPage==='apply0'"><span (click)="editForm(item.id)">编辑</span>
+              <span (click)="deleteApply(item.id)">删除</span>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+  </div>
+</div>

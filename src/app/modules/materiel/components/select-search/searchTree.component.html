@@ -1,0 +1,6 @@
+<ul class="tree-style">
+    <li *ngFor="let item of treelists">
+        <div (click)="itemClick(item,$event)" title={{item.remark}} class="tree-title"><i class="sign-style">{{(item.isleaf == 1)?'·':(item._open == "true"?'-':'+')}}</i>({{item.id}}){{item.title}}</div>
+        <searchTree *ngIf="item._open=='true' && item.items && item.items.length" (onChoose)="choose($event)" [treelists]="item.items"></searchTree>
+    </li>
+</ul>

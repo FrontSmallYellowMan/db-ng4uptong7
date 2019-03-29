@@ -1,0 +1,31 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+
+// 边框颜色
+$borderColor: #e2e2e2;
+// 白色背景
+$backColor: #fff;
+// 布局
+.container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .rebate-left-nav{
+        display: inline-block;
+        width: 240px;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1000;
+        background: $backColor none repeat scroll 0 0;
+        border-right: 1px solid $borderColor; 
+    }
+    .rebate-right-list{
+        height: 100%;
+        margin-left: 0;
+        min-width: 915px;
+        overflow: auto;
+        display: inline-block;
+        flex: 1;
+    }
+    
+}

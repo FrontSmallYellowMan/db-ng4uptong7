@@ -1,0 +1,516 @@
+@import '../../../../../sass/base/util';
+
+.sc-list {
+  max-height: 600px;
+  position: relative;
+
+  .table {
+    tr{
+      cursor: auto;
+    }
+  }
+
+  .table tr .money-right {
+    padding-right: 20px;
+    text-align: right;
+  }
+
+}
+
+.sc-list-menu {
+  height: 55px;
+  padding: 0 20px 20px;
+  background-color: #f5f7fa;
+  box-shadow: 0 0 6.4px 1.1px rgba(0, 0, 0, 0.05);
+  border: solid 1px #e2e2e2;
+  border-left: 0;
+
+  .sc-list-menu-left {
+    float: left;
+
+    li {
+      float: left;
+      height: 55px;
+      line-height: 55px;
+      padding: 0 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 15px;
+      position: relative;
+
+      .m-num {
+        left: 90%;
+        top: 35%;
+      }
+    }
+
+    li.active {
+      color: #39a0f7;
+      border-bottom: 4px solid #57aef8;
+    }
+  }
+
+  .sc-list-menu-right {
+    float: right;
+    padding-top: 9.5px;
+    padding-bottom: 9.5px;
+
+    .m-btn-main {
+      width: 136.5px;
+      height: 36px;
+      border-radius: 3px;
+      background-color: #4cc9a6;
+      font-family: MicrosoftYaHei;
+      font-size: 14px;
+      line-height: 1.57;
+      letter-spacing: 1.4px;
+      text-align: center;
+      color: #ffffff;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+.m-list-menu {
+  margin: 12px 20px;
+}
+//新建浮层左侧箭头
+
+.newIndia li:hover .iqon-direct-right {
+  display: inline-block;
+}
+
+.iqon-direct-right {
+  display: none;
+  position: relative;
+}
+
+.iqon-direct-right:before {
+  position: absolute;
+  color: #4cc9a6;
+  right: 5px;
+  top: -12px;
+}
+
+.operate{
+  cursor: pointer;
+}
+
+.operate > span.noview {
+  display: none;
+}
+
+.noview {
+  display: none;
+}
+
+.m-card-head {
+  font-family: MicrosoftYaHei;
+  height: 45px;
+  line-height: 45px;
+  border-bottom: 1px solid #ddd;
+  color: #151515;
+  font-size: 12px;
+  padding: 0 25px;
+
+  li {
+    float: left;
+    width: 15%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 10px;
+
+    &:first-child span {
+      color: #57b9f8;
+      cursor: pointer;
+    }
+
+    &:last-child {
+      width: 5%;
+      height: 100%;
+      margin: 0 10px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    &.w20 {
+      width: 20%;
+    }
+  }
+}
+
+.inline-block {
+  display: inline-block;
+  width: 40%;
+}
+
+/deep/ .date-right .picker-main {
+  right: 0;
+}
+
+/deep/ input[type=text] {
+  height: 30px;
+}
+
+.m-card-cont {
+  padding: 0 20px;
+  background-color: transparent;
+
+  .iqon-fold {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .iqon-fold-translate {
+    transform: rotate(180deg) translate(50%, 50%);
+  }
+
+  .edit-blue {
+    color: #57b9f8;
+    cursor: pointer;
+  }
+}
+
+.m-order-card {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.m-card-cont thead > tr:after {
+  display: none;
+}
+
+.table thead {
+  > tr > th {
+    padding: 0 8px;
+    line-height: 44px;
+    border-color: #ddd;
+
+    i {
+      color: #bdc4cd;
+      display: inline-block;
+      margin-left: 3px;
+      position: absolute;
+      line-height: 45px;
+    }
+
+    .iqon-orderdown-up {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.table-list > tbody > tr {
+  height: 35px;
+  cursor: pointer;
+
+  td {
+    border: 0;
+  }
+}
+
+.m-home-default {
+  margin: 20px 0;
+}
+
+.m-scan .m-scan-body .m-scan-default .m-scan-logo {
+  background-color: #57b9f8;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.m-scan-logo i {
+  display: inline-block;
+  margin-top: 35px;
+  font-size: 30px;
+}
+
+.m-scan .m-scan-body .m-scan-default {
+  margin-top: 125px;
+  margin-bottom: 125px;
+  text-align: center;
+}
+
+.m-home-page .m-home-pageL {
+  min-height: 600.5px;
+  position: inherit;
+}
+
+.newIndia {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  padding-right: 20px;
+  opacity: 0.94;
+  border-radius: 3px;
+  background-color: #4c5157;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  color: #FFF;
+  z-index: 100;
+
+  ul {
+    width: 160px;
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+    text-align: center;
+    font-size: 12px;
+
+    li {
+      width: 100%;
+      height: 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    li:hover {
+      font-size: 14px;
+    }
+  }
+}
+//缺省页css
+
+.m-scan {
+  margin: 0 20px;
+  background-color: #f5f7fa;
+  // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+  .m-scan-item {
+    width: 30%;
+  }
+
+  .m-scan-item:last-child {
+    float: left;
+  }
+
+  .m-scan-item2 {
+    width: 36%;
+  }
+
+  .item-1 {
+    margin-left: 20px;
+  }
+
+  .m-form-item-w100 {
+    width: 342px;
+    margin-top: 15px;
+    padding-bottom: 0;
+
+    .m-user-members {
+      float: left;
+      height: 35px;
+      line-height: 35px;
+
+      h6 {
+        float: left;
+        color: #4A4A4A;
+        line-height: 34px;
+        margin-right: 15px;
+      }
+
+      .datepicker-con {
+        width: 123px;
+        background-color: #FFF;
+      }
+    }
+  }
+
+  .constract-search-item {
+    padding-top: 15px;
+    padding-left: 20px;
+    width: 245px;
+    float: left;
+
+    .constractType {
+      float: left;
+      margin-top: 9px;
+    }
+
+    h6 {
+      float: left;
+      color: #4A4A4A;
+      line-height: 34px;
+      margin-right: 15px;
+    }
+  }
+}
+
+.table-box {
+  width: 100%;
+  padding: 0 15px;
+}
+
+.m-search-all-other {
+  width: 60%;
+  @extend %box-flex;
+  float:right;
+  line-height: 26px;
+
+  .m-search {
+    width: 38%;
+  }
+
+  .m-inline-block {
+    width: 59%;
+    display: flex;
+
+    label {
+      width: 18%;
+      padding-right: 5px;
+    }
+  }
+}
+
+.time-search {
+  width: 30px;
+  text-align: center;
+  line-height: 28px;
+  font-size: 12px;
+  color: #d2d8e0;
+  border: 1px solid #e1e3eb;
+  cursor: pointer;
+  border-left: none;
+  background: #fff;
+}
+
+.my-approval-table {
+  padding: 0 15px;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 45px;
+    border-bottom: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 45px;
+    border-bottom: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .table-list tbody td {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+/deep/ .loading-backdrop {
+  opacity: 0;
+}
+//搜索重置
+
+.m-returnService-btns {
+  float: right;
+  margin-top: 10px;
+
+  .m-btn-confirm {
+    width: 78px;
+    cursor: pointer;
+  }
+
+  .m-btn-default {
+    width: 78px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+}
+
+.table-list-others {
+  tbody > tr td {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+
+.m-search-high{
+  text-align: center;
+}
+
+.m-search-open{
+  position: relative;
+  float: right;
+  padding: 18px 25px;
+  background-color: #f5f7fa;
+  color: #57b9f8;
+  box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.m-search-more{
+  float: left;
+  width: 100%;
+  background-color: #f5f7fa;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  .form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 15px 25px;
+  }
+
+  .m-search-item{
+    margin-bottom: 10px;
+    width: 33%;
+    margin-left: -25px;
+
+    label{
+      display: inline-block;
+      width: 28%;
+      margin-right: 5px;
+      text-align: right;
+    }
+
+    input{
+      display: inline-block;
+      width: 69%;
+    }
+  }
+
+  .m-search-items{
+    display: flex;
+    line-height: 35px;
+    width: 40%!important;
+    margin-left: -25px!important;
+    .m-datepicker-comb{
+      margin-left: 12px;
+      width: 100%;
+      .m-datepicker-start,.m-datepicker-end{
+        width: 45%;
+        display: inline-block;
+      }
+      span{
+        width: 5%;
+        text-align: center;
+  
+      }
+    }
+  }
+  
+}
+
+//点击文字样式
+.clickText{
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover{
+      color:#70B7F3;
+  }
+}
+

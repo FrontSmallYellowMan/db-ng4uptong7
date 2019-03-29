@@ -1,0 +1,37 @@
+<!--销售合同号列表-->
+<div class="edit-nmc-salesList">
+    <div class="edit-nmc-salesList-title">请选择销售合同</div>
+
+    <div class="m-hand-input">
+        <label>手动输入销售合同号</label>
+        <input type="text" placeholder="-请填写销售合同号" [(ngModel)]="SC_Code_hand_input" (ngModelChange)="changeSC_Code()">
+    </div>
+
+    <table class="m-info-table" style="table-layout:auto">
+        <thead>
+            <tr>
+                <th class="wp10">请选择</th>
+                <th>销售合同号</th>
+                <th>客户名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let list of salesContractList;let i=index;">
+                <td class="wp10">
+                    <input type="radio" icheck [name]="'list.SC_Code'+i" [attr.name]="'list.SC_Code'+i" [attr.value]="list.MainContractCode"
+                        [(ngModel)]="MainContractCode" ngModel (ngModelChange)="getIndex(i)" [disabled]="SC_Code_hand_input">
+                </td>
+                <td>
+                    <a (click)="goToSc(list.SC_Code)" class="a_point">{{list.MainContractCode}}</a>
+                </td>
+                <td>{{list.BuyerName}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="edit-nmc-button">
+        <button type="button" class="m-btn-confirm"  (click)="getMainContractCode()">确定</button>
+        <button type="button" class="m-btn-default" (click)="cancel()">取消</button>
+    </div>
+
+</div>

@@ -1,0 +1,50 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow" style="width:600px;margin:20 auto">
+  <div class="modal-header m-dialog-head">
+    <span>客户代码选择</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+          <div class="m-search" style="width:200px;margin-left:368px;margin-top:5px;margin-bottom:5px">
+                  <i class="iqon-query" (click)="searchCustom()" style="cursor:pointer"></i>
+                  <input name="state" (keydown)="checkEnterKey($event.keyCode)" placeholder="请输入客户编号/名称查询" [(ngModel)]="custom" type="text">
+          </div>
+          <!--搜索结果缺省页开始--> 
+          <div style="width:583px;">
+            <table class="m-info-table" style="width:95%;margin:auto;">
+              <thead>
+                <tr> 
+                  <th style="text-align:center;width:275.5px">客户代码</th>
+                  <th style="text-align:center;width:275.5px">客户名称</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div  id='scroll' style="overflow-y:scroll; width:600px; height:320px;">
+            <loading [show]="loading"></loading>
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <tbody [ngClass]="{'hide':customList==null || customList.length == 0}">
+                <tr *ngFor = 'let item of customList'  (click)="changeCheck(item.KUNNR)"> 
+                  <td style="text-align:center;width:275.5px;">{{item.KUNNR}}</td>
+                  <td style="text-align:center;width:275.5px;">{{item.NAME}}</td>
+                </tr>
+              </tbody>
+              <tbody [ngClass]="{'hide':customList && customList.length > 0}">
+                <tr>
+                  <td colspan='2'> 
+                    <div class="m-noresult">
+                      <div class="m-noresult-msg">
+                        <i class="iqon-query"></i>
+                        <p class="m-noresult-notice">
+                          请输入查询条件
+                        </p>
+                        <p class="m-p-notice">温馨提示：请输入正确的条件查询</p>
+                      </div>
+				              </div> 
+                  </td> 
+                </tr> 
+              </tbody>
+            </table>
+          </div>
+    </div>              
+</div>      
+

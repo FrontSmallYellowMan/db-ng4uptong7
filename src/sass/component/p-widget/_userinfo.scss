@@ -1,0 +1,132 @@
+.m-user-info{
+  position: relative;
+  padding:0 6px;
+  height: $user-height;
+  cursor: pointer;
+  line-height: $user-height;
+
+  &:hover{
+    background-color: $def-color3;
+
+    >i{
+      display: inline-block;
+    }
+
+    .m-user-msg{
+      display: block;
+    }
+  }
+
+  >i{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: -18px;
+    width: 18px;
+    height: $user-height;
+    text-align: center;
+    line-height: $user-height;
+    border-radius: 0 5px 5px 0;
+    color: $def-color3;
+    background-color: #000;
+    opacity: 0.5;
+  }
+  
+  .m-user-img,.m-user-noimg{
+    margin-right: 8px;
+    vertical-align: middle;
+    width: $user-img-size;
+    height: $user-img-size;
+    @include border-radius();
+  }
+
+  .m-user-noimg{
+    display: inline-block;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+    background-color: #67ccb3;
+  }
+
+  .m-user-name{
+    color: $user-name-chinese;
+  }
+
+  .m-user-ename{
+    color: $user-name-english;
+  }
+}
+
+.m-user-info-small{
+  display: inline-block;
+
+  .m-user-name{
+    color: $user-name-chinese;
+  }
+
+  .m-user-ename{
+    color: $user-name-english;
+  }
+  .m-user-img,.m-user-noimg{
+    margin-right: 8px;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    @include border-radius();
+  }
+  .m-user-noimg{
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
+    line-height: 25px;
+    color: #fff;
+    background-color: #67ccb3;
+  }
+}
+
+.m-user-infowhite{
+  &:hover{
+    background-color: transparent;
+  }
+}
+
+.m-pop-up{
+  position: relative;
+  width: 280px;
+  i{
+    @extend %horizontal-center;
+    top: -12px;
+    color: #fff;
+    font-size: 15px;
+  }
+  .m-pop-content{
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0 rgba(4, 0, 0, 0.15);
+    .m-user-info-big{
+      font-size: 15px;
+      .m-user-noimgs{
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 19px;
+        background-color: #ef9051;
+      }
+    }
+    .uls-tree{
+      margin-top: 10px;
+      li{
+        line-height: 25px;
+        label{
+          display: inline-block;
+          width: 70px;
+          color: #a7b1bd;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+

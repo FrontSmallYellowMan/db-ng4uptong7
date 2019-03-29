@@ -1,0 +1,81 @@
+<!--审批意见 -->
+<div class="apply-opinion">
+    <div class="m-exm-item">
+        <p class="m-exm-advice">审批意见</p>
+        <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="opinions"></textarea>
+    </div>
+</div>
+<!--审批提交按钮 -->
+<div class="apply-submitBtn">
+    <div class="m-exm-btn">
+        <button class="m-btn-agree apply-agree" (click)="saveBill()">同意</button>
+        <button class="m-btn-refuse apply-refuse" (click)="onApproval('Reject')">驳回</button>
+        <!--div class="m-dropdown">
+            <button class="m-btn-more-big">更多<i class="iqon-xia"> </i></button>
+            <ul class="m-dropdown-option clearfix">
+                <li (click)="onOpenModal('Sign')">加签</li>
+                <li (click)="onOpenModal('Transfer')">转办</li>
+            </ul>
+        </div-->
+        <button class="m-btn-refuse" (click)="goBack()">返回</button>
+    </div>
+</div>
+<!--加签转办审批窗口-->
+<modal #approvalModal style="z-index:7000; margin-top:90px;">
+    <modal-header class="header">
+        <span>{{appTypeName}}</span>
+        <button aria-label="Close" class="close" type="button" (click)="onCancel()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <div class="body-item flex_margin">
+            <div class="marginright15">
+                <label>{{appTypeName}}人</label><i class="i-red">*</i>
+            </div>
+            <ng-select #ngSelect [items]="userArr" (selected)="selected($event)" placeholder="请输入加签人ItCode\姓名" class="width190"></ng-select>
+        </div>
+        <div class="body-item flex_margin height30">
+            <label class="marginright10">已选择</label>
+            <ul class="clearfix">
+                <li *ngFor="let item of selectUsers" class="select-user">
+                    <span>{{item.text}}</span>
+                    <span class="del-select-user" (click)="ondelSeletUser(item)">×</span>
+                </li>
+            </ul>
+            <span class="select-title" *ngIf="selectUsers.length == 0 && errorMsg.length>0">
+        {{errorMsg}}
+      </span>
+        </div>
+        <div class="apply-opinion body-item flex_margin">
+                <label class="marginright10">审批意见</label>
+            <div class="m-exm-item m-textarea-flex">
+                <textarea class="m-textarea " placeholder="请填写审批意见" [(ngModel)]="opinions"></textarea>
+            </div>
+        </div>
+    </modal-body>
+    <modal-footer class="footer">
+        <button type="button" class="m-btn-confirm" (click)="onApproval(approverType)">确定</button>
+        <button type="button" class="m-btn-cancel" (click)="onCancel()">取消</button>
+    </modal-footer>
+</modal>
+<!--信息提示框-->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="z-index:8000; margin-top:150px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                提示信息
+                <button type="button" class="close pull-right" aria-label="Close" (click)="smModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="padding:20px 0; text-align:center; font-size:18px;">
+                {{message}}
+            </div>
+            <div class="modal-footer" style="margin:5px 0" *ngIf="isNav">
+                <button type="button" class="btn btn-default" (click)="dismiss()">取消</button>
+                <button type="button" class="btn btn-primary" (click)="close()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

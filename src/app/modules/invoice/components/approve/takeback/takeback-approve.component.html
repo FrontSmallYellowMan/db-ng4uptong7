@@ -1,0 +1,133 @@
+<div class="content-auto">
+    <div style="padding-top: 62px">
+        <div class="addApply-container">
+            <h1 class="addApply-tit-h1">取回申请</h1>
+            <!--基本信息-->
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="addApp-base-infor">
+                    <ul class="addApp-base-list">
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">表单号：</label>
+                                <label class="addApp-form-label"> {{takebackObj.takebackNum}}</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">申请时间：</label>
+                                 <label class="addApp-form-label"> {{takebackObj.createDate | iqDate:'YYYY-MM-DD'}}</label>
+                            </div>
+
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">申请人：</label>
+                                 <label class="addApp-form-label">{{takebackObj.takebackItcode}}/{{takebackObj.takebackUsername}}</label>
+                                 
+                            </div>
+
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">电话：</label>
+                                 <label class="addApp-form-label">{{takebackObj.takebackPhone}}</label>
+                               
+                            </div>
+
+                        </li>
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">部门：</label>
+                                <label class="addApp-form-label" style="width:240px;"> {{takebackObj.deptName}}</label>
+                               
+                            </div>
+
+                        </li>  
+                        <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">取回原因：</label>
+                                <label class="addApp-form-label" > {{takebackObj.takebackRemark}}</label>
+                               
+                            </div>
+
+                        </li>  
+                    </ul> 
+                </div>
+            </div>
+            
+            <div class="addApply-base money">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">取回支票信息</span>
+                </div>
+                <div class="addApp-base-infor"> 
+                    <div style="width: 98%;padding-left: 25px;padding-top:10px">
+                        <table class="table table-hover table-list" style="table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                        <th>支票号</th> 
+                                        <th>出票日期</th>
+                                        <th>支票金额</th>
+                                        <th>出票账号</th>
+                                        <th>出票银行</th>
+                                        <th>收款人</th>
+                                        <th>客户代码</th>
+                                        <th>客户名称</th>
+                                        <th>合同编号</th>
+                                        <th>欠款金额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{takebackObj.ticketNum}}</td>
+                                    <td>{{takebackObj.checkoutDate | iqDate: 'YYYY-MM-DD'}}</td>
+                                    <td>{{takebackObj.ticketAmount}}</td>
+                                    <td>{{takebackObj.checkoutAccount}}</td>
+                                    <td>{{takebackObj.checkoutBank}}</td>
+                                    <td>{{takebackObj.payee}}</td>
+                                    <td>{{takebackObj.customCode}}</td>
+                                    <td>{{takebackObj.customName}}</td>
+                                    <td>{{takebackObj.contractNum}}</td>
+                                    <td>{{takebackObj.debtAmount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+            <div class="addApply-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">审批信息</span>
+                </div>
+                <div class="addApp-base-infor">
+                   <ul class="addApp-base-list">
+                         <li *ngIf="flag=='1'">
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">审批人：</label>
+                               <input  class="addApp-form-input" type="text" value="{{takebackObj.approveItcode}}/{{takebackObj.approveName}}">
+                            </div>
+
+                        </li> 
+                         <li>
+                            <div class="addApp-form-item">
+                                <label class="addApp-form-label">审批意见：</label>
+                                <input  class="addApp-form-input" type="text" [(ngModel)]="takebackObj.approveNote">
+                            </div>
+
+                        </li> 
+                    </ul>   
+                </div>
+            </div>           
+            <div class="addApp-submit-btn">
+                <div class="addApp-sub-btns" style="text-align: center">
+                    <button *ngIf="clickFlag=='0' && flag=='0'" class="m-btn-agree" type="button" (click)="approveTakeback('yes')">通过</button>&nbsp;&nbsp;
+                    <button *ngIf="clickFlag=='0' && flag=='0'" class="m-btn-refuse" type="button" (click)="approveTakeback('no')">驳回</button>&nbsp;&nbsp;
+                    <button type="button" (click)="close()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

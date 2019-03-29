@@ -1,0 +1,38 @@
+.select-container {
+    position: relative;
+    float: left;
+
+    .select-box {
+        position: absolute;
+        padding: 12px;
+        left: -70px;
+        z-index: 9051;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 10px 0px #777;
+
+        .select-list {
+            width: 260px;
+            float: left;
+            max-height: 240px;
+            overflow-y: auto;
+            text-align: left;
+
+            .select-item {
+                z-index: 9052;
+                width: 100%;
+                margin-left: 0;
+                padding-left: 10px;
+            }
+        }
+        .select-search {
+            width: 260px;
+            float: left;
+        }
+    }
+    
+}
+
+.hide{
+    display: none;
+}

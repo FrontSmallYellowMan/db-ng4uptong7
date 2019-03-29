@@ -1,0 +1,37 @@
+<div class="modal">
+  <div class="modal-dialog modal-sm m-add-admin modal-wd6 dialog-borrow" style="width:660px;margin:20 auto">
+  <div class="modal-header m-dialog-head">
+    <span>合同编号选择</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div> 
+          <div class="m-search" style="width:250px;margin-left:373px;margin-top:5px;margin-bottom:5px">
+                  <i class="iqon-query" (click)="searchContrac()" style="cursor:pointer"></i>
+                  <input name="state" (keydown)="checkEnterKey($event.keyCode)" placeholder="合同编号\客户名称\销售员" [(ngModel)]="contractParam" type="text">
+          </div>
+          <div style="width:638px;">
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <thead>
+                <tr> 
+                    <th style="text-align:center;width:160px;">合同编号</th>
+                    <th style="text-align:center;width:200px;">客户名称</th>
+                    <th style="text-align:center;width:140px;">销售员</th>
+                    <th style="text-align:center;width:100px;">创建时间</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div id='scroll' style="overflow-y:scroll; width:655px;height:300px;">
+            <table class="m-info-table" style="width:95%;margin:auto">
+              <tbody>
+                <tr *ngFor = 'let item of contractList' (click)="changeCheck(item.MainContractCode)"> 
+                  <td title="{{item.MainContractCode}}" style="width:160px;">{{item.MainContractCode}}</td>
+                  <td title="{{item.BuyerName }}" style="width:200px;">{{item.BuyerName }}</td>
+                  <td title="{{item.SalesName}}/{{item.SalesITCode}}" style="width:140px;">{{item.SalesName}}/{{item.SalesITCode}}</td>
+                  <td title="{{item.CreateTime | iqDate: 'YYYY-MM-DD' }}" style="width:100px;">{{item.CreateTime | iqDate: 'YYYY-MM-DD' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>              
+</div>      
+

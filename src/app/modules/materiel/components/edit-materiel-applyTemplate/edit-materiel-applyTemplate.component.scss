@@ -1,0 +1,121 @@
+// 弹出框样式
+
+.m-at-newTemplate-tips{
+
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 850px;
+    z-index: 2100;
+    background-color: #fff;
+    padding:0 0 30px 0;
+    position: absolute;
+
+    .m-at-form{
+ 
+       width: 50%!important;
+       padding: 10px 20px 10px 20px;
+    
+   }
+
+   .m-at-btn{
+
+      text-align: center;
+      clear: both;
+      padding-top: 20px;
+   }
+
+   .m-edit-materiel-label-width{
+       width: 150px!important;
+   }
+    
+}
+
+.m-at-title{
+
+   border-bottom: 1px solid #E2E2E2;
+   display: flex;
+   justify-content: space-between;
+   height: 50px;
+
+   h5{
+     line-height: 50px;
+     color: #4A4A4A;
+     padding: 0 0 0 20px;
+   }
+
+   i{
+     line-height: 50px;
+     color: #C8C7C8; 
+     padding: 0 20px 0 0;
+     cursor:pointer;
+   }
+
+   
+
+}
+
+.m-at-mask{
+
+    background-color: #C8C7C8;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    display: none;
+    
+}
+
+
+//------查看物料模版样式---------
+.seeMaterielTemplate-tips{
+
+    top: 30px;
+    left: 50%;
+    transform:translateX(-50%);
+    width: 850px;
+    z-index: 1042;
+    background-color: #fff;
+    padding:0 0 30px 0;
+    position: absolute;
+
+
+    .m-at-form{
+ 
+       width: 50%!important;
+       padding: 10px 20px 0px 20px;
+       display: flex;
+       line-height: 30px;
+    
+   }
+
+
+    .m-form-titleStyle{
+
+      font-weight: bold;
+      width: 100px;
+    }
+
+    .m-form-btn{
+
+        clear: both;
+        padding: 20px 0 0px 0;
+        text-align: center;
+    }
+
+    .m-form-inline{
+        color: "#4A4A4A";
+    }
+
+
+    
+
+}
+
+.restZindex{
+    z-index: 1000!important;
+    //opacity: 0.6!important;
+}

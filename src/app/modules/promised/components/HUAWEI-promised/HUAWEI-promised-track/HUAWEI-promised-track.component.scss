@@ -1,0 +1,48 @@
+:host/deep/.m-noresult{
+  height: calc(100vh - 190px);
+  margin-top: 10px;
+}
+
+.m-select-width-typeList{
+  width: 80%;
+}
+
+.m-search-item-reach{
+  margin-bottom: 10px;
+  width: 40%;
+  margin-left: -15px;
+
+  label{
+    width: 14%;
+    margin-right: 4px;
+    text-align: right;
+  }
+}
+
+.checkbox-font{
+  position: relative;
+  top: 8px;
+  input{
+    background-color: #fff;
+  }
+  span{
+    padding: 0 0px 0 4px;
+  }
+}
+
+.m-btn-export{
+  line-height: 35px;
+  margin: 6px 10px 0 0;
+  float: right;
+}
+
+.m-td-warp{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width:100px;
+}
+
+:host/deep/.picker-main{
+  right: 0;
+}

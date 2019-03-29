@@ -1,0 +1,35 @@
+<div class="map-site">
+  <loading [show]="loading"></loading>
+  <div class="map-wrap" [hidden]="loading">
+    <h1>网站地图</h1>
+    <div class="map-list clearfix">
+      <ul class="map-list-left">
+        <li *ngFor="let map of mapListLeft">
+          <a class="map-module" [href]="map.URL" target="_blank">{{map?.FuctionName}}</a>
+          <ul>
+            <li *ngFor="let item of map?.ChildrenFuncList">
+              <i class="iqon-jia" (click)="addMyCollection(item)" [class.hide]="item.Check"></i>
+              <i class="iqon-jian" (click)="deleteMyCollection(item)" [class.hide]="!item.Check"></i>
+              <a [href]="item.URL" target="_blank">{{item.FuctionName}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="map-list-right">
+        <li *ngFor="let map of mapListRight">
+          <a class="map-module" [href]="map.URL" target="_blank">{{map?.FuctionName}}</a>
+          <ul>
+            <li *ngFor="let item of map?.ChildrenFuncList">
+              <i class="iqon-jia" (click)="addMyCollection(item)" [class.hide]="item.Check"></i>
+              <i class="iqon-jian" (click)="deleteMyCollection(item)" [class.hide]="!item.Check"></i>
+              <a [href]="item.URL" target="_blank">{{item.FuctionName}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="map-btn">
+      <button class="m-btn-success" (click)="goBack()">返回</button>
+    </div>
+  </div>
+</div>

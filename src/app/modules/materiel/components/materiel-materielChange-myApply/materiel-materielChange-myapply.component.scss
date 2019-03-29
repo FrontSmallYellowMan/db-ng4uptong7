@@ -1,0 +1,134 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+* {
+　　box-sizing: content-box;
+　　-moz-box-sizing: inherit;
+　　-webkit-box-sizing: inherit;
+}
+.m-overclass{
+  padding: 10px 20px;
+  
+  .m-list-menu{
+    /*margin:15px 0;*/
+
+    .m-search-open{
+      position: relative;
+      float: right;
+      padding: 18px 25px;
+      background-color: $def-color3;
+      color: $def-main-color;
+      box-shadow: 0 -2px 3px rgba( 0, 0, 0, .15);
+      cursor: pointer;
+    }
+    .m-search-more{
+      float: left;
+      width: 100%;
+      background-color: $def-color3;
+      box-shadow: 0 0 5px rgba( 0, 0, 0, .15);
+
+      form{
+        padding: 15px 25px;
+        @extend %box-flex;
+      }
+
+      .m-search-item{
+        margin-bottom: 10px;
+        width: 30%;
+        margin-left: -15px;
+        >label{
+          display: inline-block;
+          margin-right: 4px;
+          text-align: right;
+          width: 19%;
+        }
+        >input[type=text],.m-select-search{
+          display: inline-block;
+          width: 76%;
+        }
+      }
+
+      .m-search-btn{
+        float: right;
+        .research{
+          width: 78px;
+        }
+        .resets{
+            width: 78px;
+            margin-left: 15px;
+        }
+      }
+    }
+    .m-search-high{
+      text-align: center;
+    }
+  }
+
+  .m-noresult{
+    height: calc(100vh - 190px);
+    margin-top: 10px;
+  }
+
+  .m-mate-list{
+    background-color: #fff;
+    margin:15px 0;
+  }
+}
+.m-search-items{
+  display: flex;
+  line-height: 35px;
+  width: 40%!important;
+  margin-left: -25px!important;
+  .m-datepicker-comb{
+    margin-left: 5px;
+    width: 79%;
+    .m-datepicker-start,.m-datepicker-end{
+      width: 48%;
+    }
+    span{
+      width: 5%;
+      text-align: center;
+
+    }
+  }
+}
+.hideStyle{
+  display: none;
+}
+
+.list-edit{
+  width: 100%!important;
+}
+
+.table-list td{
+    overflow: hidden!important;  /*溢出隐藏*/
+    text-overflow: ellipsis; /*以省略号...显示*/
+    white-space: nowrap;  /*强制不换行*/
+}
+
+.m-select-width-style1{
+  width: 60%;
+  display: inline-block;
+}
+
+.m-select-width{
+  display: inline-block;
+  width: 76%;
+  border-radius: 5px;
+  select{
+    color: #888888;
+    padding:0 10px!important;
+  }
+}
+
+.m-search-clear{
+  clear: both;
+}
+
+.m-font-relative{
+  position: relative;
+  top: -10px;
+}
+
+.font-color{
+  color: #4E4E4E!important;
+}

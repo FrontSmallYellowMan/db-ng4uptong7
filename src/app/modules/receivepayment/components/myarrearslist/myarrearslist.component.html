@@ -1,0 +1,89 @@
+<loading [show]="loading"></loading>
+<div class="rp-list">
+  <div class="rp-list-search clearfix">
+    <div class="search-item">
+      <div class="search-title"><label>客户名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入客户名称\编号" [(ngModel)]="query.KH">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同编号:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入合同编号" [(ngModel)]="query.ContractCode">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>欠款类型:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="all" name="constractType" [(ngModel)]="query.Type" value="0"><label for="all">全部欠款</label>
+        <input icheck type="radio" id="warn" name="constractType" [(ngModel)]="query.Type" value="1"><label for="warn">预警欠款</label>
+        <input icheck type="radio" id="out" name="constractType" [(ngModel)]="query.Type" value="2"><label for="out">超期欠款</label>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>还款日期:</label></div>
+      <div class="search-input">
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择开始日期" [(ngModel)]="query.StartTime" [EndDate]="query.EndTime"></my-datepicker>
+        </div>
+        <div class="inputs-date inputs-date-line">~</div>
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择结束日期" [(ngModel)]="query.EndTime" [StartDate]="query.StartTime"></my-datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rp-list-content">
+    <div class="search-button clearfix">
+      <div class="list-search-button" style="width:100%;">
+        <button (click)="search(query)">查询</button>
+        <button (click)="reset()">重置</button>
+        <button (click)="importResultData(query)">导出查询结果</button>
+      </div>
+    </div>
+    <div class="rp-list-content-table" *ngIf="listData?.arrearlist.length > 0">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th style="width: 150px;">合同编号</th>
+            <th style="width: 200px;">客户名称</th>
+            <th style="width: 160px;">我方法人体</th>
+            <th style="width: 100px;">事业部</th>
+            <th style="width: 110px;">欠款金额</th>
+            <th style="width: 90px;" (click)="sortCurrentTableData()">还款日期<i class="iqon-order"></i></th>
+            <th style="width: 50px;">超期天数</th>
+            <th>跟进次数</th>
+            <th>欠款跟进</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData?.arrearlist">
+            <td>{{ item.ContractCode }}</td>
+            <td [title]="item.KHMC">{{ item.KHMC }}</td>
+            <td [title]="item.GSName">{{ item.GSName }}</td>
+            <td [title]="item.YWFL">{{ item.YWFL }}</td>
+            <td>{{ item.QKJE }}</td>
+            <td>{{ item.CREDITDATE }}</td>
+            <td [class.colred]="item.CQTS > 0">{{ item.CQTS }}</td>
+            <td class="operate">
+              <span *ngIf="item.FUCount>0" (click)="routerFollowup('/receivepayment/followup',item)">{{ item.FUCount }}</span>
+              <span *ngIf="item.FUCount==0" (click)="routerFollowup('/receivepayment/followup',item)">0</span>
+            </td>
+            <td class="operate"><span (click)="routerNewfollowup('/receivepayment/followup/followup-new',item)">欠款跟进</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="search(query)"></iq-pager>
+    </div>
+    <div class="rp-list-content-null" *ngIf="!listData || listData?.arrearlist.length == 0">
+      <div class="m-noresult" style="margin-top:10px">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">输入新的查询条件试试吧~</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

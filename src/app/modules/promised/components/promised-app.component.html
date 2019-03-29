@@ -1,0 +1,57 @@
+<div class="g-hdp">
+
+  <div class="g-list">
+
+    <div class="m-boardmenu" (click)="getTabTitle($event)">
+      <a routerLink="/promised/DCG-myApply/a" data-tab="DCG" [ngClass]="{'active':isClickName==='DCG'}">DCG承诺</a>
+      <a routerLink="/promised/HUAWEI-myApply/a" data-tab="HUAWEI" [ngClass]="{'active':isClickName==='HUAWEI'}">华为承诺</a>
+    </div>
+
+    <div class="m-user-nav" *ngIf="isClickName==='DCG'">
+      <ul class="m-usertree">
+        <li routerLinkActive="active">
+          <a routerLink="/promised/DCG-myApply/a">
+            <i class="iqon-paste"></i>我的申请</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/promised/DCG-myApproval/e">
+            <i class="iqon-advertise-o"></i>我的审批</a>
+          <span class="m-num" style="margin-top:5px" *ngIf="DCGapprovalNumber!=0">{{DCGapprovalNumber}}</span>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/promised/DCG-uploadCreditInfo/">
+            <i class="iqon-orderup"></i>信用信息上传</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/promised/DCG-promisedTrack">
+            <i class="iqon-check"></i>承诺跟进</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="m-user-nav" *ngIf="isClickName==='HUAWEI'">
+      <ul class="m-usertree">
+        <li routerLinkActive="active">
+          <a routerLink="/promised/HUAWEI-myApply/a">
+            <i class="iqon-paste"></i>我的申请</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/promised/HUAWEI-myApproval/e">
+            <i class="iqon-advertise-o"></i>我的审批</a>
+          <span class="m-num" style="margin-top:5px" *ngIf="HUAWEIapprovalNumber!=0">{{HUAWEIapprovalNumber}}</span>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/promised/HUAWEI-promisedTrack">
+            <i class="iqon-check"></i>承诺跟进</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="g-right" style="box-sizing:border-box">
+    <router-outlet></router-outlet>
+  </div>
+
+
+</div>

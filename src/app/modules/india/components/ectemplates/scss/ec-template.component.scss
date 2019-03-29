@@ -1,0 +1,306 @@
+.ec-template{
+    padding: 75px 150px;
+    position: relative;
+    font-size: 12px;
+    color: #4a4a4a;
+    border-radius: 5px;
+    background-color: #ffffff;
+    .ec-template-header{
+        position: relative;
+        .ec-template-header-title{
+            //标题
+            text-align: center;
+            height: 34px;
+            font-size: 20px;
+            line-height: 34px;
+            font-weight:bold;
+        }
+        .ec-template-header-code39{
+            display: inline-block;
+            width: 350px;
+            height: 40px;
+            position: absolute;
+            top: -4px;
+            right: 0px;
+        }
+    }
+    .ec-template-body{
+        .ec-template-body-area{
+            margin-bottom: 15px;
+            padding-top: 15px;
+            .ec-template-body-area-title{
+                font-size: 14px;
+                font-weight: bold;
+            }
+            .ec-template-body-area-content{
+                line-height: 40px;
+                .area-content-supplier{
+                    display: inline-block;
+                    width: 315px;
+                }
+                .area-content-supplier-warn{
+                    border: 1px solid red;
+                    line-height: 35px;
+                    border-radius: 3px;
+                }
+                .supplier-copy{
+                    width: 265px;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                .contract-total-money{
+                    width: 135px;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                .contract-total-money-uppercase{
+                    width: 295px;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                .contract-paytype-percent{
+                    width: 85px;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                .m-select{
+                    width: 230px;
+                    display: inline-block;
+                }
+                .area-enduser{
+                    width: 600px;
+                    // border: 1px solid #e1e3eb;
+                    border-bottom: none;
+                    .area-enduser-info:nth-child(even)
+                    {
+                        // background:#f5f7fa;
+                    }
+                    .area-enduser-info{
+                        line-height: 35px;
+                        // border-bottom: 1px solid #e1e3eb;
+                        .enduser-title{
+                            float: left;
+                            // width: 135px;
+                            margin-left: 10px;
+                            font-weight:bold;
+                        }
+                        .enduser-content{
+                            float: left;
+                            // border-left: 1px solid #e1e3eb;
+                            input[type="text"]{
+                                width: 397px;
+                                margin-left: 15px;
+                                border: none;
+                                border-bottom: 1px solid #e1e3eb;
+                            }
+                        }
+                    }
+                }
+                .area-content-servicetime{
+                    display: inline-block;
+                    width: 235px;
+                }
+                .area-content-disputedealtype{
+                    line-height: 35px;
+                    padding-left: 78px;
+                    .area-content-disputedealtype-city{
+                        display: inline-flex;
+                        width: 242px;
+                        .select-search-custom{
+                            width: 90%;
+                        }
+                    }
+                    .area-content-disputedealtype-district{
+                        display: inline-flex;
+                        width: 340px;
+                        .select-search-custom{
+                            width: 64%;
+                        }
+                    }
+                }
+                .area-content-relatedservice{
+                    width: 185px;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                
+            }
+            .area-content-servicecontent{
+                .servicecontent-address,.servicecontent-contracts{
+                    display: inline-block;
+                    border: none;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+                .servicecontent-address{
+                    width: 465px;
+                }
+                .servicecontent-contracts{
+                    width: 275px;
+                }
+            }
+            .area-seller,.area-buyer{
+                line-height: 2.83;
+                margin-bottom: 15px;
+                .area-title{
+                    float: left;
+                    width: 60px;
+                    font-weight:bold;
+                }
+                .area-content{
+                    float: left;
+                    width: 357px;
+                    position: relative;
+                    .m-select{
+                        float: left;
+                        width: 357px;
+                    }
+                    a{
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        text-align: center;
+                        height: 35px;
+                        color: #fff;
+                        border: none;
+                        border-radius: 3px;
+                        transition: all .7s;
+                        font-size: 14px;
+                        overflow: hidden;
+                        background: linear-gradient(275deg,#3495f6,#42c2f7);
+                        line-height: 35px;
+                        min-width: 80px;
+                    }
+                    a:hover {
+                        opacity: 0.85;
+                    }
+                    a:focus {
+                        outline: none;
+                    }
+                    .area-content-input{
+                        width: 76%;
+                    }
+                }
+                .area-content-eccode{
+                    float: left;
+                    text-align: right;
+                    width:60%;
+                    padding-right: 10%;
+                }
+            }
+            .contract-buyerinfo-sellerinfo{
+                width: 100%;
+                .info-item{
+                    height: 40px;
+                    line-height: 35px;
+                    .info-item-seller,.info-item-buyer{
+                        float: left;
+                        width: 48%;
+                        margin-left: 2%;
+                        .info-item-seller-title,.info-item-buyer-title{
+                            float: left;
+                            width: 17%;
+                            text-align: right;
+                            font-weight: 700;
+                        }
+                        .info-item-seller-content,.info-item-buyer-content{
+                            float: left;
+                            width: 80%;
+                            margin-left: 2%;
+                            .info-item-text{
+                                width: 375px;
+                                border: none;
+                                border-bottom: 1px solid #e1e3eb;
+                            }
+                        }
+                    }
+                }
+            }
+            .text-indent2em{
+                text-indent:2em;
+                line-height: 35px;
+            }
+            .area-code{
+                .area-content-sellercode,.area-content-buyercode,.area-content-suppliercode{
+                    padding-bottom: 5px;
+                    .title,.content{
+                        float: left;
+                        height: 35px;
+                        line-height: 35px;
+                    }
+                    .title{
+                        text-align: right;
+                        width: 77%;
+                    }
+                    .content{
+                        width: 23%;
+                    }
+                }
+            }
+        }
+        .body-area-file{
+            width: 50%;
+            padding-left: 42px;
+            .body-area-file-title{
+                float: left;
+                font-weight: bold;
+                width: 65px;
+            }
+            .body-area-file-content{
+                float: left;
+                width: 408px;
+                .file-content-main-accessory a{
+                    color: #4a4a4a;
+                }
+                .file-content-main-accessory a:hover{
+                    cursor: pointer;
+                    color: #59aeea;
+                }
+                .file-content-item{
+                    height: 30px;
+                    line-height: 30px;
+                    border-bottom: 1px solid #e1e3eb;
+                }
+            }
+        }
+        .i-required{
+            color: #ff4d4d;
+        }
+    }
+    .ec-template-footer{
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 35px;
+        padding-top: 15px;
+        .m-btn-common{
+            margin-left: 15px;
+        }
+        .m-btn-cancel{
+            background-color: #f3f3f3;;
+            text-align: center;
+            border: none;
+            border-radius: 3px;
+            transition: all .7s;
+            font-size: 14px;
+            overflow: hidden;
+            display: inline-block;
+            height: 45px;
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .m-btn-default{
+            height: 45px;
+        }
+    }
+}
+.m-input-warn {
+    border-color: #ea6269 !important;
+}
+.m-select-warn{
+    line-height: 35px;
+    border-radius: 3px;
+    border:1px solid #ea6269 !important;
+}
+.border-none{
+    border: none;
+    border-bottom: 1px solid #e1e3eb;
+}

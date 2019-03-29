@@ -1,0 +1,122 @@
+@import '../../../../../../sass/base/util';
+.m-overclass{
+  padding: 15px 20px;
+}
+
+// .m-search-form{
+//   @extend %clearfix;
+//   padding-left: 50px;
+//   .m-search-input{
+//     float: left;
+//     left: 200px;
+//     >input[type=text]{
+//       width: 300px;
+//     }
+//     label{
+//       padding-right:10px;
+//     }
+//     .move{
+//       margin-left:20px;
+//     }
+//   }
+//   .m-search-btn{
+//     float: left;
+//     padding-left: 120px;
+//     .m-btn-confirm{
+//       width: 78px;
+//     }
+//     .m-btn-default{
+//       margin-left:15px;
+//     }
+//   }
+// }
+
+.m-search-box{
+  clear: both;
+  display: flex;
+  justify-content: space-between;
+
+  .m-search-item{
+    width: 27%;
+
+    >input{
+      width: 75%;
+      margin: 0 0 0 10px;
+    }
+
+  }
+
+  .m-search-button{
+    text-align: left;
+
+  button:nth-child(1){
+    width: 78px;
+  }
+  }
+
+}
+
+.m-noresult{
+  margin-top: 10px;
+  height: 100%;
+  min-height: calc(100vh - 175px);
+  background: #fff;
+}
+
+.m-table-right {
+  // max-height: 474px;
+  padding: 0 10px;
+  margin: 0 15px;
+  overflow: auto;
+  position: relative;
+  margin-top: 10px;
+  // height: 100%;
+  min-height: calc(100vh - 185px);
+  background: #fff;
+  .table-auto-content table > thead th {
+      font-size: 12px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+  }
+  
+}
+.ellipsis{
+  @extend %text-ellipsis;
+}
+
+.m-list-button{
+
+  text-align: center;
+
+  button{
+    padding: 0 10px;
+    color:rgb(6, 121, 228);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    &:hover{
+      color:rgb(243, 138, 0);
+    }
+  }
+
+  .btnDisabled{
+    cursor: not-allowed;
+    color: rgb(179, 179, 179);
+    &:hover{
+      color: rgb(179, 179, 179);
+    }
+  }
+
+  //复制按钮样式
+  .m-copyBtn{
+    border:1px solid rgb(27, 123, 248);
+    border-radius: 5px;
+    &:hover{
+      border:1px solid rgb(243, 138, 0);
+    }
+    i{
+      padding-right:2px;
+    }
+  }
+}
+                    

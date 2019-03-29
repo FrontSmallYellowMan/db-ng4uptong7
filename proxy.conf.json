@@ -1,0 +1,23 @@
+ {
+  "/api/*": {
+    "target": "http://10.0.1.85:88",
+    "secure": false,
+    "pathRewrite": {"^/api/" : "/api/"},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/dbomsapi/*": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {"^/dbomsapi/" : "/dbomsapi/"},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/EBCrm/*": {
+    "target": "http://10.0.1.88:8080",
+    "secure": false,
+    "pathRewrite": {"^/EBCrm/" : "/EBCrm/"},
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

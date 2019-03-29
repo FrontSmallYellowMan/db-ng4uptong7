@@ -1,0 +1,89 @@
+<div class="m-boardtop clearfix" style="box-sizing: border-box;">
+    <iq-breadcrumb></iq-breadcrumb>
+    <!-- <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addData()"><i class="iqon-add"></i>新建供应商</button> -->
+    <iq-newcreat [dataCreat]='newCreateApplyRoute.data' (mouseenter)="isNewPromised()"></iq-newcreat>
+    <button type="button" class="m-btn-default m-btn-export" (click)='getTemplate()'>模板下载</button>
+    <div class="m-btn-export"><iq-file-upload upType="0" text="导入信用评级" [url]="fileUpLoadApi" (onSuccess)="fileUploadSuccess($event)" [showModel]="false"></iq-file-upload></div>
+    <!-- <button type="button" class="m-btn-default m-btn-export">导入数据</button> -->
+  </div>
+  
+  <div class="m-overclass">
+    <div class="m-list-menu">
+  
+      <div class="m-search-more">
+        <form #form="ngForm">
+  
+          <div class="m-search-item">
+            <label>销售员</label>
+            <input type="text" name="seleName" placeholder="-请填写销售员姓名或itcode" [(ngModel)]="queryCreditLevelData.UserInfo" (keyup.enter)="search()">
+          </div>
+  
+          <div class="m-search-item">
+              <label>所属平台</label>
+              <input type="text" name="Platform" placeholder="-请填写所属平台" [(ngModel)]="queryCreditLevelData.FlatName"  (keyup.enter)="search()">
+            </div>
+  
+          <div class="m-search-item m-search-items">
+            <label style="padding: 0 5px 0 0">部门名称</label>
+            <input type="text" name="deptName" placeholder="-请填写部门名称" [(ngModel)]="queryCreditLevelData.DeptName"  (keyup.enter)="search()">
+          </div>
+
+          <div class="m-search-item m-search-items">
+             <!-- 展位用 -->
+            </div>
+
+          <div class="m-search-btn">
+            <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+            <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <!-- 搜索缺省 -->
+    <ng-container *ngIf="!isHide">
+      <noResultPage></noResultPage>
+    </ng-container>
+  
+    <!-- 数据列表 -->
+    <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+      <div class="table-auto-content">
+        <table class="table table-hover table-list">
+          <thead>
+            <tr>
+                <th class="wp5">序号</th>
+                <th>员工编号</th>
+                <th>ITCODE</th>
+                <th>姓名</th>
+                <th>平台</th>
+                <th>部门名称</th>
+                <th style="text-align:center">信用评级</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor='let item of searchList;index as i'>
+              <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+              <td>{{item.UserNo}}</td>
+              <td>{{item.ITCode|lowercase}}</td>
+              <td>{{item.UserName}}</td>
+              <td>{{item.FlatName}}</td>
+              <td>{{item.DeptName}}</td>
+              <td *ngIf="!item.isEdit" (click)="editLevel(i)" style="text-align:center">{{item.CommitLevel}}</td>
+              <td *ngIf="item.isEdit" style="width:100px;text-align:center">
+                <select name="level" id="" [(ngModel)]="setLevelData.CommitLevel" (ngModelChange)="setLevel(item.ITCode,i)">
+                  <option value="">请选择</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                </select>
+                <!-- <input type="text" name="level" [(ngModel)]="setLevelData.CommitLevel" (blur)="setLevel(item.ITCode,i)" placeholder="-请填写信用评级"> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="page">
+        <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+      </div>
+    </div>
+  </div>

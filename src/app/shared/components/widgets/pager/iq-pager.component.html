@@ -1,0 +1,60 @@
+
+
+<div class="page">
+  <div class="page-wrap">
+    <div class="page-size" [ngClass]="{'hide': simple}">
+        显示：
+          <a [ngClass]="{'active':pageSize == 10}" (click)="changePageSize(10)">10</a>
+          <a [ngClass]="{'active':pageSize == 20}" (click)="changePageSize(20)">20</a>
+          <a [ngClass]="{'active':pageSize == 50}" (click)="changePageSize(50)">50</a>
+        条/页
+    </div>
+    <div class="page-all" [ngClass]="{'hide': simple}">
+        共{{pagerData.total}}条
+    </div>
+    <div class="page-center">
+      <div class="pagination">
+        <ul>
+          <li><a [ngClass]="{'disable':pagerData.pageNo == 1}" (click)="prevNextPage('prev')"><i class="iqon-angle-left"></i></a></li>
+          <li (click)="changePage(item.page)" [ngClass]="{'active': item.page==pagerData.pageNo}" *ngFor="let item of pagerList; let i = index">
+            <a *ngIf="item.page !== ''">{{item.page}}</a>
+            <span *ngIf="item.page === ''">&nbsp;&nbsp;...&nbsp;&nbsp;</span>
+          </li>
+          <li><a [ngClass]="{'disable':pagerData.pageNo == pagerData.totalPages}" (click)="prevNextPage('next')"><i class="iqon-angle-right"></i></a></li>
+        </ul>
+      </div>
+      <div class="page-go" [ngClass]="{'hide': simple}">
+        到第 <input class="ng-untouched ng-pristine ng-valid" type="text" [max]="pagerData.pageNo" min="1" [(ngModel)]="pageNo"> 页
+        <button type="button" class="m-btn-default" (click)="changePage(pageNo)">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="page">
+  <div class="page-wrap">
+    <div class="page-size" [ngClass]="{'hide': simple}">
+        显示:
+        <a [ngClass]="{'active':pageSize == 10}" (click)="changePageSize(10)">10</a>
+        <a [ngClass]="{'active':pageSize == 20}" (click)="changePageSize(20)">20</a>
+        <a [ngClass]="{'active':pageSize == 50}" (click)="changePageSize(50)">50</a> 条/页
+    </div>
+    <div class="page-all" [ngClass]="{'hide': simple}">
+        共{{pagerData.total}}条
+    </div>
+    <div class="pagination">
+      <ul>
+        <li><a [ngClass]="{'disable':pagerData.pageNo == 1}" (click)="prevNextPage('prev')"><i class="iqon-angle-left"></i></a></li>
+        <li (click)="changePage(item.page)" [ngClass]="{'active': item.page==pagerData.pageNo}" *ngFor="let item of pagerList; let i = index">
+          <a *ngIf="item.page != -1">{{item.page}}</a>
+          <span *ngIf="item.page == -1">&nbsp;&nbsp;...&nbsp;&nbsp;</span>
+        </li>
+        <li><a [ngClass]="{'disable':pagerData.pageNo == pagerData.totalPages}" (click)="prevNextPage('next')"><i class="iqon-angle-right"></i></a></li>
+      </ul>
+    </div>
+    <div class="page-go" [ngClass]="{'hide': simple}">
+      到第 <input class="ng-untouched ng-pristine ng-valid" type="text" [max]="pagerData.pageNo" min="1" [(ngModel)]="pageNo"> 页
+        <button type="button" class="m-btn-default" (click)="changePage(pageNo)">确定</button>
+    </div>
+  </div>
+</div> -->

@@ -1,0 +1,523 @@
+<div class="container contpl">
+    <div class="item">
+        <div class="title">
+            <span class="titleSpan">销 售 合 同</span>
+            <div class="barcode">
+                <span class="code39"></span>
+            </div>
+        </div>
+        <div class="content">
+            <div class="row clearfix">
+                <div class="m-input-item-selcode">
+                    <div class="m-input-title">卖方合同编号：</div>
+                    <div class="m-input-content">
+                        <span>{{formData.BaseData.EC_Code}}<span *ngIf="!formData.BaseData.EC_Code">系统自动生成</span></span>
+                    </div>
+                </div>
+                <div class="m-input-item-buycode">
+                    <div class="m-input-title">买方合同编号：</div>
+                    <div class="m-input-content">
+                        <input type="text" name="BuyerContractNo" [(ngModel)]="formData.BaseData.BuyerContractNo" [disabled]="isView">
+                    </div>
+                </div>
+                <div class="m-input-item-costomcode">
+                    <div class="m-input-title">自定义合同编号：</div>
+                    <div class="m-input-content"><input type="text" name="DeptContractNo" [(ngModel)]="formData.BaseData.DeptContractNo" [disabled]="isView"></div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="m-input-item-seller">
+                    <div class="m-input-title"><i class="i-required" *ngIf="!isView">* </i><h5>卖方： </h5></div>
+                    <div class="m-input-content">
+                        <ng-select name="seller" [items]="selectInfo.CompanyList" placeholder="请选择" [(ngModel)]="selected.Seller" (selected)="onSelectSeller($event)" [disabled]="isView"></ng-select>
+                    </div>
+                </div>
+                <div class="m-input-item-buyer">
+                    <div class="m-input-title"><i class="i-required" *ngIf="!isView">* </i><h5>买方：</h5></div>
+                    <div class="m-input-content">
+                        <input type="text" id="buyerName" name="BuyerName" required placeholder="请输入客户名称" [(ngModel)]="formData.BaseData.BuyerName"
+                            [disabled]="isView" (blur)="onInputBuyerName()">
+                        <button class="btn btn-info custom" (click)="open()" *ngIf="!isView">查询</button>
+                    </div>
+                </div>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;鉴于买卖双方就本合同所涉产品销售事宜已经书面签署《货物买卖框架合同及最高额保证合同》或《合作框架协议》(包括补充协议和最高额保证合同等)，且本协议作为《货物买卖框架合同及最高额保证合同》或《合作框架协议》之附件，是《货物买卖框架合同及最高额保证合同》或《合作框架协议》不可分割的一部分。
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;根据《中华人民共和国合同法》及其他有关法律、法规之规定，买卖双方经过平等协商订立本合同，以资共同遵照执行。
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="seller clearfix">
+                    <div class="floatLeft">
+                        <i class="i-required" *ngIf="!isView">* </i>
+                        <h5>卖方： </h5>
+                    </div>
+                    <div class="floatLeft">
+                        <ng-select name="seller" [items]="selectInfo.CompanyList" placeholder="请选择" [(ngModel)]="selected.Seller"
+                        (selected)="onSelectSeller($event)" [disabled]="isView"></ng-select>
+                    </div>
+                    <div class="floatLeft">
+                        <span class="conCode">合同编号：{{formData.BaseData.EC_Code}}<span *ngIf="!formData.BaseData.EC_Code">系统自动生成</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="buyer">
+                <i class="i-required" *ngIf="!isView">* </i>
+                <h5>买方：</h5>
+                <input type="text" id="buyerName" name="BuyerName" required placeholder="请输入客户名称" [(ngModel)]="formData.BaseData.BuyerName"
+                    [disabled]="isView" (blur)="onInputBuyerName()">
+                <span>
+                    <button class="btn btn-info custom" (click)="open()" *ngIf="!isView">查询</button>
+                </span>
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;鉴于买卖双方就本合同所涉产品销售事宜已经书面签署《货物买卖框架合同及最高额保证合同》或《合作框架协议》(包括补充协议和最高额保证合同等)，且本协议作为《货物买卖框架合同及最高额保证合同》或《合作框架协议》之附件，是《货物买卖框架合同及最高额保证合同》或《合作框架协议》不可分割的一部分。
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;根据《中华人民共和国合同法》及其他有关法律、法规之规定，买卖双方经过平等协商订立本合同，以资共同遵照执行。
+                </div>
+            </div>-->
+            <div>
+                <h5>一、销售内容</h5>
+            </div>
+            <div>
+                <div class="batchUpload floatRight" *ngIf="!isView">
+                    <a class="btn btn-info custom" [href]="producttpladdress" target="_blank">模板下载</a>
+                    <div>
+                        <input type="file" ngModel name="uploaderProduct" ng2FileSelect multiple [uploader]="uploaderProduct" (change)="onBatchUploadProduct(uploaderProduct)"
+                        />
+                        <button class="btn btn-info custom">批量上传</button>
+                    </div>
+                </div>
+                <dbcontpl-productdetail (onTotalMoneyChange)="onTotalMoneyChange()" #productList [(ProductRelated)]="ProductRelated" [isHuaWei]="isHuaWei" [(products)]="formData.ProductDetails"
+                    [isView]="isView"></dbcontpl-productdetail>
+            </div>
+            <div class="row">
+                <h5>2．最终用户信息</h5>
+                <ul class="endUserInfo">
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserName_CN)">
+                        <span class="endUserInfoSpan">最终用户中文名称</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserName_CN}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserName_CN" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserName_CN" (input)="onSelectMaxLen($event,80)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserName_EN)">
+                        <span class="endUserInfoSpan">最终用户英文名称</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserName_EN}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserName_EN" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserName_EN" (input)="onSelectMaxLen($event,80)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserContact)">
+                        <span class="endUserInfoSpan">最终用户联系人</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserContact}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserContact" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserContact" (input)="onSelectMaxLen($event,40)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserAddress_CN)">
+                        <span class="endUserInfoSpan">最终用户中文地址</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserAddress_CN}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserAddress_CN" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserAddress_CN" (input)="onSelectMaxLen($event,80)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserAddress_EN)">
+                        <span class="endUserInfoSpan">最终用户英文地址</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserAddress_EN}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserAddress_EN" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserAddress_EN" (input)="onSelectMaxLen($event,100)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserTel)">
+                        <span class="endUserInfoSpan">最终用户联系电话</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserTel}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserTel" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserTel" (input)="onSelectMaxLen($event,30)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserFax)">
+                        <span class="endUserInfoSpan">最终用户传真号</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserFax}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserFax" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserFax" (input)="onSelectMaxLen($event,30)">
+                    </li>
+                    <li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserEmail)">
+                        <span class="endUserInfoSpan">最终电子邮件地址</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserEmail}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserEmail" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserEmail" (input)="onSelectMaxLen($event,50)">
+                    </li>
+                    <!--<li *ngIf="!isView || (isView && !!formData.BaseData.FinalUserReportNum)">
+                        <span class="endUserInfoSpan">报备号（如有）</span>
+                        <span *ngIf="isView">{{formData.BaseData.FinalUserReportNum}}</span>
+                        <input *ngIf="!isView" type="text" ngModel name="FinalUserReportNum" class="endUserInfoInput" [(ngModel)]="formData.BaseData.FinalUserReportNum">
+                    </li>-->
+                </ul>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;注：买方保证以上最终用户信息真实有效，如因买方提供的信息不准确或不真实而引起法律纠纷以及软件许可使用权使用受限或其他任何瑕疵，则产生的相关经济损失和法律责任全部由买方自行承担。
+                </p>
+            </div>
+            <div class="row">
+                <h5>二、产品形式</h5>
+                <p>
+                    1．如无特别规定，本协议项下产品为生产厂家许可最终用户享有对软件产品的许可使用权，买方与本合同签订后10个工作日内，可自行通过生产厂家官网、400或800电话等途径查询最终用户已获得所订购产品的许可使用权。
+                    <br/>2．本合同项下软件产品不一定提供软件介质、生产厂商许可证原件或其他证明等实物或文件资料，产品形式以生产厂家确认的形式为准。如本合同有软件介质、生产厂商许可证原件或其他证明等实物，卖方可在生产厂商将实物交付完成后交付给买方。
+                    <br/>3．由于本合同产品是卖方专为买方所订购的软件产品许可使用权，该权利自卖方按照买方要求向生产厂家下单订制、生产厂家接受合同时即自动生成，权利期限以厂商授权和确认的期限为准。除非取得生产厂家的书面许可，否则买方签订本合同后，不得更改最终用户的名称、不得退换，且应于约定时间内向卖方全部付款。
+                    <br/>4．买方在签订本合同时知悉：买方拒绝付款的，将给卖方造成相当于合同总价的损失。买方已交付预付款的，卖方有权不退还预付款。
+                </p>
+            </div>
+            <div class="row">
+                <h5>三、交付事项</h5><br/>
+                <p>
+                    1．买方指定本合同项下软件产品的交付方式为 ：
+                    <br/>（1）本合同项下约定软件产品为原厂商许可第一条载明最终用户享有的对软件产品的许可使用权，双方一致同意自本合同签订之日起【10】个工作日由原厂商系统生成E-license（开放式电子许可）后，原厂商以电子邮件方式将此E-license（开放式电子许可）内容发送至本合同第一条所述的邮件地址；
+                    <br/>（2）本合同项下约定软件产品为原厂商许可第一条载明最终用户享有的对软件产品的许可使用权，双方一致同意卖方向原厂商下单完成，由原厂商发出电子邮件（电子邮件可能包括：软件许可查询指引、软件许可账户名密码、其他确认事项等）即视为卖方已向买方交付订单约定的软件产品；
+                    <br/>（3）本合同项下约定软件产品为原厂商许可第一条载明最终用户享有的对软件产品的许可使用权，双方一致同意卖方向原厂商/原厂商指定认证机构/原厂商指定运营机构下单完成，即视为卖方已向买方交付订单约定的软件产品；
+                    <br/>双方一致同意，在上述约定的时间内完成本条第1款约定的任何一项方式交付完成，即视为本合同约定全部产品交付完成。若有多种交付方式存在的，以最先执行的时间为准视为卖方交付完成。
+                </p>
+                <span>
+                    2.买方上门提货或由卖方发货至买方指定提货地点，由买方自行提货，提货信息如下：
+                    <input icheck type="radio" id="singleAddress" name="receiveInfo" [(ngModel)]="formData.BaseData.DeliveryAddressType" (ngModelChange) = "onToggleAddress($event)" value="1" [disabled]="isView"><label>单送货地址</label>
+                    <input icheck type="radio" id="multipleAddress" name="receiveInfo" [(ngModel)]="formData.BaseData.DeliveryAddressType" (ngModelChange) = "onToggleAddress($event)" value="2" [disabled]="isView"><label>多送货地址</label>
+                </span>
+                <div *ngIf="isMultipleAddress" class="multipleAddress batchUpload">
+                    <span><i class="i-required" *ngIf="!isView">* </i>附件一</span>
+                    <span><a [href]="multipleAddress" target="_blank">多送货地址填写模板.xlsx</a></span>
+                    <div class="upload">
+                        <button class="btn btn-info">上传</button>
+                        <input type="file" ng2FileSelect [uploader]="uploaderAddress" multiple (change)="onUploaderAddress(uploaderAddress)" />
+                    </div>
+                    <a *ngIf="formData.MultiDeliveryAddress && formData.MultiDeliveryAddress.AccessoryURL" [href]="formData.MultiDeliveryAddress.AccessoryURL"
+                        target="_blank">{{formData.MultiDeliveryAddress.AccessoryName}}</a>
+                </div>
+                <div *ngIf="!isMultipleAddress">
+                    <ul class="singleReceiveInfo">
+                        <li>
+                            <span>①<i class="i-required" *ngIf="!isView">* </i>买方指定本合同项下产品的提货单位（人）全称为：</span>
+                            <input type="text" ngModel name="RecipientName" [(ngModel)]="formData.BaseData.RecipientName" required [disabled]="isView"
+                                (input)="onSelectMaxLen($event,150)">
+                        </li>
+                        <li>
+                            <span>②<i class="i-required" *ngIf="!isView">* </i>买方指定本合同项下产品的提货地址为：</span> 省份：
+                            <ng-select class="ticket" name='province' [items]="selectInfo.ReceivingProvinceList" [(ngModel)]="selected.ReceivingProvince"
+                                placeholder="请选择" name="ReceivingCity" (selected)="onSelectReceivingProvince($event)" [disabled]="isView"></ng-select>
+                            城市：
+                            <ng-select class="ticket" name='city' [items]="selectInfo.ReceivingCityList" placeholder="请选择" [(ngModel)]="selected.ReceivingCity"
+                                (selected)="onSelectReceivingCity($event)" [disabled]="isView"></ng-select>
+                            区县：
+                            <ng-select class="ticket" name='district' [items]="selectInfo.ReceivingDistrictList" placeholder="请选择" [(ngModel)]="selected.ReceivingCounty"
+                                [disabled]="isView"></ng-select>
+                            <div class="divStreet">
+                                街道：<input type="text" ngModel name="ReceivingStreet" [(ngModel)]="formData.BaseData.RecipientTheStreet"
+                                    required [disabled]="isView" (input)="onSelectMaxLen($event,150)">
+                            </div>
+
+                        </li>
+                        <li>
+                            <span>③<i class="i-required" *ngIf="!isView">* </i>买方指定的联系人的姓名及联系电话为：</span> 联系人：
+                            <input type="text" ngModel name="TheContactName" [(ngModel)]="formData.BaseData.TheContactName" required [disabled]="isView"
+                                (input)="onSelectMaxLen($event,100)"> 联系电话： <input type="text" ngModel
+                                name="TheContactPhone" [(ngModel)]="formData.BaseData.TheContactPhone" required [disabled]="isView"
+                                (input)="onSelectMaxLen($event,200)">
+                        </li>
+                        <li>
+                            <span>④<i class="i-required" *ngIf="!isView">* </i>买方指定的产品签收方式为：</span>
+                            <input type="text" ngModel name="TheReceivedType" [(ngModel)]="formData.BaseData.TheReceivedType" required [disabled]="isView"
+                                (input)="onSelectMaxLen($event,200)">
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    3.提货时间：对于产品清单，卖方同意买方可以按照<i class="i-required" *ngIf="!isView">* </i>
+                    <ng-select [disabled]="isView" class="ticket" name="TicketTypeList" [items]="selectInfo.TakeDeliveryTypes" placeholder="请选择" [(ngModel)]="selected.TakeDeliveryType"></ng-select>形式履行合同义务
+                    <div class="deliverytime clearfix">
+                        <div class="deliverytime-title">a.一次性提货时间为：</div>
+                        <div class="deliverytime-content">
+                            <span *ngIf="isView">{{formData.BaseData.TakeDeliveryTime}}前</span>
+                            <my-datepicker PlaceHolder="-请选择日期" (onChange) = "getDate($event)" [(ngModel)]="formData.BaseData.TakeDeliveryTime" *ngIf="!isView"></my-datepicker>
+                        </div>
+                    </div>
+                    <p>
+                        b.分批提货，提货时间及提货内容见附件或产品明细
+                        <br/>非卖方过错原因，卖方在本合同约定的提货时间未能发货至买方指定提货地点，卖方将无需承担发货义务，买方应当上门提货。
+                        <br/>4.买方提出变更产品交付邮件地址或提货人的，应提前3日书面通知卖方变更后的邮件地址或提货人姓名、联系方式（通讯地址、固定联系电话和邮政编码等），卖方在收到前述买方书面通知之前有权向本合同所约定的邮件地址或提货人交付。提货人对卖方的行为（包括但不限于签字、确认或承诺）无争议地视为买方之行为。
+                        <br/>5．卖方完成产品交付即视为买方验收合格，买方应在完成本合同约定交付之日起2个工作日内向卖方出具加盖公司印章的交付证明。若逾期未出具书面交付证明，则视为交付完全符合本合同约定要求，买方承诺按照本合同第五条第2款约定期限付清货款。
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <h5>四、相关服务（如软件服务的安装、技术服务支持、保修）</h5>
+                <p>除双方另有约定外，本合同项下软件产品的服务和知识产权问题均由原厂商直接负责并处理，相关标准以原厂商标准为准。</p>
+                <div class="relatedService">
+                    <textarea ngModel *ngIf="!isView" id="relatedservicetxt" name="RelatedService" rows="1" [(ngModel)]="formData.BaseData.RelatedService" (input)="onTextareaInput(formData.BaseData.RelatedService)"></textarea>
+                    <div *ngIf="isView">{{formData.BaseData.RelatedService}}</div>
+                    <div id="relatedservicediv" #relatedService></div>
+                </div>
+            </div>
+            <div class="row lineHeight row-six">
+                <h5>五、付款条款</h5>
+                <p>1．对于买、卖双方交接发票、结算票据事宜，双方一致同意：买方取得发票并不代表买方货款已付清，货款已付清是以买方货款全部到卖方指定账户为标准。</p>
+                <p>
+                    2．<i class="i-required" *ngIf="!isView">* </i> 付款方式：买方选择下面第
+                    <ng-select class="ticket-paytype" name="Payment" [items]="selectInfo.Payment" placeholder="请选择" [(ngModel)]="selected.PaymentType" [disabled]="isView" (selected)="onSelectPaymentType($event)"></ng-select>种付款方式付款。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Ticket'">
+                    （1）票据方式一次性付清：<br/>卖方发货前，买方交付给卖方一张自发货之日起
+                    <!--<input type="text" class="ticketDay" ngModel name="PayType_Ticket_EffectiveDay" [(ngModel)]="formData.BaseData.PayType_Ticket_EffectiveDay" (input)="onCheckTickedDay()" [disabled]="isView"> 日内，买方交付给卖方一张自本合同生效之日起-->
+                    <input type="number" class="ticketDay" ngModel name="PayType_Ticket_Day" [(ngModel)]="formData.BaseData.PayType_Ticket_Day" (input)="onCheckTickedDay()" [disabled]="isView">日的
+                    <ng-select class="ticket" name="TicketTypeList" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_Ticket_Type" [disabled]="isView"></ng-select>用于支付合同货款（以款到卖方账户为准），
+                    <ng-select class="ticket" name="TicketTypeList" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_Ticket_Type" [disabled]="true"></ng-select>金额：
+                    <input type="text" id="TicketTotalMoney" ngModel name="TotalMoney" class="money" [(ngModel)]="TicketTotalMoney" placeholder="" disabled> 元。在买方向卖方支付上述票据前，卖方有权拒绝发货并不承担逾期交货的违约责任；同时买方保证在卖方发货之日起
+                    <input type="text" ngModel name="PayType_Ticket_DayCopy" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_Ticket_Day" placeholder="" disabled>日内该票据能够足额兑付。如未能兑付或未能足额兑付，则买方仍应完成付款义务。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Transfer'">
+                    （2）转账/电汇方式一次性付清：<br/> 买方于卖方发货之日起
+                    <input type="number" ngModel name="PayType_Transfer_Day" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_Transfer_Day" (input)="onCheckTransferDay()" [disabled]="isView">日内付清货款。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Once-Period'">
+                    （3）一次性交付，分批付款：<br/> 本合同签订之日起三日内，买方向卖方支付合同总价款的
+                    <input type="text" ngModel name="PayType_OP_Ratio" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP_Ratio" (input)="onInputProportion($event,'PayType_OP_Money','Once-Period')" [disabled]="isView">%(
+                    <input type="text" ngModel name="PayType_OP_Money" class="money" [(ngModel)]="formData.BaseData.PayType_OP_Money" (click)="onClickMoney($event,'PayType_OP_Ratio')" (input)="onInputMoney($event,'Once-Period')" [disabled]="isView">元)作为预付款。卖方发货前，买方交付给卖方一张自发货之日起
+                    <input type="number" ngModel name="PayType_OP_Day" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP_Day" (input)="onCheckOpDay()" [disabled]="isView">日的
+                    <ng-select name="TicketTypeList3" class="ticket" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_OP_Ticket" [disabled]="isView"></ng-select>用于支付合同货款（以款到卖方账户为准），
+                    <ng-select name="TicketTypeList3" class="ticket" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_OP_Ticket" [disabled]="true"></ng-select>金额：
+                    <input type="text" id="PayType_OP_SurplusMoney" ngModel name="ceilMoney23" class="money" [(ngModel)]="PayType_OP_SurplusMoney" disabled placeholder="">元。在买方向卖方支付合同约定预付款和上述票据前，卖方有权拒绝交货并不承担逾期交货的违约责任；买方保证在发货之日起
+                    <input type="text" ngModel name="PayType_OP_DayCopy" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP_Day" placeholder="" disabled>日内付清剩余货款，即
+                    <input type="text" id="PayType_OP_MoneyCopy" ngModel name="ceilMoney23Copy" class="money" [(ngModel)]="PayType_OP_MoneyCopy" disabled placeholder="">元。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Period-Period'">
+                    （4）分期交货，分期付款：<br/> 卖方分批交货，本合同签订之日起三日内，买方向卖方支付合同总价款的
+                    <input type="text" ngModel name="PayType_PP_Ratio" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_PP_Ratio" (keyup)="onInputProportion($event,'PayType_PP_Money','Period-Period')" [disabled]="isView">%(
+                    <input type="text" ngModel name="PayType_PP_Money" class="money" [(ngModel)]="formData.BaseData.PayType_PP_Money" (click)="onClickMoney($event,'PayType_OP_Ratio')" (input)="onInputMoney($event,'PayType_PP_Money')" [disabled]="isView">元)作为预付款，买方需在每次发货前交给卖方一张自发货之日起
+                    <input type="number" ngModel name="PayType_PP_Day" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_PP_Day" (input)="onCheckPpDay()" [disabled]="isView">日的
+                    <ng-select name="TicketTypeList5" class="ticket" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_PP_Ticket" [disabled]="isView"></ng-select>用于支付合同货款（以款到卖方账户为准），
+                    <ng-select name="TicketTypeList6" class="ticket" [items]="selectInfo.TicketTypeList" placeholder="请选择" [(ngModel)]="selected.PayType_PP_Ticket" [disabled]="true"></ng-select>金额等于每次发货的产品销售金额，在买方向卖方交付预付款和上述票据前，卖方有权拒绝发货并不承担逾期交货的违约责任；买方保证在卖方发货之日起
+                    <input type="text" ngModel name="PayType_PP_DayCopy" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_PP_Day" disabled>日内付清对应货款。本款约定之预付款仅用作冲抵最后一笔应付货款。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Full'">
+                    （5）全款到账交付：<br/>买方于本合同生效之日起
+                    <input type="number" ngModel name="PayType_Full_Day" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_Full_Day" (input)="onCheckFullDay()" [disabled]="isView">日内向卖方一次性支付全部货款，卖方在收到买方全部货款后交货；在买方向卖方支付合同约定货款前，卖方有权拒绝发货并不承担逾期交货的违约责任。
+                </p>
+                <p *ngIf="currentPayType == '' || currentPayType == 'Once-Period2'">
+                    （6）一次性交货，分批付款：<br/> 本合同签订之日起
+                    <input type="number" ngModel name="PayType_OP2_SignDay" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP2_SignDay" (input)="onCheckPayTypeOp2Date('PayType_OP2_SignDay')" [disabled]="isView">日内，买方向卖方支付合同总价款的
+                    <input type="text" ngModel name="PayType_OP2_Ratio" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP2_Ratio" (input)="onInputProportion($event,'PayType_OP2_Money','Once-Period2')" [disabled]="isView"> % （
+                    <input type="text" ngModel name="PayType_OP2_Money" class="money" [(ngModel)]="formData.BaseData.PayType_OP2_Money" (click)="onClickMoney($event,'PayType_OP2_Ratio')" (input)="onInputMoney($event,'Once-Period2')" [disabled]="isView"> 元）作为预付款，在买方向卖方支付合同约定预付款前，卖方有权拒绝发货并不承担逾期交货的违约责任，同时买方保证在卖方发货之日起
+                    <input type="number" ngModel name="PayType_OP2_SendDay" class="ticketDay" [(ngModel)]="formData.BaseData.PayType_OP2_SendDay" (input)="onCheckPayTypeOp2Date('PayType_OP2_SendDay')" [disabled]="isView">日内付清剩余货款，即
+                    <input type="text" id="PayType_OP2_MoneyCopy" ngModel name="PayType_OP2_MoneyCopy" class="money" [(ngModel)]="PayType_OP2_MoneyCopy" [disabled]="true"> 元。
+                </p>
+                <div class="paymentMethod" *ngIf="currentPayType == '' || currentPayType == 'Customize'">
+                    <span>（7）</span>
+                    <textarea rows="2" cols="140" ngModel name="PayType_Customize" [(ngModel)]="formData.BaseData.PayType_Customize" placeholder="自定义条款" [disabled]="isView" (input)="onSelectMaxLen($event,500)"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <h5>六、知识产权与陈述保证</h5><br/>
+                <p>
+                    1．知识产权
+                    <br/>（1）卖方保证本合同中约定的软件产品许可使用权享有合法的权利。
+                    <br/>（2）买方只能按原厂商的软件产品许可权利范围(使用权限、最终用户、期限等）规定使用或再销售软件产品许可使用权，不享有软件产品的所有权（包含著作权），不得侵犯所订购软件产品原厂商的合法权利，即不得有修改本合同所涉软件或对软件进行解密或复制、反编译、进行非法销售等行为。
+                    <br/>（3）如本合同项下软件产品侵犯他人知识产权，或买方在销售、许可销售、使用本合同项下产品过程中发生侵犯他人知识产权的行为，致使权利人追究买方或第三方责任，卖方对此不承担任何责任。若因买方原因导致权利人追究卖方责任的，买方应承担相应的赔偿责任。
+                    <br/>2．陈述与保证
+                    <br/>（1）买方不得以反向工程、反编译、反汇编等对服务进行任何变动，不得删除、修改或掩藏软件中的任何版权、商标或其他专有权声明等。
+                    <br/>（2）买方是最终用户数据的控制方或该数据控制方之有权代理，并确保已获得最终用户及实际使用者的授权，许可卖方及厂商（及其服务提供商、许可方）按照卖方的要求访问最终用户提供的或与最终用户有关的数据（包括通信内容）或将这些数据披露给执法部门或其他政府机构（或由厂商或其他政府实体提供对此类数据的访问权限）。
+                </p>
+                <h5>七、违约条款</h5><br/>
+                <p>
+                    1.双方承担违约责任的情形：
+                    <br/>（1）任何一方直接或间接违反本合同项下的任何条款或不及时、充分地承担本合同项下其应当承担的义务而构成违约的，守约方有权以书面通知违约方，要求纠正其违约行为并采取充分、有效、及时的措施消除违约后果并赔偿守约方因违约方之违约行为而遭受的损失。
+                    <br/>（2）在违约事实发生后，经守约方合理及客观的判断该等违约事实已造成守约方履行本合同项下其相应的义务已不可能或显失公平，守约方有权书面通知合同相对方终止本合同。
+                    <br/>（3）一方违约的，合同相对方应当在合理范围内采取适当措施防止损失的扩大；没有采取适当措施致使损失扩大的，不得就扩大的损失要求赔偿。一方因防止损失扩大而支出的合理费用应由违约方承担。如守约方不采取措施减少损失，对于本应减轻的损失数额，违约方有权要求从损害赔偿中扣除。
+                </p>
+                <p>
+                    2.除上述7.1条约定外，卖方承担和不承担违约责任的特殊情形：
+                    <br/>（1）卖方逾期交付的，每日按逾期交付金额的千分之一向买方支付违约金，但卖方所支付的违约金不超过逾期交付金额的10%。
+                    <br/>（2）卖方在下列情形下不承担违约责任：
+                    <br/> ①交货规格、型号、数量、外包装经双方确认不符合合同约定的，若买方同意接受的； 
+                    <br/> ②如因产品厂商或供应给卖方产品的供货商等第三方原因致使产品迟延交付的；
+                    <br/> ③在卖方送货和卖方代办托运的交货方式中，如因买方错误告知交货地点和接货人，致使卖方无法按时送达的；
+                    <br/> ④如因厂商原因，致使卖方无法按本合同约定向买方提供产品的，视为本合同目的不能实现；本合同解除后，卖方退还买方已支付款项，且不承担任何责任；
+                    <br/> ⑤若本合同发生原厂商审计的情形，买方需对其提供的配合资料及文件负责，如因买方提供的资料及文件不真实或不符合原厂商审计要求导致卖方被拒绝下单、延期下单、原厂商处罚等情况致使卖方备货延期、不能下单成功或遭受损失的；
+                    <br/> ⑥其他卖方不应承担违约责任的情形。
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;以上情形下,卖方除不承担违约责任外，仍有权要求买方赔偿因此给卖方造成的损失，赔偿责任包括但不限于：最终用户索赔、原厂商审计处罚卖方等。
+                </p>
+                <p>
+                    3. 除上述7.1条约定外，买方承担违约责任的特殊情形：
+                    <br/>（1）买方逾期付款的，自逾期之日起30日（含30日）内，每日须按逾期支付的款项金额的千分之叁的标准向卖方支付违约金；逾期30天仍未付清货款的，买方须向卖方支付合同总价款30%的违约金，且卖方有权解除本合同。
+                    <br/>（2）鉴于本协议项下软件产品的特殊性，买方未按约定期限提取产品或者提取产品后退货的，视为买方单方违约，买方除应向卖方支付本合同项下全部货款外，还应赔偿卖方因此造成的损失。买方已交付预付款的，卖方不予退还。
+                    <br/>（3）如若本合同签订后，买方未按约定向卖方支付预付款，经卖方催促后3日内仍未支付，卖方可解除本合同，并要求买方支付本合同总价款的30%作为违约金。
+                    <br/>（4）买方在交付日期届满之日起满20个工作日仍未能安排接货的，卖方有权采取包括但不限于停止交付或解除本合同等方式处理，买方已交付预付款的，预付款卖方不予退还。卖方采取前述措施并不免除买方的违约责任。
+                    <br/>（5）买方未能按照本合同约定履行付款义务导致卖方提请司法机关处理的，买方承诺除按照本合同7.3.1条向卖方支付违约金之外，还应承担卖方因此而遭受的任何可预期的间接损失及其他合理的费用，包括但不限于律师费用、诉讼及仲裁费用、公证费、差旅费等其他实现债权的费用。
+                </p>
+                <h5>八、产品所有权保留及风险转移</h5><br/>
+                <p>
+                    1．在买方未支付清全部货款之前，卖方保留撤销授予买方本合同项下软件许可使用的权利。
+                    <br/>2．本合同项下产品毁损、灭失的风险，在卖方交付产品后，由买方承担；非卖方过错原因买方拒绝签收或接受产品的，于合同约定交付之日起由买方承担。
+                </p>
+                <h5>九、保密</h5><br/>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp; 买卖双方对本合同以及在本合同签订、履行过程中知悉的对方资料和信息，除该方作出相反的书面说明外，均应视为该方的商业秘密，未经该方书面同意不得向任何第三方泄露。任何一方因违反保密义务而给另一方造成损失的应负相应的赔偿责任。无论本合同是否解除或终止，本条款持续有效。
+                </p>
+                <h5>十、不可抗力</h5><br/>
+                <p>
+                    1．本合同中，不可抗力是指不能预见、不能避免并不能克服的客观情况，包括：战争、火灾、洪水、台风、地震、较大面积传播的突发性传染疾病、政策变化或其它人力不可抗拒之事件。不可抗力因素可能出现在产品制造运输、仓储或交付过程中，出现上述不可抗力的一方及时通知另一方后，就不可抗力造成的违约不承担任何责任。
+                    <br/>2．双方的任何一方由于不可抗力的原因不能履行合同时，应及时通知对方，双方应于上述事件消除后15日内就合同履行重新达成协议。
+                </p>
+            </div>
+            <div class="row">
+                <h5>十一、争议解决方式</h5>
+                <span *ngIf="!isRiskView" style="margin-left:18px; font-size: 16px; color:brown;">提示：争议解决方式,只信控岗可选择</span>
+                <div>
+                    <input icheck type="radio" id="dispute01" name="DisputeDealtType" [(ngModel)]="formData.BaseData.DisputeDealtType" value="01" [disabled]="!isRiskView">
+                    1. 因本合同、《货物买卖框架合同及最高额保证合同》或《合作框架协议》的签署、解释、履行产生争议时，双方应先协商解决；协商不成时，任意一方均可向卖方住所地有管辖权的人民法院提起诉讼。<br/>
+                    <input icheck type="radio" id="dispute001" name="DisputeDealtType" [(ngModel)]="formData.BaseData.DisputeDealtType" value="001" [disabled]="!isRiskView">
+                    1. 因本合同、《货物买卖框架合同及最高额保证合同》或《合作框架协议》的签署、解释、履行产生争议时，双方应先协商解决；协商不成时，任意一方均可向合同签订地有管辖权的人民法院提起诉讼。本合同签订地为：
+                    <ng-select name="CityList" class="ticket" [items]="selectInfo.CityList" [(ngModel)]="selected.City" (selected)="onSelectCity($event)" placeholder="请选择" [disabled]="!isRiskView"></ng-select>市
+                    <ng-select name="CountyList" class="ticket" [items]="selectInfo.CountyList" [(ngModel)]="selected.County" placeholder="请选择" [disabled]="!isRiskView"></ng-select>区（县）。<br/>
+                    <!--20171130版本删除-->
+                    <!--<input type="radio" id="dispute0001" (click)="onToggleDispute('0001')" name="DisputeDealtType" class="DisputeDealtType" [disabled]="!isRiskView" />
+                    1. 因本合同的签署、解释、履行产生争议时，双方应先协商解决；协商不成时，任意一方均可向合同签订地有管辖权的人民法院提起诉讼。本合同签订地为北京市海淀区。<br/>-->
+                    2. 因本合同、《货物买卖框架合同及最高额保证合同》或《合作框架协议》的签署、解释、履行以及争议的解决等事项均适用中华人民共和国法律(不包括香港、澳门和台湾地区)。
+                </div>
+            </div>
+            <div class="row">
+                <h5>十二、合同效力、变更</h5>
+                <p>
+                    1．本合同自双方加盖公章或合同专用章之日起生效。
+                    <br/> 2. 本合同一式4份，双方各执2份，具有同等法律效力。
+                    <br/> 3．本合同系双方当事人反复讨论协商一致的结果，各方充分理解合同内容，意思表示真实、有效。本合同不属于任何一方提供的制式文本，所有条款不属于格式条款，即使存在或可能被认定为一方的制式文本或格式条款的情形，另一方在此声明放弃以此抗辩的权利。
+                    <br/> 4．本合同生效后，买卖双方均不得随意变更或解除合同。
+                    <br/> 5．特别约定：
+                    <br/> （1）本合同及其附件构成双方之间就本合同项下之合作所达成的全部意思表示，并替代双方以前或执行本合同过程中所做的任何口头交流、电子邮件或声明。
+                    <br/> （2）如果卖方在合同签订后发现买方或买方的关联公司对卖方或卖方的关联公司有超期欠款的，卖方可中止（或终止）履行本合同。
+                </p>
+            </div>
+            <div class="row sellerBuyer">
+                <ul>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>卖方：</label>
+                            <span>{{ formData.BaseData.SellerName }}</span>
+                        </div>
+                        <div>
+                            <label>买方：</label>
+                            <span> {{ formData.BaseData.BuyerName }}</span>
+                        </div>
+                    </li>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>地址：</label>
+                            <span>{{ formData.BaseData.SellerAddress }}</span>
+                        </div>
+                        <div>
+                            <label>地址：</label>
+                            <input type="text" class="buyertxt" ngModel name="BuyerAddress" [(ngModel)]="formData.BaseData.BuyerAddress" [disabled]="isView" (input)="onSelectMaxLen($event,200)">
+                        </div>
+                    </li>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>电话：</label>
+                            <input type="text" class="buyertxt" ngModel name="BuyerTelephone" [(ngModel)]="formData.BaseData.SellerTelephone" [disabled]="isView">
+                        </div>
+                        <div>
+                            <label>电话：</label>
+                            <input type="text" class="buyertxt" ngModel name="BuyerTelephone" [(ngModel)]="formData.BaseData.BuyerTelephone" [disabled]="isView">
+                        </div>
+                    </li>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>开户银行：</label>
+                            <span>{{ formData.BaseData.SellerBankName }}</span>
+                        </div>
+                        <div>
+                            <label>开户银行：</label>
+                            <input type="text" class="buyertxt" ngModel name="BuyerBankName" [(ngModel)]="formData.BaseData.BuyerBankName" [disabled]="isView" (input)="onSelectMaxLen($event,150)">
+                        </div>
+                    </li>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>账号：</label>
+                            <span>{{ formData.BaseData.SellerBankNo }}</span>
+                        </div>
+                        <div>
+                            <label>账号：</label>
+                            <input type="text" class="buyertxt" ngModel name="BuyerBankNo" [(ngModel)]="formData.BaseData.BuyerBankNo" [disabled]="isView">
+                        </div>
+                    </li>
+                    <li class="sellerBuyerInfo">
+                        <div>
+                            <label>日期：</label>
+                            <my-datepicker *ngIf="!isView" PlaceHolder="-请选择日期" (ngModelChange) = "onGetDate($event)" [(ngModel)]="formData.BaseData.ContractTime"></my-datepicker>
+                            <span *ngIf="isView">{{ contractTime }}</span>
+                        </div>
+                        <div>
+                            <label>日期：</label>
+                            {{ contractTime }}
+                        </div>
+                    </li>
+                    <li class="files sellerBuyerInfo" style="margin-top: 20px;">
+                        <div *ngIf="!isView" style="position: absolute;">
+                            <button class="btn btn-info custom">上传附件</button>
+                            <input id="sellerFile" type="file" ng2FileSelect multiple [uploader]="upLoadECFile" (change)="onUploadFiles(upLoadECFile)" />
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="fileList">
+                            <p *ngFor="let item of formData.Accessories">
+                                <a [href]="item.AccessoryURL" target="_blank">{{ item.AccessoryName }}</a>
+                                <span><i class="iqon-close-m" (click)="onRemoveFile(item)" *ngIf="!isView"></i></span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                <div class="c-content-footer">
+                    <button *ngIf="isView && isRiskView" class="m-btn-assist-1" (click)="onClickSaveTemp('risksave')">保存</button>
+                    <button *ngIf="isView" class="m-btn-more-big" (click)="back()">返回</button>
+                    <button *ngIf="!isView" class="m-btn-prev" (click)="onClickPrev()">上一步</button>
+                    <button *ngIf="!isView" class="m-btn-next" (click)="onClickNext()">下一步</button>
+                    <button *ngIf="!isView" class="m-btn-more-big" (click)="onClickSaveTemp('save')">暂存</button>
+                    <button *ngIf="!isView" class="m-btn-more-big" (click)="onClickSaveTemp('view')">预览</button>
+                    <button *ngIf="!isView" class="m-btn-more-big" (click)="onClickShowTpl()">保存模板</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<modal #modal>
+    <modal-header>
+        <span style="display:inline-block; font-size:16px;height:30px;line-height:30px;">买方信息</span>
+        <span class="pull-right" (click)="modal.close()" style="font-size:25px; width:18px; cursor:pointer; margin-right:4px;">&times;</span>
+    </modal-header>
+    <modal-body>
+        <div style="padding:18px 0 10px 0; position:relative;">
+            <input type="text" class="form-control" placeholder="请输入客户名称" [(ngModel)]="formData.BaseData.BuyerName" style="width:85%;">
+            <button class="btn btn-info" (click)="onGetBuyerInfo()" style="position:absolute;right:0;top:18px; width:80px;">查询</button>
+        </div>
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <td style="width:45%;">客户名称</td>
+                    <td>客户编号</td>
+                    <td>客户类型</td>
+                </tr>
+                <tr *ngFor="let item of currentPageItems" (click)="onSelectedBuyer(item)">
+                    <td class="td-serchUser-1">{{ item.NAME }}</td>
+                    <td class="td-serchUser-2"> {{ item.KUNNR }}</td>
+                    <td class="td-serchUser-3">{{ item.KTOKD }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </modal-body>
+    <modal-footer>
+        <div class="page">
+            <iq-pager [data]="pagerData" [simple]="true" (onChange)="onChangePage($event)"></iq-pager>
+        </div>
+    </modal-footer>
+</modal>
+
+<div bsModal #saveTemplate="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content-msg">
+            <div class="modal-header-tpl" style="text-align:left;">
+                模板保存
+                <span aria-hidden="true" class="pull-right" (click)="saveTemplate.hide()" style="font-size:25px; width:18px; cursor:pointer; margin-right:4px;">&times;</span>
+            </div>
+            <div class="modal-body-tpl" style="text-align:left; padding:4px 8px 10px; font-size:14px;">
+                模板名称<i style="color:red">*</i>
+                <div *ngIf="templateNameIsVali" style="font-size:12px; color:red">模板名称必填!</div>
+                <input type="text" placeholder="请输入模板名称" [(ngModel)]="templateName" (input)="inputTemplateName()">
+            </div>
+            <div style="padding:5px 23px 10px;">
+                <button class="m-btn-confirm" (click)="onClickSaveBtn()">确定</button>
+                <button class="m-btn-cancel" (click)="saveTemplate.hide()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

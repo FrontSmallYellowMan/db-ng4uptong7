@@ -1,0 +1,123 @@
+<div class="container m-order-number">
+  <div class="modal-header m-list-head">
+    <span>选择预收款</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div class="modal-body clearfix">
+    <div class="m-search-all">
+      <label style="margin-right:10px;">记账日期</label>
+      <div class="inline-block">
+        <my-datepicker PlaceHolder="-请选择日期" (onChange)="getDate($event)" [(ngModel)]="query.StartDate" [EndDate]="query.EndDate"></my-datepicker>
+      </div>
+      <div class="inline-block">~</div>
+      <div class="inline-block date-right">
+        <my-datepicker PlaceHolder="-请选择日期" (onChange)="getDate($event)" [(ngModel)]="query.EndDate" [StartDate]="query.StartDate"></my-datepicker>
+      </div>
+      <button type="button" class="m-btn-default" style="margin-left:10px;height: 30px;" (click)="search()">搜索</button>
+    </div>
+    <!-- <div class="m-search-all">
+            <div class="m-search">
+                <i class="iqon-query" (click) = "search()"></i>
+                <input name="companyCode" [(ngModel)] = "query.CompanyCode" placeholder="搜索合同编号,客户名称..." type="text">
+            </div>
+        </div> -->
+    <loading [show]="loading"></loading>
+    <div class="m-order-table" *ngIf="!defauls">
+      <ul class="table-head">
+        <li>
+          <!--<input type="checkbox" allcheck="advanceall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="advanceSelected()" (onIndeterminate)="CheckIndeterminate($event)">-->
+          选择
+        </li>
+        <li>凭证编号</li>
+        <li>客户名称</li>
+        <li>客户代码</li>
+        <li>公司代码</li>
+        <li>凭证日期</li>
+        <li>业务范围</li>
+        <li>金额</li>
+        <li>凭证行项目号</li>
+        <li>项目文件</li>
+        <li>BOMS单号</li>
+        <li>操作</li>
+      </ul>
+      <div class="table-body">
+        <ul *ngFor="let item of advancesList;index as i">
+          <li>
+            <!--<input type="checkbox" allcheckChild="advanceall" [disabled]="item.SalesOrderNum" icheck [(ngModel)]="item.checked">-->
+            <input type="checkbox" [disabled]="item.SalesOrderNum" icheck [(ngModel)]="item.checked" (ngModelChange) = "calTotalPaymoney()">
+          </li>
+          <li>{{item.SHEET_NO || "&nbsp;"}}</li>
+          <li [title]="item.KHMC">{{item.KHMC || "&nbsp;"}}</li>
+          <li>{{item.KHDM || "&nbsp;"}}</li>
+          <li>{{item.GSDM || "&nbsp;"}}</li>
+          <li>{{item.TICKET_DATE || "&nbsp;"}}</li>
+          <li>{{item.YWFWDM || "&nbsp;"}}</li>
+          <li>{{item.AMOUNT || "&nbsp;"}}</li>
+          <li>{{item.BUZEI || "&nbsp;"}}</li>
+          <li [title]="item.SGTXT">{{item.SGTXT || "&nbsp;"}}</li>
+          <li [title]="item.SalesOrderNum">{{item.SalesOrderNum || "&nbsp;"}}</li>
+          <li>
+            <i class="iqon-dustbin" *ngIf="item.IsShowDelete" style="cursor:pointer;" (click)="delPrepanyment(item,i)"></i>
+            <i *ngIf="!item.IsShowDelete">&nbsp;</i>
+          </li>
+        </ul>
+      </div>
+      <!-- <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" allcheck="advanceall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate"
+                                (onCount)="advanceSelected()" (onIndeterminate)="CheckIndeterminate($event)">
+                        </th>
+                        <th>凭证编号</th>
+                        <th>客户名称</th>
+                        <th>客户代码</th>
+                        <th>公司代码</th>
+                        <th>凭证日期</th>
+                        <th>业务范围</th>
+                        <th>金额</th>
+                        <th>凭证行项目号</th>
+                        <th>项目文件</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let item of advancesList;index as i">
+                        <td><input type="checkbox" allcheckChild="advanceall" icheck [(ngModel)]="item.checked"></td>
+                        <td>{{item.SHEET_NO}}</td>
+                        <td [title] = "item.KHMC">{{item.KHMC}}</td>
+                        <td>{{item.KHDM}}</td>
+                        <td>{{item.GSDM}}</td>
+                        <td>{{item.TICKET_DATE}}</td>
+                        <td>{{item.YWFWDM}}</td>
+                        <td>{{item.AMOUNT}}</td>
+                        <td>{{item.BUZEI}}</td>
+                        <td [title] = "item.SGTXT">{{item.SGTXT}}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+    </div>
+    <div class="m-noresult" *ngIf="defauls">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">暂无相关数据</p>
+
+      </div>
+    </div>
+    <div class="m-advance-footer">
+      <ul>
+        <li>选择的预收款金额<span>{{advanceAmount | iqNumber:'1.2-2'}}</span></li>
+        <li>销售单总金额<span>{{(SalesAmountTotal || 0) | iqNumber:'1.2-2'}}</span></li>
+        <li style="padding-left:50px;">余额<span>{{(advanceAmount - SalesAmountTotal) | iqNumber:'1.2-2'}}</span></li>
+      </ul>
+      <div style="margin-bottom:5px;">若未查询到预收款信息，请点击链接登陆查看<a href="#" (click)="toNewPage()">核销系统</a></div>
+      <div><input type="checkbox" icheck [(ngModel)]="query.isACustomer"> 一次性收账用户</div>
+    </div>
+    <!-- <iq-pager [data]="pagerData" [simple] = "true" (onChange)="onChangePage($event)"></iq-pager> -->
+  </div>
+  <div class="modal-footer">
+    <button class="m-btn-confirm" type="button" (click)="save()">确定</button>
+    <button class="m-btn-cancel" type="button" (click)="hide()">取消</button>
+  </div>
+
+
+</div>

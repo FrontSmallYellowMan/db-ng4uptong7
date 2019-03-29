@@ -1,0 +1,186 @@
+.addApply-base {
+  margin-bottom: 10px;
+
+  input[readonly] {
+    background-color: #ffffff;
+  }
+}
+
+.double-font {
+  line-height: 16px;
+  // margin-top: -8px;
+}
+
+.addApply-container .addApply-base .addApp-base-infor .addApp-base-list > li {
+  width: 49%;
+
+  &.w-full {
+    width: 100%;
+  }
+}
+
+.addApp-form-item {
+  position: relative;
+
+  .addApp-form-tips {
+    line-height: 0;
+  }
+
+  .m-warn-tip {
+    position: absolute;
+    left: 18%;
+    top: 36px;
+  }
+
+  .addApp-form-label {
+    width: 16%;
+  }
+}
+
+.w-full .addApp-form-right {
+  width: 91.8%;
+  height: auto;
+}
+
+.w-full .addApp-form-label {
+  width: 7.8%;
+}
+
+.addApp-form-right {
+  width: 83%;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.m-user-info {
+  display: inline-block;
+  padding: 0 10px;
+  margin-right: 40px;
+}
+
+.m-info-table {
+  // width: 100%;
+}
+
+.m-btn-font {
+  line-height: 35px;
+  margin-left: 20px;
+  color: #57b9f8;
+  cursor: pointer;
+}
+
+.float-r {
+  float: right;
+  cursor: pointer;
+}
+
+.w360 {
+  width: 360px;
+}
+
+.m-sales-money {
+  width: 100%;
+  font-size: 14px;
+  color: #151515;
+
+  li {
+    float: left;
+    width: 20%;
+    line-height: 35px;
+  }
+}
+
+.oc-address-ul {
+  padding-left: 3.3%;
+  width: 100%;
+
+  .addApp-form-label {
+    width: 10%;
+  }
+
+  .m-select {
+    display: inline-block;
+    font-weight: normal;
+    width: 22%;
+    margin-left: 10px;
+  }
+
+  input {
+    width: 30%;
+  }
+}
+
+// /deep/ .loading-container .loading-backdrop {
+//   background-color: inherit !important;
+// }
+
+/deep/ .w-full .iradio_square-blue {
+  margin-left: 10px;
+  top: 8px;
+}
+
+.iradio_label {
+  margin-right: 35px;
+  line-height: 34px;
+  margin-left: 10px;
+}
+
+/deep/ .repare-list li {
+  display: block !important;
+
+  p {
+    width: 7.8% !important;
+    vertical-align: top;
+  }
+
+  iq-person-select {
+    margin-left: 12px !important;
+  }
+}
+
+/deep/ prepare-person {
+  display: block;
+}
+
+.m-input-notice {
+  display: block;
+  color: #a8b1bd;
+  font-size: 12px;
+}
+
+/deep/ .disabled input {
+  width: 20px;
+  height: 20px;
+  left: 0;
+  top: -4px;
+  z-index: 9;
+}
+
+.m-textarea {
+  // height: 100px;
+  padding: 10px 15px;
+  line-height: 25px;
+}
+
+.oc-input-none {
+  width: 0;
+  height: 0;
+  border: 0;
+}
+
+/deep/ .m-nuber-tag,
+i {
+  font-style: normal;
+}
+
+:host/deep/.m-projectInfo{
+  width: 90%;
+  margin: 10px auto 0;
+  overflow: auto;
+  
+  .c-input-title{
+    color: #4a4a4a!important;
+  }
+}

@@ -1,0 +1,83 @@
+.ec-component-buyer{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    width: 70%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-width: 300px;
+    background: #fff;
+    z-index: 9999;
+    .ec-component-buyer-header{
+        padding: 0 20px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        background-color: #fff;
+        border-bottom: 1px solid #e1e3eb;
+        font-weight: 500;
+        i{
+            float: right;
+            line-height: 50px;
+            color: #d2d8e0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+    .ec-component-buyer-body{
+        padding: 0 15px 0;
+        overflow: auto;
+        .ec-component-buyer-body-search{
+            margin: 10px auto 15px;
+            width: 98%;
+            min-width: 500px;
+            .search-input{
+                float: left;
+                width: 33%;
+                padding-right: 12px;
+                .search-input-title,.search-input-control{
+                    float: left;
+                    height: 35px;
+                    line-height: 35px;
+                }
+                .search-input-title{
+                    width: 25%;
+                }
+                .search-input-control{
+                    width: 75%;
+                }
+            }
+            .search-btn{
+                width: 100%;
+                text-align: right;
+                padding-top: 40px;
+                padding-right: 15px;
+            }
+            a{
+                cursor: pointer;
+                display: inline-block;
+                text-align: center;
+                height: 35px;
+                color: #fff;
+                border: none;
+                border-radius: 3px;
+                transition: all .7s;
+                font-size: 14px;
+                overflow: hidden;
+                background: linear-gradient(275deg,#3495f6,#42c2f7);
+                line-height: 35px;
+                width: 85px;
+            }
+            a:hover {
+                opacity: 0.85;
+            }
+            a:focus {
+                outline: none;
+            }
+        }
+        .ec-component-buyer-body-result{
+            height: 390px;
+            overflow-y: auto;
+        }
+    }
+}

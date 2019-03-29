@@ -1,0 +1,222 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+
+        <div class="apply-p-left">
+            <div class="addApply-container">
+                <h1 class="addApply-tit-h1">借用转移申请</h1>
+                <!--基本信息-->
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">基础信息</span>
+                    </div>
+
+                    <div class="addApp-base-infor">
+                        <ul class="addApp-base-list">
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 申请人</label>
+                                    <span class="span-text">{{apply.brwTrsfApply.oPersonName}}
+                            <span style="color: #a8b1bd;">{{apply.brwTrsfApply.oPersonItCode}}</span>
+                                    </span>
+                                    <!--div class="m-user-info-small">
+                                        <div class="m-user-noimg">{{apply.brwTrsfApply.oPersonItCode}}</div>
+                                        <span class="m-user-name">{{apply.brwTrsfApply.oPersonName}}</span>
+                                        <span class="m-user-ename">{{apply.brwTrsfApply.oPersonItCode}}</span>
+                                    </div-->
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 申请时间 </label>
+                                    <span class="span-text">{{apply.brwTrsfApply.applyDate|iqDate:'YYYY-MM-DD'}}</span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 员工编号 </label>
+                                    <span class="span-text">{{apply.brwTrsfApply.applyUserNo}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 联系方式</label>
+                                    <span class="span-text">{{apply.brwTrsfApply.contactPhone}}</span>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 本部 </label>
+                                    <span class="span-text">{{apply.brwTrsfApply.baseDeptName}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 事业部 </label>
+                                    <span class="span-text">{{apply.brwTrsfApply.subDeptName}}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 平台</label>
+                                    <span class="span-text">{{apply.brwTrsfApply.platformName}}</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="addApp-submit-btn">
+                        <div class="addApp-sub-btns">
+                            <!--<button *ngIf="pageFlag==='n'" class="m-btn-confirm" (click)="popupReservation()">查询未清项</button>-->
+                            <!--<button class="m-btn-confirm" (click)="popupReservation()">查询未清项</button>-->
+                        </div>
+                    </div>
+                </div>
+              
+
+                <div class="addApply-base">
+                    <div class="m-dialog-head">
+                        <span class="m-dialog-head-change">转移后信息 </span>
+                    </div>
+                    <div class="addApp-base-infor">
+                         <ul class="addApp-base-list">
+                               <li>
+                                <div class="addApp-form-item">
+                                    <label class="addApp-form-label"> 接收人</label>
+                                      <span class="span-text">{{apply.brwTrsfApply.nPersonName}}
+                            <span style="color: #a8b1bd;">{{apply.brwTrsfApply.nPersonItCode}}</span>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                
+                </div>
+                <nav class="nav1 nav"><span>物料与运输信息</span></nav>
+                <!--物料与运输信息1-->
+                <div class="m-material-info1" *ngFor="let key of itemKeys;index as i">
+                    <h2>物料与运输信息{{i+1}}</h2>
+                    <div class="m-table m-table1">
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <th width="10%">原预留号</th>
+                                <td width="23%">{{apply.trsfMtrMap[key].mItemInfo.oreservationNo}}</td>
+                                <th width="10%">原凭证号1</th>
+                                <td width="23%">
+                                    {{apply.trsfMtrMap[key].mItemInfo.ovoucherNo1}}
+                                </td>
+                                <th width="10%">原凭证号2</th>
+                                <td width="24%">
+                                    {{apply.trsfMtrMap[key].mItemInfo.ovoucherNo2}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="10%">借用日期</th>
+                                <td width="23%">
+                                    {{apply.trsfMtrMap[key].mItemInfo.borrowDate|iqDate:'YYYY-MM-DD'}}
+                                </td>
+                                <th width="10%">预计归还日期</th>
+                                <td width="23%">
+                                    {{apply.trsfMtrMap[key].mItemInfo.giveBackDay|iqDate:'YYYY-MM-DD'}}
+                                </td>
+                                <th width="10%"></th>
+                                <td width="24%">
+                                </td>
+                            </tr>
+                            <tr *ngIf="apply.brwTrsfApply.flowCurrNodeName=='物流器材岗审批'">
+                                <th width="10%" class="m-text-weight">凭证号(1)</th>
+                                <td width="23%">
+                                    <input [(ngModel)]="apply.trsfMtrMap[key].mItemInfo.nvoucherNo1">
+                                </td>
+                                <th width="10%" class="m-text-weight">凭证号(2)</th>
+                                <td width="23%">
+                                    <input [(ngModel)]="apply.trsfMtrMap[key].mItemInfo.nvoucherNo2">
+                                </td>
+                                <th width="10%" class="m-text-weight">预留号</th>
+                                <td width="24%">
+                                    <input [(ngModel)]="apply.trsfMtrMap[key].mItemInfo.nreservationNo">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tables">
+                        <table class="m-info-table">
+                            <thead>
+                                <tr class="m-infor-tr">
+                                    <th class="m-text-center" width="5%">序号</th>
+                                    <th width="10%">物料编号</th>
+                                    <th width="30%">物料描述</th>
+                                    <th width="10%">批次</th>
+                                    <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>单位</th>
+                                    <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>数量</th>
+
+                                    <th *ngIf="saleRole" width="10%">金额</th>
+                                    <th width="8%">工厂</th>
+                                    <th width="15%">借用在途库</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item1 of apply.trsfMtrMap[key].mItemDetail;index as j">
+                                    <td class="m-text-center add-w-b60">{{j+1}}</td>
+                                    <td>{{item1.meterialNo}}</td>
+                                    <td>{{item1.meterialMemo}}</td>
+                                    <td>{{item1.batch}}</td>
+                                    <td>{{item1.unit}}</td>
+                                    <td>{{item1.count}}</td>
+                                    <td *ngIf="saleRole">{{item1.totalAmount}}</td>
+                                    <td>{{item1.factory}}</td>
+                                    <td>{{item1.onwayStore}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--写入erp-->
+                    <div class="addApp-sub-btns" *ngIf="apply.brwTrsfApply.flowCurrNodeName=='物流器材岗审批'">
+                        <!--<div class="addApp-sub-btns">-->
+                        <button class="m-btn-confirm"  *ngIf="currAppFlag&&apply.brwTrsfApply.flowCurrNodeName=='物流器材岗审批'&&erpFlag" type="button" (click)="writeToErp(key)">写入ERP</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+
+            <!--审批记录 -->
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+
+            <!--<jy-wfapproval *ngIf="!isView" [saveId6Flag]="saveId6Flag" [appParms]="appParms" (onSave)="saveBill($event)"></jy-wfapproval>
+                <div class="addApp-sub-btns" style="text-align: center" *ngIf="isView">
+                    <button class="m-btn-sketch" type="button" (click)="goback()">返回</button>
+                </div>-->
+
+            <div class="apply-opinion" *ngIf="currAppFlag">
+                <div class="m-exm-item">
+                    <p class="m-exm-advice">审批意见</p>
+                    <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="remark" name="remark"></textarea>
+                </div>
+            </div>
+
+            <div class="apply-submitBtn">
+                <div class="m-exm-btn">
+                    <button class="m-btn-agree apply-agree" (click)="saveBill($event)" *ngIf="currAppFlag">同意</button>
+                    <button class="m-btn-refuse apply-refuse" (click)="reject()" *ngIf="currAppFlag">驳回</button>
+                    <!--<button class="m-btn-confirm" *ngIf="isView&&apply.brwTrsfApply.flowCurrNodeName=='物流器材岗'"  type="button" (click)="writeToErp()" >写入ERP</button>-->
+                    <!--<div class="m-dropdown" *ngIf="applyPage==='1'&&isView">
+                        <button class="m-btn-more-big">更多</button>
+                        <ul class="m-dropdown-option">
+                            <li>加签</li>
+                            <li>转办</li>
+                        </ul>
+                    </div>-->
+                    <button class="m-btn-refuse" (click)="goback()">返回</button>
+                </div>
+            </div>
+        </div>
+
+        <!--审批过程 -->
+        <div class="apply-p-right ">
+            <db-wfview #wfview></db-wfview>
+        </div>
+
+    </div>
+</div>

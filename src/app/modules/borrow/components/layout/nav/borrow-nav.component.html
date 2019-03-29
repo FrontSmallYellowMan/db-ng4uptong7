@@ -1,0 +1,97 @@
+<div class="m-home-pageL">
+  <ul class="m-usertree">
+    <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+      <a routerLink="/borrow/list" class="list">借用申请列表</a>
+    </li>
+    <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+      <a routerLink="/borrow/rtnlist">借用实物归还列表</a>
+    </li>
+    <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+      <a routerLink="/borrow/transferlist">借用转移列表</a>
+    </li>
+    <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+      <a routerLink="/borrow/turnsalelist">借用转销售列表</a>
+    </li>
+    <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+      <a routerLink="/borrow/limit">额度申请列表</a>
+    </li>
+    <li class="m-hasicon" [ngClass]="{ open: open }" (click)="open = !open">
+      <a>借用跟踪</a>
+      <!-- 此处使用false；是因为点击事件冒泡，导致父级open也会取反-->
+      <ul class="m-tree">
+        <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+          <a
+            style="line-height: 46px"
+            routerLink="/borrow/tracking/tracking-borrow"
+            >借用查询</a
+          >
+        </li>
+        <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+          <a
+            style="line-height: 46px"
+            routerLink="/borrow/tracking/tracking-rtn"
+            >借用归还查询</a
+          >
+        </li>
+        <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+          <a
+            style="line-height: 46px"
+            routerLink="/borrow/tracking/tracking-turnsale"
+            >借用转销售查询</a
+          >
+        </li>
+        <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+          <a
+            style="line-height: 46px"
+            routerLink="/borrow/tracking/tracking-transfer"
+            >借用转移查询</a
+          >
+        </li>
+        <li routerLinkActive="active" (click)="open = false" class="m-hasicon">
+          <a
+            style="line-height: 46px"
+            routerLink="/borrow/tracking/tracking-unclearitem"
+            >借用未清项查询</a
+          >
+        </li>
+        <li
+          routerLinkActive="active"
+          *ngIf="userRoles.admin || userRoles.riskMgr"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/borrow/tracking/freeze-personnel">冻结人员信息</a>
+        </li>
+        <li
+          routerLinkActive="active"
+          *ngIf="userRoles.admin || userRoles.riskMgr"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/borrow/tracking/tracking-limit">借用额度管理</a>
+        </li>
+        <li
+          routerLinkActive="active"
+          *ngIf="userRoles.admin"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/borrow/tracking/platform-inventory"
+            >发货平台和库存地的对应关系</a
+          >
+        </li>
+        <li
+          routerLinkActive="active"
+          *ngIf="userRoles.admin || userRoles.riskMgr"
+          (click)="open = false"
+          class="m-hasicon"
+        >
+          <a routerLink="/borrow/tracking/tracking-fiscal">财年调整规则</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<!--作为占位符，Angular将基于当前的路由器状态动态填充-->
+<router-outlet></router-outlet>

@@ -1,0 +1,51 @@
+<div class="addApply-base money">
+    <div class="m-list-head">
+        <span class="m-dialog-head-change progress-txt">审批人信息</span>
+    </div>
+
+    <div class="addApp-base-infor">
+      <ul style = "padding: 10px 25px 0;">
+          <li class="addApp-form-item" *ngFor="let item of approversList;index as i;">
+            <div  [ngClass]="{'hide': item['IsOpened']==0 || (!isEdit&&approverIdenties[i]['list'].length==0) }" style="width:100%;">
+              <div *ngIf = "item['NodeAttribute']=='Editable'">
+                  <div class="addApp-form-item">
+                      <div class="addApp-form-label"><label>{{item['NodeName']}}</label></div>
+                      <div class="addApp-form-right" *ngIf = "isEdit">
+                        <iq-person-select *ngIf="item['ApproverList'].length == 0" #person [(ngModel)]="approverIdenties[i]['list']" [max]="1"  (ngModelChange)="changePerson(approverIdenties[i]['list'],i)" ngDefaultControl></iq-person-select>
+                        <div class="m-select" style="width: 25%;" *ngIf="item['ApproverList'].length > 0">
+                            <i class="iqon-xia"></i>
+                            <select style="margin-bottom: 3px;" [(ngModel)]="item.NodeSelectItCode" (ngModelChange)="changePerson(approverIdenties[i]['list'],i,'select',item.NodeSelectItCode)">
+                                <option value=null>-请选择</option>
+                                <option *ngFor="let userItem of item['ApproverList']" [ngValue]="userItem.ITCode">{{userItem.UserName}}</option>
+                            </select>
+                            <!--预审环节或者加签环节 可删除-->
+                            <span *ngIf="(item.NodeName.indexOf('级预审') != -1 || item.NodeName.indexOf('级加签') != -1) && item.NodeName.indexOf('一级') == -1" (click)="delCurrentNode(approversList,i)">
+                                <i class="iqon-close"></i>
+                            </span>
+                        </div>
+                      </div>
+                      <div class="addApp-form-right" *ngIf = "!isEdit&&approverIdenties[i]['list'].length!=0">
+                        <div class="m-user-info" *ngFor="let user of approverIdenties[i]['list']" #person user-image  [hasClose]="false" [user]="user"></div>
+                      </div>
+                  </div>
+              </div>
+              <div *ngIf = "item['NodeAttribute']=='Readonly'">
+                  <div class="addApp-form-item">
+                      <div class="addApp-form-label"><label>{{item['NodeName']}}</label></div>
+                      <div class="addApp-form-right" *ngIf = "i == approversList.length-1" #person>
+                        <div class="m-user-info" *ngFor="let item of sealManagesInfo" user-image  [hasClose]="false" [user]="item"></div>
+                      </div>
+                      <div class="addApp-form-right" *ngIf = "i != approversList.length-1" #person>
+                        <div class="m-user-info" *ngFor="let user of approverIdenties[i]['list']" user-image  [hasClose]="false" [user]="user"></div>
+                      </div>
+                  </div>
+              </div>
+              <div *ngIf = "item['NodeAttribute']=='Hidden'">
+                  <div class="m-user-info hide" #person user-image  [hasClose]="false" [user]="item"></div>
+              </div>
+            </div>
+          </li>
+      </ul>
+    </div>
+</div>
+<!-- <db-sc-approver #approvers [approversInfo] = "ApproverInfoJson" [isEdit] = "true" (scApprover)="scApprover($event)"></db-sc-approver> -->

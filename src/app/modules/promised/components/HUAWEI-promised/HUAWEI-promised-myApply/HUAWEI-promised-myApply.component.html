@@ -1,0 +1,150 @@
+<div class="m-boardtop clearfix" style="box-sizing: border-box;">
+  <iq-breadcrumb></iq-breadcrumb>
+  <!-- <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addData()"><i class="iqon-add"></i>新建供应商</button> -->
+  <iq-newcreat [dataCreat]="newCreateApplyRoute.data" (mouseenter)="isNewPromised()"></iq-newcreat>
+</div>
+
+<div class="m-overclass">
+  <div class="m-list-menu">
+    <ul class="m-state" (click)="onTab($event)" #tab>
+      <li class="active" data-state="提交申请">审批中</li>
+      <li data-state="已完成">已完成</li>
+      <li data-state=''>全部</li>
+      <li data-state="草稿">草稿</li>
+    </ul>
+
+    <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+      <div class="m-search-high" (click)="openSearch()">
+        <i class="iqon-highsearch"></i>
+        高级搜索
+      </div>
+    </div>
+
+    <!-- 高级搜索 -->
+    <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+      收起高级搜索
+    </div>
+    <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+      <form #form="ngForm">
+
+        <div class="m-search-item">
+          <label>销售员</label>
+          <input type="text" name="Platform" placeholder="-请填写销售员姓名或itcode" [(ngModel)]="applyQuery.SalesITCode">
+        </div>
+
+        <div class="m-search-item">
+          <label>平台</label>
+          <div class="m-select m-select-width">
+            <i class="iqon-xia"></i>
+            <select name="path" id="" [(ngModel)]="applyQuery.PlatformID">
+              <option value=null disabled selected class="font-color">-请选择</option>
+              <option value="">全部</option>
+              <option [value]="item.platformcode" *ngFor="let item of listPlatform;let i=index">{{item.platform}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="m-search-item m-search-items">
+
+
+          <label>承诺日期</label>
+          <!-- <my-datepicker></my-datepicker> -->
+          <div class="m-datepicker-comb">
+            <div class="m-datepicker-start">
+              <my-datepicker [(ngModel)]="applyQuery.BeginDate" [EndDate]="applyQuery.EndDate" format="YYYY-MM-DD" PlaceHolder="-请选择开始日期" name="BeginDate" ></my-datepicker>
+            </div>
+            <span>~</span>
+            <div class="m-datepicker-end">
+              <my-datepicker [(ngModel)]="applyQuery.EndDate" [StartDate]="applyQuery.BeginDate" format="YYYY-MM-DD" PlaceHolder="-请选择结束日期" name="EndDate"></my-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-search-item">
+          <label>申请编号</label>
+          <input type="text" placeholder="-请填写申请编号" [(ngModel)]="applyQuery.ApplyID" name="ApplyID">
+        </div>
+
+        <div class="m-search-item">
+          <label>承诺类型</label>
+          <div class="m-select m-select-width">
+            <i class="iqon-xia"></i>
+            <input type="text" placeholder="-请选择承诺类型" (click)="getPromisedTypeList()" style="cursor:pointer;padding:0 22px 0 15px!important;" name="typeList" [(ngModel)]="typeList" [title]="typeList">
+          </div>
+        </div>
+
+        <div class="m-search-item m-search-items">
+          <div class="m-search-btn">
+            <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+            <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- 搜索缺省 -->
+  <ng-container *ngIf="!isHide">
+    <noResultPage></noResultPage>
+  </ng-container>
+
+  <!-- 数据列表 -->
+  <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+    <div class="table-auto-content">
+      <table class="table table-hover table-list">
+        <thead>
+          <tr>
+            <th class="wp5" *ngIf="applyQuery.WFStatus==='草稿'||applyQuery.WFStatus===''">
+              <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event"
+                (onIndeterminate)="CheckIndeterminate($event)">
+            </th>
+            <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+              <th>序号</th>
+              <th>申请单编号</th>
+              <th>ITCODE</th>
+              <th>姓名</th>
+              <th>平台</th>
+              <th style="width:100px;">事业部</th>
+              <th style="width:100px;">承诺类型</th>
+              <th>合同金额</th>
+              <th>创建日期</th>
+              <th>承诺日期</th>
+              <th>超期天数</th>
+              <th *ngIf="applyQuery.WFStatus=='提交申请'||applyQuery.WFStatus=='已完成'">达成情况</th>
+              <th *ngIf="applyQuery.WFStatus==''">申请状态</th>
+            </ng-container>
+            <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+              <th class="list-edit" colspan="10">已选{{checkedNum}}项
+                <button type="button" (click)="deleteList(searchList)">删除</button>
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of searchList;let i=index">
+            <td class="wp5" stopParentClick *ngIf="applyQuery.WFStatus==='草稿'||applyQuery.WFStatus===''">
+              <input type="checkbox" allcheckChild="demoall" [(ngModel)]="item.checked" icheck name="" [disabled]="item.WFStatus==='审批通过'||item.WFStatus==='提交申请'">
+            </td>
+            <td class="wp5">{{(pagerData.pageNo-1)*pagerData.pageSize+i+1}}</td>
+            <td><span (click)="getDetail(item.WFStatus,item.ApplyID)" class="clickText">{{item.ApplyID}}</span></td>
+            <td>{{item.SalesITCode}}</td>
+            <td>{{item.SalesName}}</td>
+            <td>{{item.PlatformName}}</td>
+            <td [title]="item.SalesDeparment"><div class="m-td-warp">{{item.SalesDeparment}}</div></td>
+            <td [title]="promisedTypeList[i]"><div class="m-td-warp">{{promisedTypeList[i]}}</div></td>
+            <td>{{item.ContractMoney}}<span [style.display]="!item.ContractMoney?'none':'inline'">元</span></td>
+            <td>{{item.CreateDate|iqDate:"YYYY-MM-DD HH:mm:ss"}}</td>
+            <td>{{item.CommitDate|iqDate:"YYYY-MM-DD"}}</td>
+            <td [timeDifference]="(item.ReachStatus==='已达成'||item.ReachStatus==='特批达成')?'':item.CommitDate" >{{(item.ReachStatus==='已达成'||item.ReachStatus==='特批达成')?'无':''}}</td>
+            <td [ngClass]="{'m-timeDifference-color-red':item.ReachStatus==='未达成','m-timeDifference-color-green':item.ReachStatus==='已达成'||item.ReachStatus==='特批达成','m-timeDifference-color-blue':item.ReachStatus==='冻结'}" *ngIf="applyQuery.WFStatus=='已完成'||applyQuery.WFStatus=='提交申请'">{{item.ReachStatus}}</td>
+            <td *ngIf="applyQuery.WFStatus==''">{{item.WFStatus}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+    </div>
+  </div>
+</div>

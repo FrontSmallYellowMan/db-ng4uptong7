@@ -1,0 +1,378 @@
+@import '../../../../sass/base/util';
+.relation-box {
+    width: 83%;
+    .relation-item,.relation-line {
+        display: inline-block;
+    }
+    .relation-item {
+        width: 46%;
+    }
+    .relation-line {
+        width: 5%;
+        text-align: center;
+    }
+}
+.addApp-ch-before {
+    padding-bottom: 10px;
+    thead{
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        .w40{
+            width: 40px;
+        }
+        .w46 {
+            width:46px;
+            width:57px\0;
+            
+        }
+    }
+    
+    td:first-child{
+        padding: 0 10px;
+    }
+    tbody>tr>td>select{
+      width: 100%;  
+    }
+    tbody{
+        // padding-bottom: 0;
+        // overflow-y: auto;
+        border-bottom:1px solid #ddd;
+        margin-left: -0.5px\0;
+        td:nth-child(4){
+            word-wrap: break-word!important;
+            line-height: 15px!important;
+
+        }
+    }
+    .wp1{
+        padding:0 10px;
+    }
+    tbody td{
+       vertical-align: middle; 
+    }
+}
+.left { float: left;}
+.right { float:right;}
+.plus {
+    display: inline-block;
+    font-size: 22px;
+    margin-left: 3px;
+}
+// .little-input {
+//     width: 78%;
+// }
+.m-datepicker-comb{
+  display: flex;
+  width: 300px;
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+  }
+}
+.repare-list{
+    li {
+        display: flex;
+        p {
+            display:inline-block;
+            text-align: right;
+            width: 8%;
+            line-height: 40px;
+            font-weight:bold;
+        }
+        .uls{
+            display: flex;
+            flex-wrap:wrap;
+            width:92%;
+            div{
+                width: 25%;
+            }
+        }
+        .m-user-info {
+            margin-left: 15px;
+            display: inline-block;
+            cursor: auto;
+            min-width: 85%;
+        }
+    }
+}
+.iqSelect{  
+    display:inline-block;    
+    width: 83%;
+    margin-left: 10px;
+}
+.addApp-sub-btns{
+    width: 400px;
+    .m-btn-more-big{
+        margin-left: 10px;
+    }
+    .m-btn-addAppback{
+        margin-left: 10px;
+        font-size: 14px;
+        line-height: 2.33;
+        text-align: center;
+        color: #4a4a4a;
+    }
+    
+}
+.accessory-content {
+    li {
+        width: 100%!important;
+        .addApp-form-label {
+            width: 7.5%;
+        }
+        .accessory-item {
+            margin-left: 12px;
+            width: 92%;
+            border: 1px solid #e1e3eb;
+        }
+    }
+}
+.addApp-base-infor{
+    .w100{
+        width: 100%;
+    }
+    .fix-table-content{
+        margin: 15px 20px;
+    }
+}
+:host /deep/ iq-file-upload .m-fileupload {
+    vertical-align: middle;
+    line-height: 22px;
+    margin-top: -4px;
+}
+.DataVendor {
+    /deep/ 
+    .m-option .m-option-list {
+	    width: 840px;
+    }
+}
+.file-tip-box {
+    margin-top: -3px!important;
+    .file-tip {
+        margin-left: 27px;
+        width: 100%;
+        span {
+            color:#a8b1bd;
+            font-size:12px;
+        }
+    }
+}
+.table{
+    // table-layout: auto!important;
+}
+.btns{
+    width:300px;
+}
+.btns1{
+    width: 170px;
+}
+.addApply-base{
+    padding-bottom: 0;
+}
+.table-list  tr{
+    line-height: 45px;
+}
+.auto{
+    overflow-y: auto!important;
+}
+.info-wrap{
+    @extend %box-flex;
+    width: 92%;
+    div{
+        width:20%;
+    }
+}
+.table-hover > tbody > tr:hover {
+    background-color:rgba(87, 185, 248, 0.1);
+}
+.addApp-form-item {
+    .addApp-form-time{
+        display:inline-block;
+        padding: 0;
+        border: none;
+    }
+}
+.padSpan{
+    padding-left: 15px;
+    font-size: 12px;
+    line-height: 2.67;
+}
+.iqSelect{
+    display:inline-block;    
+    width: 83%;
+    margin-left: 10px;
+}
+.w43{
+    width: 41%!important;
+    margin-left: 8px;    
+}
+.excessprompt-str {
+    color:#ea6269;
+}
+.list-explain {
+    display: inline-block;
+    font-size: 12px!important;
+    margin-left: 25px;
+    span {
+        color:#57b9f8;
+    }
+    label {
+        margin-right: 20px;
+    }
+    .label-first {
+        margin-left: 20px;
+    }
+}
+.approval-buttons{
+    float: left;
+    position:relative;
+    left:50%;
+    padding-bottom: 135px;
+    .approval-btnCanel{
+        text-align: center;
+        width: 86px;
+        height: 45px;
+        line-height: 45px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .approval-dropdown {
+        button>i {
+            margin-left: 5px;
+            font-size: 12px;
+            color: #d2d8e0;
+        }
+        .m-dropdown-option {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #e1e3eb;
+            opacity: 0;
+            transform-origin: 50% 0;
+            transition: all .5s ease-out;
+            transform: rotateX(-90deg);
+            li {
+                padding: 0 20px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 14px;
+                color: #4a4a4a;
+                cursor: pointer;
+            }
+            li.active,li:hover {
+                background-color: #f5f7fa;
+            }
+        }
+    }
+    .approval-dropdown:hover .m-dropdown-option {
+        transition: all 0.5s;
+        -webkit-transform: perspective(500px) rotateX(0deg);
+        transform: perspective(500px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+.approval-buttons div{
+    float: left;
+    position:relative;
+    left:-50%;
+    margin: 0 8px;
+}
+.cursor {
+    cursor:pointer;
+}
+select {
+    cursor:pointer;
+}
+.add-supplier-btn {
+    // 添加供应商按钮
+    display: inline-block;
+    width: 4% !important;;
+    height:35px;
+    >i {
+        cursor:pointer;
+        display: inline-block;
+        text-align: center;
+        color: #e1e3eb;
+        width: 30px;
+        height: 30px;
+        margin-left: 12px;
+        margin-top: 3px;
+        line-height: 28px;
+        border-radius: 50%;
+        border: 1px solid #e1e3eb;
+        font-family:'fontawesome-webfont' !important;
+        speak:none;
+        font-style:normal;
+        font-weight:normal;
+        font-variant:normal;
+        text-transform:none;
+        -webkit-font-smoothing:antialiased;
+        &:hover {
+            color: #57b9f8;
+            border: 1px solid #57b9f8;
+        }
+        &:before {
+            content:"\E911";
+        }
+    }
+}
+.material-number-w {
+    width:100px;
+}
+.upload-show {
+    cursor:pointer;
+    &:hover {
+        color: #57b9f8;
+    }
+}
+.procu-warn {
+    text-align: right;
+}
+.m-input-warn {
+    border-color: #ea6269 !important
+}
+.wp11 {
+    width: 11%;
+}
+.supplier-tip {
+    margin-left: 15px;
+}
+.contractinfo-li {
+    .addApp-form-label {
+        width: 19%;
+        margin-right:15px;
+    }
+    .label-radio {
+        line-height:34px;
+    }
+}
+.contract-content {
+    width: 100%!important;
+    .m-exm-label {
+        vertical-align:top;
+    }
+}
+.contractacc-box {
+    width: 100%!important;
+    .tp20 {
+        padding-left: 26px;
+        width:14%;
+    }
+}
+.ishavecontract-half {
+    .m-exm-label {
+        width: 96px!important;
+    }
+    .m-exm-cont {
+        padding-left: 30px!important;
+    }
+}
+.printapprove-box {
+    .m-user-info-small {
+        margin-right:30px!important;
+        margin-bottom:6px!important;
+    }
+}

@@ -1,0 +1,429 @@
+<div class="apply-progress" style="padding-top: 62px;">
+    <div class="apply-p-left">
+        <nav>{{name}}</nav>
+
+        <!--基本信息-->
+        <div class="m-basic-info">
+            <h2>基本信息<i class="iqon-fold"></i></h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td width="10%" class="m-text-weight">预留号</td>
+                        <td width="40%">{{rtnAppPo.borrowReturnApply.reservationNo}}</td>
+                        <td width="10%" class="m-text-weight">申请时间</td>
+                        <td width="40%">{{rtnAppPo.borrowReturnApply.createDate| iqDate:'YYYY-MM-DD' }}</td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">申请人</td>
+                        <td width="40%">
+                            <!--div class="m-user-info-small">
+                            <div class="m-user-members" style="float: left;">
+                                            <div user-image [hasClose]="false" [user]="userInfo" *ngIf="notChange"></div>
+                                        </div>
+                               </div-->
+                            {{rtnAppPo.borrowReturnApply.applyUserName}}
+                            <span style="color: #a8b1bd;">{{rtnAppPo.borrowReturnApply.applyItCode}}</span>
+                        </td>
+                        <td width="10%" class="m-text-weight">联系方式</td>
+                        <td> {{rtnAppPo.borrowReturnApply.applyUserTel}}</td>
+                    </tr>
+                    <tr>
+                        <td class="m-text-weight">员工编号</td>
+                        <td>{{rtnAppPo.borrowReturnApply.applyUserNo}}</td>
+                        <td class="m-text-weight">业务范围编号</td>
+                        <td>{{rtnAppPo.borrowReturnApply.businessScopeCode}}</td>
+                    </tr>
+                    <tr>
+                        <td class="m-text-weight">本部</td>
+                        <td>{{rtnAppPo.borrowReturnApply.baseDeptName}}</td>
+                        <td class="m-text-weight">事业部</td>
+                        <td>{{rtnAppPo.borrowReturnApply.subDeptName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="m-text-weight">平台</td>
+                        <td>{{rtnAppPo.borrowReturnApply.platformCode}}-{{rtnAppPo.borrowReturnApply.platformName}}</td>
+                        <td class="m-text-weight">工厂</td>
+                        <td>{{rtnAppPo.borrowReturnApply.factory}}</td>
+                    </tr>
+                    <tr>
+                        <td class="m-text-weight">原凭证号(1)</td>
+                        <td>{{rtnAppPo.borrowReturnApply.oldVoucherNo1}}</td>
+                        <td class="m-text-weight">原凭证号(2)</td>
+                        <td>{{rtnAppPo.borrowReturnApply.oldVoucherNo2}}</td>
+                    </tr>
+
+                    <tr *ngIf="rtnAppPo.borrowReturnApply.flowStatus==3">
+                        <td class="m-text-weight">凭证号(1)</td>
+                        <td>{{rtnAppPo.borrowReturnApply.voucherNo1}}</td>
+                        <td class="m-text-weight">凭证号(2)</td>
+                        <td>{{rtnAppPo.borrowReturnApply.voucherNo2}}</td>
+                    </tr>
+                    <tr *ngIf="rtnAppPo.borrowReturnApply.flowStatus==3&&rtnAppPo.borrowReturnApply.allopatryReturn==1">
+                        <td class="m-text-weight">凭证号(3)</td>
+                        <td>{{rtnAppPo.borrowReturnApply.voucherNo3}}</td>
+
+                    </tr>
+                    <tr *ngIf="!materialFlag">
+                        <td class="m-text-weight">是否异地归还</td>
+                        <td>{{rtnAppPo.borrowReturnApply.allopatryReturn==0?"否":"是"}}</td>
+                        <td class="m-text-weight">取货方式</td>
+                        <td>{{rtnAppPo.borrowReturnApply.pickupType==0?"销售员自送":"物流取货"}}</td>
+                    </tr>
+
+                    <tr *ngIf="(!materialFlag)&&rtnAppPo.borrowReturnApply.flowStatus>0&&saleRole">
+                        <td class="m-text-weight">归还总金额</td>
+                        <td>{{rtnAppPo.borrowReturnApply.returnTotalAmount}}</td>
+
+                    </tr>
+                    <tr *ngIf="materialFlag">
+                        <td class="m-text-weight">凭证号(1)</td>
+                        <td><input type="text" required placeholder="请填写" [(ngModel)]="rtnAppPo.borrowReturnApply.voucherNo1"
+                                name="voucherNo1"></td>
+                        <td class="m-text-weight">凭证号(2)</td>
+                        <td><input type="text" required placeholder="请填写" [(ngModel)]="rtnAppPo.borrowReturnApply.voucherNo2"
+                                name="voucherNo2"></td>
+                    </tr>
+                    <tr *ngIf="materialFlag">
+                        <td *ngIf="rtnAppPo.borrowReturnApply.allopatryReturn==1" class="m-text-weight">凭证号(3)</td>
+                        <td *ngIf="rtnAppPo.borrowReturnApply.allopatryReturn==1"><input type="text" required placeholder="请填写" [(ngModel)]="rtnAppPo.borrowReturnApply.voucherNo3"
+                                name="voucherNo3"></td>
+                        <td class="m-text-weight">是否异地归还</td>
+                        <td>{{rtnAppPo.borrowReturnApply.allopatryReturn==0?"否":"是"}}</td>
+                        <td *ngIf="rtnAppPo.borrowReturnApply.allopatryReturn==0" class="m-text-weight">取货方式</td>
+                        <td *ngIf="rtnAppPo.borrowReturnApply.allopatryReturn==0">{{rtnAppPo.borrowReturnApply.pickupType==0?"销售员自送":"物流取货"}}</td>
+                    </tr>
+                    <tr *ngIf="materialFlag&&rtnAppPo.borrowReturnApply.allopatryReturn==1">
+                        <td class="m-text-weight">取货方式</td>
+                        <td>{{rtnAppPo.borrowReturnApply.pickupType==0?"销售员自送":"物流取货"}}</td>
+                        <td *ngIf="saleRole" class="m-text-weight">归还总金额</td>
+                        <td>{{rtnAppPo.borrowReturnApply.returnTotalAmount}}</td>
+                    </tr>
+                    <tr *ngIf="materialFlag&&rtnAppPo.borrowReturnApply.allopatryReturn==0">
+
+                        <td *ngIf="saleRole" class="m-text-weight">归还总金额</td>
+                        <td>{{rtnAppPo.borrowReturnApply.returnTotalAmount}}</td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="m-text-weight">归还说明</td>
+                        <td>{{rtnAppPo.borrowReturnApply.returnMemo}}</td>
+
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
+        <!--物料与运输信息1-->
+        <nav class="nav1"><span>物料与运输信息</span></nav>
+        <div class="m-material-info1" *ngFor="let item of rtnAppPo.rtnTransportPoList;index as i">
+            <h2>物料与运输信息<i class="iqon-fold"></i></h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="zjCurrAppFlag">
+                    <tr>
+                        <td *ngIf="item.rtnTransport.rtnAddress.length > 10" width="15%" class="m-text-weight">取货地址</td>
+                        <td  *ngIf="item.rtnTransport.rtnAddress.length < 10" width="8%" class="m-text-weight">取货地址</td>
+                        <td class="flex">{{item.rtnTransport.rtnAddress}}
+                            <div class="btns1" style="margin-left: 0px;">
+                                <button type="button" (click)="viewTimeMap(item.rtnTransport.rtnAddressId)">查看详细</button>
+                            </div>
+                        </td>
+                        <td *ngIf="rtnAppPo.borrowReturnApply.pickupType==1" width="15%" class="m-text-weight">运输方式</td>
+                        <td *ngIf="rtnAppPo.borrowReturnApply.pickupType==1" width="35%">{{item.rtnTransport.transportName}}</td>
+
+                    </tr>
+
+                </table>
+
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="!zjCurrAppFlag&&rtnAppPo.borrowReturnApply.pickupType==1">
+                    <tr>
+                        <td width="10%" class="m-text-weight">取货地址</td>
+                        <td class="flex">{{item.rtnTransport.rtnAddress}}
+                            <div class="btns1" style="margin-left: 0px;">
+                                <button type="button" (click)="viewTimeMap(item.rtnTransport.rtnAddressId)">查看详细</button>
+                            </div>
+                        </td>
+                        <td width="10%" class="m-text-weight">运输方式</td>
+                        <td width="25%">{{item.rtnTransport.transportName}}</td>
+                        <td *ngIf="item.rtnTransport.noApplySubmit>0" width="10%" class="m-text-weight" class="m-text-weight">运输单号</td>
+                        <td *ngIf="item.rtnTransport.noApplySubmit==1">
+                            <a href="javascript:;" (click)="loadFile(item.rtnTransport.transportUrl)">{{item.rtnTransport.transportNo}}</a>
+
+                        </td>
+                        <td *ngIf="item.rtnTransport.noApplySubmit==2">
+                            <button class="m-btn-confirm" type="button" (click)="noapplySubmit(item)">触发无单</button>
+                        </td>
+                        <!--<td *ngIf="rtnAppPo.borrowReturnApply.noApplySubmit==='2'">运输单号获取失败！ {{rtnAppPo.borrowReturnApply.submitResult}}</button> </td>-->
+                    </tr>
+
+                </table>
+
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="!zjCurrAppFlag&&rtnAppPo.borrowReturnApply.pickupType==0">
+                    <tr>
+                        <td width="10%" class="m-text-weight">取货地址</td>
+                        <td class="flex">{{item.rtnTransport.rtnAddress}}
+                            <div class="btns1" style="margin-left: 0px;">
+                                <button type="button" (click)="viewTimeMap(item.rtnTransport.rtnAddressId)">查看详细</button>
+                            </div>
+                        </td>
+                        <!--<td *ngIf="rtnAppPo.borrowReturnApply.noApplySubmit==='2'">运输单号获取失败！ {{rtnAppPo.borrowReturnApply.submitResult}}</button> </td>-->
+                    </tr>
+
+                </table>
+                <show-location-view *ngIf="showLocation" (missData)="missData($event)" [addressId]="addressId"></show-location-view>
+                <table class="m-info-table">
+                    <thead>
+                        <tr class="m-infor-tr">
+                            <th class="m-text-center" width="5%">序号</th>
+                            <th width="10%">物料号</th>
+                            <th>物料描述</th>
+                            <th width="10%">批次</th>
+                            <th width="8%">单位</th>
+                            <th width="8%">数量</th>
+                            <th *ngIf="saleRole" width="14%">归还金额/元</th>
+                            <th width="10%">借用在途库</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item1 of item.rtnMaterielAppList;index as j">
+                            <td class="m-text-center add-w-b60">{{j+1}}</td>
+                            <td> {{item1.meterialNo}} </td>
+                            <td>{{item1.meterialMemo}}</td>
+                            <td> {{item1.batch}}</td>
+                            <td>{{item1.unit}}</td>
+                            <td> {{item1.count}}</td>
+                            <td *ngIf="saleRole">{{item1.totalAmount}}</td>
+                            <td>{{item1.onwayStore}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <!--物料与运输信息1-->
+        <nav class="nav1" *ngIf="(rtnAppPo.borrowReturnApply.flowStatus>0&&rptTestPo.qualityTestReport.rptId)||zjCurrAppFlag"><span>产品质量检测报告单</span></nav>
+        <div class="m-material-info1" *ngIf="(rtnAppPo.borrowReturnApply.flowStatus>0&&rptTestPo.qualityTestReport.rptId)||zjCurrAppFlag">
+            <h2>产品质量检测报告单<i class="iqon-fold"></i></h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="zjCurrAppFlag">
+                    <tr>
+                        <td width="10%" class="m-text-weight">借出库房</td>
+                        <td width="40%"><input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.loanStoreHouse"
+                                name="loanStoreHouse" #radio1 checked value="0">
+                            <label for="radio1" class="radio-label">样品库</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.loanStoreHouse" name="loanStoreHouse" #radio2
+                                value="1">
+                            <label for="radio2" class="radio-label" style="">商品库</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.loanStoreHouse" name="loanStoreHouse" #radio2
+                                value="2">
+                            <label for="radio2" class="radio-label">待修库</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.loanStoreHouse" name="loanStoreHouse" #radio2
+                                value="3">
+                            <label for="radio2" class="radio-label">其它</label>
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">送检原因 </td>
+                        <td width="40%"><input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.giveReason" name="giveReason"
+                                #radio1 checked value="0">
+                            <label for="radio1" class="radio-label">退货</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.giveReason" name="giveReason" #radio2 value="1">
+                            <label for="radio2" class="radio-label">还租赁</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.giveReason" name="giveReason" #radio2 value="2">
+                            <label for="radio2" class="radio-label">批次到货质检</label>
+                            <input type="radio" class="radio" icheck [(ngModel)]="rptTestPo.qualityTestReport.giveReason" name="giveReason" #radio2 value="3">
+                            <label for="radio2" class="radio-label">其它</label></td>
+                    </tr>
+
+                </table>
+
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="!zjCurrAppFlag">
+                    <tr>
+                        <td width="10%" class="m-text-weight">借出库房</td>
+                        <td width="40%">
+                            <span *ngIf="rptTestPo.qualityTestReport.loanStoreHouse=='0'">样品库</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.loanStoreHouse=='1'">商品库</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.loanStoreHouse=='2'">待修库</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.loanStoreHouse=='3'">其它</span>
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">送检原因</td>
+                        <td width="40%">
+                            <span *ngIf="rptTestPo.qualityTestReport.giveReason=='0'">退货</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.giveReason=='1'">还租赁</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.giveReason=='2'">批次到货质检</span>
+                            <span *ngIf="rptTestPo.qualityTestReport.giveReason=='3'">其它</span>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+
+                <table class="m-info-table" style="border-bottom:0px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">
+                                <span style="float: left">共{{rptTestPo.rtnMaterielList.length}}条</span>
+                                <span>归还物料明细表</span>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                </table>
+                <table class="m-info-table" style="margin-top: 0px;">
+                    <thead>
+
+                        <tr class="m-infor-tr">
+
+
+                            <th class="m-text-center" width="5%">序号</th>
+                            <th width="10%">物料号</th>
+                            <th>物料描述</th>
+                            <th width="10%">批次</th>
+                            <th width="8%">单位</th>
+                            <th width="8%">数量</th>
+                            <th *ngIf="saleRole">归还金额/元</th>
+                            <th width="8%">物料序列号</th>
+                            <th width="8%">建议还入库</th>
+                            <th width="5%" *ngIf="zjCurrAppFlag"></th>
+                        </tr>
+
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item1 of rptTestPo.rtnMaterielList;index as j">
+                            <td class="m-text-center add-w-b60">{{j+1}}</td>
+                            <td> {{item1.meterialNo}} </td>
+                            <td>{{item1.meterialMemo}}</td>
+                            <td> {{item1.batch}}</td>
+                            <td>{{item1.unit}}</td>
+                            <td>
+                                <input type="text" *ngIf="zjCurrAppFlag" required [(ngModel)]="item1.count" (change)="materielNumberChange(item1)" name="count">
+                                <span *ngIf="!zjCurrAppFlag">{{item1.count}}</span>
+
+                            </td>
+                            <td *ngIf="saleRole">{{item1.totalAmount}}</td>
+                            <td>
+                                <input type="text" *ngIf="zjCurrAppFlag" required [(ngModel)]="item1.materielNum" name="materielNum">
+                                <span *ngIf="!zjCurrAppFlag">{{item1.materielNum}}</span>
+                            </td>
+                            <td>
+                                <input type="text" *ngIf="zjCurrAppFlag" required [(ngModel)]="item1.rtnInStore" name="rtnInStore" (keyup)="rtnInStoreChange(item1)"
+                                    maxlength="4">
+                                <span *ngIf="!zjCurrAppFlag">{{item1.rtnInStore}}</span>
+
+                            </td>
+                            <td class="m-text-center" *ngIf="zjCurrAppFlag"><i class="iqon-add-bold adds" (click)="addRtnMateriel(item1)"></i>
+                                <i class="iqon-jian adds" (click)="delRtnMateriel(j)"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="zjCurrAppFlag">
+                    <tr>
+                        <td width="10%" class="m-text-weight">检查项目</td>
+                        <td width="40%">
+                            <input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.testProject" name="testProject">
+
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">外包装检查 </td>
+                        <td width="40%"><input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.outerPackTest" name="outerPackTest"></td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">机器外观检查</td>
+                        <td width="40%"> <input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.machineAppearanceTest" name="machineAppearanceTest">
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">电性能检查 </td>
+                        <td width="40%"><input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.electricalPerformanceTest" name="electricalPerformanceTest"></td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">附件检查</td>
+                        <td width="40%"> <input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.fileTest" name="fileTest">
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">质检结论 </td>
+                        <td width="40%"><input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.testResult" name="testResult"></td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">备注</td>
+                        <td> <input type="text" required [(ngModel)]="rptTestPo.qualityTestReport.remarks" name="remarks">
+                        </td>
+
+                    </tr>
+                </table>
+
+                <table cellpadding="0" cellspacing="0" width="100%" *ngIf="!zjCurrAppFlag">
+                    <tr>
+                        <td width="10%" class="m-text-weight">检查项目</td>
+                        <td width="40%">
+
+                            {{rptTestPo.qualityTestReport.testProject}}
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">外包装检查 </td>
+                        <td width="40%">
+                            {{rptTestPo.qualityTestReport.outerPackTest}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">机器外观检查</td>
+                        <td width="40%">
+                            {{rptTestPo.qualityTestReport.machineAppearanceTest}}
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">电性能检查 </td>
+                        <td width="40%">
+                            {{rptTestPo.qualityTestReport.electricalPerformanceTest}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">附件检查</td>
+                        <td width="40%">
+                            {{rptTestPo.qualityTestReport.fileTest}}
+                        </td>
+                        <td width="10%" class="m-text-weight" class="m-text-weight">质检结论 </td>
+                        <td width="40%">
+                            {{rptTestPo.qualityTestReport.testResult}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="10%" class="m-text-weight">备注</td>
+                        <td>
+                            {{rptTestPo.qualityTestReport.remarks}}
+                        </td>
+
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+        <!--审批记录-->
+        <div class="m-app-history">
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+        </div>
+        <!--审批意见 -->
+
+        <div class="m-app-opinion" *ngIf="currAppFlag">
+            <div class="m-exm-item">
+                <p class="m-exm-advice">审批意见</p>
+                <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="remark" name="remark"></textarea>
+            </div>
+        </div>
+
+
+        <div class="apply-submitBtn">
+            <div class="m-exm-btn">
+                <button class="m-btn-agree apply-agree" (click)="agree()" *ngIf="currAppFlag">同意</button>
+                <button class="m-btn-refuse apply-refuse" *ngIf="currAppFlag" (click)="reject()">驳回</button>
+                <button class="m-btn-refuse" (click)="goback()">返回</button>
+            </div>
+        </div>
+    </div>
+    <div class="apply-p-right g-right1">
+        <div class="apply-p-right">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

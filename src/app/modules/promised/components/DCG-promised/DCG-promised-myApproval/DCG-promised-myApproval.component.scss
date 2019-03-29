@@ -1,0 +1,22 @@
+:host/deep/.m-noresult{
+  height: calc(100vh - 190px);
+  margin-top: 10px;
+}
+.m-div-warp{
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+width:150px;
+}
+
+.green{
+  color:green;
+}
+
+.red{
+  color: firebrick;
+}
+
+:host/deep/.picker-main{
+  right: 0;
+}

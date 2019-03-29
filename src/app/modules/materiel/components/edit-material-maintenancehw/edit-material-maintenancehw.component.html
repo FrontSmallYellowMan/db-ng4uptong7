@@ -1,0 +1,42 @@
+<div class="modal-dialog" style="width: 480px;">
+  <div class="modal-header m-dialog-head">
+    <span>华为物料维护</span>
+    <i class="iqon-close" (click)="hide()"></i>
+  </div>
+  <div *ngIf="materialHWInfo.View">
+    <div class="m-modal-form">
+      <div class="m-form-item-w100">
+        <label class="m-form-label">创建人</label>{{materialHWInfo.CreaterITCode}}/{{materialHWInfo.CreaterName}}
+      </div>
+      <div class="m-form-item-w100">
+        <label class="m-form-label">创建时间</label>{{materialHWInfo.CreateTime | iqDate: "YYYY-MM-DD"}}
+      </div>
+      <div class="m-form-item-w100">
+        <label class="m-form-label">部件编码</label>{{materialHWInfo.MaterialCodeHW}}
+      </div>
+      <div class="m-form-item-w100">
+        <label class="m-form-label">物料号</label>{{materialHWInfo.MaterialCode}}
+      </div>
+    </div>
+    <div class="m-modal-btn">
+      <button type="button" class="m-btn-confirm" (click)="edit(true)">编辑</button>
+      <button type="button" class="m-btn-cancel" (click)="hide()">返回</button>
+    </div>
+  </div>
+  <form #form="ngForm" *ngIf="!materialHWInfo.View">
+    <div class="m-modal-form">
+      <div class="m-form-item-w100">
+        <label class="m-form-label">部件编码</label>
+        <input #MaterialCodeHW="ngModel" [(ngModel)]="materialHWInfo.MaterialCodeHW" [ngClass]="{'m-input-warn': !MaterialCodeHW.valid && (hasSubmit || MaterialCodeHW.touched) }" type="text" name="materialCodeHW" placeholder="-请填写部件编码" maxlength="50"  required>       
+      </div>
+      <div class="m-form-item-w100">
+        <label class="m-form-label">物料号</label>
+        <input #MaterialCode="ngModel" [(ngModel)]="materialHWInfo.MaterialCode"  type="text" name="materialCode" placeholder="-请填写物料编号" [ngClass]="{'m-input-warn':!MaterialCode.valid&&(hasSubmit||MaterialCode.touched)}" required maxlength="50" pattern="[0-9-]*">             
+      </div>
+    </div>
+    <div class="m-modal-btn">
+      <button type="button" class="m-btn-confirm" (click)="save()">确定</button>
+      <button type="button" class="m-btn-cancel" (click)="hide()">取消</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,17 @@
+<div class="select-search" #selectSearch>
+  <div
+    class="select-modal"
+    (click)="toggle()"
+    [ngStyle]="{
+      color: selectedItem ? '#4a4a4a' : '#888',
+      background: disabled ? '#eee' : '#fff',
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      'border-color': required && !selectedItem ? '#ea6269' : '#e1e3eb'
+    }"
+  >
+    <div style="margin-right: 15px;text-align:center;">
+      {{ selectedItem || placeHolder }}
+    </div>
+    <i class="iqon-xia"></i>
+  </div>
+</div>

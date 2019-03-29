@@ -1,0 +1,242 @@
+.disabled {
+    pointer-events: none;
+    cursor:not-allowed;
+    opacity: 0.5;
+}
+.addApp-up-file{
+	    margin: 0!important;
+	    height: 75px !important;
+    line-height: 75px !important;
+    h2{
+	    width: 30px;
+	    margin-top: 30px;
+	    font-size: 14px;
+	    margin-left: 20px;
+    }
+}
+.apply-p-right{
+	    overflow: hidden !important;
+}
+.addApp-file-details{
+	    margin: 20px 0!important;
+      >ul>li{
+        cursor: pointer;
+      }
+}
+.height92{
+	    height: 92px;
+    line-height: 92px;
+}
+.add-width65{
+	width: 65px !important;
+}
+.add-width100{
+	width: 100px !important;
+}
+.add-width200{
+	width: 200px !important;
+}
+.m-center{
+	th{
+		text-align: center !important;
+	}
+	td{
+		text-align: center !important;
+	}
+}
+:host /deep/ .form-control {
+ 	width:100% !important;
+}
+:host /deep/ .dropdown-menu {
+ 	position: relative !important;
+ 	top: 0px !important;
+}
+.ui-select-choices{
+	position: relative !important;
+}
+tbody{
+	padding-bottom: 1px !important;
+}
+.clearfloat{
+	    clear: both;
+}
+.addApp-base-list{
+	.addApp-form-item{
+		input{
+		    width: 75%;
+		}
+	}
+}
+.width65{
+	width:65px;
+}
+.width100{
+	width:100px;
+}
+:host /deep/ .m-exm-remark {
+    width: 50% !important;
+ }
+ :host /deep/ .m-exm-advice {
+  	color: #57b9f8 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+:host /deep/ .ui-select-choices > li{
+  	width: 100% !important;
+}
+.m-exm-item{
+	width:100%!important;
+}
+pos-ordertype1{
+	position: absolute;
+    top: 108px;
+    left: 110px;
+}
+pos-ordertype2{
+	position: absolute;
+    top: 108px;
+    left: 110px;
+}
+:host /deep/ .apply-flush-details{
+	    position: relative !important;
+}
+:host /deep/.m-step-progress2{
+	.m-apply-step-pro{
+	    width: 156px !important;
+		    height: 80px !important;
+	}
+}
+:host /deep/.m-dropdown{
+	.m-dropdown-option{
+	    width: 120px !important;
+	    background-color: #fff !important;
+	    li:hover{
+	    	color:#57b9f8 !important;
+	    }
+	}
+}
+.addApp {       
+    width: 75%;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+.col-4{
+	width: 33.3333333% !important;
+}
+.addApp-pos{
+	
+	.sel-pos{
+		position: absolute;
+    	top: 0px;
+    	left: 90px;
+	}
+	
+}
+.posRel{
+	position: relative;
+	z-index: 100;
+	.moneyPos{
+		position: absolute;
+    	top: 0px;
+		left: 5%;
+		width: 90%;
+		display: block;
+		height: 100%;
+		background: #fff;
+	}
+}
+.addApp-up-file[_ngcontent-c5] {
+	margin: 0 !important;
+	height: 0px !important;
+	min-height: 75px !important;
+    line-height: 75px !important;
+}
+.table-bordered{
+	thead{
+		th{
+			height: 30px;
+			line-height: 30px;
+			padding: 0 5px;
+		}		
+	}
+	tbody {		
+    	overflow-y: initial !important;
+		border-collapse: separate !important;
+	}	
+}
+.z-index5{
+	z-index: 5;
+}
+
+.option-bill{
+	border: 1px solid #e1e3eb;
+    border-radius: 3px;
+}
+.addApp-base-list .addApp-form-item {
+	position: relative;
+}
+.clearfix { 
+	
+	  *zoom: 1; 
+	
+	} 
+	
+	 
+	
+	.clearfix:before, 
+	
+	.clearfix:after { 
+	
+	  display: table; 
+	
+	  line-height: 0; 
+	
+	  content: ""; 
+	
+	} 
+	
+	 
+	
+	.clearfix:after { 
+	
+	  clear: both; 
+	
+	} 
+	.apply-progress .apply-p-left .apply-p-infor .m-exm-item{
+		padding: 8px 0;
+	}
+	.apply-progress .apply-p-left .apply-p-infor .m-exm-item ul > li {
+		height: 100%;
+	}
+	.apply-progress .apply-p-left .apply-p-infor .m-exm-item ul > li .m-exm-label {
+		vertical-align: top;
+	}
+
+	.apply-progress{
+      margin: 0 20px 0 0;
+  }
+  .m-exm-item{
+      padding: 0 25px 15px!important;
+  }
+  .m-exm-half{
+    height: auto!important;
+    margin-top: 18px!important;
+  }
+  .btn-content{
+      height: auto;
+  }
+  .apply-finance-l{
+      padding-bottom: 0!important;
+  }
+  .m-exm-cont{
+	  padding-left: 50px;
+  }
+  .m-warn-td{
+	  position: relative;
+  }
+  .m-warn-p{
+	  position: absolute;
+  }
+  .apply-progress .apply-p-left .apply-flush-details .apply-order-type .addApp-base-list li {
+    width: 33%;
+}

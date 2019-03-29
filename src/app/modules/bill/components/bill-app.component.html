@@ -1,0 +1,198 @@
+<!-- <div style="height: 100%;padding-top: 62px"> -->
+<div class="g-hdp">
+    <div class="m-home-page">
+        <div class="g-right" style="overflow-x:hidden;">
+            <div class="m-home-pageR clearfix">
+                <!--菜单-->
+                <div class="m-boardtop clearfix">
+                    <div class="m-crumb">
+                        <ul>我的位置：
+                            <li><a>DCG业务管理平台</a></li>
+                            <li><a>冲红退换货</a></li>
+                            <li><a>{{titleli}}</a></li>
+                        </ul>
+                    </div>
+                    <iq-newcreat [dataCreat]=dataCreat></iq-newcreat>
+                </div>
+                <!--搜索-->
+                <div class="m-list-menu" *ngIf="myApplyShow">
+                    <ul class="m-state">
+                        <li [ngClass]="{'active':applyPage=='审批'}" (click)="getMyApply('审批')">审批中</li>
+                        <li [ngClass]="{'active':applyPage=='完成'}" (click)="getMyApply('完成')">已完成</li>
+                        <li [ngClass]="{'active':applyPage=='草稿'}" (click)="getMyApply('草稿')">草稿</li>
+                        <li [ngClass]="{'active':applyPage=='全部'}" (click)="getMyApply('全部')">全部</li>
+                    </ul>
+                    <div class="m-search-all">
+                        <div class="alter">
+                            <div class="m-select">
+                                <!--<i class="iqon-xia"></i>-->
+                                <ng-select class="addApp-form-input" [items]="listCompany" (selected)="selectedCompaney($event)" placeholder="请选择"></ng-select>
+                            </div>
+                        </div>
+                        <div class="m-search">
+                            <i class="iqon-query" (click)=getmMessageList(InvoicePeopleITCode) style="cursor:pointer"></i>
+                            <input name="state" placeholder="发票号/申请人/ITCode" [(ngModel)]=InvoicePeopleITCode type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-list-menu" *ngIf="myApproveShow">
+                    <ul class="m-state">
+                        <li [ngClass]="{'active':approvePage=='未处理'}" (click)="getMyList('未处理')">待我审批</li>
+                        <li [ngClass]="{'active':approvePage=='已处理'}" (click)="getMyList('已处理')">我已审批</li>
+                        <li [ngClass]="{'active':approvePage=='全部'}" (click)="getMyList('全部')">全部</li>
+                    </ul>
+                    <div class="m-search-all">
+                        <div class="alter">
+                            <div class="m-select">
+                                <!--<i class="iqon-xia"></i>-->
+                                <ng-select class="addApp-form-input" [items]="listCompany" (selected)="selectedCompaney($event)" placeholder="请选择"></ng-select>
+                            </div>
+                        </div>
+                        <div class="m-search">
+                            <i class="iqon-query" (click)=getmMessageList(InvoicePeopleITCode)></i>
+                            <input name="state" placeholder="发票号/申请人/ITCode" [(ngModel)]=InvoicePeopleITCode type="text">
+                        </div>
+                    </div>
+                </div>
+                <!--表格-->
+                <div class="m-table-right" *ngIf="myApplyShow">
+                    <div class="table-auto-content">
+                        <table class="table table-hover table-list" style="table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th class="w122 width120">申请单号</th>
+                                    <th class="w122" style="width: 20%">公司</th>
+                                    <th style="width: 24%">代理商名称</th>
+                                    <!-- <th>申请单状态</th> -->
+                                    <th class="w122">当前环节</th>
+                                    <!--<th>当前处理人</th>-->
+                                    <th class="width70">申请人</th>
+                                    <th>申请日期</th>
+                                    <th *ngIf="applyPage=='草稿'||applyPage=='驳回'">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of ApplyPageData;index as i">
+                                <tr *ngIf="applyPage!='草稿'&&applyPage!='驳回'">
+                                    <td>{{item.applyno}}</td>
+                                    <td class="w250"> <a [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">{{item.company}}</a></td>
+                                    <td> <a [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">{{item.customer}}</a></td>
+                                    <!-- <td> <a [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">{{item.wfstatus}} </a></td> -->
+                                    <td title="{{changedata(item.currentapprover)}}">{{changedata(item.currentapprover)}}</td>
+                                    <!-- <td class="m-orange w122" ><button *ngIf="CurrentNodeFlag" (click)="getCurrentNode(item.applyId,item)"> 查看</button>{{item.currentapprove}}</td>  -->
+                                    <td><a [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">{{item.proposer}}</a></td>
+                                    <td><a [routerLink]="['/bill/return-check/']" [queryParams]="{applyid:item.applyId}">{{item.applydate}}</a></td>
+                                </tr>
+                                <tr *ngIf="(applyPage=='草稿'||applyPage=='驳回')&&localPersonName==item.proposer" [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyId}">
+                                    <td>{{item.applyno}}</td>
+                                    <td class="w250">{{item.company}}</td>
+                                    <td> {{item.customer}}</td>
+                                    <!-- <td> <a [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">{{item.wfstatus}} </a></td> -->
+                                    <td title="{{changedata(item.currentapprover)}}">{{changedata(item.currentapprover)}}</td>
+                                    <!-- <td class="m-orange w122" ><button *ngIf="CurrentNodeFlag" (click)="getCurrentNode(item.applyId,item)"> 查看</button>{{item.currentapprove}}</td>  -->
+                                    <td>{{item.proposer}}</td>
+                                    <td>{{item.applydate}}</td>
+                                    <td>
+                                        <span class="m-del-information" (click)="removeRedItem(item)">删除</span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="applyPage=='草稿'&& localPersonName!=item.proposer" [routerLink]="['/bill/check/']" [queryParams]="{applyid:item.applyId}">
+                                    <td>{{item.applyno}}</td>
+                                    <td class="w250">{{item.company}}</td>
+                                    <td> {{item.customer}}</td>
+                                    <td title="{{changedata(item.currentapprover)}}">{{changedata(item.currentapprover)}}</td>
+                                    <td>{{item.proposer}}</td>
+                                    <td>{{item.applydate}}</td>
+                                    <td>
+                                        <span class="m-del-information" (click)="removeRedItem(item)">删除</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="page" *ngIf="myApplyShow">
+                        <iq-pager [data]="pagerData" (onChange)="onChangePage($event,1)"></iq-pager>
+                    </div>
+                </div>
+                <div class="m-table-right" *ngIf="myApproveShow">
+                    <div class="table-auto-content" style="width:100%">
+                        <table class="table table-hover table-list" style="table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th class="w122 width120">申请单号</th>
+                                    <th class="w122" style="width: 20%">公司</th>
+                                    <th style="width: 24%">代理商名称</th>
+                                    <th>申请单状态</th>
+                                    <th class="w122">当前环节</th>
+                                    <th class="width70">申请人</th>
+                                    <th class="width140">申请日期</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of getMyListData;index as i">
+                                <tr (click)=routerJump(0,item.taskTableURL) *ngIf="approvePage=='未处理'">
+                                    <td class="w250">{{item.applyno}}</td>
+                                    <td>{{item.company}}</td>
+                                    <td> {{item.customer}}</td>
+                                    <td> {{item.wfstatus}}</td>
+                                    <td title="{{item.currentapprove}}"> {{item.currentapprove}}</td>
+                                    <td>{{item.proposer}}</td>
+                                    <td>{{item.applydate}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="w250" *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.applyno}}</a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.company}}</a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.customer}}</a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.wfstatus}} </a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.currentapprove}}</a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.proposer}}</a></td>
+                                    <td *ngIf="item.currentapprove=='申请人'&&item.currentapproveId==loginNodeId"> <a [routerLink]="['/bill/examine/']" [queryParams]="{applyid:item.applyid}">{{item.applydate}}</a></td>
+                                </tr> -->
+                                <tr (click)=routerJump(1,item.applyid) *ngIf="approvePage=='已处理'">
+                                    <td class="w250">{{item.applyno}}</td>
+                                    <td>{{item.company}}</td>
+                                    <td> {{item.customer}}</td>
+                                    <td> {{item.wfstatus}}</td>
+                                    <td title="{{item.currentapprove}}"> {{item.currentapprove}}</td>
+                                    <td>{{item.proposer}}</td>
+                                    <td>{{item.applydate}}</td>
+                                </tr>
+                                <tr (click)=routerJump(1,item.applyid)  *ngIf="approvePage=='全部'">
+                                    <td class="w250">{{item.applyno}}</td>
+                                    <td>{{item.company}}</td>
+                                    <td> {{item.customer}}</td>
+                                    <td> {{item.wfstatus}}</td>
+                                    <td title="{{item.currentapprove}}"> {{item.currentapprove}}</td>
+                                    <td>{{item.proposer}}</td>
+                                    <td>{{item.applydate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page" *ngIf="myApproveShow">
+                        <iq-pager [data]="pagerData" (onChange)="onChangePage($event,2)"></iq-pager>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="g-list m-home-page">
+        <div class="m-home-pageL">
+            <ul class="m-usertree">
+                <li class="m-hasicon" [ngClass]="{'active':liMyApply}">
+                    <i class="iqon-report"></i>
+                    <a (click)="getMyApply('审批')" style="cursor:pointer">我的申请</a>
+                </li>
+                <li class="m-hasicon" [ngClass]="{'active':litMyList}">
+                    <i class="iqon-record"></i>
+                    <a (click)="getMyList('未处理')" style="cursor:pointer">我的审批</a>
+                </li>
+                <!-- <li class="m-hasicon" [ngClass]="{'active':liDoneList}">
+                    <i class="iqon-check"></i>
+                    <a (click)="haveDoneList()" style="cursor:pointer">我已审批</a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+</div>

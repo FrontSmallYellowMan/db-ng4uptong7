@@ -1,0 +1,624 @@
+<div class="ri-red-approve">
+  <loading [show]="loading"></loading>
+  <!--左侧内容-->
+  <div class="ri-red-approve-left">
+    <div class="ri-red-apply">
+      <div class="red-apply-title">
+        <h5>退换货申请</h5>
+      </div>
+      <form #redApplyForm="ngForm">
+        <!--基础信息-->
+        <div class="red-apply-content">
+
+          <div class="apply-content-title">
+            <h5>基础信息</h5>
+          </div>
+          <div class="apply-content-main clearfix">
+            <div class="c-form-item">
+              <div class="c-input-title"><label>申请人：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.proposer }} {{ applyData.apply.ITCode }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>申请日期：</label></div>
+              <div class="c-input-wrap">{{ getDataYYYYMMDD(applyData.apply.applydate) }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>电话：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.phone }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>成本中心：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.costcenter }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>公司：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.companycode }}-{{ applyData.apply.company }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>业务范围：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.bizcode }}-{{ applyData.apply.biz }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>发票类型：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.invoicetype }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>所属平台：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.platform }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title"><label>冲退类型：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.revisetype }}</div>
+            </div>
+            <div class="c-form-item">
+              <div class="c-input-title" style="width: 32%;"><label>是否需要我方上门取货：</label></div>
+              <div class="c-input-wrap" style="width: 3%;">
+                <span *ngIf="applyData.apply.homepickup != 1">是</span>
+                <span *ngIf="applyData.apply.homepickup == 1">否</span>
+              </div>
+              <div class="c-input-title" style="width: 16%;"><label>运输类型：</label></div>
+              <div class="c-input-wrap" style="width: 5%;">
+                <span *ngIf="applyData.apply.transittype == 0">市内</span>
+                <span *ngIf="applyData.apply.transittype == 1">外埠</span>
+              </div>
+            </div>
+            <div class="c-form-item-small" *ngIf="subrevisetype.length > 0">
+              <span *ngFor="let item of subrevisetype; index as i">{{ item?.subtype }} <i *ngIf="i != subrevisetype.length-1">，</i></span>
+            </div>
+            <div class="c-form-item-custom clearfix">
+              <div class="c-input-title"><label>说明原因：</label></div>
+              <div class="c-input-wrap">{{ applyData.apply.reason }}</div>
+            </div>
+          </div>
+
+        </div>
+        <!--财务信息-->
+        <div class="red-apply-content">
+
+          <div class="apply-content-title">
+            <h5>财务信息</h5>
+          </div>
+          <div class="apply-content-main mater-detail-content clearfix">
+            <!--冲红前-->
+            <div class="invoice-before">
+              <div class="invoice-before-total">
+                共{{ applyData.invoice.length }}条
+              </div>
+              <table class="m-info-table">
+                <thead>
+                  <tr class="m-infor-tr table-head-tr1">
+                    <th colspan="10" class="m-text-center change">冲红前</th>
+                  </tr>
+                  <tr>
+                    <th class='m-text-center' style="width:30px;">序号</th>
+                    <th class="m-text-center">客户编号</th>
+                    <th class="m-text-center">客户名称</th>
+                    <th class="m-text-center">原订单号</th>
+                    <th class="m-text-center">系统发票号</th>
+                    <th class="m-text-center">外部发票号</th>
+                    <th class="m-text-center">原发票日期</th>
+                    <th class="m-text-center" style="width: 110px;">金额/元</th>
+                    <th class="m-text-center">原始收付基准日</th>
+                    <th class="m-text-center">原清账号</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="applyData.invoice.length == 0">
+                    <td colspan="10" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                  </tr>
+                  <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                    <td class="m-text-center">{{ i + 1 }}</td>
+                    <td class="m-text-center">{{ item.originalcustomercode }}</td>
+                    <td class="m-text-center">{{ item.originalcustomer }}</td>
+                    <td class="m-text-center">{{ item.orderno }}</td>
+                    <td class="m-text-center">{{ item.internalinvoiceno }}</td>
+                    <td class="m-text-center">{{ item.externalinvoiceno }}</td>
+                    <td class="m-text-center">{{ getDataYYYYMMDD(item.invoicedate) }}</td>
+                    <td class="m-text-center">{{ myToFixed(item.originalmoney) }}</td>
+                    <td class="m-text-center">{{ getDataYYYYMMDD(item.originalreceiptdate) }}</td>
+                    <td class="m-text-center">{{ item.originalcomplexaccount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--冲红后-->
+            <div class="invoice-after">
+              <div class="invoice-after-total">
+                共{{ applyData.invoice.length }}条
+              </div>
+              <table class="m-info-table">
+                <thead>
+                  <tr class="m-infor-tr table-head-tr1">
+                    <th colspan="4" class="m-text-center change">冲红后</th>
+                    <th class="m-text-center change">特殊说明</th>
+                    <th class="m-text-center change">财务</th>
+                  </tr>
+                  <tr>
+                    <th class="m-text-center" style="width:30px;">序号</th>
+                    <th class="m-text-center">客户编号<br>(冲名称时填写)</th>
+                    <th class="m-text-center">客户名称</th>
+                    <th class="m-text-center">金额/元<br>(冲金额时填写)</th>
+                    <th class="m-text-center">付款账期<br>(延过账期时填写)</th>
+                    <th class="m-text-center">清账号</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="applyData.invoice.length == 0">
+                    <td colspan="6" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                  </tr>
+                  <tr class="m-infor-trr" *ngFor="let item of applyData.invoice; index as i;">
+                    <td class="m-text-center">{{ i + 1 }}</td>
+                    <td class="m-text-center">{{ item.originalcustomercode }}</td>
+                    <td class="m-text-center">{{ item.originalcustomer }}</td>
+                    <td class="m-text-center">{{ myToFixed(item.money) }}</td>
+                    <td class="m-text-center">
+                      <div class="m-select" style="width: 70%; margin: 3px auto;" *ngIf="nodeID == 8 && isAllowEdit">
+                        <i class="iqon-xia"></i>
+                        <select style="height:30px;" [name]="'receiptdate' + i" [(ngModel)]="item.receiptdate" #receiptdate="ngModel">
+                          <option value="">-请选择</option>
+                          <option value=0>是</option>
+                          <option value=1>否</option>
+                        </select>
+                      </div>
+                      <span *ngIf="(nodeID != 8 || (nodeID == 8 && !isAllowEdit)) && item.receiptdate === 0">是</span>
+                      <span *ngIf="(nodeID != 8 || (nodeID == 8 && !isAllowEdit)) && item.receiptdate === 1">否</span>
+                    </td>
+                    <td class="m-text-center">
+                      <!--nodeID=10 财务发票(填写清帐号)-->
+                      <input *ngIf="nodeID==10 && isAllowEdit" type="text" [name]="'complexaccout' + i" [(ngModel)]="item.complexaccout" required
+                        #complexaccout="ngModel" [ngClass]="{'m-input-warn':complexaccout.invalid}">
+                      <span *ngIf="!isAllowEdit">{{ item.complexaccout }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <!--单据信息-->
+        <div class="red-apply-content" *ngIf="isApplyItcode || (nodeID && nodeID!=3 && nodeID!=4 && nodeID!=5 && nodeID!=6 && nodeID!=7 && nodeID!=12)">
+          <div class="apply-content-title">
+            <h5>单据信息</h5>
+          </div>
+          <div class="apply-content-main">
+            <table class="m-info-table" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">RE订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">RE交货单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">ZTY订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">ZTY交货单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">ZCR订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 1">ZOR订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 2">ZRE订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 2">ZRE交货单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 2">ZSD订单</th>
+                  <th class="m-text-center" style="width:15%;" *ngIf="materialType == 2">ZSD交货单</th>
+                  <th class="m-text-center" style="width:15%;">其他</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of applyData.invoice; index as i;">
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'REorderno' + i" [(ngModel)]="item.REorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.REorderno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'REdeliveryno' + i" [(ngModel)]="item.REdeliveryno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.REdeliveryno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZTYorderno' + i" [(ngModel)]="item.ZTYorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZTYorderno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZTYdeliveryno' + i" [(ngModel)]="item.ZTYdeliveryno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZTYdeliveryno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZCRorderno' + i" [(ngModel)]="item.ZCRorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZCRorderno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 1">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZORorderno' + i" [(ngModel)]="item.ZORorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZORorderno }}</span>
+                  </td>
+
+                  <td class="m-text-center" *ngIf="materialType == 2">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZREorderno' + i" [(ngModel)]="item.ZREorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZREorderno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 2">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZREdeliveryno' + i" [(ngModel)]="item.ZREdeliveryno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZREdeliveryno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 2">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZSDorderno' + i" [(ngModel)]="item.ZSDorderno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZSDorderno }}</span>
+                  </td>
+                  <td class="m-text-center" *ngIf="materialType == 2">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'ZSDdeliveryno' + i" [(ngModel)]="item.ZSDdeliveryno" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.ZSDdeliveryno }}</span>
+                  </td>
+                  <td class="m-text-center">
+                    <input *ngIf="isAllowEdit && nodeID == 8" [name]="'OrtherOrder' + i" [(ngModel)]="item.OrtherOrder" type="text">
+                    <span *ngIf="!isAllowEdit || nodeID != 8">{{ item.OrtherOrder }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--冲退明细-->
+        <!--财务发票(红字)、财务发票(清帐号)、财务经理nodeID=12、nodeID=10、nodeID=7不需要查看冲退明细-->
+        <!--申请人、商务经理、器材会计岗、销售组织器材会计nodeID=8、nodeID=9、nodeID == 13-->
+        <div class="red-apply-content" *ngIf="isApplyItcode || nodeID==8 || nodeID==9 || nodeID == 13">
+          <div class="apply-content-title">
+            <h5>冲退明细</h5>
+          </div>
+          <div class="apply-content-main">
+            <div class="material-detail-tab">
+              <div class="material-detail-tabtitle">
+                <ul class="clearfix">
+                  <li *ngFor="let item of saveToERPDataList; index as i;" [ngClass]="{'active':item?.active}" (click)="clickTab(i)">{{ item.invoice?.internalinvoiceno }}</li>
+                </ul>
+              </div>
+              <div class="material-detail-tabcontent">
+                <div *ngFor="let saveToERPDate of saveToERPDataList; index as saveToERPDatei;">
+                  <div *ngIf="saveToERPDate.active">
+                    <div class="material-detail-tabcontent-tabitem" *ngFor="let group of saveToERPDate?.group; index as groupi;">
+                      <div class="material-table-title-node6 clearfix">
+                        <div class="table-title-title" *ngIf="groupi == 0"><label>订单类型：</label></div>
+                        <div class="m-select table-title-content" *ngIf="groupi == 0">
+                          <i class="iqon-xia" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXuchu"></i>
+                          <select name="xuchuOrderType" [(ngModel)]="group.ordertype" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXuchu">
+                            <option value="">-请选择</option>
+                            <option value="ZCR">ZCR</option>
+                            <option value="RE">RE</option>
+                            <option value="ZRE">ZRE</option>
+                          </select>
+                          <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXuchu">{{ group.ordertype }}</span>
+                        </div>
+
+                        <div class="table-title-title" *ngIf="groupi == 1"><label>订单类型：</label></div>
+                        <div class="m-select table-title-content" *ngIf="groupi == 1">
+                          <i class="iqon-xia" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui"></i>
+                          <select name="xuchuOrderType" [(ngModel)]="group.ordertype" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui">
+                            <option value="">-请选择</option>
+                            <option value="ZTY">ZTY</option>
+                            <option value="ZOR">ZOR</option>
+                            <option value="ZSD">ZSD</option>
+                          </select>
+                          <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXutui">{{ group.ordertype }}</span>
+                        </div>
+
+                        <div class="table-title-title" *ngIf="materialType == 1 && nodeID == 8 && groupi == 0"><label>退入销售平台工厂:</label></div>
+                        <div class="table-title-title" *ngIf="materialType == 1 && nodeID == 8 && groupi == 0">
+                          <span>
+                            <input type="radio" [disabled]="group.hasERP || !isAllowEdit" class="radio" icheck [(ngModel)]="saveToERPDate.returnsellfactory" name="returnsellfactory" (ngModelChange)="returnFactoryChange('0',saveToERPDatei)" value="0"> 是
+                          </span>
+                          <span style="padding-left: 15px;">
+                            <input type="radio" [disabled]="group.hasERP || !isAllowEdit" class="radio" icheck [(ngModel)]="saveToERPDate.returnsellfactory" name="returnsellfactory" (ngModelChange)="returnFactoryChange('1',saveToERPDatei)" value="1"> 否
+                          </span>
+                        </div>
+
+                        <div class="table-title-title" *ngIf="(saveToERPDate.materialSubType == 3 || materialType == 2) && nodeID == 8"><label>是否写入erp:</label></div>
+                        <div class="table-title-title" *ngIf="(saveToERPDate.materialSubType == 3 || materialType == 2) && nodeID == 8">
+                          <span>
+                            <input type="radio" [disabled]="group.hasERP || !isAllowEdit" [name]="'isERP'+saveToERPDatei+groupi+ 10" [(ngModel)]="group.isERP" value="0" (ngModelChange)="onIsERPChange($event, saveToERPDatei, groupi)" icheck> 是
+                          </span>
+                          <span style="padding-left: 15px;">
+                            <input type="radio" [disabled]="group.hasERP || !isAllowEdit" [name]="'isERP'+saveToERPDatei+groupi+ 10" [(ngModel)]="group.isERP" value="1" (ngModelChange)="onIsERPChange($event, saveToERPDatei, groupi)" icheck> 否
+                          </span>
+                        </div>
+
+                        <div class="table-title-title" *ngIf="groupi == 0"><label>红字通知单号:</label></div>
+                        <div class="table-title-content" *ngIf="groupi == 0">
+                          <input type="text" name="rednoticeno" [(ngModel)]="group.rednoticeno" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXuchu">
+                          <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXuchu">{{ group.rednoticeno }}</span>
+                        </div>
+                        <div class="table-title-title" *ngIf="groupi == 1"><label>发票备注:</label></div>
+                        <div class="table-title-content" *ngIf="groupi == 1">
+                          <input *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui" type="text" [name]="'invoiceremark'+saveToERPDatei+groupi" [(ngModel)]="group.invoiceremark">
+                          <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXutui">{{ group.invoiceremark }}</span>
+                        </div>
+                        <div class="table-title-content" *ngIf="groupi == 1 && !saveToERPDate.hasSaveToERPXutui && nodeID == 8">
+                          <button class="m-btn-confirm" (click)="delPositiveDoc(saveToERPDatei)">删除正向单</button>
+                        </div>
+                        <br>
+                        <div class="material-tabletitle-info clearfix" style="margin-top: 20px;" *ngIf="(materialType == 2) && groupi == 1">
+                          <div class="c-input-title" style="text-align: right; width: 10%;"><label>运输方式：</label></div>
+                          <div class="c-input-wrap c-select-wrap" style="width: 17%; margin-left: 1%;">
+                            <div class="m-select">
+                              <i class="iqon-xia" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui"></i>
+                              <select name="TransitMode" [(ngModel)]="applyData.invoice[saveToERPDatei].TransitModeCode" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui">
+                                <option value="">-请选择</option>
+                                <option *ngFor="let item of baseDataSource.transitmodes" [ngValue]="item.TransitModeCode">{{item.TransitMode}}</option>
+                              </select>
+                              <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXutui">{{ applyData.invoice[saveToERPDatei].TransitMode }}</span>
+                            </div>
+                          </div>
+                          <div class="c-input-title" style="text-align: right; width: 10%;"><label>送货地址：</label></div>
+                          <div class="c-input-wrap c-select-wrap" style="width: 36%; margin-left: 2%;">
+                            <div class="m-select">
+                              <i class="iqon-xia" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui"></i>
+                              <select name="detailaddress" [(ngModel)]="applyData.invoice[saveToERPDatei].detailaddress" *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui">
+                                <option value="">-请选择</option>
+                                <option *ngFor="let item of temporaryAddressDataSource" [ngValue]="item.detailaddress">{{item.detailaddress}}</option>
+                              </select>
+                              <span *ngIf="!isAllowEdit || nodeID != 8 || saveToERPDate.hasSaveToERPXutui">{{ applyData.invoice[saveToERPDatei].detailaddress }}</span>
+                            </div>
+                          </div>
+                          <button *ngIf="isAllowEdit && nodeID == 8 && !saveToERPDate.hasSaveToERPXutui" class="m-btn-confirm" [disabled]="group.hasERP || !isAllowEdit" type="button" (click)="editTemporaryAddress(saveToERPDate.detailaddress)">编辑地址</button>
+                        </div>
+                      </div>
+                      <table class="m-info-table" style="width:100%;">
+                        <thead>
+                          <tr>
+                            <th class='m-text-center' style="width: 55px;">行项目号</th>
+                            <th class="m-text-center" style="width: 95px;">物料号</th>
+                            <th class="m-text-center" style="width: 305px;">物料描述</th>
+                            <th class="m-text-center" style="width: 60px;">数量</th>
+                            <th class="m-text-center" style="width: 60px;">工厂</th>
+                            <th class="m-text-center" style="width: 60px;">库存地</th>
+                            <th class="m-text-center" style="width: 110px;">批次</th>
+                            <th class="m-text-center" style="width: 86px;">销售总额</th>
+                            <th class="m-text-center" style="width: 86px;">返款金额</th>
+                            <th class="m-text-center" style="width: 40px; vertical-align: middle;" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)">
+                              <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="addLineForMaterialCodeType(groupi, saveToERPDatei)">+</a>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of group.material; index as i;">
+                            <td class='m-text-center'>{{ (i+1)*10 }}</td>
+                            <td class="m-text-center">
+                              <input *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                type="text" [name]="'materialcode' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.materialcode"
+                                #materialcode="ngModel" required [ngClass]="{'m-input-warn':materialcode.invalid}" (keyup)="getMaterialDesc(i, groupi, saveToERPDatei, item)">
+                              <span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ item.materialcode }}</span>
+                            </td>
+                            <td class="m-text-left">{{ item.description }}</td>
+                            <td class="m-text-center">
+                              <input *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                 type="text" [name]="'num' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.num" #num="ngModel" required
+                                 (blur)="checkReturnNum(saveToERPDatei, groupi, i)" pattern="^[0-9]\d*$" [ngClass]="{'m-input-warn':num.invalid}">
+                              <span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ item.num }}</span>
+                            </td>
+                            <td class="m-text-center">
+                              <input type="text" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                [name]="'factory' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.factory" required maxlength="4"
+                                #factory="ngModel" pattern="[0-9a-zA-Z]{4}" [ngClass]="{'m-input-warn':factory.invalid}">
+                              <span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ item.factory }}</span>
+                            </td>
+                            <td class="m-text-center">
+                              <input type="text" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                [name]="'storagelocation' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.storagelocation" maxlength="4">
+                              <span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ item.storagelocation }}</span>
+                            </td>
+                            <td class="m-text-center">
+                              <input type="text" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                [name]="'batchno' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.batchno" #batchno="ngModel" pattern="^[A-Za-z0-9]+$"
+                                [ngClass]="{'m-input-warn':batchno.invalid}">
+                              <span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ item.batchno }}</span>
+                            </td>
+                            <td class="m-text-left">
+                              <!--<input type="number" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                [name]="'money' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.money" #money="ngModel" required
+                                pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':money.invalid}" (blur)="caleInvoiceMoney(groupi,group.material,saveToERPDate.invoice.internalinvoiceno)">-->
+                              <!--<span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ myToFixed(item.originalmoney*item.returnnum) }}</span>-->
+                              <span>{{ myToFixed(item.originalmoney*item.returnnum) }}</span>
+                            </td>
+                            <td class="m-text-left">
+                              <!--<input type="number" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)"
+                                [name]="'backmoney' + (i+1)*10 + (groupi+1)" [(ngModel)]="item.backmoney" #backmoney="ngModel"
+                                required pattern="^[0-9]\d*$|^[0-9]\d*[.]{1}\d{1,2}$" [ngClass]="{'m-input-warn':backmoney.invalid}"
+                                (blur)="caleInvoiceMoney(groupi,group.material,saveToERPDate.invoice.internalinvoiceno)">-->
+                              <!--<span *ngIf="isApplyItcode || !isAllowEdit || nodeID==9 || (groupi ==0 && saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && saveToERPDate.hasSaveToERPXutui)">{{ myToFixed(item.originalbackmoney*item.returnnum) }}</span>-->
+                              <span>{{ myToFixed(item.originalbackmoney*item.returnnum) }}</span>
+                            </td>
+                            <td class="m-text-center" style="vertical-align: middle;" *ngIf="((groupi ==0 && !saveToERPDate.hasSaveToERPXuchu) || (groupi > 0 && !saveToERPDate.hasSaveToERPXutui)) && (nodeID==8 && isAllowEdit)">
+                              <a class="m-text-center addApp-reduce m-enmc-handStyle" (click)="delLineForMaterialCodeType(saveToERPDatei, groupi, i)">-</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="red-apply-footer" *ngIf="nodeID==8 && isAllowEdit">
+                      <button class="m-btn-confirm" [ngClass]="{'m-btn-disable':saveToERPDate.hasSaveToERPXuchu}" name="saveerpxuchu" [disabled]="saveToERPDate.hasSaveToERPXuchu"
+                        (click)="saveToERP(saveToERPDate,saveToERPDatei, '-1')">负向订单-写入ERP</button>
+                      <button *ngIf="saveToERPDate.materialSubType == 3 || materialType == 2" class="m-btn-confirm" [ngClass]="{'m-btn-disable':saveToERPDate.hasSaveToERPXutui}" name="saveerpxutui" [disabled]="saveToERPDate.hasSaveToERPXutui"
+                        (click)="saveToERP(saveToERPDate,saveToERPDatei, '1')">正向订单-写入ERP</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <ul>
+              <li class="c-check-info"><label>检验项目:</label><span>{{ applyData.apply.checkbill }}</span></li>
+              <li class="c-check-info"><label>外包装检查:</label><span>{{ applyData.apply.outerpackagecheck }}</span></li>
+              <li class="c-check-info"><label>机器外观检查:</label><span>{{ applyData.apply.appearancecheck }}</span></li>
+              <li class="c-check-info"><label>电性能检查:</label><span>{{ applyData.apply.electroniccheck }}</span></li>
+              <li class="c-check-info"><label>附件检查:</label><span>{{ applyData.apply.attachmentcheck }}</span></li>
+              <li class="c-check-info"><label>质检结论:</label><span>{{ applyData.apply.checkconlusion }}</span></li>
+              <li class="c-check-info"><label>备注:</label><span>{{ applyData.apply.checkremark }}</span></li>
+            </ul>
+          </div>
+        </div>
+        <!--事业部质检、一级、二级nodeID=3、nodeID=4、nodeID=5-->
+        <div class="red-apply-content" *ngIf="!isApplyItcode && (nodeID==3 || nodeID==4 || nodeID==5 || nodeID==6)">
+          <div class="apply-content-title">
+            <h5>冲退明细</h5>
+          </div>
+          <div class="apply-content-main">
+            <div class="material-detail-tab">
+              <div class="material-detail-tabtitle">
+                <ul class="clearfix">
+                  <li *ngFor="let item of materialList; index as i;" [ngClass]="{'active':item?.active}" (click)="clickTab(i)">{{ item?.internalinvoiceno }}</li>
+                </ul>
+              </div>
+              <div class="material-detail-tabcontent">
+
+                <div *ngFor="let tabitem of materialList; index as tabitemi;">
+                  <!--退货类型-->
+                  <div *ngIf="materialType === 1 && tabitem.active">
+                    <table class="m-info-table">
+                      <thead>
+                        <tr>
+                          <th class='m-text-center' style="width: 70px; vertical-align: middle;">行项目号</th>
+                          <th class="m-text-center" style="width: 80px;">物料号</th>
+                          <th class="m-text-center" style="width: 215px;">物料描述</th>
+                          <th class="m-text-center" style="width: 70px;">数量</th>
+                          <th class="m-text-center" style="width: 75px;">退货数量</th>
+                          <th class="m-text-center" style="width: 80px;">工厂</th>
+                          <th class="m-text-center" style="width: 80px;">库存地</th>
+                          <th class="m-text-center" style="width: 90px;">退入库存地</th>
+                          <th class="m-text-center" style="width: 80px;">批次</th>
+                          <th class="m-text-center" style="width: 80px;">销售额</th>
+                          <th class="m-text-center" style="width: 80px;">返款金额</th>
+                          <th class="m-text-center" style="width: 80px;">交货单号</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="tabitem.tableList == 0">
+                          <td colspan="12" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                        </tr>
+                        <tr *ngFor="let item of tabitem.tableList; index as i;">
+                          <td class='m-text-center'>{{ item.projcode }}</td>
+                          <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                          <td class="m-text-left">{{ item.originaldescription }}</td>
+                          <td class="m-text-center">{{ item.num }}</td>
+                          <td class="m-text-center">{{ item.returnnum }}</td>
+                          <td class="m-text-center">{{ item.factory }}</td>
+                          <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                          <td class="m-text-center">{{ item.returnstoragelocation }}</td>
+                          <td class="m-text-center">{{ item.originalbatchno }}</td>
+                          <td class="m-text-center">{{ item.originalmoney }}</td>
+                          <td class="m-text-center">{{ item.originalbackmoney }}</td>
+                          <td class="m-text-center">{{ item.deliveryno }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!--换货类型-->
+                  <div *ngIf="(materialType === 2 || materialType === 4) && tabitem.active">
+                    <div class="material-tabletitle-info clearfix">
+                      <div class="c-input-title"><label>运输方式：</label></div>
+                      <div class="c-input-wrap c-select-wrap" style="width: 35%;"> {{ applyData.invoice[tabitemi].TransitMode }}</div>
+                      <div class="c-input-title"><label>送货地址：</label></div>
+                      <div class="c-input-wrap c-select-wrap" style="width: 35%;"> {{ applyData.invoice[tabitemi].detailaddress }}</div>
+                    </div>
+                  </div>
+                  <table *ngIf="materialType === 2 || materialType === 4 && tabitem.active" class="m-info-table">
+                    <thead>
+                      <tr>
+                        <th class='m-text-center' style="width: 60px; vertical-align: middle;">行项目号</th>
+                        <th class="m-text-center" style="width: 80px;">物料号</th>
+                        <th class="m-text-center">物料描述</th>
+                        <th class="m-text-center" style="width: 65px;">数量</th>
+                        <th class="m-text-center" style="width: 50px;">工厂</th>
+                        <th class="m-text-center" style="width: 55px;">库存地</th>
+                        <th class="m-text-center" style="width: 90px;">退入库存地</th>
+                        <th class="m-text-center" style="width: 105px;">要求发货库存地</th>
+                        <th class="m-text-center" style="width: 90px;">批次</th>
+                        <th class="m-text-center" style="width: 110px;">要求发货批次</th>
+                        <th class="m-text-center" style="width: 55px;">销售额</th>
+                        <th class="m-text-center" style="width: 70px;">返款金额</th>
+                        <th class="m-text-center" style="width: 70px;">交货单号</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="tabitem.tableList == 0">
+                        <td colspan="12" style="text-align: left;padding-left: 10px!important;">无记录</td>
+                      </tr>
+                      <tr *ngFor="let item of tabitem.tableList; index as i;">
+                        <td class='m-text-center'>{{ item.projcode }}</td>
+                        <td class="m-text-center">{{ item.originalmaterialcode }}</td>
+                        <td class="m-text-left">{{ item.originaldescription }}</td>
+                        <td class="m-text-center">{{ item.num }}</td>
+                        <td class="m-text-center">{{ item.factory }}</td>
+                        <td class="m-text-center">{{ item.originalstoragelocation }}</td>
+                        <td class="m-text-center">{{ item.returnstoragelocation }}</td>
+                        <td class="m-text-center">{{ item.specifystoragelocation }}</td>
+                        <td class="m-text-center">{{ item.originalbatchno }}</td>
+                        <td class="m-text-center">{{ item.batchno }}</td>
+                        <td class="m-text-center">{{ item.money }}</td>
+                        <td class="m-text-center">{{ item.backmoney }}</td>
+                        <td class="m-text-center">{{ item.deliveryno }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <ul>
+              <li class="c-check-info"><label>检验项目:</label><span>{{ applyData.apply.checkbill }}</span></li>
+              <li class="c-check-info"><label>外包装检查:</label><span>{{ applyData.apply.outerpackagecheck }}</span></li>
+              <li class="c-check-info"><label>机器外观检查:</label><span>{{ applyData.apply.appearancecheck }}</span></li>
+              <li class="c-check-info"><label>电性能检查:</label><span>{{ applyData.apply.electroniccheck }}</span></li>
+              <li class="c-check-info"><label>附件检查:</label><span>{{ applyData.apply.attachmentcheck }}</span></li>
+              <li class="c-check-info"><label>质检结论:</label><span>{{ applyData.apply.checkconlusion }}</span></li>
+              <li class="c-check-info"><label>备注:</label><span>{{ applyData.apply.checkremark }}</span></li>
+            </ul>
+          </div>
+        </div>
+        <!--附件信息-->
+        <div class="red-apply-content">
+          <div class="apply-content-title">
+            <h5>附件信息</h5>
+          </div>
+          <div class="apply-content-main" *ngIf="isApplyItcode && invoiceHasApprove">
+            <div class="apply-content-title-message">我承诺上传的附件与原件一致，并将原件提交给财务留存</div>
+            <iq-file-upload upType="1" [url]="uploadAccesslUrl" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedFiles"
+              text="附件上传" (onSuccess)="fileUploadSuccess($event)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+          </div>
+          <div class="apply-content-main" *ngIf="!isApplyItcode || !invoiceHasApprove">
+            <ul>
+              <li class="apply-content-main-accessory" *ngFor="let item of applyData.accessory"><a (click)="downLoadFile(item.AccessoryURL)">{{ item.AccessoryName }}</a></li>
+            </ul>
+          </div>
+          <div class="apply-content-main" *ngIf="nodeID && nodeID!=3 && nodeID!=4 && nodeID!=5 && nodeID!=6 && nodeID!=7">
+            <table class="m-info-table" style="width:35%; text-align:center;">
+              <tr>
+                <td style="width:40%;">外部发票号</td>
+                <td style="width:60%;"><span class="material-col-need" *ngIf="nodeID==12 && isAllowEdit">*</span>红字通知单号</td>
+              </tr>
+              <tr *ngFor="let item of applyData.invoice; index as i;">
+                <td>{{ item.externalinvoiceno }}</td>
+                <td>
+                  <input type="text" *ngIf="nodeID==12 && isAllowEdit" [name]="'rednoticeno' + i" [(ngModel)]="item.AccountantRedNoticeNo"
+                    required #rednoticeno="ngModel" [ngClass]="{'m-input-warn':rednoticeno.invalid}">
+                  <span *ngIf="nodeID!=12 || (nodeID==12 && !isAllowEdit)">{{item.AccountantRedNoticeNo}}</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!--审批历史记录-->
+        <div class="red-app-history">
+          <db-wfhistory [wfHistoryData]="wfHistory" *ngIf="wfHistory"></db-wfhistory>
+        </div>
+        <!--审批组件-->
+        <div class="contract-approval" *ngIf="!applyID && isAllowEdit">
+          <!-- 通用审批组件 -->
+          <db-wfapproval *ngIf="!isADP" [hasSaved]="hasSaved" [appParms]="appParms" [isRed]="nodeID == 7 && isRed && subrevisetype[0]?.subtypecode != '801'" (onSave)="onApprove($event)"></db-wfapproval>
+          <!-- 加签审批组件 -->
+          <db-wfadp *ngIf="isADP" [adpAppParms]="appParms"></db-wfadp>
+        </div>
+        <!--查看页面按钮组-->
+        <div class="red-apply-footer" *ngIf="applyID || !isAllowEdit">
+          <button class="m-btn-assist-1" type="button" (click)="cancle()">返回</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--流程全景图-->
+  <div class="ri-red-approve-right">
+    <db-wfview #wfview></db-wfview>
+  </div>
+</div>

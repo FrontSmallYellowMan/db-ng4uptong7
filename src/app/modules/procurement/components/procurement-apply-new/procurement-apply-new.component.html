@@ -1,0 +1,280 @@
+<div class="m-boardtop clearfix">
+  <button type="button" class="m-btn-success g-fr" style="margin-top: 7px;" (click)="addStockApply()">
+    <i class="iqon-add"></i>新建备货采购申请</button>
+</div>
+<div class="m-overclass">
+  <div class="addApply-container">
+    <!--1、缺省页开始-->
+    <div class="m-apply" [ngClass]="{'hide': isSearch || (contractList && contractList.length > 0)}">
+      <loading [show]="loading"></loading>
+      <div class="m-apply-circle" style="width:350px">
+        <i class="iqon-plus-circle"></i>
+        <span>暂无合同</span>
+        <div class="m-create-button" (click)="newApply()">点击创建”预下单采购申请“</div>
+      </div>
+    </div>
+    <!--缺省页结束-->
+    <!--2、搜索信息-->
+    <div class="addApply-base" [ngClass]="{'hide': !isSearch && !(contractList && contractList.length > 0)}">
+      <div class="m-dialog-head">
+        <span class="m-dialog-head-change progress-txt">请搜索销售合同信息</span>
+        <i class="iqon-fold" (click)="searchBoxShow=!searchBoxShow"></i>
+      </div>
+      <div class="addApp-base-infor" *ngIf="searchBoxShow">
+        <ul class="addApp-base-list">
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">销售员</label>
+              <iq-person-select name="person" #person="ngModel" [(ngModel)]="sale.person" [max]="1" style="margin-left:10px;display:inline-block;"
+                ngDefaultControl (ngModelChange)="selectedPerson($event)"></iq-person-select>
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">客户名称</label>
+              <input class="addApp-form-input" type="text" [(ngModel)]="query.BuyerName" (keyup.enter)="search()">
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">合同金额</label>
+              <div class="relation-box" style="margin-left:10px;">
+                <div class="relation-item">
+                  <input type="text" [(ngModel)]="query.StartContractMoney" (keyup.enter)="search()" (blur)="testMoney('start')">
+                </div>
+                <div class="relation-line">~</div>
+                <div class="relation-item">
+                  <input type="text" [(ngModel)]="query.EndContractMoney" (keyup.enter)="search()" (blur)="testMoney('end')">
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">项目名称</label>
+              <input class="addApp-form-input" type="text" [(ngModel)]="query.ProjectName" (keyup.enter)="search()">
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">申请日期</label>
+              <div class="relation-box" style="margin-left:10px;">
+                <div class="relation-item">
+                  <my-datepicker [(ngModel)]="query.StartAddTime" format="YYYY-MM-DD" [EndDate]="query.EndAddTime" PlaceHolder="-请选择日期" name="mDateStart"></my-datepicker>
+                </div>
+                <div class="relation-line">~</div>
+                <div class="relation-item">
+                  <my-datepicker [(ngModel)]="query.EndAddTime" format="YYYY-MM-DD" [StartDate]="query.StartAddTime" PlaceHolder="-请选择日期" name="mDateEnd"></my-datepicker>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="addApp-form-item">
+              <label class="addApp-form-label">厂商PO号</label>
+              <input class="addApp-form-input" type="text" [(ngModel)]="query.PO" (keyup.enter)="search()">
+            </div>
+          </li>
+        </ul>
+        <div class="addApp-sub-btns btns" style="padding-bottom:15px">
+          <button class="m-btn-confirm" type="button" (click)="search()">查询</button>
+          <button class="m-btn-sketch" type="button" (click)="clearSearch()">重置</button>
+        </div>
+      </div>
+    </div>
+
+    <!--3、选择列表-->
+    <div class="addApply-base money" [ngClass]="{'hide': !isSearch && !(contractList && contractList.length > 0)}">
+      <!-- 内容页开始 -->
+      <div [ngClass]="{'hide': !contractList || contractList.length == 0}">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">请选择销售合同</span>
+        </div>
+        <div class="addApp-base-infor" style="overflow-x:auto">
+          <loading [show]="loading"></loading>
+          <table class="table table-hover table-list" style="table-layout:auto">
+            <thead>
+              <tr>
+                <th style="text-align:center">
+                  <input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event"
+                    (onIndeterminate)="CheckIndeterminate($event)" (onClick)="parentClick($event)">
+                </th>
+                <th (click)="rankSet('ProjectName')">
+                  项目名称
+                  <i class="iqon-order" *ngIf="this.rank.ProjectName=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.ProjectName=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.ProjectName=='desc'"></i>
+                </th>
+                <th (click)="rankSet('MainContractCode')">
+                  合同号
+                  <i class="iqon-order" *ngIf="this.rank.MainContractCode=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.MainContractCode=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.MainContractCode=='desc'"></i>
+                </th>
+                <th (click)="rankSet('BuyerName')">
+                  客户名称
+                  <i class="iqon-order" *ngIf="this.rank.BuyerName=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.BuyerName=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.BuyerName=='desc'"></i>
+                </th>
+                <th (click)="rankSet('SalesName')">
+                  销售员
+                  <i class="iqon-order" *ngIf="this.rank.SalesName=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.SalesName=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.SalesName=='desc'"></i>
+                </th>
+                <th (click)="rankSet('ContractMoney')">
+                  销售合同金额
+                  <i class="iqon-order" *ngIf="this.rank.ContractMoney=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.ContractMoney=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.ContractMoney=='desc'"></i>
+                </th>
+                <th (click)="rankSet('SC_Status')">
+                  销售合同状态
+                  <i class="iqon-order" *ngIf="this.rank.SC_Status=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.SC_Status=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.SC_Status=='desc'"></i>
+                </th>
+                <th (click)="rankSet('PurchaseTaxMoney')">
+                  累计采购金额
+                  <i class="iqon-order" *ngIf="this.rank.PurchaseTaxMoney=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.PurchaseTaxMoney=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.PurchaseTaxMoney=='desc'"></i>
+                </th>
+                <th (click)="rankSet('remnantmoney')">
+                  厂商PO号
+                </th>
+                <!-- <th style="width:10%" (click)="rankSet('remnantmoney')">
+                  剩余采购金额
+                  <i class="iqon-order" *ngIf="this.rank.remnantmoney=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.remnantmoney=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.remnantmoney=='desc'"></i>
+                </th> -->
+                <th (click)="rankSet('SubmitTime')">
+                  申请日期
+                  <i class="iqon-order" *ngIf="this.rank.SubmitTime=='none'"></i>
+                  <i class="iqon-orderup" *ngIf="this.rank.SubmitTime=='asc'"></i>
+                  <i class="iqon-orderdown" *ngIf="this.rank.SubmitTime=='desc'"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of contractList;index as i">
+                <td style="text-align:center">
+                  <input type="checkbox" allcheckChild="demoall" icheck [disabled]="item.disabled" [(ngModel)]="item.checked" (onClick)="childClick($event,i)">
+                </td>
+                <td title={{item.ProjectName}}>
+                  {{ item.ProjectName }}
+                </td>
+                <td title={{item.MainContractCode}}>
+                  {{ item.MainContractCode }}
+                </td>
+                <td title={{item.BuyerName}}>
+                  {{ item.BuyerName }}
+                </td>
+                <td>
+                  {{ item.SalesName }}
+                </td>
+                <td>
+                  {{ item.ContractMoney }}
+                </td>
+                <td>
+                  {{ item.SC_Status==1?"审批中":"已完成" }}
+                </td>
+                <td>
+                  {{ item.PurchaseTaxMoney }}
+                </td>
+                <td>
+                  {{item.PO}}
+                </td>
+                <!-- <td style="width:10%">
+                  {{ item.remnantmoney }}
+                </td> -->
+                <td>
+                  {{ item.SubmitTime | iqDate:'YYYY-MM-DD'}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+        </div>
+      </div>
+      <!-- 内容页结束 -->
+      <!--搜索结果缺省页开始-->
+      <div class="m-noresult" [ngClass]="{'hide': !isSearch || (contractList && contractList.length > 0)}">
+        <loading [show]="loading"></loading>
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">
+            很抱歉，没有找到相关的信息
+          </p>
+          <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+        </div>
+      </div>
+      <!--搜索结果缺省页结束-->
+    </div>
+    <!--4、已选择列表-->
+    <div class="addApply-base money" [ngClass]="{'hide': !contractList || contractList.length == 0}" style="overflow-x:auto">
+      <div class="m-dialog-head">
+        <span class="m-dialog-head-change progress-txt">已选销售合同</span>
+      </div>
+      <table class="table table-hover table-list" style="table-layout:auto">
+        <thead>
+          <tr>
+            <th></th>
+            <th>
+              项目名称
+            </th>
+            <th>
+              合同号
+            </th>
+            <th>客户名称</th>
+            <th>销售员</th>
+            <th>销售合同金额</th>
+            <th>销售合同状态</th>
+            <th>累计采购金额</th>
+            <th>厂商PO号</th>
+            <th>申请日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of selectedList;index as i">
+            <td></td>
+            <td title={{item.ProjectName}}>
+              {{ item.ProjectName }}
+            </td>
+            <td title={{item.MainContractCode}}>
+              {{ item.MainContractCode }}
+            </td>
+            <td title={{item.BuyerName}}>
+              {{ item.BuyerName }}
+            </td>
+            <td>
+              {{ item.SalesName }}
+            </td>
+            <td>
+              {{ item.ContractMoney }}
+            </td>
+            <td>
+              {{ item.SC_Status==1?"审批中":"已完成" }}
+            </td>
+            <td>
+              {{ item.PurchaseTaxMoney }}
+            </td>
+            <td>
+              {{ item.PO }}
+            </td>
+            <td>
+              {{ item.SubmitTime | iqDate:'YYYY-MM-DD' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="addApp-submit-btn" [ngClass]="{'hide': !contractList || contractList.length == 0}">
+    <div class="addApp-sub-btns btns1">
+      <button class="m-btn-confirm" type="button" (click)="newApply()">提交采购申请</button>
+    </div>
+  </div>
+</div>

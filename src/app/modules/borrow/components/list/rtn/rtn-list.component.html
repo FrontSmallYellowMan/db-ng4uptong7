@@ -1,0 +1,104 @@
+<div class="m-home-pageR clearfix">
+  <div class="m-boardtop clearfix">
+    <div class="m-boardmenu">
+      <a href="javascript:;" [ngClass]="{'active':applyFlag==='1'}" (click)="applyOrApprove('1')">我的申请</a>
+      <a href="javascript:;" [ngClass]="{'active':applyFlag==='2'}" (click)="applyOrApprove('2')">我的审批<span class="m-num">{{waitForApprovalNum}}</span></a>
+
+
+    </div>
+
+    <button class="m-btn-main-2 g-fr" style="margin-top: 7px;"  (click)="createBorrowRtnPage()" >+新建申请</button>
+
+  </div>
+
+
+
+
+  <div class="m-list-menu" *ngIf="applyFlag==='1'">
+    <ul class="m-state">
+
+      <li [ngClass]="{'active':applyPage==='apply1'}" id="defaultlist1" (click)="changeapplytype('apply1')">审批中</li>
+      <li [ngClass]="{'active':applyPage==='apply3'}" (click)="changeapplytype('apply3')">已完成</li>
+      <li [ngClass]="{'active':applyPage==='apply'}" (click)="changeapplytype('apply')">全部</li>
+      <li [ngClass]="{'active':applyPage==='apply0'}" (click)="changeapplytype('apply0')">草稿</li>
+    </ul>
+  </div>
+  <div class="m-list-menu" *ngIf="applyFlag==='2'">
+    <ul class="m-state">
+      <li [ngClass]="{'active':applyPage==='approval0'}" (click)="changeapplytype('approval0')">待我审批</li>
+      <li [ngClass]="{'active':applyPage==='approval1'}" (click)="changeapplytype('approval1')">我已审批</li>
+      <li [ngClass]="{'active':applyPage==='approval'}" (click)="changeapplytype('approval')">全部</li>
+    </ul>
+  </div>
+
+ <div [ngClass]="{'hide':true}">
+     <button type="button"  id="searchBtn" (click)="search()"></button>
+   </div>
+
+
+  <div class="m-table-right" *ngIf="!isShowMes">
+    <!--搜索条件-->
+
+    <table class="table table-hover table-list" style="table-layout: fixed;">
+      <thead>
+        <tr>
+          <th>申请单号<i class="iqon-orderdown" [class.iqon-orderdown-up]='idSort' (click)='approvalSort()'></i> </th>
+          <th>业务范围编码</th>
+          <th>预留号</th>
+          <th>取货方式</th>
+          <th>本部</th>
+          <th>事业部</th>
+          <th>平台</th>
+          <th *ngIf="applyFlag==='2'">申请人</th>
+          <th *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval0'">当前环节</th>
+          <th *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval0'">当前处理人</th>
+          <th>申请日期<i class="iqon-order" (click)='approvalSort()'></i></th>
+          <th *ngIf="applyPage==='apply0'">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of borrowReturnApplyList;index as i">
+          <td><span (click)="goDetail(item.applyId)"  title="{{item.applyNo}}">{{item.applyNo}}</span></td>
+          <td><span (click)="goDetail(item.applyId)">{{item.businessScopeCode}}</span>
+
+          </td>
+          <td><span (click)="goDetail(item.applyId)" title="{{item.reservationNo}}" >{{item.reservationNo}}</span>
+
+            <td><span (click)="goDetail(item.applyId)">{{item.pickupType>0?"物流取货":"销售员自送"}}</span>
+
+            </td>
+            <td><span (click)="goDetail(item.applyId)">{{item.baseDeptName}}</span></td>
+            <td><span (click)="goDetail(item.applyId)">{{item.subDeptName}}</span></td>
+            <td><span (click)="goDetail(item.applyId)">{{item.platformName}}</span></td>
+            <td *ngIf="applyFlag==='2'"><span (click)="goDetail(item.applyId)">{{item.applyUserName}}/{{item.applyItCode}}</span></td>
+
+            <td *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval0'"><span (click)="goDetail(item.applyId)">{{item.flowCurrNodeName}}</span></td>
+            <td *ngIf="applyPage!=='apply0' && applyPage!=='apply3' && applyPage!=='approval0'"><span (click)="goDetail(item.applyId)" title="{{item.currApprAuthors}}">{{item.currApprAuthors}}</span></td>
+            <td><span (click)="goDetail(item.applyId)">{{item.applyDate|iqDate:'YYYY-MM-DD'}}</span></td>
+            <td *ngIf="applyPage==='apply0'"><span   (click)="editForm(item.applyId)">编辑</span>
+              <span (click)="deleteApply(item.applyId)">删除</span>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page">
+      <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+    </div>
+  </div>
+
+
+  <div class="m-home-default" *ngIf="isShowMes">
+    <div class="m-scan">
+      <div class="m-scan-body">
+        <div class="m-scan-default">
+          <div class="m-scan-logo">
+            <i class="iqon-apply"></i>
+          </div>
+          <h3>{{tipMessage}}</h3>
+          <h4>{{detailMessage}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

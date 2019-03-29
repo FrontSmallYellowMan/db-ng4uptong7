@@ -1,0 +1,192 @@
+<div style="padding-top: 62px;">
+    <div class="apply-progress">
+        <div class="apply-p-left">
+            <h1 class="apply-tit-h1">支票交存明细</h1>
+            <!--基本信息-->
+            <div class="apply-p-base">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change">基础信息</span>
+                </div>
+                <!--选择类型基础信息 -->
+                <div class="apply-p-infor m-clearfix">
+                    <div class="m-exm-item" style="float: none">
+                        <ul>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请人</div>
+                                <div class="m-exm-cont">
+                                    <div class="m-user-info-small">
+                                        <div
+                                            class="m-user-info"
+                                            [user]="dataPerson"
+                                            user-image
+                                            [hasClose]="false"
+                                        ></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">联系电话</div>
+                                <div class="m-exm-cont">
+                                    {{ invoiceInfo.applyPhone }}
+                                </div>
+                            </li>
+
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">接收平台</div>
+                                <div class="m-exm-cont">
+                                    {{ invoiceInfo.platformName }}
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">是否押票：</div>
+                                <div class="m-exm-cont">
+                                    {{
+                                        invoiceInfo.isPawnTicket == "0"
+                                            ? "否"
+                                            : "是"
+                                    }}
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">申请日期</div>
+                                <div class="m-exm-cont">
+                                    {{
+                                        invoiceInfo.createDate
+                                            | iqDate: "YYYY-MM-DD"
+                                    }}
+                                </div>
+                            </li>
+                            <li class="m-exm-half">
+                                <div class="m-exm-label">支票状态</div>
+                                <div class="m-exm-cont">
+                                    {{ invoiceInfo.statusName }}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >支票信息</span
+                    >
+                </div>
+                <div class="apply-finance-l">
+                    <table class="m-info-table" style="TABLE-LAYOUT: fixed">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">序列号</th>
+                                <th style="text-align:center">支票号</th>
+                                <th style="text-align:center">出票日期</th>
+                                <th style="text-align:center">支票金额</th>
+                                <th style="text-align:center">出票人账号</th>
+                                <th style="text-align:center">出票人银行</th>
+                                <th style="text-align:center">收款人</th>
+                                <th style="text-align:center">客户代码</th>
+                                <th style="text-align:center">客户名称</th>
+                                <th style="text-align:center">合同编号</th>
+                                <th style="text-align:center">欠款金额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>{{ invoiceInfo.ticketNum }}</td>
+                                <td>
+                                    {{
+                                        invoiceInfo.checkoutDate
+                                            | iqDate: "YYYY-MM-DD"
+                                    }}
+                                </td>
+                                <td style="word-WRAP: break-word">
+                                    {{
+                                        invoiceInfo.ticketAmount == null
+                                            ? 0
+                                            : invoiceInfo.ticketAmount.toFixed(
+                                                  2
+                                              )
+                                    }}
+                                </td>
+                                <td style="word-WRAP: break-word">
+                                    {{ invoiceInfo.checkoutAccount }}
+                                </td>
+                                <td style="word-WRAP: break-word">
+                                    {{ invoiceInfo.checkoutBank }}
+                                </td>
+                                <td>{{ invoiceInfo.payeeName }}</td>
+                                <td style="word-WRAP: break-word">
+                                    {{ invoiceInfo.customCode }}
+                                </td>
+                                <td>{{ invoiceInfo.customName }}</td>
+                                <td style="word-WRAP: break-word">
+                                    {{ invoiceInfo.contractNum }}
+                                </td>
+                                <td>
+                                    {{
+                                        invoiceInfo.debtAmount == null
+                                            ? 0
+                                            : invoiceInfo.debtAmount.toFixed(2)
+                                    }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="apply-finance-infor">
+                <div class="m-dialog-head">
+                    <span class="m-dialog-head-change progress-txt"
+                        >操作记录</span
+                    >
+                </div>
+                <div class="apply-finance-l">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">操作步骤</th>
+                                <th style="text-align:center">操作人</th>
+                                <th style="text-align:center">操作时间</th>
+                                <th style="text-align:center">备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of approveList">
+                                <td>{{ item.operateNode }}</td>
+                                <td>
+                                    <div class="m-user-info-small">
+                                        <div
+                                            class="m-user-info"
+                                            [user]="item.user"
+                                            user-image
+                                            [hasClose]="false"
+                                        ></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{
+                                        item.createDate
+                                            | iqDate: "YYYY-MM-DD HH:mm:ss"
+                                    }}
+                                </td>
+                                <td>{{ item.remark }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="addApp-submit-btn" style="text-align:center">
+                <div class="addApp-sub-btns">
+                    <button class="m-btn-confirm" (click)="goback()">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--审批图-->
+        <div class="apply-p-right" style="overflow:hidden">
+            <db-wfview #wfview></db-wfview>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+* {
+　　box-sizing: content-box;
+　　-moz-box-sizing: inherit;
+　　-webkit-box-sizing: inherit;
+}
+.m-overclass{
+  padding: 10px 20px;
+
+  .m-list-menu{
+    /*margin:15px 0;*/
+
+    .m-search-open{
+      position: relative;
+      float: right;
+      padding: 18px 25px;
+      background-color: $def-color3;
+      color: $def-main-color;
+      box-shadow: 0 -2px 3px rgba( 0, 0, 0, .15);
+      cursor: pointer;
+    }
+    .m-search-more{
+      float: left;
+      width: 100%;
+      background-color: $def-color3;
+      box-shadow: 0 0 5px rgba( 0, 0, 0, .15);
+
+      form{
+        padding: 15px 25px;
+        @extend %box-flex;
+      }
+
+      .m-search-item{
+        margin-bottom: 10px;
+        width: 30%;
+        margin-left: -15px;
+        >label{
+          display: inline-block;
+          margin-right: 4px;
+          text-align: right;
+          width: 19%;
+        }
+        >input[type=text],.m-select-search{
+          display: inline-block;
+          width: 76%;
+        }
+      }
+
+      .m-search-flex{
+        display: flex;
+        line-height: 35px;
+        width: 32% !important;
+        margin-left: -25px !important;
+      }
+
+      .m-search-btn{
+        float: right;
+        .research{
+          width: 78px;
+        }
+        .resets{
+            width: 78px;
+            margin-left: 15px;
+        }
+      }
+    }
+    .m-search-high{
+      text-align: center;
+    }
+  }
+  
+}
+
+.m-search-form{
+  @extend %clearfix;
+  padding: 15px 15px 20px;
+
+  .m-search-input{
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    >input[type=text]{
+      width: 300px;
+    }
+    .em-flex{
+      display: flex;
+      width: 29%;
+      white-space: nowrap;
+      label{
+        width:20%;
+        text-align: right;
+        line-height: 35px;
+        padding-right: 10px;
+      }
+      .m-select,input{
+        width: 80%;
+        border-radius: 5%;
+      }
+    }
+    .em-flex-down{
+      width: 360px;
+      margin-top: 10px;
+      .m-datepicker-comb{
+        display: flex;
+        line-height: 35px;
+      }
+      label{
+        line-height: 35px;
+      }
+    }
+  }
+  .m-search-btn{
+    float: right;
+    padding-top: 10px;
+    margin: 0 9px 0 0;
+    .m-btn-confirm{
+      width: 78px;
+    }
+    .m-btn-default{
+      width: 78px;
+      margin-left: 15px;
+    }
+  }
+}
+
+.m-noresult{
+  margin-top: 10px;
+  min-height: 75vh;
+}
+
+.m-materiel-cont{
+  background: #fff;
+}
+
+
+.m-datepicker-comb{
+  display: inline-block;
+  width: 300px;
+
+  .m-datepicker-start,.m-datepicker-end{
+    display: inline-block;
+    width: 140px;
+    padding: 0 4px 0 4px;
+  }
+}
+
+.table{
+  table-layout: auto;
+  font-size:12px;
+  >thead>tr>th{
+    border:none;
+  }
+
+}
+
+.m-apply{
+  margin-top: 15px;
+  min-height: 75vh!important;
+}
+
+:host/deep/.page{
+  margin-top: 20px;
+}
+
+
+    

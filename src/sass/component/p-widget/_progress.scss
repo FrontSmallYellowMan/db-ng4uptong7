@@ -1,0 +1,28 @@
+//进度条
+.m-progress-all{
+  position: relative;
+  width: 250px;
+  height: 10px;
+  background-color: $def-color3;
+  span{
+    display: inline-block;
+    width: 188px;
+    height: 10px;
+    background-color: $def-main-color;
+    position: absolute;
+  }
+}
+.m-alert-progress{
+  position: relative;
+  width: 330px;
+  height: 80px;
+  border-radius: 3px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+
+  .m-progress-all{
+    position: absolute;
+    top: 35px;
+    left: 40px;
+  }
+}

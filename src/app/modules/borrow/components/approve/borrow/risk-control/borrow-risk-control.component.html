@@ -1,0 +1,434 @@
+<div class="apply-progress" style="padding-top: 62px;">
+    <div class="apply-p-left">
+        <nav>{{name}}</nav>
+        <div class="m-title" *ngIf="(borrowApplyFormData.borrowApply.flowCurrNodeName=='风控审批')&&(exceedType>0)">
+            <div class="m-title-limit{{exceedType==1?'':'1'}}">此单超出{{exceedType==1? 1: 1.2}}倍豁免（借用额度：{{myCurrentAmount}}）</div>
+        </div>
+        <!--基本信息-->
+        <div class="m-basic-info">
+            <h2>基本信息 <i class="iqon-fold"></i></h2>
+            <div class="m-table m-table1">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <th width="8%">申请人</th>
+                        <td width="42%">
+                            <!--span class="m-user-mark">{{borrowApplyFormData.borrowApply.applyItCode}}</span-->
+                            <span>{{borrowApplyFormData.borrowApply.applyUserName}}</span>
+                            <span class="m-ft-col">{{borrowApplyFormData.borrowApply.applyItCode}}</span>
+                        </td>
+                        <th width="8%">代办人</th>
+                        <td width="42%">
+                            <span>{{createUserInfo.userCN}}</span>
+                            <span class="m-ft-col">{{createUserInfo.userEN}}</span>
+                            <!--div class="m-user-info-small">
+                            <div class="m-user-members" style="float: left;">
+                                            <div user-image [hasClose]="false" [user]="createUserInfo" ></div>
+                                        </div>
+                               </div-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>申请时间</th>
+                        <td>{{borrowApplyFormData.borrowApply.applyDate}}</td>
+                        <th>联系方式</th>
+                        <td>{{borrowApplyFormData.borrowApply.applyUserTel}}</td>
+                    </tr>
+                    <tr>
+                        <th>员工编号</th>
+                        <td>{{borrowApplyFormData.borrowApply.applyUserNo}}</td>
+                        <th>成本中心编号</th>
+                        <td>{{borrowApplyFormData.borrowApply.costcenterCode}}</td>
+                    </tr>
+                    <tr>
+                        <th>本部</th>
+                        <td>{{borrowApplyFormData.borrowApply.baseDeptName}}</td>
+                        <th>平台</th>
+                        <td>{{borrowApplyFormData.borrowApply.platformName}}</td>
+                    </tr>
+                    <tr>
+                        <th>事业部</th>
+                        <td>{{borrowApplyFormData.borrowApply.subDeptName}}</td>
+                        <th>业务范围编号</th>
+                        <td>{{borrowApplyFormData.borrowApply.businessScope}}</td>
+                    </tr>
+                    <tr>
+                        <th>工厂</th>
+                        <td>{{borrowApplyFormData.borrowApply.factory}}</td>
+                        <th>借用属性</th>
+                        <td>{{borrowApplyFormData.borrowApply.borrowAttributeName}}</td>
+                    </tr>
+                    <tr>
+                        <th>借用类型</th>
+                        <td>{{borrowApplyFormData.borrowApply.borrowTypeName}}</td>
+                        <th>项目名称</th>
+                        <td>{{borrowApplyFormData.borrowApply.projectName}}</td>
+                    </tr>
+                    <tr>
+                        <th>借用客户名称</th>
+                        <td>{{borrowApplyFormData.borrowApply.borrowCustomerName}}</td>
+                        <th *ngIf="(borrowApplyFormData.borrowApply.flowCurrNodeName=='风控审批')">借用额度</th>
+                        <td *ngIf="(borrowApplyFormData.borrowApply.flowCurrNodeName=='风控审批')">{{borrowApplyFormData.borrowApply.creditLine}}</td>
+                    </tr>
+                    <tr>
+                        <th>借用日期</th>
+                        <td>{{borrowApplyFormData.borrowApply.borrowDate}}</td>
+                        <th>借用天数</th>
+                        <td>{{borrowApplyFormData.borrowApply.borrowDayCount}}</td>
+                    </tr>
+                    <tr>
+                        <th>预计归还日期</th>
+                        <td>{{borrowApplyFormData.borrowApply.giveBackDay}}</td>
+                        <th>交货方式</th>
+                        <td>{{borrowApplyFormData.borrowApply.deliveryTypeName}}</td>
+                    </tr>
+                    <tr>
+                        <th>经营性借用</th>
+                        <td>{{borrowApplyFormData.borrowApply.operatingBorrow==0?"否":"是"}}</td>
+                        <ng-container *ngIf="saleRole==true">
+                            <th>借用总金额</th>
+                            <td>{{borrowApplyFormData.borrowApply.borrowTotalAmount}}</td>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <th>借用说明</th>
+                        <td class="msgTd" colspan="3">{{borrowApplyFormData.borrowApply.borrowMemo}}</td>
+                    </tr>
+                    <tr>
+                        <th>借用依据</th>
+                        <td colspan="3">
+                            <!--<span  *ngFor="let item of borrowApplyFormData.borrowApply.attachmentList" class="m-dialog-head-change float-r" style="margin-right:20px;" (click)="loadFile(item.filePath)">{{item.fileName}}</span>-->
+
+
+                            <a *ngFor="let item of borrowApplyFormData.borrowApply.attachmentList" href="javascript:;" (click)="loadFile(item.filePath)"
+                                style="margin-right:20px;"><i class="iqon-enclosure"></i>{{item.fileName}}</a>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--物料与运输信息1-->
+        <nav class="nav1"><span>物料与运输信息</span></nav>
+        <!--物料与运输信息1-->
+        <ng-container *ngIf="borrowApplyFormData.borrowApply.flowCurrNodeName!='器材岗审批'&&borrowApplyFormData.borrowApply.flowStatus!=3">
+            <div class="m-material-info1" *ngFor="let item of borrowApplyFormData.transportPoList;index as i">
+                <h2>物料与运输信息{{i+1}}</h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <th width="7%"><strong>库存地</strong></th>
+                            <td width="38%">
+                                {{item.transport.inventoryName}}
+                            </td>
+                            <ng-container *ngIf="saleRole!=true">
+                                    <th></th>
+                                    <td></td>
+                            </ng-container>
+
+                            <ng-container *ngIf="saleRole==true">
+                                <th width="6%">借用金额</th>
+                                <td width="38%">
+                                    {{item.transport.borrowAmount}}
+                                </td>
+                            </ng-container>
+                        </tr>
+                        <tr *ngIf="hideTransportInfo==false">
+                            <th>期望到货日期</th>
+                            <td class="days">{{item.transport.arrivalDate}}</td>
+                            <th>运输方式</th>
+                            <td class="days">
+                                {{item.transport.transportName}}
+                            </td>
+                        </tr>
+
+                        <tr *ngIf="hideTransportInfo==false">
+                            <th>送货地址</th>
+                            <td class="flex">
+                                {{item.transport.deliveryAddress}}
+                                <div class="btns1" style="margin-left: 0px;">
+                                    <button type="button" (click)="viewTimeMap(item.transport.deliveryAddressId)">查看详细</button>
+                                </div>
+                            </td>
+                            <th><i class="addApp-form-tips addApp-form-tips1">*</i>运输起点</th>
+                            <td>
+                                {{item.transport.startTransport}}
+                            </td>
+                        </tr>
+                    </table>
+                    <show-location-view *ngIf="showLocation" (missData)="missData($event)" [addressId]="addressId"></show-location-view>
+                </div>
+                <div class="tables">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="35%">物料描述</th>
+                                <th width="8%">批次</th>
+                                <th width="8%"><i class="addApp-form-tips addApp-form-tips1">*</i>单位</th>
+                                <th width="8%"><i class="addApp-form-tips addApp-form-tips1">*</i>数量</th>
+                                <th width="8%">工厂</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item1 of item.materielList;index as j">
+                                <td class="m-text-center add-w-b60">{{j+1}}</td>
+                                <td>{{item1.meterialNo}}</td>
+                                <td>{{item1.meterialMemo}}</td>
+                                <td>{{item1.batch}}</td>
+                                <td>{{item1.unit}}</td>
+                                <td>{{item1.count}}</td>
+                                <td>{{item1.factory}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="borrowApplyFormData.borrowApply.flowCurrNodeName=='器材岗审批'">
+            <div class="m-material-info1" *ngFor="let item of borrowApplyFormData.transportPoList;index as i">
+                <h2>物料与运输信息{{i+1}}</h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%" *ngIf="hideTransportInfo==false">
+                        <tr>
+                            <th width="7%">库存地</th>
+                            <td width="27%">
+                                {{item.transport.inventoryName}}
+                            </td>
+                            <ng-container *ngIf="saleRole==true">
+                                <th width="6%">借用金额</th>
+                                <td width="27%">
+                                    {{item.transport.borrowAmount}}
+                                </td>
+                            </ng-container>
+                            <th width="6%">运输单号</th>
+                            <td width="27%">{{item.transport.transportNo}}</td>
+                        </tr>
+                        <tr>
+                            <th width="7%">期望到货日期</th>
+                            <td width="27%">{{item.transport.arrivalDate}}</td>
+                            <th>运输方式</th>
+                            <td class="days">
+                                {{item.transport.transportName}}
+                            </td>
+                            <th>送货地址</th>
+                            <td class="flex">
+                                {{item.transport.deliveryAddress}}
+                                <div class="btns1" style="margin-left: 0px;">
+                                    <button type="button" (click)="viewTimeMap(item.transport.deliveryAddressId)">查看详细</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="7%"><i class="addApp-form-tips addApp-form-tips1">*</i>借用库</th>
+                            <td width="27%" *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.borrowStoreHouse" (change)="borrowStoreHouseChange($event,'borrowStoreHouse')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.borrowStoreHouse}}</td>
+                            <th>凭证号(1)</th>
+
+                            <td width="27%" *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.voucherNo1" (change)="borrowStoreHouseChange($event,'voucherNo1')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.voucherNo1}}</td>
+                            <th>凭证号(2)</th>
+                            <td *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.voucherNo2" (change)="borrowStoreHouseChange($event,'voucherNo2')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.voucherNo2}}</td>
+                        </tr>
+                        <tr>
+                            <th>预留号</th>
+                            <td><input type="text" required [(ngModel)]="item.transport.reservationNo"></td>
+                        </tr>
+                    </table>
+                    <show-location-view *ngIf="showLocation" (missData)="missData($event)" [addressId]="addressId"></show-location-view>
+
+                    <table cellpadding="0" cellspacing="0" width="100%" *ngIf="hideTransportInfo">
+                        <tr>
+                            <th width="7%">库存地</th>
+                            <td width="27%">
+                                {{item.transport.inventoryName}}
+                            </td>
+                            <ng-container *ngIf="saleRole==true">
+                                <th width="6%">借用金额</th>
+                                <td width="27%">
+                                    {{item.transport.borrowAmount}}
+                                </td>
+                            </ng-container>
+                            <th width="6%">预留号</th>
+                            <td width="27%"><input type="text" required [(ngModel)]="item.transport.reservationNo"></td>
+                        </tr>
+
+                        <tr>
+                            <th width="7%"><i class="addApp-form-tips addApp-form-tips1">*</i>借用库</th>
+                            <td width="27%" *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.borrowStoreHouse" (change)="borrowStoreHouseChange($event,'borrowStoreHouse')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.borrowStoreHouse}}</td>
+                            <th>凭证号(1)</th>
+
+                            <td width="27%" *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.voucherNo1" (change)="borrowStoreHouseChange($event,'voucherNo1')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.voucherNo1}}</td>
+                            <th>凭证号(2)</th>
+                            <td *ngIf="i==0"><input type="text" required [(ngModel)]="item.transport.voucherNo2" (change)="borrowStoreHouseChange($event,'voucherNo2')"></td>
+                            <td width="27%" *ngIf="i!=0">{{item.transport.voucherNo2}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div class="tables">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="30%">物料描述</th>
+                                <th width="8%">批次</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>单位</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>数量</th>
+                                <th width="8%">工厂</th>
+                                <th width="8%">借用在途库</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item1 of item.materielList;index as j">
+                                <td class="m-text-center add-w-b60">{{j+1}}</td>
+                                <td>{{item1.meterialNo}}</td>
+                                <td>{{item1.meterialMemo}}</td>
+                                <td>{{item1.batch}}</td>
+                                <td>{{item1.unit}}
+                                </td>
+                                <td>{{item1.count}}</td>
+                                <td>{{item1.factory}}</td>
+                                <td *ngIf="i==0&&j==0"><input type="text" [(ngModel)]="item1.onwayStore" (change)="materielOnWayStoreChange($event)"></td>
+                                <td *ngIf="!(i==0&&j==0)">{{item1.onwayStore}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="borrowApplyFormData.borrowApply.flowStatus==3">
+            <div class="m-material-info1" *ngFor="let item of borrowApplyFormData.transportPoList;index as i">
+                <h2>物料与运输信息{{i+1}}</h2>
+                <div class="m-table m-table1">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr *ngIf="hideTransportInfo==false">
+                            <th width="7%">库存地</th>
+                            <td width="27%">
+                                {{item.transport.inventoryName}}
+                            </td>
+                            <ng-container *ngIf="saleRole==true">
+                                <th width="6%">借用金额</th>
+                                <td width="27%">
+                                    {{item.transport.borrowAmount}}
+                                </td>
+                            </ng-container>
+                            <th *ngIf="hideTransportInfo==false" width="6%">运输单号</th>
+                            <td *ngIf="hideTransportInfo==false" width="27%"> {{item.transport.transportNo}}</td>
+
+                        </tr>
+
+
+                        <tr *ngIf="hideTransportInfo">
+                            <th width="7%">库存地</th>
+                            <td width="27%">
+                                {{item.transport.inventoryName}}
+                            </td>
+                            <ng-container *ngIf="saleRole==true">
+                                <th width="6%">借用金额</th>
+                                <td width="27%">
+                                    {{item.transport.borrowAmount}}
+                                </td>
+                            </ng-container>
+                            <th width="6%">预留号</th>
+                            <td width="27%">{{item.transport.reservationNo}}</td>
+
+                        </tr>
+
+
+
+
+                        <tr *ngIf="hideTransportInfo==false">
+                            <th width="7%">期望到货日期</th>
+                            <td width="27%">{{item.transport.arrivalDate}}</td>
+                            <th>运输方式</th>
+                            <td class="days">
+                                {{item.transport.transportName}}
+                            </td>
+                            <th>送货地址</th>
+                            <td class="flex">
+                                {{item.transport.deliveryAddress}}
+                                <div class="btns1" style="margin-left: 0px;">
+                                    <button type="button" (click)="viewTimeMap(item.transport.deliveryAddressId)">查看详细</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="7%">借用库</th>
+                            <td width="27%">{{item.transport.borrowStoreHouse}}</td>
+                            <th>凭证号(1)</th>
+                            <td width="27%">{{item.transport.voucherNo1}}</td>
+                            <th>凭证号(2)</th>
+                            <td width="27%">{{item.transport.voucherNo2}}</td>
+                        </tr>
+                        <tr *ngIf="hideTransportInfo==false">
+                            <th>预留号</th>
+                            <td>{{item.transport.reservationNo}}</td>
+                        </tr>
+                    </table>
+                    <show-location-view *ngIf="showLocation" (missData)="missData($event)" [addressId]="addressId"></show-location-view>
+                </div>
+
+                <div class="tables">
+                    <table class="m-info-table">
+                        <thead>
+                            <tr class="m-infor-tr">
+                                <th class="m-text-center" width="5%">序号</th>
+                                <th width="8%">物料编号</th>
+                                <th width="30%">物料描述</th>
+                                <th width="8%">批次</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>单位</th>
+                                <th width="5%"><i class="addApp-form-tips addApp-form-tips1">*</i>数量</th>
+                                <th width="8%">工厂</th>
+                                <th width="8%">借用在途库</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item1 of item.materielList;index as j">
+                                <td class="m-text-center add-w-b60">{{j+1}}</td>
+                                <td>{{item1.meterialNo}}</td>
+                                <td>{{item1.meterialMemo}}</td>
+                                <td>{{item1.batch}}</td>
+                                <td>{{item1.unit}}
+                                </td>
+                                <td>{{item1.count}}</td>
+                                <td>{{item1.factory}}</td>
+                                <td>{{item1.onwayStore}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </ng-container>
+        <!--审批记录 -->
+
+        <div class="m-app-history">
+            <db-wfhistory [wfHistoryData]="wfData.wfHistoryData"></db-wfhistory>
+        </div>
+
+        <div class="m-app-opinion" *ngIf="applyPage==='0'&&!isView">
+            <div class="m-exm-item">
+                <p class="m-exm-advice">审批意见</p>
+                <textarea class="m-textarea" placeholder="请填写审批意见......" [(ngModel)]="remark" name="remark"></textarea>
+            </div>
+        </div>
+
+        <div class="apply-submitBtn">
+            <div class="m-exm-btn">
+                <button class="m-btn-agree apply-agree" (click)="agree()" *ngIf="applyPage==='0'&&!isView">同意</button>
+                <button class="m-btn-refuse apply-refuse" (click)="reject()" *ngIf="applyPage==='0'&&!isView&&isWritedToERP===1">驳回</button>
+                <button class="m-btn-agree apply-agree" (click)="noapplySubmit()" *ngIf="borrowApplyFormData.borrowApply.noApplySubmit===2&&!isView">触发无单</button>
+                <button class="m-btn-agree apply-agree" (click)="writeERP()" *ngIf="applyPage==='0'&&borrowApplyFormData.borrowApply.flowCurrNodeName==='器材岗审批'&&!isView&&isWritedToERP!=2" >写入ERP</button>
+              
+                <button class="m-btn-refuse" (click)="goback()">返回</button>
+            </div>
+        </div>
+    </div>
+    <div class="apply-p-right">
+        <db-wfview #wfview></db-wfview>
+    </div>
+</div>

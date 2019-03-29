@@ -1,0 +1,29 @@
+.m-dropdown-move{
+	margin-left: -28px;
+	li{
+		i{
+			opacity: 0;
+		    transition: all 1s ease-in-out;
+		    color: #4cc9a6;
+		}
+	}
+	li:hover{
+		i{
+			opacity: 1;
+		}
+	}
+}
+.m-dropdown{
+	.m-btn-success{
+		i{
+		color: #fff;
+		}
+	}
+}
+
+.m-mask{
+	height: 35px;
+	position: relative;
+	top: 10px;
+	//color: #4cc9a6;
+}

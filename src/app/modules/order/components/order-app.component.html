@@ -1,0 +1,48 @@
+<div class="g-hdp">
+  <div class="g-list">
+    <div class="m-user-nav">
+      <ul class="m-usertree">
+        <li routerLinkActive="active">
+          <a routerLink="/order/order-normal">标准销售订单</a>
+        </li>
+        <!-- <li routerLinkActive="active">
+                    <a routerLink="/order/order-frame">框架合同订单</a>
+                </li> -->
+        <li routerLinkActive="active">
+          <a routerLink="/order/order-macao">澳门销售订单</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/order/order-others">其他销售订单</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/order/order-contract">合同物料查询</a>
+        </li>
+        <li routerLinkActive="active">
+          <a routerLink="/order/order-completed">查询已完成订单</a>
+        </li>
+        <li [class.open]="isShowOrderManageList">
+            <a href="javascript:" (click)="toggleShowList()">销售订单管理</a>
+            <i class="iqon-angle-right"></i>
+          <ul class="m-tree" [ngClass]="{'hideList':!isShowOrderManageList}">
+            <li routerLinkActive="active">
+              <a routerLink="/order/order-exemptionlist">客户超期豁免维护</a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/order/order-materialValidate">订单物料验证调整</a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/order/order-advanceCollectionValidate">订单预收款验证调整</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/order/order-deleteOrder">删除销售订单</a>
+              </li>
+          </ul>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+  <div class="g-right">
+    <router-outlet></router-outlet>
+  </div>
+</div>

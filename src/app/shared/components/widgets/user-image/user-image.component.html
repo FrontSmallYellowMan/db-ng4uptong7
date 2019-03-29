@@ -1,0 +1,29 @@
+<user-image-head [user]="Obj" [url]="url" *ngIf="hasImg"></user-image-head>
+<span class="m-user-name">{{Obj?.userCN}}</span>
+<span class="m-user-ename">{{Obj?.userEN}}</span>
+<i class="iqon-close" (click)="closeClick()" *ngIf="hasClose"></i>
+
+<div class="m-pop-up" *ngIf="showHover">
+  <i class="iqon-shang"></i>
+  <div class="m-pop-content">
+    <div class="m-user-info-big">
+      <user-image-head [user]="Obj"></user-image-head>
+      <span class="m-user-name">{{Obj?.userCN}}</span>
+      <span class="m-user-ename">{{Obj?.userEN}}</span>
+    </div>
+    <ul class="uls-tree">
+      <li>
+        <label>本部名称</label>
+        <span>{{Obj?.headName}}</span>
+      </li>
+      <li>
+        <label>事业部名称</label>
+        <span>{{Obj?.departName}}</span>
+      </li>
+      <li>
+        <label>归属平台</label>
+        <span>{{Obj?.platName}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

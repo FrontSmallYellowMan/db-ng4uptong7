@@ -1,0 +1,11 @@
+<div class="m-approval">
+  <div class="m-user-members">
+    <div class="m-user-info">
+      <user-image-head [user]="id_head"></user-image-head>
+      <span class="m-user-name">{{Obj.userCN}}</span>
+      <span class="m-user-ename">{{Obj.userEN}}</span>
+      <i class="iqon-close-m" *ngIf="delete" (click)="doDel($event.target)"></i>
+      <p class="m-user-msg">审批人提示信息XXXXXXXXXXXXXX</p>
+    </div>
+  </div>
+</div>

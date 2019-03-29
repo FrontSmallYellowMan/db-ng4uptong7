@@ -1,0 +1,345 @@
+<loading [show]="loading"></loading>
+<div class="m-apply-exm2 m-srs">
+  <h3>物料变更</h3>
+
+
+  <form #form="ngForm">
+
+    <div class="m-exm">
+
+      <div class="m-list-head">
+        <h5>基本信息</h5>
+      </div>
+
+      <div class="m-exm-item">
+        <ul>
+          <li class="m-exm-half">
+            <div class="m-exm-label">申请人</div>
+            <div class="m-enmc-cont">
+              <div class="m-user-info-small">
+                <div user-image [hasClose]="false" [user]="userInfo"></div>
+                <!-- <img alt="纪永凤" class="m-user-img" src="assets/default-user.png">
+              <span class="m-user-name"></span>
+              <span class="m-user-ename">weihfa</span> -->
+              </div>
+            </div>
+          </li>
+          <li class="m-exm-half">
+            <div class="m-exm-label">申请日期</div>
+            <div class="m-enmc-cont">{{materielChangeData.ApplyTime|iqDate:"YYYY-MM-DD"}}</div>
+          </li>
+          <li class="m-exm-half">
+            <div class="m-exm-label">申请单号</div>
+            <div class="m-enmc-cont">
+              {{materielChangeData.ChangeNo}}
+            </div>
+          </li>
+          <li class="m-exm-half">
+            <div class="m-exm-label">
+              <span class="m-form-need">*</span>联系方式</div>
+            <div class="m-enmc-cont">
+              <!-- <input type="text" maxlength="13" name="Contact" placeholder="-请填写联系方式" #Contact="ngModel" required [(ngModel)]="materielChangeData.Contact" [ngClass]="{'m-input-warn':Contact.invalid&&(Contact.touched||isSubmit)}">-->
+              {{materielChangeData.Contact}}
+            </div>
+            <!-- <p class="m-p-warn" *ngIf="Contact.invalid && (Contact.touched||isSubmit)">请选择供应商编号</p> -->
+          </li>
+          <li class="m-exm-half">
+            <div class="m-exm-label">
+              <span class="m-form-need">*</span>工厂</div>
+            <div class="m-enmc-cont">
+              <!-- <input type="text" name="Factory" #Factory="ngModel" placeholder="-请填写工厂" required [(ngModel)]="materielChangeData.Factory" maxlength="4" pattern="[0-9a-zA-Z]{4}" [ngClass]="{'m-input-warn':Factory.invalid&&(Factory.touched||isSubmit)}"> -->
+              {{materielChangeData.Factory}}
+            </div>
+          </li>
+          <li class="m-exm-half" *ngIf="approveData.nodeid==='6'&&taskState==='0'&&materielChangeData.MaterialVoucher===null">
+            <div class="m-exm-label"><span class="m-form-need">*</span>物料凭证号</div>
+            <div class="m-enmc-cont">
+              <input type="text" placeholder="-请填写物料凭证号" [(ngModel)]="approveData.vouncher" name="MaterialVoucher" #MaterialVoucher="ngModel" [ngClass]="{'m-input-warn':MaterialVoucher.invalid}" required>
+            </div>
+          </li>
+          <li class="m-exm-half" *ngIf="materielChangeData.MaterialVoucher!=null">
+            <div class="m-exm-label"><span class="m-form-need">*</span>物料凭证号</div>
+            <div class="m-enmc-cont">
+              <!-- <input type="text" placeholder="-请填写物料凭证号" [(ngModel)]="approveData.vouncher" name="MaterialVoucher" > -->
+              {{materielChangeData.MaterialVoucher}}
+            </div>
+          </li>
+        </ul>
+
+        <div class="m-enmc-line">
+          <div class="m-exm-label">
+            <span class="m-form-need">*</span>调整物料原因</div>
+          <div class="m-enmc-input">
+            <!-- <input type="text" placeholder="-请填写调整物料的原因" required [(ngModel)]="materielChangeData.Reason" name="Reason" #Reason="ngModel" [ngClass]="{'m-input-warn':Reason.invalid&&(Reason.touched||isSubmit)}"> -->
+            <p>{{materielChangeData.Reason}}</p>
+          </div>
+        </div>
+
+        <div class="m-enmc-line">
+          <div class="m-exm-label">备注</div>
+          <div class="m-enmc-input">
+            <!-- <input type="text" name="Remark" placeholder="-如果变更前物料是转存储物料或者物料库存地为虚库，请在备注维护转储或采购订单号" [(ngModel)]="materielChangeData.Remark"> -->
+            <div class="m-enmc-input">
+            {{materielChangeData.Remark}}
+            </div>
+          </div>
+        </div>
+
+        <div class="m-enmc-line">
+          <div class="m-exm-label">附件</div>
+          <div class="m-enmc-input">
+            <ul class="m-enclosure" *ngFor="let list of materielChangeData.AccessoryList;index as i">
+              <li class="uploaded">
+                <i class="iqon-enclosure"></i>
+                <span class="filename" (click)="seeFileUpLoad(list.AccURL)">
+                    {{list.AccName}}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!--变更成本差异明细表按钮-->
+      <div class="m-btn-marginBottom" *ngIf="approveData.nodeid=='4'||approveData.nodeid=='5'||approveData.nodeid=='9'||approveData.nodeid=='10'||approveData.nodeid=='11'||approveData.nodeid=='12'">
+        <button class="m-btn-assist-1" (click)="getDetailed()" type="button">变更成本差异明细表</button>
+      </div>
+
+      <div class="m-exm-item">
+
+        <div class="m-cnm-title">
+          <div>
+            <h5>物料明细</h5>
+            <span class="m-materielChange-tips" *ngIf="!!materielChangeData.SaleStatus">{{materielTips}}</span>
+          </div>
+          <div>
+            <!-- <h5><a href="#">模板下载</a></h5> -->
+            <!-- <button class="m-btn-confirm">excel导入</button> -->
+            <!-- <button class="m-btn-confirm">excel导出</button> -->
+            <!-- <a id="aHref">导出表格</a> -->
+            
+            <!-- 当处在物流器材会计岗或者，需要显示导出物料明细 -->
+            <button type="button" class="m-btn-confirm" style="vertical-align:middle;" *ngIf="(materielChangeData.ApplicationState=='0'&&materielChangeData.InstanceId!=null)||approveresult||approveData.nodeid==='6'" (click)="getMaterialList()">excel导出</button>
+            
+            <!-- <button class="m-btn-confirm" type="button" style="vertical-align:middle;" (click)="getMaterielDetailed()" *ngIf="(materielChangeData.ApplicationState=='0'&&materielChangeData.InstanceId!=null)||approveresult">excel导出</button>             -->
+          </div>
+        </div>
+
+        <!--物料表格-->
+        <table class="m-enmc-table" id="exportTable">
+          <tbody>
+            <tr>
+              <td colspan="9" style="padding:0;width:47%;" valign="top">
+
+                <!--物料信息-->
+                <table class="m-info-table">
+                  <thead>
+                    <tr>
+                      <th style="text-align:center;width:8%">序号</th>
+                      <th style="width:16%">转出物料编号</th>
+                      <th style="width:18%">转出物料名称</th>
+                      <th style="width:7%">
+                        <span class="m-form-need"></span>单位</th>
+                      <th style="width:8%">
+                        <span class="m-form-need"></span>数量</th>
+                      <th style="width:7%">批次</th>
+                      <th style="width:10%">
+                        <span class="m-form-need"></span>转出库存地</th>
+                      <th style="width:10%">销售合同号</th>
+                      <th style="width:10%">
+                        <span class="m-form-need"></span>入库30天内</th>
+                    </tr>
+                  </thead>
+                  <tr *ngFor="let list of detailExportList;let i=index;trackBy:trackById" class="m-td-border">
+                    <td style="text-align:center">{{i+1}}</td>
+                    <td>
+                      <!-- <textarea rows="3" [name]="'ExportMaterialNo'+i" [(ngModel)]="list.ExportMaterialNo" data-textarea="m-nmc-textarea" [attr.data-textarea]="'m-nmc-textarea'+i"
+                        class="textareaStyle"></textarea> -->
+                        <p style="word-break:break-all;">{{list.ExportMaterialNo}}</p>
+                      <!-- <input type="text" [name]="'ExportMaterialNo'+i" [(ngModel)]="list.ExportMaterialNo"> -->
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportMaterial'+i" [(ngModel)]="list.ExportMaterial" maxlength="40"> -->
+                      <!-- <textarea rows="3" [name]="'ExportMaterial'+i" [attr.name]="'ExportMaterial'+i" wrap="physical" [(ngModel)]="list.ExportMaterial"
+                        [attr.data-textarea]="'m-nmc-textarea'+i" maxlength="40" class="textareaStyle" title="{{list.ExportMaterial}}">{{list.ExportMaterial}}</textarea> -->
+                        <p>{{list.ExportMaterial}}</p>
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportSalesUnit'+i" [(ngModel)]="list.ExportSalesUnit">                           -->
+                      <!-- <textarea rows="3" [name]="'ExportSalesUnit'+i" [(ngModel)]="list.ExportSalesUnit" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                        class="textareaStyle"></textarea> -->
+                        <p>{{list.ExportSalesUnit}}</p>
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportCount'+i" [(ngModel)]="list.ExportCount" pattern="^[0-9]*$"> -->
+                      <!-- <textarea rows="3" [name]="'ExportCount'+i" [(ngModel)]="list.ExportCount" pattern="^[0-9]*$" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                        class="textareaStyle"></textarea> -->
+                        <p>{{list.ExportCount}}</p>
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportBatch'+i" [(ngModel)]="list.ExportBatch"> -->
+                      <!-- <textarea rows="3" [name]="'ExportBatch'+i" [(ngModel)]="list.ExportBatch" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                        class="textareaStyle"></textarea> -->
+                        <p style="width:38px;word-wrap: break-word; word-break: normal;">{{list.ExportBatch}}</p>
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportStorageLocation'+i" [(ngModel)]="list.ExportStorageLocation" maxlength="4"> -->
+                      <!-- <textarea rows="3" [name]="'ExportStorageLocation'+i" [(ngModel)]="list.ExportStorageLocation" maxlength="4" wrap="physical"
+                        [attr.data-textarea]="'m-nmc-textarea'+i" class="textareaStyle"></textarea> -->
+                        <p>{{list.ExportStorageLocation}}</p>
+                    </td>
+                    <td>
+                      <!-- <input type="text" [name]="'ExportSC_Code'+i" [(ngModel)]="list.ExportSC_Code" (mousedown)="showSalesList(list.ExportMaterialNo,i)"> -->
+                      <!-- <textarea rows="3" [name]="'ExportSC_Code'+i" [(ngModel)]="list.ExportSC_Code" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                        class="textareaStyle"></textarea> -->
+                        <P style="width:48px;word-wrap: break-word; word-break: normal;">{{list.ExportSC_Code}}</P>
+                    </td> 
+                    <td [ngStyle]="{'border-right':detailExportList.length>=detailImportList.length?'1px solid #DDDDDD':'none'}">
+                      <!-- <input type="checkbox" icheck [name]="'InStorageThirtyDays'+i" [(ngModel)]="list.InStorageThirtyDays">  -->
+                      <input type="radio" [name]="'InStorageThirtyDays'+i" icheck [attr.name]="'InStorageThirtyDays'+i" [(ngModel)]="list.InStorageThirtyDays"
+                        value="1" [disabled]="true">是
+                      <input type="radio" [name]="'InStorageThirtyDays'+i" icheck [attr.name]="'InStorageThirtyDays'+i" [(ngModel)]="list.InStorageThirtyDays"
+                        value="0" [disabled]="true">否
+                    </td>
+                  </tr>
+                </table>
+                <!--物料信息 end-->
+
+              </td>
+
+              <td colspan="11" style="padding:0;width:53%;" valign="top">
+                <table class="m-info-table" style="border-left:none">
+                  <thead>
+                    <tr>
+                      <th style="border-left:none;width:14%">
+                        转入物料编号
+                        <!-- <a class="m-enmc-handStyle addButtonStyle" title="新建一般物料" (click)="addMateriel()">+</a>                               -->
+                      </th>
+                      <th style="width:18%">转入物料名称</th>
+                      <th style="width:7%">
+                        <span class="m-form-need"></span>单位</th>
+                      <th style="width:8%">
+                        <span class="m-form-need"></span>数量</th>
+                      <th style="width:7%">批次</th>
+                      <th style="width:9%">
+                        <span class="m-form-need"></span>转入库存地</th>
+                      <th style="width:8%">
+                        <span class="m-form-need"></span>本月销售</th>
+                      <th style="width:10%">
+                        <span class="m-form-need"></span>销售合同号</th>
+                      <th style="width:10%">销售订单号</th>
+                      <th style="width:9%">库存数量</th>
+                      <!-- <th class="wp10"><a class="addApp-reduce m-text-center m-enmc-handStyle" (click)="addLine()">+</a></th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let list of detailImportList;let i=index;trackBy:trackById">
+                      <td [ngStyle]="{'border-left':detailExportList.length<detailImportList.length?'1px solid #DDDDDD':'none'}" style="padding:2px!important;text-align:left;">
+                        <!-- <textarea rows="3" [name]="'ImportMaterialNo'+i" wrap="physical" [(ngModel)]="list.ImportMaterialNo" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          class="textareaStyle"></textarea> -->
+                          <p style="word-break:break-all;">{{list.ImportMaterialNo}}</p>
+                      </td>
+                      <td [title]="list.ImportMaterial">
+                        <!-- <textarea rows="3" [name]="'ImportMaterial'+i" [(ngModel)]="list.ImportMaterial" maxlength="40" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle" title="{{list.ImportMaterial}}"></textarea> -->
+                          <p>{{list.ImportMaterial}}</p>
+                      </td>
+                      <td>
+                        <!-- <textarea rows="3" [name]="'ImportSalesUnit'+i" [(ngModel)]="list.ImportSalesUnit" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle"></textarea> -->
+                          <p>{{list.ImportSalesUnit}}</p>
+                      </td>
+                      <td *ngIf="approveData.nodeid!='7'&&materielChangeData.SaleStatus==0">
+                        <!-- <textarea *ngIf="approveData.nodeid!='7'&&materielChangeData.SaleStatus==0" rows="3" [name]="'ImportCount'+i" [(ngModel)]="list.ImportCount" wrap="physical"
+                          [attr.data-textarea]="'m-nmc-textarea'+i" maxlength="40" class="textareaStyle"></textarea>
+                        <textarea *ngIf="approveData.nodeid==='7'||materielChangeData.SaleStatus!=0" rows="3" [name]="'SalesCount'+i" [(ngModel)]="list.SalesCount" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle"></textarea> -->
+                          <p>{{list.ImportCount}}</p>
+                      </td>
+                      <td *ngIf="approveData.nodeid==='7'||materielChangeData.SaleStatus!=0">{{list.SalesCount}}</td>
+                      <td>
+                        <!-- <textarea rows="3" [name]="'ImportBatch'+i" [(ngModel)]="list.ImportBatch" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle"></textarea> -->
+                          <p style="width:40px; word-wrap: break-word; word-break: normal;">{{list.ImportBatch}}</p>
+                      </td>
+                      <td>
+                        <!-- <textarea rows="3" [name]="'ImportStorageLocation'+i" [(ngModel)]="list.ImportStorageLocation" maxlength="4" wrap="physical"
+                          [attr.data-textarea]="'m-nmc-textarea'+i" maxlength="40" class="textareaStyle"></textarea> -->
+                          <p>{{list.ImportStorageLocation}}</p>
+                      </td>
+                      <td>
+                        <div style="width:40px;">
+                        <input type="radio" icheck [name]="'SaleInCurrentMonth'+i" [attr.name]="'SaleInCurrentMonth'+i" [(ngModel)]="list.SaleInCurrentMonth"
+                          value="1" [disabled]="true">是
+                        <input type="radio" icheck [name]="'SaleInCurrentMonth'+i" [attr.name]="'SaleInCurrentMonth'+i" [(ngModel)]="list.SaleInCurrentMonth"
+                          value="0" [disabled]="true">否
+                        </div>
+                      </td>
+                      <td>
+                        <!-- <input type="text" [name]="'ImportSC_Code'+i" [(ngModel)]="list.ImportSC_Code"> -->
+                        <!-- <textarea rows="3" [name]="'ImportSC_Code'+i" [(ngModel)]="list.ImportSC_Code" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle"></textarea> -->
+                          <div style="width:48px; word-wrap: break-word; word-break: normal;">{{list.ImportSC_Code}}</div>
+                      </td>
+                      <td>
+                        <!-- <input type="text" [name]="'ImportSaleOrderId'+i" [(ngModel)]="list.ImportSaleOrderId"> -->
+                        <textarea rows="4" [name]="'ImportSaleOrderId'+i" [(ngModel)]="list.ImportSaleOrderId" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" [disabled]="!(approveData.nodeid=='7')||list.isImportSaleOrder" [ngClass]="{'cursorStyle':!(approveData.nodeid=='7')||list.isImportSaleOrder}"
+                          style="margin:0; background-color:#fff;width:55px;"></textarea>
+                      </td>
+                      <td>
+                        <!-- <input type="text" [name]="'QuantityInStock'+i" [(ngModel)]="list.QuantityInStock"> -->
+                        <!-- <textarea rows="3" [name]="'QuantityInStock'+i" [(ngModel)]="list.QuantityInStock" wrap="physical" [attr.data-textarea]="'m-nmc-textarea'+i"
+                          maxlength="40" class="textareaStyle" disabled style="background-color:#fff;cursor: not-allowed;"></textarea> -->
+                          {{list.QuantityInStock}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!--物料表格 end-->
+
+      </div>
+
+    </div>
+
+    <!--审批历史记录-->
+    <div class="m-div-margin" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+    <!--审批历史记录 end-->
+
+    <!--审批按钮-->
+    <div *ngIf="isShowApprovalButton&&taskState=='0'&&ADP=='0'&&approveData.nodeid!='7'" class="m-div-margin">
+      <db-wfapproval [appParms]="approveData" [hasSaved]="isApproval" (onApprovalComplateCallBack)="writeStorage()" (onSave)="writeImportMateriel($event)"></db-wfapproval>
+    </div>
+
+    <!-- 反填环节审批按钮 -->
+    <div class="m-button-margin" *ngIf="taskState=='0'&&ADP=='0'&&approveData.nodeid==='7'">
+      <button type="button" (click)="backSaleApplval()" class="m-btn-agree">同意</button>
+      <button class="approval-button-back" type="button" (click)="cancel()">返回</button>
+    </div>
+
+    <!-- 加签审批按钮 -->
+    <div *ngIf="taskState=='0'&&ADP=='1'" class="m-div-margin">
+      <db-wfadp [adpAppParms]="approveData" (onApprovalComplateCallBack)="writeStorage()"></db-wfadp>
+    </div>
+
+    <div *ngIf="!isShowApprovalButton||taskState=='1'||taskState==undefined" class="buttonStyle m-div-margin">
+      <button class="m-btn-default" type="button" (click)="cancel()">
+        关闭
+      </button>
+    </div>
+    <!--审批按钮 end-->
+
+  </form>
+</div>
+
+<div class="apply-p-right">
+  <db-wfview #wfView></db-wfview>
+</div>

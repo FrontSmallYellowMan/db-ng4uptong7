@@ -1,0 +1,313 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-boardmenu">
+            <a href="javascript:;" *ngIf="salesman || admin" [ngClass]="{'active':flag==='0'}" (click)="changeFlag('0')">我的申请<span class="m-nums hide" ></span></a>
+            <a href="javascript:;" *ngIf="business || financial || admin" [ngClass]="{'active':flag==='1'}" (click)="changeFlag('1')">我的审批<span class="m-nums"  [ngClass]="{'hide':count===0}">{{count}}</span></a>
+        </div>
+
+        <div class="m-dropdown g-fr" *ngIf="salesman || admin">
+            <button class="m-btn-success" (click)="addsq()"><i class="iqon-add"></i>新建申请</button>
+        </div>
+        <!--搜索-->
+        <div class="m-list-menu" [ngSwitch]="flag">
+            <ul class="m-state" *ngSwitchCase="'0'">
+                <li [ngClass]="{'active':applyPage=='0'}" (click)="changeapplytype('0','0','0')">审批中</li>
+                <li [ngClass]="{'active':applyPage=='1'}" (click)="changeapplytype('1','0','0')">已完成</li>
+                <li [ngClass]="{'active':applyPage=='all'}" (click)="changeapplytype('all','0','0')">全部</li>
+                <li [ngClass]="{'active':applyPage=='3'}" (click)="changeapplytype('3','0','0')">草稿</li>
+                <li [ngClass]="{'active':applyPage=='4'}" (click)="changeapplytype('4','0','0')">退票信息</li>
+            </ul>
+            <ul *ngSwitchCase="'1'" class="m-state">
+                <li *ngIf="business || admin" [ngClass]="{'active':applyPage=='0'}" (click)="changeapplytype('0','8','1')">待我接收</li>
+                <li *ngIf="business || admin" [ngClass]="{'active':applyPage=='1'}" (click)="changeapplytype('1','8','1')">支票上传财务</li>
+                <li *ngIf="financial || admin" [ngClass]="{'active':applyPage=='2'}" (click)="changeapplytype('2','8','1')">确认接收支票</li>
+                <li *ngIf="financial || admin" [ngClass]="{'active':applyPage=='3'}" (click)="changeapplytype('3','9','1')">确认银行取走</li>
+                <li *ngIf="business || admin" [ngClass]="{'active':applyPage=='6,7,9,10'}" (click)="changeapplytype('6,7,9,10','12','1')">退票拒收返原</li>
+            </ul>
+        </div>
+        <div class="m-list-menu" *ngIf="salesman || business || financial || admin">
+            <div class="m-search-all" style="float:left">
+                <div class="m-search">
+                    <input type="hidden" id="invoiceQuery" (click)="getInvoiceQuery()">
+                    <i *ngIf="flag=='0'" class="iqon-query" id="invoiceQuery" (click)="getInvoiceQuery()" style="cursor:pointer"></i>
+                    <i *ngIf="flag=='1' && applyPage !='2' && applyPage!='3'" class="iqon-query" id="getQueryData" (click)="getQueryData()" style="cursor:pointer"></i>
+                    <input name="state" placeholder="申请人\支票号\客户名称\合同编码" [(ngModel)]="query.keyWords" type="text">
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="font-weight:bold">入账日期：</span>
+                <div class="m-search" style="width: 145px;">
+                    <my-datepicker PlaceHolder="请选择日期" (ngModelChange)="getIqDate($event,'start')" [(ngModel)]="query.startDate" [EndDate]="query.endDate"
+                        style="cursor: pointer;width: 90px;"></my-datepicker>
+                </div>
+                ~
+                <div class="m-search" style="width: 145px;">
+                    <my-datepicker PlaceHolder="请选择日期" (ngModelChange)="getIqDate($event,'end')" [(ngModel)]="query.endDate" [StartDate]="query.startDate"
+                        style="cursor: pointer;width: 90px;"></my-datepicker>
+                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="m-stotalAmountearch" style="width:260px;display: inline-block;vertical-align:top" *ngIf="applyPage=='3' && flag=='1'">
+                    <span style="font-weight:bold" *ngIf="applyPage=='3' && flag=='1'">收款人：</span>
+                    <select (change)="changePayeeData($event)" [(ngModel)]='query.payee' class="form-control" style="width:200px;float: right">
+                                <option value="">--请选择收款人--</option>  
+                                <option *ngFor="let payee of payeeOptions"  value="{{payee.companycode}}">{{payee.company}}</option>
+                        </select>
+                </div>
+                <div class="m-search-all" style="float:none;display: inline-block;">
+
+                    <button class="m-btn-cancel" (click)="resetQuery()">重置</button>
+
+                     <span *ngIf="query.invoiceStatus=='1'">
+                <button class="m-btn-cancel" (click)="exportFinanceExport()">导出EXCEL</button>                
+            </span>
+
+                    <!--<button  class="m-btn-cancel">导出EXCEL</button>-->
+                </div>
+                
+                
+               
+            </div>
+            <!--<div class="m-search-all" style="float:left" *ngIf="loginUser.plantFormCode == '21' && applyPage=='2' && flag=='1' && businessList !=null && businessList !=[]">
+        </div>
+        <div class="m-search-all" style="float:left" *ngIf="applyPage=='3' && flag=='1'">
+        </div>-->
+        </div>
+        <div class="m-list-menu" *ngIf="flag=='1' && ( applyPage=='2' || applyPage=='3')">
+            <div class="m-search-all" style="float:left" *ngIf="loginUser.plantFormCode == '21' && applyPage=='2' && flag=='1' && businessList !=null && businessList !=[]">
+                <span style="font-weight:bold">商务接口人：</span>
+                <span><input  type="radio"  name="business" checked (click)="changeBusiness('')">全部&nbsp;&nbsp;</span>
+                <span *ngFor="let busin of businessList"><input  type="radio"  name="business" (click)="changeBusiness(busin.businessItcode)">{{busin.businessname}}&nbsp;&nbsp;</span>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="m-search-all" style="float:left" *ngIf="flag=='1' && applyPage=='3'">
+                <span style="font-weight:bold">支票状态：</span>
+                <span><input checked  type="radio" [ngModel]="invoiceStatus" value="3" (ngModelChange)="invoiceStatus=$event;changeInvoiceStauts(invoiceStatus)">银行未取走</span>&nbsp;&nbsp;
+                <span><input  type="radio" [ngModel]="invoiceStatus"  value="4" (ngModelChange)="invoiceStatus=$event;changeInvoiceStauts(invoiceStatus)">银行已取走</span>&nbsp;&nbsp;
+                <span><input  type="radio" [ngModel]="invoiceStatus"  value="5,8" (ngModelChange)="invoiceStatus=$event;changeInvoiceStauts(invoiceStatus)">拒收/退回未取走</span>&nbsp;&nbsp;
+                <span><input  type="radio" [ngModel]="invoiceStatus"  value="3,4,5,8" (ngModelChange)="invoiceStatus=$event;changeInvoiceStauts(invoiceStatus)">全部</span>
+            </div>
+            <div class="m-search-all" *ngIf="flag=='1' && ( applyPage=='2' || applyPage=='3')" style="float:right">
+                <!--<ng-container *ngIf="applyPage=='3'">
+                <button (click)="export()">EXCEL导出</button>
+            </ng-container>-->
+                <button class="m-btn-cancel btn-blue" id="getQueryData" (click)="getQueryData()">搜索</button>
+                <button class="m-btn-cancel" (click)="reset()">重置</button>
+            </div>
+        </div>
+        <!--表格-->
+        <div class="m-table-right" *ngIf="flag=='0'">
+            <loading [show]="loading"></loading>
+            <div class="m-home-default" [ngClass]="{'hide':invoiceList !=null && invoiceList.length > 0}">
+                <div class="m-scan">
+                    <div class="m-scan-body">
+                        <div class="m-scan-default">
+                            <div class="m-scan-logo">
+                                <i class="iqon-apply"></i>
+                            </div>
+                            <h3>暂无相关数据</h3>
+                            <h4>点击“新建申请”新建数据吧~</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="{'hide': invoiceList ==null || invoiceList.length ==0}">
+                <table class="table table-hover table-list" style="table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">支票号</th>
+                            <th style="text-align:center">出票日期</th>
+                            <th style="text-align:center;">支票金额</th>
+                            <th style="text-align:center" *ngIf="applyPage=='4'">出票人银行</th>
+                            <th style="text-align:center;">收款人</th>
+                            <th style="text-align:center;" *ngIf="applyPage!='4'">客户代码</th>
+                            <th style="text-align:center">客户名称</th>
+                            <!--<th style="text-align:center" >合同编号</th>-->
+                            <!--<th style="text-align:center" >欠款金额</th>-->
+                            <th *ngIf="applyPage!='4'" style="text-align:center;">是否押票</th>
+                            <th style="text-align:center" *ngIf="applyPage=='0' || applyPage=='all'">当前状态</th>
+                            <th style="text-align:center" *ngIf="applyPage=='0' || applyPage=='all'">审批人</th>
+                            <th style="text-align:center" *ngIf="applyPage=='4'">退票日期</th>
+                            <th style="text-align:center" *ngIf="applyPage=='4'">退回类型</th>
+                            <th style="text-align:center"*ngIf="applyPage=='4'">申请人</th>
+                            <!--<th style="width:90px;text-align:center">申请日期</th>-->
+                            <th style="text-align:center" *ngIf="isDraft">操作</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let invoice of invoiceList' (click)="goDetail(invoice.id)">
+                            <td style="text-align:center" title="{{invoice.ticketNum}}">{{invoice.ticketNum}}</td>
+                            <td style="text-align:center" title="{{invoice.checkoutDate | iqDate: 'YYYY-MM-DD'}}">{{invoice.checkoutDate | iqDate: "YYYY-MM-DD"}}</td>
+                            <td style="text-align:center" title="{{invoice.ticketAmount==null?0:invoice.ticketAmount.toFixed(2)}}">{{invoice.ticketAmount==null?0:invoice.ticketAmount.toFixed(2)}}</td>
+                            <td style="text-align:center" title="{{invoice.checkoutBank}}" *ngIf="applyPage=='4'">{{invoice.checkoutBank}}</td>
+                            <td style="text-align:center" title="{{invoice.payeeName}}">{{invoice.payee}}</td>
+                            <td style="text-align:center" title="{{invoice.customCode}}" *ngIf="applyPage!='4'">{{invoice.customCode}}</td>
+                            <td style="text-align:center" title="{{invoice.customName}}">{{invoice.customName}}</td>
+                            <!--<td style="text-align:center" title="{{invoice.contractNum}}">{{invoice.contractNum}}</td>-->
+                            <!--<td style="text-align:center" title="{{invoice.debtAmount==null?0:invoice.debtAmount.toFixed(2)}}">{{invoice.debtAmount==null?0:invoice.debtAmount.toFixed(2)}}</td>-->
+                            <td style="text-align:center" title="{{invoice.isPawnTicket=='0'?'否':'是'}}" *ngIf="applyPage!='4'">{{invoice.isPawnTicket=='0'?'否':'是'}}</td>
+                            <td style="text-align:center" title="{{invoice.statusName}}" *ngIf="applyPage=='0' || applyPage=='all'">{{invoice.statusName}}</td>
+                            <td style="text-align:center" title="{{invoice.nextApprove}}" *ngIf="applyPage=='0' || applyPage=='all'">{{invoice.nextApprove}}</td>
+                            <td style="text-align:center" title="{{invoice.llastModifiedDate | iqDate: 'YYYY-MM-DD'}}" *ngIf="applyPage=='4'">{{invoice.llastModifiedDate | iqDate: "YYYY-MM-DD"}}</td>
+                            <td style="text-align:center" *ngIf="applyPage=='4'">
+                                <span title="银行拒收" *ngIf="invoice.invoiceStatus=='5'">银行拒收</span>
+                                <span title="拒收后商务取走" *ngIf="invoice.invoiceStatus=='6'">拒收后商务取走</span>
+                                <span title="拒收后申请人取走" *ngIf="invoice.invoiceStatus=='7'">拒收后申请人取走</span>
+                                <span title="银行退票" *ngIf="invoice.invoiceStatus=='8'">银行退票</span>
+                                <span title="退票后商务取走" *ngIf="invoice.invoiceStatus=='9'">退票后商务取走</span>
+                                <span title="退票后申请人取走" *ngIf="invoice.invoiceStatus=='10'">退票后申请人取走</span>
+                            </td>
+                            <td style="text-align:center" title="{{invoice.applyUserName}}/{{invoice.applyItcode}}" *ngIf="applyPage=='4'">{{invoice.applyUserName +"/"+invoice.applyItcode}}</td>
+                            <!--<td style="text-align:center" title="{{invoice.createDate | iqDate: 'YYYY-MM-DD'}}">{{invoice.createDate | iqDate: 'YYYY-MM-DD'}}</td>-->
+                            <!--<td style="text-align:center" title="重新申请" *ngIf="applyPage=='3' && flag=='0'"><a  href="/invoice/apply/invoice/{{invoice.id}}" target="_blank">重新申请</a></td>-->
+                            <td style="text-align:center" *ngIf="isDraft"><a href="javascript:;" (click)="delDraftById(invoice.id);$event.stopPropagation();">删除</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page" [ngClass]="{'hide': invoiceList ==null || invoiceList.length ==0}">
+                <iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+            </div>
+        </div>
+        <div class="m-list-menu">
+            <ul class="m-state" style="width:1035px;" *ngIf=" payeeAllCount !=0 && (query.invoiceStatus=='1' || query.invoiceStatus=='2' || query.invoiceStatus=='3' || query.invoiceStatus=='4'|| query.invoiceStatus=='5,8' || query.invoiceStatus=='3,4,5,8')">
+                &nbsp;&nbsp;&nbsp;<span *ngIf="payeeAllCount !=0"><input type="radio"  name="payeeCountList" checked  (click)="changePayee('all')">全部({{payeeAllCount}}张)&nbsp;&nbsp;&nbsp;</span>
+                <span *ngFor="let payee of payeeList"><input type="radio" name="payeeCountList"  (click)="changePayee(payee.payee)">{{payee.payee}}({{payee.payeeCount}}张)&nbsp;&nbsp;&nbsp;</span>
+                <span *ngIf="query.invoiceStatus=='1'">        
+
+                    <b>总金额{{totalAmount}} </b>
+                    </span>
+            </ul>
+            <ul class="m-state" *ngIf="query.invoiceStatus=='6,7,9,10' || query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10'">
+                <input type="radio" [ngModel]="sel" value="6,7,9,10" (ngModelChange)="sel=$event;changeseltype(sel)" checked>全部&nbsp;&nbsp;&nbsp;
+                <input type="radio" [ngModel]="sel" value="6,9" (ngModelChange)="sel=$event;changeseltype(sel)">未处理&nbsp;&nbsp;
+                <input type="radio" [ngModel]="sel" value="7,10" (ngModelChange)="sel=$event;changeseltype(sel)">已取走&nbsp;&nbsp;
+            </ul>
+        </div>
+        <div class="m-table-right" style="overflow:hidden" *ngIf="flag=='1'">
+            <loading [show]="loading"></loading>
+            <div class="m-home-default" [ngClass]="{'hide':approveList !=null && approveList.length > 0}">
+                <div class="m-scan">
+                    <div class="m-scan-body">
+                        <div class="m-scan-default">
+                            <div class="m-scan-logo">
+                                <i class="iqon-apply"></i>
+                            </div>
+                            <h3>暂无相关数据</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative;" [ngClass]="{'hide': approveList ==null || approveList.length ==0}">
+                <!-- </ng-container> -->
+                <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+                        <div style="position: absolute;height: 46px;width: 100%;left: 40px;background: #fff;z-index:1">
+                        <th >
+
+                            已选{{checkedNum}}项
+                            <button type="button" *ngIf="!clickFlag" class="m-btn-agree" name="button">请稍后...</button>
+                            <button type="button" *ngIf="!clickFlag3" class="m-btn-refuse" name="button">请稍后...</button>
+                            <button *ngIf="query.invoiceStatus==0 && clickFlag" type="button" class="m-btn-agree" name="button" (click)='approve(1)'>确认接收</button>
+                            <button *ngIf="query.invoiceStatus==1 && clickFlag" type="button" class="m-btn-agree" name="button" (click)='approve(2)'>上传到财务</button>
+                            <button *ngIf="query.invoiceStatus==2 && clickFlag" type="button" class="m-btn-agree" name="button" (click)='approve(3)'>确认接收</button>
+                            <button *ngIf="query.invoiceStatus==3 && clickFlag" type="button" class="m-btn-agree" name="button" (click)='approve(4)'>确认银行取走</button>
+                            <button *ngIf="query.invoiceStatus=='5,8' && loginUser.plantFormCode == '21' && clickFlag" type="button" class="m-btn-agree"
+                                name="button" (click)='approve2(1)'>确认商务取回</button>
+                            <button *ngIf="query.invoiceStatus=='5,8' && loginUser.plantFormCode != '21' && clickFlag" type="button" class="m-btn-agree"
+                                name="button" (click)='approve2(2)'>确认申请人取回</button>
+                            <button *ngIf="query.invoiceStatus=='6,9' && clickFlag" type="button" class="m-btn-agree" name="button" (click)='approve2(2)'>确认取走</button>
+                            <button *ngIf="query.invoiceStatus==4 && clickFlag3" type="button" class="m-btn-refuse" name="button" (click)='approve(5)'>拒收</button>                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" *ngIf="!clickFlag2" class="m-btn-refuse" name="button">请稍后...</button>
+                            <button *ngIf="query.invoiceStatus==0 && clickFlag2" type="button" class="m-btn-refuse" name="button" (click)='approve(13)'>驳回</button>
+                            <button *ngIf="query.invoiceStatus==4 && clickFlag2" type="button" class="m-btn-refuse" name="button" (click)='approve(8)'>退票</button>
+                        </th>
+                    </div>
+                    </ng-container>
+                <table class="table table-hover table-list" style="table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th style="width:30px;" *ngIf="query.invoiceStatus !='6,7,9,10' && query.invoiceStatus != '7,10' && query.invoiceStatus != '3,4,5,8'"><input icheck type="checkbox" allcheck="selectedAll" [(ngModel)]='fullChecked' style="position: absolute; opacity: 0;"
+                                    [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+                            <!-- <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate"> -->
+                                <th style="text-align:center;" >支票号</th>
+                                <!--<th style="text-align:center;width:10%;">出票日期</th>-->
+                                <th style="text-align:center;" >支票金额</th>
+                                <th style="text-align:center;" >出票人账号</th>
+                                <th style="text-align:center;" >出票人银行</th>
+                                <th style="text-align:center;"  *ngIf="applyPage!='1' && flag=='1'">收款人</th>
+                                <th style="text-align:center;"  *ngIf="applyPage=='2,3,6,7,9,10' && flag=='1'">客户代码</th>
+                                <th style="text-align:center;" >客户名称</th>
+                                <!--<th style="text-align:center" width="8%" *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1' || query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">合同编号</th>-->
+                                <!--<th style="text-align:center" width="8%" *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1' || query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">欠款金额</th>-->
+                                <th style="text-align:center;"  *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1'">是否押票</th>
+                                <th style="text-align:center;" >申请人</th>
+                                <th style="text-align:center"  *ngIf="loginUser.plantFormCode == '21' && (query.invoiceStatus=='2' || query.invoiceStatus=='3' || query.invoiceStatus=='4' || query.invoiceStatus=='5,8' || query.invoiceStatus=='3,4,5,8')">商务接口人</th>
+                                <!--<th style="text-align:center" width="7%">申请日期</th>-->
+                                <th style="text-align:center" *ngIf="query.invoiceStatus=='1'">商务审批人</th>
+                                <!--<th *ngIf="query.invoiceStatus=='5,8'">退回原因</th>-->
+                                <th style="text-align:center" *ngIf="query.invoiceStatus=='3,4,5,8'">支票状态</th>
+                                <th style="text-align:center" *ngIf="query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">退票类型</th>
+                                <th style="text-align:center" *ngIf="query.invoiceStatus =='3' || query.invoiceStatus =='4' || query.invoiceStatus =='5,8'">操 作</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let invoice of approveList;let i=index">
+                            <td (click)="goDetail(invoice.id)" *ngIf="query.invoiceStatus !='6,7,9,10' && query.invoiceStatus != '7,10' && query.invoiceStatus != '3,4,5,8'">
+                                <input icheck type="checkbox" allcheckChild="selectedAll" [(ngModel)]='invoice.checked' style="position: absolute; opacity: 0;"
+                                    (ngModelChange)="calTotalMoney()"></td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.ticketNum}}" style="text-align:center;">{{invoice.ticketNum}}</td>
+                            <!--<td (click)="goDetail(invoice.id)" style="width:110px;" title="{{invoice.checkoutDate | iqDate: 'YYYY-MM-DD'}}" style="text-align:center">{{invoice.checkoutDate | iqDate: 'YYYY-MM-DD'}}<span class="m-nums_ing" *ngIf="invoice.yan=='0'">延</span>
+                                <span class="m-nums_end" *ngIf="invoice.yan=='1'">延</span>
+                            </td>-->
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.ticketAmount==null?0:invoice.ticketAmount.toFixed(2)}}" style="text-align:center;">{{invoice.ticketAmount==null?0:invoice.ticketAmount.toFixed(2)}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.checkoutAccount}}" style="text-align:center;">{{invoice.checkoutAccount}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.checkoutBank}}" style="text-align:center;">{{invoice.checkoutBank}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.payeeName}}" style="text-align:center;" *ngIf="applyPage!='1' && flag=='1'">{{invoice.payee}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.customCode}}" style="text-align:center;" *ngIf="applyPage=='2,3,6,7,9,10' && flag=='1'">{{invoice.customCode}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.customName}}" style="text-align:center;">{{invoice.customName}}</td>
+                            <!--<td (click)="goDetail(invoice.id)" title="{{invoice.contractNum}}" style="text-align:center" *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1' ||query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">{{invoice.contractNum}}</td>-->
+                            <!--<td (click)="goDetail(invoice.id)" title="{{invoice.debtAmount==null?0:invoice.debtAmount.toFixed(2)}}" style="text-align:center"
+                                *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1' ||query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">{{invoice.debtAmount==null?0:invoice.debtAmount.toFixed(2)}}</td>-->
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.isPawnTicket=='0'?'否':'是'}}" style="text-align:center;" *ngIf="query.invoiceStatus=='0' ||query.invoiceStatus=='1'">{{invoice.isPawnTicket=='0'?'否':'是'}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.applyUserName}}/{{invoice.applyItcode}}" style="text-align:center;">{{invoice.applyUserName}}/{{invoice.applyItcode}}</td>
+                            <td (click)="goDetail(invoice.id)" title="{{invoice.businessname}}/{{invoice.businessItcode}}" style="text-align:center"
+                                *ngIf="loginUser.plantFormCode == '21' && (query.invoiceStatus=='2' || query.invoiceStatus=='3' || query.invoiceStatus=='4' || query.invoiceStatus=='5,8' || query.invoiceStatus=='3,4,5,8')">{{invoice.businessname}}/{{invoice.businessItcode}}</td>
+                            <!--<td (click)="goDetail(invoice.id)" title="{{invoice.createDate | iqDate: 'YYYY-MM-DD'}}" style="text-align:center">{{invoice.createDate | iqDate: 'YYYY-MM-DD'}}</td>-->
+                            <td (click)="goDetail(invoice.id)" *ngIf="query.invoiceStatus=='1'">{{invoice.businessItcode}}/{{invoice.businessname}}</td>
+                            <!--<td (click)="goDetail(invoice.id)" title="{{}}" *ngIf="query.invoiceStatus=='5,8'">{{invoice.invoiceStatus=='5'?'拒收':'退票'}}</td>-->
+                            <td (click)="goDetail(invoice.id)" style="text-align:center" *ngIf="query.invoiceStatus=='3,4,5,8'">
+                                <span title="银行未取走" *ngIf="invoice.invoiceStatus=='3'">银行未取走</span>
+                                <span title="银行已取走" *ngIf="invoice.invoiceStatus=='4'">银行已取走</span>
+                                <span title="银行拒收" *ngIf="invoice.invoiceStatus=='5'">银行拒收</span>
+                                <span title="拒收后商务取走" *ngIf="invoice.invoiceStatus=='6'">拒收后商务取走</span>
+                                <span title="拒收后申请人取走" *ngIf="invoice.invoiceStatus=='7'">拒收后申请人取走</span>
+                                <span title="银行退票" *ngIf="invoice.invoiceStatus=='8'">银行退票</span>
+                                <span title="退票后商务取走" *ngIf="invoice.invoiceStatus=='9'">退票后商务取走</span>
+                                <span title="退票后申请人取走" *ngIf="invoice.invoiceStatus=='10'">退票后申请人取走</span>
+                            </td>
+                            <td (click)="goDetail(invoice.id)" style="text-align:center" *ngIf="query.invoiceStatus=='6,9' ||query.invoiceStatus=='7,10' ||query.invoiceStatus=='6,7,9,10'">
+                                <span *ngIf="invoice.invoiceStatus=='6' || invoice.invoiceStatus=='7'">银行拒收</span>
+                                <span *ngIf="invoice.invoiceStatus=='9' || invoice.invoiceStatus=='10'">银行退回</span>
+                            </td>
+                            <td class="operate" *ngIf=" query.invoiceStatus =='3' || query.invoiceStatus =='4' || query.invoiceStatus =='5,8'">
+                                <!--<a *ngIf="query.invoiceStatus=='0'" routerLink="/invoice/apply/invoiceEdit/{{invoice.id}}" target="_blank">编辑</a>-->
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='3'" (click)="refuse(invoice.id,'5')">拒收</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='4'" (click)="refuse(invoice.id,'5')">拒收</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='4'" (click)="refuse(invoice.id,'8')">退票</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='5,8' && invoice.invoiceStatus =='5' && loginUser.plantFormCode == '21'"
+                                    (click)="refuse(invoice.id,'6')">取回</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='5,8' && invoice.invoiceStatus =='5' && loginUser.plantFormCode != '21'"
+                                    (click)="refuse(invoice.id,'7')">取回</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='5,8' && invoice.invoiceStatus =='8' && loginUser.plantFormCode == '21'"
+                                    (click)="refuse(invoice.id,'9')">取回</span>
+                                <span style="width:25px;" *ngIf="query.invoiceStatus =='5,8' && invoice.invoiceStatus =='8' && loginUser.plantFormCode != '21'"
+                                    (click)="refuse(invoice.id,'10')">取回</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="page" [ngClass]="{'hide':approveList ==null || approveList.length ==0}">
+                <iq-pager [data]="apprData" (onChange)="onChangePage2($event)"></iq-pager>
+            </div>
+        </div>
+
+    </div>

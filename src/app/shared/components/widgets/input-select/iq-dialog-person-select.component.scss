@@ -1,0 +1,12 @@
+.m-user-list,.m-user-selected-list{
+  height: calc(100% - 38px);
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.m-user-selected-list /deep/ li.m-user-info{
+  white-space: nowrap;
+
+  > i{
+    right:0
+  }
+}

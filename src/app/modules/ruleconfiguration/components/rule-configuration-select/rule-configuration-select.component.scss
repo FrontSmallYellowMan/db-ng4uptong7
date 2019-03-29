@@ -1,0 +1,49 @@
+.config-select{
+  display: flex;
+  height: 35px;
+  line-height: 35px;
+  button{
+    width:80px;
+    height: 30px;
+    line-height: 30px;
+    background: linear-gradient(to right,rgb(3, 212, 240),rgb(26, 137, 241));
+    opacity: 1;
+    transition: all 0.5s linear;
+    &:hover{
+       background: linear-gradient(to right,rgb(212, 3, 240),rgb(26, 137, 241));
+       opacity: 0.8;
+       transition: all 0.5s linear;
+    }
+  }
+
+  .m-btn-disabled{
+    transition: all .5s linear;
+    background: linear-gradient(to right, rgb(189, 189, 189),rgb(189, 189, 189));
+    cursor: not-allowed;
+    &:hover{
+    background: linear-gradient(to right, rgb(189, 189, 189),rgb(189, 189, 189));
+    }
+  }
+
+  span{
+    padding: 0 5px;
+  }
+  i{
+    cursor: pointer;
+    color: red;
+    padding: 0 2px;
+    transition: all 0.2s linear;
+    &:hover{
+      color:firebrick;
+      padding: 0 2px;
+      transition: all 0.2s linear;
+    }
+  }
+
+  .config-select-data{
+    word-wrap: break-word;
+    word-break: break-all;
+    line-height: 18px;
+  }
+
+}

@@ -1,0 +1,184 @@
+<loading [show]="loading"></loading>
+<div class="sc-seal">
+  <div class="sc-seal-search clearfix">
+    <div class="search-item">
+      <div class="search-title"><label>我方主体:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.SellerCompanyCode">
+            <option value="">-请选择我方主体</option>
+            <option *ngFor="let item of companyData" [ngValue]="item.companycode">{{item.company}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>客户名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入客户名称" [(ngModel)]="query.BuyerName">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>项目名称:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入项目名称" [(ngModel)]="query.ProjectName">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>平台:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.PlatformID">
+            <option value="">-请选择平台</option>
+            <option *ngFor="let item of platformData" [ngValue]="item.platformcode">{{item.platform}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>本部:</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.Headquarter" (change)="onDepartmentChange(query.Headquarter)">
+            <option value="">-请选择本部</option>
+            <option *ngFor="let item of DepartmentList" [ngValue]="item.BBMC">{{item.BBMC}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>事业部</label></div>
+      <div class="search-input">
+        <div class="m-select">
+          <i class="iqon-xia"></i>
+          <select [(ngModel)]="query.BusinessUnit">
+            <option value="">-请选择事业部</option>
+            <option *ngFor="let item of BusinessList" [ngValue]="item.SYBMC">{{item.SYBMC}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>印章岗审批完成时间:</label></div>
+      <div class="search-input">
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择开始日期" [(ngModel)]="query.FinishTimeBegin" [EndDate]="query.FinishTimeEnd"></my-datepicker>
+        </div>
+        <div class="inputs-date inputs-date-line">~</div>
+        <div class="inputs-date inputs-date-select">
+          <my-datepicker PlaceHolder="-请选择结束日期" [(ngModel)]="query.FinishTimeEnd" [StartDate]="query.FinishTimeBegin"></my-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同金额:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入合同金额" [(ngModel)]="query.SCMoney">
+        <!-- <div class="inputs-date inputs-date-select">
+          <input type="text" placeholder="-请输入合同金额" [(ngModel)]="query.StartMoney">
+        </div>
+        <div class="inputs-date inputs-date-line">~</div>
+        <div class="inputs-date inputs-date-select">
+          <input type="text" placeholder="-请输入合同金额" [(ngModel)]="query.EndMoney">
+        </div> -->
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>销售员:</label></div>
+      <div class="search-input">
+        <input type="text" placeholder="-请输入销售员\ItCode" [(ngModel)]="query.ApplyInfo">
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同创建来源:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="radio1" name="ContractSource" [(ngModel)]="query.ContractSource" value="自定义"><label for="radio1">自定义</label>
+        <input icheck type="radio" id="radio2" name="ContractSource" [(ngModel)]="query.ContractSource" value="模板"><label for="radio2">模板</label>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同类型:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="radio3" name="ContractType" [(ngModel)]="query.ContractType" value="硬件"><label for="radio3">硬件</label>
+        <input icheck type="radio" id="radio4" name="ContractType" [(ngModel)]="query.ContractType" value="软件"><label for="radio3">软件</label>
+        <input icheck type="radio" id="radio5" name="ContractType" [(ngModel)]="query.ContractType" value="服务"><label for="radio5">服务</label>
+      </div>
+    </div>
+    <div class="search-item">
+      <div class="search-title"><label>合同是否回收:</label></div>
+      <div class="search-input">
+        <input icheck type="radio" id="radio6" name="IsRecovery" [(ngModel)]="query.IsRecovery" value="1"><label for="radio6">是</label>
+        <input icheck type="radio" id="radio7" name="IsRecovery" [(ngModel)]="query.IsRecovery" value="0"><label for="radio7">否</label>
+        <input icheck type="radio" id="radio8" name="IsRecovery" [(ngModel)]="query.IsRecovery" value="2"><label for="radio8">PO</label>
+        <input icheck type="radio" id="radio9" name="IsRecovery" [(ngModel)]="query.IsRecovery" value="3"><label for="radio9">电子合同</label>
+      </div>
+    </div>
+  </div>
+  <div class="sc-seal-content">
+    <div class="search-button" style="width: 98%;margin-bottom: 12px;">
+      <button (click)="search(query,'searchbtn')">查询</button>
+      <button (click)="reset()">重置</button>
+    </div>
+    <div class="sc-seal-content-table" *ngIf="listData?.TaskList.length > 0">
+      <table class="table table-hover table-list" style="overflow-x: auto;display: block;">
+        <thead>
+          <tr>
+            <th>合同编号</th>
+            <th>申请人</th>
+            <th>我方主体</th>
+            <th>客户名称</th>
+            <th>项目名称</th>
+            <th>平台</th>
+            <th>合同金额</th>
+            <th>盖章日期</th>
+            <th>申请日期</th>
+            <th>本部</th>
+            <th>事业部</th>
+            <th>用印份数</th>
+            <th>是否回收</th>
+            <th>是否作废</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listData?.TaskList; index as i;" style="cursor: auto;">
+            <td><span (click)="routerContractPage(item)" class="list-first-td">{{ item.MainContractCode }}</span></td>
+            <td [title]="item.ApplyName">{{ item.ApplyName }}</td>
+            <td [title]="item.SellerCompany">{{ item.SellerCompany }}</td>
+            <td [title]="item.BuyerName">{{ item.BuyerName }}</td>
+            <td [title]="item.ProjectName">{{ item.ProjectName }}</td>
+            <td>{{ item.Platform }}</td>
+            <td>{{ item.ContractMoney }}</td>
+            <td>{{ item.SealApprovalTime }}</td>
+            <td>{{ item.SubmitTime }}</td>
+            <td>{{ item.Headquarter }}</td>
+            <td>{{ item.BusinessUnit }}</td>
+            <td>{{ item.PrintCount }}</td>
+            <td>
+              <span *ngIf="item.IsRecovery == '0'">否</span>
+              <span *ngIf="item.IsRecovery == '1'">是</span>
+              <span *ngIf="item.IsRecovery == '2'">PO</span>
+            </td>
+            <td>
+              <span *ngIf="item.IsRelieve == '0'">是,作废中</span>
+              <span *ngIf="item.IsRelieve == '1'">是,已作废</span>
+              <span *ngIf="item.IsRelieve == 'NullOrEmpty'">否,正常</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <iq-pager [data]="pagerData" (onChange)="search(query)"></iq-pager>
+    </div>
+    <div class="sc-seal-content-null" *ngIf="!listData || listData?.TaskList.length == 0" style="margin-top:0px">
+      <div class="m-noresult" style="margin-top:30px">
+        <div class="m-noresult-msg">
+          <i class="iqon-query"></i>
+          <p class="m-noresult-notice">暂无相关数据</p>
+          <p class="m-p-notice">输入新的查询条件试试吧~</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

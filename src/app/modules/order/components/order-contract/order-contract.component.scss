@@ -1,0 +1,82 @@
+.m-list-menu .m-search{
+  float: right;
+  width: 250px;
+}
+.table-list thead{
+    th{
+      border-bottom: none;
+      border-top: none;
+      i{
+          margin-left: 3px;
+          position: absolute;
+          line-height: 49px;
+      }
+      .iqon-orderdown-up{
+          transform: rotate(180deg);
+      }
+    }
+
+}
+
+.table-list{
+
+    tr{
+        cursor: auto;
+    }
+
+    table-layout: auto;
+    .w130{
+        width: 130px !important;
+    }
+}
+
+.m-home-default{
+    margin: 20px 0;
+}
+.m-scan .m-scan-body .m-scan-default .m-scan-logo {
+    background-color: #57b9f8;
+    margin-bottom: 30px;
+    color: #ffffff
+}
+.m-scan-logo i{
+    display: inline-block;
+    margin-top: 35px;
+    font-size: 30px;
+}
+.m-scan .m-scan-body .m-scan-default {
+    margin-top: 125px;
+    margin-bottom: 125px;
+    text-align: center;
+}
+.m-home-page .m-home-pageL {
+    min-height: 600.5px;
+    position: inherit;
+}
+.m-overclass{
+    position: relative;
+  .money-right{
+    padding-right: 100px;
+    text-align: right;
+  }
+  /deep/ .loading-backdrop{
+    background-color: transparent;
+  }
+}
+.m-noresult{
+    margin-top: 10px;
+    min-height: calc(100vh - 180px);
+}
+.m-btn-addContract{
+    position: absolute;
+    right: 20px;
+    top: 6px;
+}
+
+//点击文字样式
+.clickText{
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover{
+        color:#70B7F3;
+    }
+  }

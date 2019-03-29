@@ -1,0 +1,10 @@
+<div class="sc-notice">
+  <div class="sc-notice-header">消息通知</div>
+  <div class="sc-notice-content">
+    <textarea rows="3" class="m-textarea" placeholder="-请输入消息信息" name="notice" [(ngModel)]="data.Msg" #notice="ngModel" [ngClass]="{'m-input-warn':notice.invalid && (notice.touched || isNotice)}" required maxlength="300"></textarea>
+  </div>
+  <div class="sc-notice-footer">
+    <button class="m-btn-confirm" (click)="onNotice()">确定</button>
+    <button class="m-btn-cancel" (click)="cancel()">取消</button>
+  </div>
+</div>

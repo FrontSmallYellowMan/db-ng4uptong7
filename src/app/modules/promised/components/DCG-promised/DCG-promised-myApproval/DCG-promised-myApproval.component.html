@@ -1,0 +1,121 @@
+<div class="m-boardtop clearfix" style="box-sizing: border-box;">
+    <iq-breadcrumb></iq-breadcrumb>
+    <iq-newcreat [dataCreat]="newCreateApplyRoute.data" (mouseenter)="isNewPromised()"></iq-newcreat>
+  </div>
+  
+  <div class="m-overclass">
+      <div class="m-list-menu" >
+        <ul class="m-state" (click)="onTab($event)" #tab>
+          <li class="active" data-state="0">待我审批</li>
+          <li data-state="1">我已审批</li>
+          <li data-state="2">全部</li>
+        </ul>
+    
+        <div class="m-search-all" [ngClass]="{'hide': highSearchShow}">
+          <div class="m-search-high" (click)="openSearch()">
+            <i class="iqon-highsearch"></i>
+            高级搜索
+          </div>
+        </div>
+    
+        <!-- 高级搜索 -->
+        <div class="m-search-open" [ngClass]="{'hide': !highSearchShow}" (click)="closeSearch()">
+          收起高级搜索
+        </div>
+        <div class="m-search-more" [ngClass]="{'hide': !highSearchShow}">
+          <form #form = "ngForm">
+            <div class="m-search-item">
+              <label>销售员</label>
+              <input type="text" name="SalesITCode" [(ngModel)]="query.SalesITCode"  placeholder="-请填写销售员姓名或itcode" trim>
+            </div>
+    
+            <div class="m-search-item">
+                <label>平台</label>           
+                  <div class="m-select m-select-width">
+                    <i class="iqon-xia"></i>
+                    <select name="PlatformName" id="" [(ngModel)]="query.PlatformName">
+                      <option value="" disabled selected class="font-color">-请选择</option>
+                      <ng-container *ngFor="let p of platForms">
+                      <option value="{{p.platform}}">{{p.platform}}</option>
+                      </ng-container>
+                    </select>
+                  </div>  
+              </div>
+            <div class="m-search-item m-search-items">
+                  <label>申请日期</label>
+                  <div class="m-datepicker-comb">
+                    <div class="m-datepicker-start">
+                      <my-datepicker [(ngModel)]="query.BeginDate" [EndDate]="query.EndDate" format="YYYY-MM-DD"  PlaceHolder="-请选择开始日期" name="BeginDate" required></my-datepicker>
+                    </div> <span>~</span> 
+                    <div class="m-datepicker-end">
+                      <my-datepicker [(ngModel)]="query.EndDate" [StartDate]="query.BeginDate" format="YYYY-MM-DD"  PlaceHolder="-请选择结束日期" name="EndDate" required></my-datepicker>
+                    </div>
+                  </div>
+            </div>
+              <div class="m-search-item m-search-clear">
+                  <label>信用评级</label>           
+                  <div class="m-select m-select-width">
+                    <i class="iqon-xia"></i>
+                    <select name="SalesLevel" id="" [(ngModel)]="query.SalesLevel">
+                      <option value="" disabled selected class="font-color">-请选择</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                    </select>
+                  </div>
+              </div>
+            <div class="m-search-btn">
+              <button type="button" class="m-btn-confirm research" (click)="search()">搜索</button>
+              <button type="button" class="m-btn-default resets" (click)=reset()>重置</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    
+      <!-- 搜索缺省 -->
+      <ng-container *ngIf="!isHide">
+          <noResultPage></noResultPage>
+      </ng-container>
+  
+      <!-- 数据列表 -->
+      <div class="m-card-cont" [ngClass]="{'hideStyle':!isHide}">
+        <div class="table-auto-content">
+          <table class="table table-hover table-list">
+            <thead>
+              <tr>
+                  <th class="wp5">序号</th>
+                  <th>申请单编号</th>
+                  <th>ITCODE</th>
+                  <th>姓名</th>
+                  <th>平台</th>
+                  <th style="width:150px;">事业部</th>
+                  <th>信用评级</th>
+                  <th>承诺日期</th>
+                  <th>创建日期</th>
+                  <th>超期天数</th>
+                  <th>流程状态</th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr *ngFor="let item of searchList ;let i=index">
+              <td class="wp5">{{noCounter+i+1}}</td>
+              <td ><span class="clickText" (click)="getDetail(item.ApplyID,item.TaskTableURL)">{{item.ApplyID}}</span></td>
+              <td>{{item.SalesITCode|lowercase}}</td>
+              <td>{{item.SalesName}}</td>
+              <td>{{item.PlatformName}}</td>
+              <td [title]="item.SalesDeparment"><div class="m-div-warp">{{item.SalesDeparment}}</div></td>
+              <td>{{item.SalesLevel}}</td>
+              <td>{{item.CommitDate|iqDate:"YYYY-MM-DD"}}</td>
+              <td>{{item.CreateDate|date:"y-MM-dd HH:mm:ss"}}</td>
+              <td [timeDifference]="item.CommitDate"></td>
+              <td>{{item.WFstatus}}</td>
+             </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="page">
+            <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+          </div>
+      </div>
+    </div>
+    

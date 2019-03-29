@@ -1,0 +1,98 @@
+/* 附件组件 */
+.m-enclosure{
+  position: relative;
+  border: 1px solid $def-link1-color;
+  border-radius: 3px;
+  line-height: 35px;
+  color: $def-font2-color;
+
+  >li{
+    padding: 0 15px;
+    border-bottom: 1px solid #eee;
+
+    &:last-child{
+      border-bottom:none;
+    }
+
+    &.not-upload{
+      position: relative;
+      
+      input[type=file]{
+        width: 200px;
+        height: 36px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        font-size: 0;
+        cursor: pointer;
+      }
+    }
+
+    &.not-upload:hover, &:hover .iqon-enclosure, &:hover .filename{
+      color: $def-main-color!important;
+      cursor: pointer;
+    }
+
+    &.uploading{
+
+      .m-progress-all{
+        display: inline-block;
+        width: 140px;
+        height: 5px;
+        vertical-align: middle;
+
+        >span{
+          width: 0;
+          height: 5px;
+        }
+      }
+
+      .m-btn-text{
+        color: $def-main-color;
+      }
+    }
+
+    &.uploaded .filename{
+      position: relative;
+      color: $def-font1-color;
+
+      &:hover .file-download{
+        display: block;
+      }
+
+      .file-download{
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 0;
+        padding: 0 10px;
+        background-color: rgba(0, 0, 0, .8);
+        border-radius: 5px;
+        line-height: 30px;
+        color: #fff;
+        cursor: pointer;
+
+        &::after{
+          content: "";
+          display: block;
+          @extend %horizontal-center;
+          top: -10px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent transparent rgba(0, 0, 0, .8);
+        }
+      }
+    }
+
+    .iqon-enclosure{
+      margin-right: 10px;
+    }
+
+    .iqon-close{
+      margin-left: 10px;
+      color: $def-color1;
+      cursor: pointer;
+    }
+  }
+}

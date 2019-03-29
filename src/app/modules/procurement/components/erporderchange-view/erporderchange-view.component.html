@@ -1,0 +1,299 @@
+<div class="erporderChange">
+
+  <h4>{{pageTitle}}</h4>
+
+  <!-- 基本信息 -->
+  <div class="erporderChange-content1 clearfix">
+
+    <div class="erporderChange-title">
+      <h5>基本信息</h5>
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips" style="height:28px;">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>申请日期</p>
+      <div class="m-select erporderChange-select-style1">
+        {{erpOrderChangeData.AddTime|iqDate:"YYYY-MM-DD"}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="allMaterialType[0]=='' && (MaterialType.touched||isSubmit)">请选择物料类型</p> -->
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips" style="height:28px;">
+      <p class="erporderChange-form-title erporderChange-form-titles">申请人</p>
+      <div class="m-select erporderChange-select-style1">
+        <div class="m-user-info-small">
+          <div user-image [hasClose]="false" [user]="userInfo"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips" style="height:28px;">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>需求跟踪号</p>
+      <div class="m-select erporderChange-select-style1">
+        {{erpOrderChangeData.TrackingNumber}}
+      </div>
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips" style="height:28px;">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>事业部</p>
+      <div class="m-select erporderChange-select-style1">
+        {{erpOrderChangeData.SYBMC}}
+      </div>
+
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips" style="top:5px;">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>ERP订单编号
+        <br>(修改前)</p>
+      <div class="m-select erporderChange-select-style1" style="top:-10px;">
+        {{erpOrderChangeData.OriginalERPOrderNo}}
+      </div>
+      <!-- <p class="m-p-warn" style="line-height:20px;" *ngIf="!supplierData.phone && (Phone.touched||isSubmit)">请填写联系方式</p>         -->
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>ERP订单编号
+        <br>(修改后)</p>
+      <div class="m-select erporderChange-select-style1" style="top:-10px;">
+        {{erpOrderChangeData.ERPOrderNo}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="ContractID.invalid&& (ContractID.touched||isSubmit)">请填写合同编号</p> -->
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>订单总金额
+        <br>(修改前)</p>
+      <div class="m-select erporderChange-select-style1 m-input-width" style="top:-10px;">
+        {{erpOrderChangeData.OriginalOrderAmount|number:"1.2"}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>订单总金额
+        <br>(修改后)</p>
+      <div class="m-select erporderChange-select-style1" style="top:-10px;">
+        {{erpOrderChangeData.OrderAmount|number:"1.2"}}
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+    </div>
+
+
+    <div class="erporderChange-form erporderChange-tips">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>是否采购冲红</p>
+      <div class="m-select erporderChange-select-style1 m-input-width">
+        <input type="radio" icheck name="IsRedInvoice" #IsRedInvoice="ngModel" [(ngModel)]="erpOrderChangeData.IsRedInvoice" value=1
+          [disabled]="true">
+        <span>是</span>
+        <input type="radio" icheck name="IsRedInvoice" #IsRedInvoice="ngModel" [(ngModel)]="erpOrderChangeData.IsRedInvoice" value=0
+          [disabled]="true">
+        <span>否</span>
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="ContractMoney.invalid&& (ContractMoney.touched||isSubmit)" style="padding-right:7%">请填写合同金额，保留两位小数</p> -->
+    </div>
+
+    <div class="erporderChange-form erporderChange-tips">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need">*</span>是否修改
+        <br>物料明细</p>
+      <div class="m-select erporderChange-select-style1" style="vertical-align: top;">
+        <input type="radio" icheck name="IsChangeMaterial" #IsChangeMaterial="ngModel" [(ngModel)]="erpOrderChangeData.IsChangeMaterial"
+          value=1 [disabled]="true">
+        <span>是</span>
+        <input type="radio" icheck name="IsChangeMaterial" #IsChangeMaterial="ngModel" [(ngModel)]="erpOrderChangeData.IsChangeMaterial"
+          value=0 [disabled]="true">
+        <span>否</span>
+      </div>
+      <!-- <p class="m-p-warn" *ngIf="AgentName.invalid&& (AgentName.touched||isSubmit)">请填写代理商名称</p> -->
+    </div>
+
+    <div class="erporderChange-textarea">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>修改项目描述</p>
+      <div class="m-select erporderChange-textarea-content" style="line-height:20px;">
+        {{erpOrderChangeData.ItemDescription}}
+      </div>
+
+    </div>
+
+
+    <div class="erporderChange-upLoad-form erporderChange-tips" *ngIf="alreadyfilelUpLoadList.length>0">
+      <p class="erporderChange-form-title erporderChange-form-titles">
+        <span class="m-form-need"></span>附件</p>
+      <div class="m-select erporderChange-select-style1" style="vertical-align: top;width:88.5%;top:-3px;">
+        <ul class="m-enclosure" *ngFor="let list of alreadyfilelUpLoadList;index as i">
+          <li class="uploaded">
+            <i class="iqon-enclosure"></i>
+            <span class="filename" (click)="seeFileUpLoad(list.AccessoryURL)">
+              {{list.AccessoryName}}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!--采购信息-->
+  <div class="erporderChange-content1 clearfix">
+
+    <div class="erporderChange-title">
+      <h5>采购信息</h5>
+    </div>
+
+    <div class="m-erporderchange-table">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="wp10"></th>
+              <th style="width:45%">修改前</th>
+              <th style="width:45%">修改后</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of procurementInformation;index as i">
+              <td>{{item.title}}</td>
+              <td>
+                <span>{{item.before}}</span>           
+              </td>
+              <td [ngClass]="{'m-erpchange-font-redcolor':item.before!==item.after}">
+                <span>{{item.after}}</span>
+            </tr>
+  
+          </tbody>
+        </table>
+      </div>
+
+  </div>
+
+
+
+  <!--修改物料明细-->
+  <div class="erporderChange-content1 clearfix" *ngIf="erpOrderChangeData.IsChangeMaterial==1">
+
+    <div class="erporderChange-title">
+      <h5>修改物料明细
+        <span class="m-title-font">是否创建新的采购订单
+          <input type="radio" icheck name="Is2ERP" [(ngModel)]="erpOrderChangeData.Is2ERP" value=1 [disabled]="true">
+          <span>是</span>
+          <input type="radio" icheck name="Is2ERP" [(ngModel)]="erpOrderChangeData.Is2ERP" value=0 [disabled]="true">
+          <span>否</span>
+        </span>
+
+      </h5>
+    </div>
+
+    <div class="m-erporderchange-table">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th style="width:5%">行项目</th>
+            <th style="width:10%">
+              <span class="m-form-need"></span>物料编号</th>
+            <th style="width:22%">物料描述</th>
+            <th style="width:5%">
+              <span class="m-form-need"></span>数量</th>
+            <th style="width:8%">
+              <span class="m-form-need"></span>未税单价</th>
+            <th style="width:6%">
+              <span class="m-form-need"></span>库存地</th>
+            <th style="width:8%">
+              <span class="m-form-need"></span>批次</th>
+            <th style="width:10%">
+              <span class="m-form-need"></span>需求跟踪号</th>
+            <th style="width:16%">
+              <span class="m-form-need"></span>销售合同号</th>
+            <th style="text-align:center" style="width:10%" [ngClass]="{'m-th-scoll':materialList.length>10}">状态</th>
+          </tr>
+        </thead>
+      </table>
+
+      <div [ngClass]="{'m-table-scoll':materialList.length>10}">
+      <table class="table table-hover" style="border-top:none;">
+        <tbody>
+          <tr *ngFor="let item of materialList;index as i;" [ngClass]="{'m-delete-line':item.IsDeleted||item.IsERPDeleted}">
+            <td style="width:5%">{{item.ItemNo}}</td>
+            <td style="width:10%" [ngClass]="{'m-erpchange-font-redcolor':item.MaterialNumber!==item.OriginalMaterialNumber}">
+              {{item.MaterialNumber}}
+            </td>
+            <td style="width:22%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalMaterialDescription!==item.MaterialDescription}">
+              <p class="m-p-warp" [title]="item.MaterialDescription">{{item.MaterialDescription}}</p>
+            </td>
+            <td style="width:5%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalCount!==item.Count}">
+              {{item.Count}}
+            </td>
+            <td style="width:8%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalPrice!==item.Price}">
+              {{item.Price|number:"1.2"}}
+            </td>
+            <td style="width:6%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalStorageLocation!==item.StorageLocation}">
+              {{item.StorageLocation}}
+            </td>
+            <td style="width:8%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalBatch!==item.Batch}">
+              {{item.Batch}}
+            </td>
+            <td style="width:10%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalTrackingNo!==item.TrackingNo}">
+              {{item.TrackingNo}}
+            </td>
+            <td style="width:16%" [ngClass]="{'m-erpchange-font-redcolor':item.OriginalSC_Code!==item.SC_Code}">
+              {{item.MainContractCode}}
+            </td>
+            <td *ngIf="item.IsDeleted&&!item.IsERPDeleted" class="m-td-jian wp10">
+                已删除
+            </td>
+            <td *ngIf="item.IsDeleted&&item.IsERPDeleted||!item.IsDeleted&&item.IsERPDeleted" class="m-td-jian wp10">
+              ERP中已删除
+            </td>
+            <td *ngIf="!item.IsDeleted&&!item.IsERPDeleted&&!item.materialIsChange" class="m-td-jian wp10">
+            </td>
+            <td *ngIf="item.materialIsChange&&!item.IsDeleted&&!item.IsERPDeleted&&!item.IsNew" class="m-td-jian wp10">
+              已变更
+              </td>
+              <td *ngIf="item.IsNew" class="m-td-jian wp10">
+                 新建
+              </td>
+          </tr>
+
+        </tbody>
+      </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!--审批历史记录-->
+  <div class="m-edit-approvalDetail-content1" *ngIf="wfHistory.length>0">
+    <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+  </div>
+  <!--审批历史记录 end-->
+
+  <!--审批按钮-->
+  <div class="m-div-margin" *ngIf="pageStatus==='e'&&taskState==='0'&&ADP!='1'">
+    <db-wfapproval [appParms]="approveData" [hasSaved]="isApproval" (onSave)="writeType($event)" (onApprovalComplateCallBack)="wariteStorage()"></db-wfapproval>
+  </div>
+
+  <!-- 加签审批按钮 -->
+  <div *ngIf="taskState=='0'&&ADP=='1'" class="m-div-margin">
+    <db-wfadp [adpAppParms]="approveData" (onApprovalComplateCallBack)="writeStorage()"></db-wfadp>
+  </div>
+
+  <div class="m-commonly-btn" *ngIf="pageStatus==='a'||erpOrderChangeData.ApproveState==3||taskState==='1'">
+    <button class="m-btn-cancel" (click)="cancle()" type="button">关闭</button>
+  </div>
+
+
+</div>
+
+<!-- 审批全景图 -->
+<div class="apply-p-right">
+  <db-wfview #wfView></db-wfview>
+</div>

@@ -1,0 +1,43 @@
+<div class="pop-approverList">
+
+  <div class="pop-title">
+    <span>请选择审批人</span>
+    <i class="iqon-close2" (click)="close()"></i>
+  </div>
+
+  <table class="m-rule-table" style="margin-top:20px;">
+    <tr>
+      <th style="width:5%">
+        <input type="checkbox" icheck [(ngModel)]="isAllChecked" value=true (ngModelChange)="allCheckedChange()">
+      </th>
+      <th>
+        姓名
+      </th>
+      <th>
+        Itcode
+      </th>
+    </tr>
+  </table>
+
+  <div class="table-box" [ngClass]="{'isScoll':popApproverList.length>9}">
+    <table class="m-rule-table" style="border-top:none">
+      <tr *ngFor="let item of popApproverList;index as i">
+        <td stopParentClick style="width:5%">
+          <input type="checkbox" icheck [(ngModel)]="item.checked" (ngModelChange)="testIsAllChecked()">
+        </td>
+        <td>
+          {{item.UserName}}
+        </td>
+        <td>
+          {{item.ITCode}}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="m-pop-button">
+    <button type="button" class="m-btn-confirm" (click)="confirm()">确定</button>
+    <button type="button" class="m-btn-cancel" (click)="close()">取消</button>
+  </div>
+
+</div>

@@ -1,0 +1,106 @@
+
+@import '../../../../../../sass/base/variables';
+@import '../../../../../../sass/base/util';
+
+.m-search-open{
+  position: relative;
+  float: right;
+  padding: 18px 25px;
+  background-color: $def-color3;
+  color: $def-main-color;
+  box-shadow: 0 -2px 3px rgba( 0, 0, 0, .15);
+  cursor: pointer;
+}
+.m-search-more{
+  float: left;
+  width: 100%;
+  background-color: $def-color3;
+  box-shadow: 0 0 5px rgba( 0, 0, 0, .15);
+
+  .form{
+    padding: 15px 25px;
+    @extend %box-flex;
+  }
+  .m-search-btn{
+      width: 100%;
+      text-align: center;
+      button{
+          width: 78px;
+      }
+  }
+  .m-search-item{
+      display: inline-block;
+      margin-bottom: 10px;
+      width: 100%;
+      label{
+          display: inline-block;
+          margin-right: 5px;
+          text-align: right;
+      }
+      input{
+          display: inline-block;
+          width: 30%;
+          height: 35px;
+      }
+  }
+  .m-search-data{
+      display: inline-block;
+      margin-bottom: 10px;
+      width: 50%;
+      label{
+          display: inline-block;
+          width: 17%;
+          margin-right: 5px;
+          text-align: right;
+      }
+      .m-data-box{
+          display: inline-block;
+          width: 40%;
+      }
+  }
+  /deep/ .m-datepicker-comb{
+    display: inline-block;
+  }
+}
+/deep/ .loading-container .loading-backdrop{
+    background-color: inherit !important;
+}
+.table{
+tr{
+    th:last-child{
+        text-align: center;
+    }
+    td:last-child{
+        text-align: center;
+    }
+}
+}
+
+.hide{
+    display: none;
+}
+
+.m-noresult{
+    height:calc(100vh - 175px);
+    margin: 15px 0 0 0;
+}
+
+.m-btn-need{
+    padding: 0 5px 0 5px;
+    text-align: center;
+    color: rgb(18, 140, 221);
+    border: 1px solid rgb(18, 140, 221);
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 5px 0 0;
+    &:hover{
+        color:rgb(250, 138, 33);
+        border: 1px solid rgb(250, 138, 33);
+    }
+}
+
+.btnDisabled{
+    color: #ccc!important;
+    border: 1px solid #ccc!important;
+    cursor: not-allowed;
+}

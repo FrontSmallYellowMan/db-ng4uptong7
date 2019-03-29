@@ -1,0 +1,137 @@
+<div class="index-content">
+  <ul class="nav-block clearfix">
+    <li *ngFor="let item of navConfig.nav_head" (mouseenter)="item.slideState = 'in'">
+      <div (mouseleave)="item.slideState = 'out'">
+        <div class="nav-block-list">
+          <i class="{{item.iqon}}"></i>
+          <div class="nav-block-right">
+            <p class="title">{{item.title}}</p>
+            <p class="enter">快速新建入口</p>
+          </div>
+        </div>
+        <div class="nav-down" [@shrinkOut]="item.slideState">
+          <ul>
+            <li *ngFor="let nav of item.list" [class.open]="nav.isOpen === 'open'" (click)="nav.isOpen = nav.isOpen==='close'?'open':'close'">
+              <ng-container *ngIf="!nav.children">
+                <a (click)="openUrl(nav)" [class.not-complete]="nav.notComplete">
+                  {{nav.title}}
+                  <span *ngIf="nav.new && flag" style="color: orange;">new</span>
+                </a>
+              </ng-container>
+              <ng-container *ngIf="nav.children">
+                <a href="javascript:;">{{nav.title}}</a>
+                <i class="iqon-angle-right"></i>
+                <ul [@shrinkOutC]="nav.isOpen" stopParentClick>
+                  <li *ngFor="let child of nav?.children" (click)="openUrl(child)" [class.not-complete]="child.notComplete">{{child.name}}</li>
+                </ul>
+              </ng-container>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <!-- 我的订单 -->
+  <div class="my-order-info">
+    <div class="my-order-head">
+      <span class="my-order-title"><i class="iqon-report"></i>我的销售</span>
+    </div>
+    <div class="my-order-content">
+      <ul class="clearfix">
+        <li>待用印<a class="m-num" (click)="openMySales('Print')">{{mySalesAmount?.PendingPrint | loading}}</a></li>
+        <li>待备货<a class="m-num" (click)="openMySales('Stock')">{{mySalesAmount?.PendingStock | loading}}</a></li>
+        <li>待开销售<a class="m-num" (click)="openMySales('UnSales')">{{mySalesAmount?.PendingSale | loading}}</a></li>
+        <li>配送中<a href="order/order-completed?saleType=1" target="_blank" class="m-num">{{mySalesAmount?.DistributionParm?.Distribution | loading}}</a></li>
+        <li>待回款<a class="m-num">{{mySalesAmount?.PendingPayment | loading}}</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- 表格 -->
+  <div class="my-order-table">
+    <div class="my-order-table-left">
+      <div class="my-order-head">
+        <span class="my-order-title"><i class="iqon-report"></i>销售额</span>
+        <!-- <span class='my-order-all my-order-sm'>203,955,543.00元</span> -->
+      </div>
+      <div #echarts class="my-order-charts"></div>
+    </div>
+    <div class="my-order-table-right">
+      <div class="my-order-head">
+        <span class="my-order-title"><i class="iqon-report"></i>钱到账</span>
+        <span class='my-order-all'>全部</span>
+      </div>
+      <div class="my-order-body">
+        <table>
+          <thead>
+            <tr>
+              <th>客户名称</th>
+              <th>到账金额</th>
+              <th>到账日</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cusPayList">
+              <td>{{item.CustName}}</td>
+              <td>{{item.Amount}}</td>
+              <td>{{item.ArriveDate}}</td>
+              <td>{{item.Remark}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- 金额 -->
+  <div class="my-sales-money">
+    <div class="my-sales-section">
+      <p>本月合同金额</p>
+      <p class="my-section-money">{{mySalesAmount?.ContractAmount | loading}}</p>
+    </div>
+    <div class="my-sales-section">
+      <p>本月销售金额</p>
+      <p class="my-section-money">{{mySalesAmount?.SalesAmount | loading}}</p>
+    </div>
+    <div class="my-sales-section">
+      <p>欠款金额</p>
+      <p class="my-section-money">{{mySalesAmount?.ArrearsAmount | loading}}</p>
+    </div>
+    <div class="my-sales-section">
+      <p>超期欠款</p>
+      <p class="my-section-money">{{mySalesAmount?.OverdueAmount | loading}}</p>
+    </div>
+    <div class="my-sales-section">
+      <p>坏账</p>
+      <p class="my-section-money">{{mySalesAmount?.BadDebtAmount | loading}}</p>
+    </div>
+  </div>
+  <!-- 收钱 -->
+  <div class="my-order-info my-order-table">
+    <div class="my-order-head">
+      <span class="my-order-title"><i class="iqon-report"></i>快收钱去</span>
+      <span class='my-order-all'>全部</span>
+    </div>
+    <div class="my-order-body">
+      <table>
+        <thead>
+          <tr>
+            <th>合同编号</th>
+            <th>客户名称</th>
+            <th>开票金额</th>
+            <th>到账日</th>
+            <th>超期天数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of overDueList">
+            <td>{{item.ContractCode}}</td>
+            <td>{{item.KHMC}}</td>
+            <td>{{item.CQJE}}</td>
+            <td>{{item.CREDITDATE}}</td>
+            <td>{{item.CQTS}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

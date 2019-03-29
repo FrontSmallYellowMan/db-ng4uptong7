@@ -1,0 +1,699 @@
+<div class="order-approval-view apply-progress content-auto">
+  <loading [show]="loading"></loading>
+  <div class="apply-p-left">
+    <div class="m-apply-exm2">
+      <h3 class="order-view-header" *ngIf='isView'>查看销售订单
+        <span *ngIf="orderViewForm.SalesOrderData.Status==='2'||orderViewForm.SalesOrderData.ERPOrderCode"
+          (click)="getDelivery()" class="m-right-btn">查看物流信息</span></h3>
+      <h3 class="order-view-header" *ngIf='!isView'>审批销售订单</h3>
+      <div class="m-exm">
+
+        <!-- 商务关注信息 -->
+        <div class="one-section" *ngIf='!isView && isSale && orderViewForm.SalesOrderData.BizConcernInfo'>
+            <div class="m-dialog-head">
+              <span class="m-dialog-head-blue">商务关注信息</span>
+              <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.careMessage' (click)='foldMess("careMessage")'></i>
+            </div>
+            <div class="m-exm-item" [class.hide]='aprOpenList.careMessage'>
+              <ul>
+                <li class="m-exm">
+                  <div class="m-exm-label">关注信息</div>
+                  <div class="m-exm-cont" style="color:#ff4d4d;">{{orderViewForm.SalesOrderData.BizConcernInfo}}</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        <!-- 基本信息 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">基本信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.baseMes' (click)='foldMess("baseMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.baseMes'>
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label m-exm-label-person">收款人</div>
+                <div class="m-exm-cont">
+                  <div class="m-user-info-small">
+                    <div class="m-user-info m-user-info-title" #agent user-image [hasClose]="false"></div>
+                  </div>
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label m-exm-label-person">销售员</div>
+                <div class="m-exm-cont">
+                  <div class="m-user-info-small">
+                    <div class="m-user-info m-user-info-title" #sale user-image [hasClose]="false"></div>
+                  </div>
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">订单类型</div>
+                <ng-container *ngFor="let items of ListOrderType;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.OrderTypeId==items.OrderTypeId' class="m-exm-cont">{{items.OrderName}}</div>
+                </ng-container>
+
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label" *ngIf='typeParam!=2'>合同主体</div>
+                <div class="m-exm-label" *ngIf='typeParam===2'>我方主体</div>
+                <div class="m-exm-cont">{{ContractSubject}}</div>
+              </li>
+              <li class="m-exm-half" *ngIf='typeParam!=2'>
+                <div class="m-exm-label">合同编号</div>
+                <div class="m-exm-cont">
+                  <span>{{orderViewForm.SalesOrderData.ContractCode}}</span>
+                  <span>{{orderViewForm.IsBackContract?'（已返原）':'（未返原）'}}</span>
+                  <span class="m-dialog-head-blue see-order-info" (click)='SeeOrderInfo()'>查看合同</span>
+                </div>
+                <p class="m-p-warn" style="padding-left:150px;" *ngIf="orderViewForm.SalesOrderData.SaleContractStatus==='1'">
+                  合同"{{orderViewForm.SalesOrderData.ContractCode}}"已变更，请及时关注！
+                </p>
+                <p class="m-p-warn" style="padding-left:150px;" *ngIf="orderViewForm.SalesOrderData.SaleContractStatus==='2'">
+                  合同"{{orderViewForm.SalesOrderData.ContractCode}}"已解除！
+                </p>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">项目币种</div>
+                <ng-container *ngFor="let items of ListCurrency;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.CurrencyID==items.CurrencyID' class="m-exm-cont">{{items.CurrencyName}}</div>
+                </ng-container>
+              </li>
+
+              <!-- 合同主体为00M5和00M6 添加字段 -->
+              <ng-container *ngIf="isSpecial">
+                <li class="m-exm-half">
+                  <div class="m-exm-label">居间服务方名称</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.IntermediateCustomerName}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">居间服务方ERP编号</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.IntermediateCustomerERPCode}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">合作模式</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CooperationMode}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">账号接收邮箱</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerEmail}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">是否为特折单</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.IsSuperDiscount=='0'?'否':'是'}}</div>
+                </li>
+              </ng-container>
+              <li class="m-exm-half">
+                <div class="m-exm-label">PO号</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.POCode}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">是否包含CSP</div>
+                <div class="m-exm-cont">
+                  <span *ngIf='orderViewForm.SalesOrderData.IsContainCSP=="1"'>是</span>
+                  <span *ngIf='orderViewForm.SalesOrderData.IsContainCSP=="0"'>否</span>
+                </div>
+              </li>
+              <!-- 2018-11-12 新增字段 -->
+              <li class="m-exm-half">
+                <div class="m-exm-label">销售小组</div>
+                <div class="m-exm-cont">{{saleGroupName}}</div>
+              </li>
+
+              <li class="m-exm-half" *ngIf='typeParam === 0 && orderViewForm.SalesOrderData.ERPOrderCode'>
+                <div class="m-exm-label">是否整单发货</div>
+                <div class="m-exm-cont">
+                  <span *ngIf='orderViewForm.SalesOrderData.isCompleteOrder=="1"'>是</span>
+                  <span *ngIf='orderViewForm.SalesOrderData.isCompleteOrder=="0"'>否</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 项目信息 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">项目信息</span>
+          </div>
+          <div class="m-exm-item m-projectInfo">
+            <db-customerform [readonly]=true [Data]="customerFormData"></db-customerform>
+          </div>
+        </div>
+
+        <!-- 支付信息 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">支付信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.payMes' (click)='foldMess("payMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.payMes'>
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label">客户应收账款</div>
+                <div class="m-exm-cont">
+                  <span>{{orderViewForm.SalesOrderData.Receivable}}</span>
+                  <span *ngIf='isMesCtr' (click)='seeDtailLis()' class="m-dialog-head-blue see-order-info">查看明细</span>
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">客户超期欠款</div>
+                <div class="m-exm-cont">
+                  <span>{{orderViewForm.SalesOrderData.Overdue}}</span>
+                  <span *ngIf='isMesCtr' (click)='seeDtailLis()' class="m-dialog-head-blue see-order-info">查看明细</span>
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">售达方编码</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerERPCode}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">售达方名称</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerName}}</div>
+              </li>
+              <li class="m-exm-half" *ngIf="orderViewForm.SalesOrderData.CustomerTaxNumber && (isACustomer || (!isACustomer && orderViewForm.SalesOrderData.InvoiceTypeID == '0002'))">
+                <div class="m-exm-label">售达方税号</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerTaxNumber}}</div>
+              </li>
+              <ng-container *ngIf="isACustomer">
+                <li class="m-exm-half">
+                  <div class="m-exm-label">售达方邮编</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerPost}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">售达方城市</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerCity}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">注册地址及电话</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerAddress}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">售达方开户银行名称</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerBank}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">售达方开户行账号</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerBankAccount}}</div>
+                </li>
+              </ng-container>
+              <li class="m-exm-half" *ngIf='typeParam!=2'>
+                <div class="m-exm-label">系统账期</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.AccountPeriod}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">分销渠道</div>
+                <ng-container *ngFor="let items of ListChannel;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.ChannelOfDistributionID==items.ChannelOfDistributionID'
+                    class="m-exm-cont">{{items.Name}}</div>
+                </ng-container>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">付款条件代码</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.PaymentTermsCode}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">付款条件名称</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.PaymentTerms}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 商务信息 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">商务信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.busMes' (click)='foldMess("busMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.busMes'>
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label">发票类型</div>
+                <ng-container *ngFor="let items of ListInvoice;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.InvoiceTypeID==items.InvoiceTypeID' class="m-exm-cont">{{items.Name}}</div>
+                </ng-container>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">是否有返款</div>
+                <ng-container *ngFor="let items of ListRebate;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.RebatePercentageID==items.RebatePercentageID' class="m-exm-cont">{{items.Name}}</div>
+                </ng-container>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">厂商项目编号</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.ManufacturerProNo}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">发票内容</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.InvoiceNote}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">交货备注</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.DeliveryNote}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 其他信息 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">其他信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.otherMes' (click)='foldMess("otherMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.otherMes'>
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label">最终用户全称</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.EndUserName}}</div>
+              </li>
+              <!-- <li class="m-exm-half">
+                                  <div class="m-exm-label">区域</div>
+                                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.CustomerRegion}}</div>
+                              </li> -->
+              <li class="m-exm-half">
+                <div class="m-exm-label">商务审批平台</div>
+                <!-- <div class="m-exm-cont">{{orderViewForm.SalesOrderData.BusiApprovePlatform}}</div> -->
+                <ng-container *ngFor="let items of ListPlatform;index as i;">
+                  <div *ngIf='orderViewForm.SalesOrderData.BusiApprovePlatform==items.platformcode' class="m-exm-cont">{{items.platform}}</div>
+                </ng-container>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">部门产品组</div>
+                <!-- <div class="m-exm-cont">{{orderViewForm.SalesOrderData.BusiApprovePlatform}}</div> -->
+                <ng-container *ngFor="let items of ListDepPro;index as i;">
+                  <div class="m-exm-cont" *ngIf='orderViewForm.SalesOrderData.DepartmentProductGroupID==items.DepartmentProductGroupID'><span>{{items.DepartmentProductGroupID
+                      + " | "+ items.Name}}</span></div>
+                </ng-container>
+              </li>
+              <!-- <li class="m-exm-half">
+                                  <div class="m-exm-label">部门行业</div>
+                                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.ProjectIndustryID}}</div>
+                              </li> -->
+              <!-- <li class="m-exm-half">
+                                  <div class="m-exm-label">DC行业大类</div>
+                                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.IndustryID}}</div>
+                              </li> -->
+              <ng-container *ngIf='typeParam===1'>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">装货点</div>
+                  <!-- <div class="m-exm-cont">{{orderViewForm.SalesOrderData.LoadingPointCode}}</div> -->
+                  <ng-container *ngFor="let items of ListLoading;index as i;">
+                    <div *ngIf='orderViewForm.SalesOrderData.LoadingPointCode==items.LoadingPointCode' class="m-exm-cont">{{items.LoadingPointName+'
+                      | '+ items.LoadingPointCode}}</div>
+                  </ng-container>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">卸货点</div>
+                  <!-- <div class="m-exm-cont">{{orderViewForm.SalesOrderData.UnloadingPointCode}}</div> -->
+                  <ng-container *ngFor="let items of ListUnading;index as i;">
+                    <div *ngIf='orderViewForm.SalesOrderData.UnloadingPointCode==items.UnloadingPointCode' class="m-exm-cont">{{items.UnloadingPointName+'
+                      | '+ items.UnloadingPointCode}}</div>
+                  </ng-container>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">装运条件</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.TermsofShipment}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">事业部内部合同号</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.DepartmentContCode}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">国际贸易条款</div>
+                  <ng-container *ngFor="let items of ListTerm;index as i;">
+                    <div *ngIf='orderViewForm.SalesOrderData.DeliveredTermACode==items.DeliveredTermACode' class="m-exm-cont">{{items.DeliveredTermAName}}</div>
+                  </ng-container>
+                  <!-- <div class="m-exm-cont">{{orderViewForm.SalesOrderData.DeliveredTermACode}}</div> -->
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">国际货易条款备注</div>
+                  <div class="m-exm-cont">{{orderViewForm.SalesOrderData.DeliveredTermInfo}}</div>
+                </li>
+
+              </ng-container>
+
+            </ul>
+          </div>
+        </div>
+        
+        <!-- 送达方及销售物料 -->
+        <div class="m-material-info1" *ngFor='let items of orderViewForm.DeliveryData;index as i;'>
+          <h2><i class="m-nuber-tag" *ngIf="orderViewForm.DeliveryData.length > 1">{{i+1}}</i>送达方及销售物料
+            <button type="button" *ngIf="!isView && isSale && items.Deliverinfo.ERPOrderCode" class="m-btn-del" (click)="clearERPcode(items.Deliverinfo.ERPOrderCode)">清除ERP销售订单编号</button>
+            <i class="iqon-fold"
+              [class.iqon-fold-up]='aprOpenList.contractMes[i]' (click)='foldMess("contractMes",i)'></i>
+              
+            </h2>
+          <div class="m-table" [class.hide]='aprOpenList.contractMes[i]'>
+            <div class="m-exm-item mb20">
+              <ul>
+                <li class="m-exm-half" *ngIf='items.Deliverinfo.ERPOrderCode'>
+                  <div class="m-exm-label">ERP销售订单编号</div>
+                  <div class="m-exm-cont">{{items.Deliverinfo.ERPOrderCode}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">送达方编码</div>
+                  <div class="m-exm-cont">{{items.Deliverinfo.SDFCode}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">送达方名称</div>
+                  <div class="m-exm-cont">{{items.Deliverinfo.SDFName}}</div>
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">送达方地址</div>
+                  <div class="m-exm-cont">
+                    <ng-container *ngFor="let provinces of provinceCityInfo.province;">
+                      <span style="margin-right: 0;" *ngIf='items.Deliverinfo.AreaID==provinces.ProvinceCode'>{{provinces.ProvinceName}}（省/市）-</span>
+                    </ng-container>
+                    <ng-container *ngFor="let citys of provinceCityInfo.city;">
+                      <span style="margin-right: 0;" *ngIf='items.Deliverinfo.SDFCity==citys.CityCode'>{{citys.CityName}}（市/县）-</span>
+                    </ng-container>
+                    <span style="margin-right: 0;" *ngIf='items.Deliverinfo.SDFDistrict'>{{items.Deliverinfo.SDFDistrict}}（县/区）-</span>
+                    <!-- </ng-container> -->
+                    {{items.Deliverinfo.SDFAddress}}
+                  </div>
+                </li>
+                <li class="m-exm-half">
+                </li>
+                <li class="m-exm-half">
+                  <div class="m-exm-label">签收方式</div>
+                  <div class="m-exm-cont">{{items.Deliverinfo.SignatureMethod}}</div>
+                </li>
+              </ul>
+            </div>
+            <div class="table-ulbox clearfix table-deliverinfo">
+              <ul class="table-head clearfix">
+                <li class="w8w">ERP商品编码</li>
+                <li class="w10w">商品名称</li>
+                <li class="w5w">数量</li>
+                <li>金额</li>
+                <li>返款</li>
+                <li>销售总价</li>
+                <li class="w5w">库存地</li>
+                <li class="w5w">工厂</li>
+                <li class="minWidth-batch">批次</li>
+                <li>发货方式</li>
+                <li>备注</li>
+                <li>销售单位</li>
+              </ul>
+              <div class="table-body">
+                <ul class="clearfix" *ngFor='let item of items.MaterialList'>
+                  <li class="w8w" title="{{item.MaterialCode}}">{{item.MaterialCode}}</li>
+                  <li class="w10w" title="{{item.MaterialName}}">{{item.MaterialName}}</li>
+                  <li class="w5w" title="{{item.Quantity}}">{{item.Quantity}}</li>
+                  <li title="{{(item.Price || 0) |iqNumber:'1.2-2'}}">{{(item.Price || 0) |iqNumber:'1.2-2'}}</li>
+                  <li title="{{(item.RebateAmount || 0) |iqNumber:'1.2-2'}}">{{(item.RebateAmount || 0)
+                    |iqNumber:'1.2-2'}}</li>
+                  <li title="{{(item.TotalPrice || 0) |iqNumber:'1.2-2'}}">{{(item.TotalPrice || 0) |iqNumber:'1.2-2'}}</li>
+                  <li class="w5w" title="{{item.StorageLocation}}">{{item.StorageLocation}}</li>
+                  <li class="w5w" title="{{item.Factory}}">{{item.Factory}}</li>
+                  <li title="{{item.Batch}}" class="minWidth-batch">{{item.Batch}}</li>
+                  <ng-container *ngFor="let items of deliveryTypeList;index as i;">
+                    <li *ngIf='item.ConsignmentModeID==items.ConsignmentModeID' title="{{item.ConsignmentModeID}}">{{items.Name}}</li>
+                  </ng-container>
+                  <li title="{{item.Remark}}">{{item.Remark}}</li>
+                  <li title="{{item.SalesUnit}}">{{item.SalesUnit}}</li>
+                </ul>
+
+              </div>
+            </div>
+            <div class="m-warn-tip" *ngIf="isSale && items.Deliverinfo.IsDelegate==1" style="margin-top:10px;width:100%;"><span>当前送达方信息与合同发生变化，请同时提交委托发货原件给商务</span></div>
+          </div>
+          <div class="m-table my-payMes-table" *ngIf='orderViewForm.SalesOrderData.OrderTypeId=="0002" && items.ListPrePayment && items.ListPrePayment.length>0'>
+            <div class="payMes-title">
+              预收款信息
+            </div>
+            <div class="table-ulbox clearfix table-deliverinfo" >
+              <ul class="table-head clearfix">
+                <li class="w10w">核销凭证号</li>
+                <li class="w10w">客户名称</li>
+                <li>客户编码</li>
+                <li class="w5w">公司代码</li>
+                <li>凭证日期</li>
+                <li class="w5w">业务范围</li>
+                <li>金额</li>
+                <li>凭证行项目号</li>
+                <li>项目文件</li>
+              </ul>
+              <div class="table-body">
+                <ul class="clearfix" *ngFor='let item of items.ListPrePayment'>
+                  <li class="w10w" title="{{item.SHEET_NO}}">{{item.SHEET_NO}}</li>
+                  <li class="w10w" title="{{item.KHMC}}">{{item.KHMC}}</li>
+                  <li title="{{item.KHDM}}">{{item.KHDM}}</li>
+                  <li class="w5w" title="{{item.GSDM}}">{{item.GSDM}}</li>
+                  <li title="{{item.TICKET_DATE}}">{{item.TICKET_DATE}}</li>
+                  <li class="w5w" title="{{item.YWFWDM}}">{{item.YWFWDM}}</li>
+                  <li title="{{(item.AMOUNT || 0) |iqNumber:'1.2-2'}}">{{(item.AMOUNT || 0) |iqNumber:'1.2-2'}}</li>
+                  <li title="{{item.BUZEI}}">{{item.BUZEI}}</li>
+                  <li title="{{item.SGTXT}}">{{item.SGTXT}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 原始借用的物料信息 -->
+        <div class="one-section" *ngIf='isReturnBorrow'>
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">原始借用的物料信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.UnclearMaterial' (click)='foldMess("UnclearMaterial")'></i>
+          </div>
+          <div class="m-table" [class.hide]='aprOpenList.UnclearMaterial'>
+            <div class="table-ulbox clearfix table-unclearMaterial">
+              <ul class="table-head clearfix">
+                <li class="w5w">序号</li>
+                <li class="w10w">预留号</li>
+                <li class="w10w">ERP商品编码</li>
+                <li class="sales-name">商品名称</li>
+                <li>数量</li>
+                <li>库存地</li>
+                <li>工厂</li>
+                <li>批次</li>
+              </ul>
+              <div class="table-body">
+                <ul class="clearfix" *ngFor='let one of returnMaterialList;index as i'>
+                  <li class="w5w">{{i+1}}</li>
+                  <li class="w10w" title="{{one.ReservationNo}}">{{one.ReservationNo}}</li>
+                  <li class="w10w" title="{{one.MaterialNo}}">{{one.MaterialNo}}</li>
+                  <li class="sales-name" title="{{one.MaterialName}}">{{one.MaterialName}}</li>
+                  <li>{{one.ReturnCount}}</li>
+                  <li>{{one.OnwayStore}}</li>
+                  <li>{{one.Factory}}</li>
+                  <li>{{one.Batch}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 销售金额 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">销售金额</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.salMes' (click)='foldMess("salMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.salMes'>
+            <ul>
+              <li class="m-exm-half-half">
+                <div class="m-exm-label">订单金额</div>
+                <div class="m-exm-cont pl100">{{(orderViewForm.SalesOrderData.SalesAmountTotal || 0)
+                  |iqNumber:'1.2-2'}}</div>
+              </li>
+              <li class="m-exm-half-half">
+                <div class="m-exm-label">返款金额</div>
+                <div class="m-exm-cont">{{(orderViewForm.SalesOrderData.RebateAmountTotal || 0)
+                  |iqNumber:'1.2-2'}}</div>
+              </li>
+              <li class="m-exm-half-half">
+                <div class="m-exm-label">物料总数量</div>
+                <div class="m-exm-cont pl100">{{(materialSum || 0)}}</div>
+              </li>
+              <li class="m-exm-half-half" *ngIf='typeParam!=2'>
+                <div class="m-exm-label">合同金额</div>
+                <div class="m-exm-cont pl100">{{(orderViewForm.SalesOrderData.ContractMoney || 0) |iqNumber:'1.2-2'}}</div>
+              </li>
+              <li class="m-exm-half-half" *ngIf='typeParam!=2'>
+                <div class="m-exm-label">未开销售金额</div>
+                <div class="m-exm-cont pl100">{{(orderViewForm.UnSalesAmount || 0) |iqNumber:'1.2-2'}}</div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+        <!-- 关联支票信息 -->
+        <div class="m-material-info1" *ngIf='!isReturnBorrow'>
+          <h2>关联支票信息<span class="m-warn-tip" *ngIf='((orderViewForm.SalesOrderData.PaymentMode == "002"||orderViewForm.SalesOrderData.PaymentMode == "003") && (orderViewForm.ReceiptData?.length<1) )'>(付款方式为支票或商票，当前尚未关联)</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.relatMes' (click)='foldMess("relatMes")'></i>
+          </h2>
+          <div class="m-table" [class.hide]='aprOpenList.relatMes' *ngIf='(orderViewForm.ReceiptData?.length>1)'>
+            <div class="table-ulbox clearfix table-material">
+              <ul class="table-head clearfix">
+                <li>销售员</li>
+                <li>支票号</li>
+                <li>出票日期</li>
+                <li class="w10w">支票金额</li>
+                <li class="w10w">本次使用金额</li>
+                <li class="w10w">可使用金额</li>
+                <li>收款人</li>
+                <li class="last-vw">客户名称</li>
+              </ul>
+              <div class="table-body">
+                <ul class="clearfix" *ngFor='let one of orderViewForm.ReceiptData'>
+                  <li>{{one.apply_user_name}}</li>
+                  <li title="{{one.ticket_num}}">{{one.ticket_num}}</li>
+                  <li>{{one.checkout_date}}</li>
+                  <li class="w10w" title="{{one.ticket_amount}}">{{one.ticket_amount}}</li>
+                  <li class="w10w" title="{{(one.amount || 0) |iqNumber:'1.2-2'}}">{{(one.amount || 0)
+                    |iqNumber:'1.2-2'}}</li>
+                  <li class="w10w" title="{{one.Ticket_AvailableAmount}}">{{one.Ticket_AvailableAmount}}</li>
+                  <li title="{{one.payee}}">{{one.payee}}</li>
+                  <li class="last-vw" title="{{one.custom_name}}">{{one.custom_name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 订单备注 -->
+        <div class="one-section">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">订单备注</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.markMes' (click)='foldMess("markMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.markMes'>
+            <ul>
+              <li>
+                <div class="m-exm-label">备注信息</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.Remark}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 发票邮寄信息 -->
+        <div class="one-section" *ngIf='orderViewForm.SalesOrderData.IsMailingInvoice!="0"'>
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">发票邮寄信息</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.addrssMes' (click)='foldMess("addrssMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.addrssMes'>
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label">公司名称</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.InvoiceCompanyName}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">发票收件人</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.InvoiceRecipient}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">收件人地址</div>
+                <div class="m-exm-cont">
+                  <ng-container *ngFor="let provinces of provinceCityInfo.province">
+                    <span style="margin-right: 0;" *ngIf='orderViewForm.SalesOrderData.InvoiceAreaID==provinces.ProvinceCode'>{{provinces.ProvinceName}}（省/市）-</span>
+                  </ng-container>
+                  <ng-container *ngFor="let citys of provinceCityInfo.city">
+                    <span style="margin-right: 0;" *ngIf='orderViewForm.SalesOrderData.InvoiceCity==citys.CityCode'>{{citys.CityName}}（市/县）-</span>
+                  </ng-container>
+                  <span style="margin-right: 0;">{{orderViewForm.SalesOrderData.InvoiceDistrict}}（县/区）-</span>
+                  <!-- </ng-container> -->
+                  {{orderViewForm.SalesOrderData.InvoiceAddress}}
+                </div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">收件人电话</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.InvoicePhone}}</div>
+              </li>
+              <li class="m-exm-half">
+                <div class="m-exm-label">收件人邮编</div>
+                <div class="m-exm-cont">{{orderViewForm.SalesOrderData.InvoicePostCode}}</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- 附件不可更改 -->
+        <div class="one-section" *ngIf="!canEditFiles">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">附件</span>
+            <i class="iqon-fold" [class.iqon-fold-up]='aprOpenList.fileMes' (click)='foldMess("fileMes")'></i>
+          </div>
+          <div class="m-exm-item" [class.hide]='aprOpenList.fileMes'>
+            <div class="m-exm-item">
+              <ul>
+                <li>
+                  <div class="m-exm-label" [class.pre]='orderViewForm.AccessoryList.length==0'>附件文件</div>
+
+                  <ng-container *ngFor="let pre of orderViewForm.AccessoryList;">
+                    <div class="m-exm-cont m-dialog-head-blue accessory-list" (click)='download(pre.AccessoryURL)'>
+                      {{pre.AccessoryName}}
+                    </div>
+                  </ng-container>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- 附件可以修改 -->
+        <div class="one-section" *ngIf="canEditFiles">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-blue">附件</span>
+          </div>
+          <div class="m-exm-item">
+            <!-- 附件可以添加 -->
+            <!-- <iq-file-upload upType="1" [url]="uploadFilesApi" (onSuccess)="onFileCallBack($event)" [hasUploaded]="oldFileList"
+              [maxFileSize] = "52428800" [maxFileNum]="10"
+              (onDeleteItem)="deleteUploadFile($event)" (onClickFile)="getUploadFile($event)"></iq-file-upload> -->
+              <iq-file-upload upType="1" [url]="uploadFilesApi" (onSuccess)="onFileCallBack($event)" [hasUploaded]="oldFileList" (onDeleteItem)="deleteUploadFile($event)" (onClickFile)="getUploadFile($event)"></iq-file-upload>
+            <!-- <p class="m-input-notice">附件数量不超过10个，单个附件不超过5M</p> -->
+          </div>
+        </div>
+        <!-- 审批记录 -->
+        <div class="wfh-history">
+          <db-wfhistory [wfHistoryData]="wfData.wfHistory"></db-wfhistory>
+        </div>
+        <!--是否验证物料-->
+        <div class="one-section" *ngIf="isCanErp">
+          <div class="m-exm-item">
+            <ul>
+              <li class="m-exm-half">
+                <div class="m-exm-label">是否验证物料</div>
+                <div class="m-exm-cont">
+                  <input icheck type="radio" id="IsVerifyMaterialradio1" name="IsVerifyMaterial" [(ngModel)]="orderViewForm.SalesOrderData.IsVerifyMaterial"
+                    value=true checked> 是
+                  <input icheck type="radio" id="IsVerifyMaterialradio2" name="IsVerifyMaterial" [(ngModel)]="orderViewForm.SalesOrderData.IsVerifyMaterial"
+                    value=false> 否
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="wfh-btn" *ngIf="isFinishApprova==='1'&&orderViewForm.SalesOrderData.SaleContractStatus!=='2'">
+          <div [ngClass]="{'wfh-btn-wrgry': !isCanApprol && isSale,'wfh-btn-normal': isCanApprol && isSale}">
+            <db-wfapproval *ngIf="!isView && !isADP" (onApprovalComplateCallBack)='approveCallBack()' (onSave)="onApprovalSave($event)"
+              [hasSaved]="hasSaved" [appParms]="appParms" [isShowAgreetbutton]="nodeid==7?true:false"></db-wfapproval>
+            <button *ngIf="!isView && !isADP && isCanErp && isSale" type="button" class="m-btn-agree m-btn-agree-read apply-agree">同意</button>
+            <button *ngIf="!isView && !isADP && isSale && !isCanErp" type="button" class="m-btn-refuse m-btn-refuse-read apply-refuse">驳回</button>
+          </div>
+          <button *ngIf="!isView && isSale && isCanErp" class="m-btn-assist-1 m-btn-wr" type="button" (click)="wrERP()">写入ERP</button>
+          <button *ngIf="!isView && isSale && !isCanErp" type="button" class="m-btn-assist-1 m-btn-wr m-btn-wrgry">写入ERP</button>
+          <button class="m-btn-clearERPcode" *ngIf="!isView && isSale && orderViewForm.SalesOrderData.ERPOrderCode" type="button" (click)="clearERPcode('')">清除ERP销售订单号</button>
+
+        </div>
+        <!--加签审批-->
+        <div class="contract-adp-approval" *ngIf="!isView&&isADP">
+          <db-wfadp [adpAppParms]="adpAppParms"></db-wfadp>
+        </div>
+        <!--查看页面按钮组-->
+        <div class="contract-view-buttons" *ngIf="isView||isFinishApprova==='0'||orderViewForm.SalesOrderData.SaleContractStatus==='2'">
+          <ng-container *ngIf="isAllowRevoke&&!orderViewForm.SalesOrderData.ERPOrderCode">
+            <button class="m-btn-assist-1" type="button" (click)="revoke()">撤销</button>
+          </ng-container>
+          <button class="m-btn-more-big" type="button" (click)="onBack()">返回</button>
+        </div>
+
+      </div>
+    </div>
+    <div class="apply-p-right g-right1">
+      <db-wfview #wfview></db-wfview>
+    </div>
+
+  </div>

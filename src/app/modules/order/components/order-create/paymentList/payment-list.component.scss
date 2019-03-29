@@ -1,0 +1,79 @@
+.m-search-all{
+    height:30px;
+    .m-search{
+        width: 250px;
+        float: right;
+    }
+}
+.m-order-number{
+    z-index: 1045;
+    top:6%;
+    left:26%;
+}
+.modal-body{
+    height:455px;
+    padding-top:15px;
+}
+.m-order-table{
+    margin: 15px 0 15px;
+}
+.m-order-table{
+    .m-shipTo-head{
+        background-color: #f5f7fa;
+        height:30px;
+        line-height: 30px;
+        border-bottom:1px solid #d2d8e0;
+        font-weight: 500;
+    }
+    .m-shipTo-body{
+        max-height:342px;
+        overflow-y: auto;
+        width:100%;
+        ul{
+            width: 100%;
+            border-bottom:1px solid #d2d8e0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        ul:hover{
+            background-color: #fbfbfb;
+        }
+    }
+    li{
+        float: left;
+        padding:0 8px;
+        height:30px;
+        line-height: 30px;
+        border-left:1px solid #d2d8e0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:nth-child(1){
+            width:38px;
+            border-left:0;
+            text-align: center;
+        }
+        &:nth-child(2){
+            width:200px;
+        }
+        &:nth-child(3){
+            width:280px;
+        }
+    }
+}
+.inline-block{
+    display: inline-block;
+}
+/deep/ input[type=text]{
+    height:30px;
+}
+/deep/ .iqon-calendar-2{
+    display: none;
+}
+/deep/ .my-datepicker{
+    width:120px;
+}
+.m-order-number .modal-footer{
+    margin-top:20px;
+}

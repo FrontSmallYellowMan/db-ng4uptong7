@@ -1,0 +1,77 @@
+<div class="m-boardtop clearfix">
+  <iq-breadcrumb></iq-breadcrumb>
+  <button type="button" class="m-btn-success g-fr" (click)="addMaterMaint()" style="margin-top: 7px;"><i class="iqon-add"></i>新建华为物料</button>
+  <iq-file-upload upType="0" [url]="fileUploadApi" [allowedFileType]="['xls']" text="导入华为物料" (onSuccess)="fileUpSuccess($event)" style="float: right;margin: 8px 10px 0 0;" [showModel]="false"></iq-file-upload>
+  <button type="button" (click)="download()" class="m-btn-text g-fr mr10" style="color: #57b9f8;">下载华为物料模板</button>
+</div>
+
+<div class="m-overclass">
+  <!--缺省页开始-->
+  <div class="m-apply" (click)="addMaterMaint()" [ngClass]="{'hide': isSearch || materialList.length > 0}">
+    <loading [show]="loading"></loading>
+    <div class="m-apply-circle">
+      <i class="iqon-plus-circle"></i>
+      <span>新建华为物料</span>
+    </div>
+  </div>
+  <!--缺省页结束-->
+  <!--内容页开始-->
+  <div class="m-contclass" [ngClass]="{'hide': !isSearch && materialList.length == 0}">
+    <div class="m-search-form">
+      <div class="m-search-input">
+        <label>部件编码</label><input type="text" placeholder="-请填写部件编码" [(ngModel)]="query.MaterialCodeHW">
+        <label class="move">物料号</label><input type="text" placeholder="-请填写物料号" [(ngModel)]="query.MaterialCode">
+      </div>
+      <div class="m-search-btn">
+        <button class="m-btn-confirm" (click)="search()">搜索</button>
+        <button class="m-btn-default" (click)="reset()">重置</button>
+      </div>
+    </div>
+    <!--搜索结果缺省页开始-->
+    <div class="m-noresult" [ngClass]="{'hide': !isSearch || materialList.length > 0}" style="position: relative; height: 450px;">
+      <div class="m-noresult-msg">
+        <i class="iqon-query"></i>
+        <p class="m-noresult-notice">
+          很抱歉，没有找到与“<span>{{searchWord}}</span>”有关的信息
+        </p>
+        <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--搜索结果缺省页结束-->
+
+<div class="m-table-right" [ngClass]="{'hide': materialList.length == 0}" style="margin-top: 0;">
+  <loading [show]="loading"></loading>
+  <table class="table table-hover table-list" style="table-layout:auto">
+    <thead>
+      <tr>
+        <th class="wp5"><input type="checkbox" allcheck="demoall" icheck [(ngModel)]="fullChecked" [indeterminate]="fullCheckedIndeterminate" (onCount)="checkedNum = $event" (onIndeterminate)="CheckIndeterminate($event)"></th>
+        <ng-container *ngIf="!fullChecked && !fullCheckedIndeterminate">
+          <th class="wp10">序号</th>
+          <th class="wp20">部件编码</th>
+          <th class="wp25">物料号</th>
+          <th class="wp20">创建人</th>
+          <th class="wp25">创建时间</th>
+        </ng-container>
+        <ng-container *ngIf="fullChecked || fullCheckedIndeterminate">
+          <th class="list-edit" colspan="6">已选{{checkedNum}}项<button type="button" (click)="deleteMaterialHW(materialList)">删除</button></th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of materialList;index as i">
+        <td class="wp5" stopParentClick>
+          <input type="checkbox" allcheckChild="demoall" icheck [(ngModel)]="item.checked">
+        </td>
+        <td class="wp10">{{(pagerData.pageNo-1)*pagerData.pageSize + i + 1}}</td>
+        <td class="wp20"><span class="clickText" (click)="viewMaterMaint(item)">{{item.MaterialCodeHW}}</span></td>
+        <td class="wp25">{{item.MaterialCode}}</td>
+        <td class="wp20">{{item.CreaterITCode}}/{{item.CreaterName}}</td>
+        <td class="wp25">{{item.CreateTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+  <!--内容页结束-->
+</div>

@@ -1,0 +1,33 @@
+<div class="g-hdp">
+  <div class="main">
+    <div class="m-home-page">
+      <div class="g-right">
+         <div class="m-home-pageR clearfix">
+             <router-outlet></router-outlet>
+         </div>
+      </div>
+     </div>
+     <div class="g-list m-home-page">
+       <div class="m-home-pageL">
+           <div class="m-user-nav">
+              <div class="m-usertab">
+                  <div class="m-usernav" *ngFor="let navitem of indiaNavConfig; index as i;" (click)="tab(navitem, i)">
+                    <span  [ngClass]="{'active':navitem.active}">{{navitem.text}}</span>
+                  </div>
+              </div>
+              <ul class="m-usertree">
+                <li *ngFor="let menuItem of menu; index as i;" [ngClass]="{'open':menuItem.open}">
+                  <a (click)="isOpen(i)">{{ menuItem.text }}</a>
+                  <i [class]="menuItem.iqon"></i>
+                  <ul class="m-tree" *ngIf="menuItem.sub.length > 0">
+                    <li *ngFor="let subItem of menuItem.sub; index as subi;" [ngClass]="{'active':subItem.active}">
+                      <a (click)="isActive(i,subi, subItem.url)">{{ subItem.text }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+       </div>
+     </div>
+  </div>
+</div>

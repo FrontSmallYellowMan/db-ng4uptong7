@@ -1,0 +1,285 @@
+<loading [show]="isLoading"></loading>
+<div class="form-container">
+    <form id="pipeline-form" #form="ngForm">
+        <div class="common-area">
+            <div class="area-title">
+                <h5>通用信息</h5>
+            </div>
+    
+            <div class="area-content">
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">销售员</div>
+                        <div class="inputs">
+                            {{ formDataConfig.SellerName.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">创建日期</div>
+                        <div class="inputs">
+                            <p>{{ formDataConfig.CreateTime.value }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            客户名称
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.CustomName.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">客户编号</div>
+                        <div class="inputs">
+                            {{ formDataConfig.CustomNo.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">项目状态</div>
+                        <div class="inputs">
+                            {{ formDataConfig.ProjectState.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">项目进度</div>
+                        <div class="inputs">
+                            {{ formDataConfig.ProjectProgress.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            项目名称
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.ProjectName.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">项目编号</div>
+                        <div class="inputs">
+                            <p>{{ formDataConfig.ProjectNo.value }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">币种</div>
+                        <div class="inputs">
+                            {{ formDataConfig.Currency.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            项目金额
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.ProjectAmount.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">项目类型</div>
+                        <div class="inputs">
+                            {{ formDataConfig.ProjectType.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">所属平台</div>
+                        <div class="inputs">
+                            {{ formDataConfig.Platform.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">预约签约法人体</div>
+                        <div class="inputs">
+                            {{ formDataConfig.PreSignBody.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            预约签约日期
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.PreSignDate.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row area-row-visible">
+                    <div class="item">
+                        <div class="title">
+                            预计交货日期
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.PreDeliveryDate.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">预计下单日期</div>
+                        <div class="inputs">
+                            {{ formDataConfig.PreOrderDate.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            预计毛利率
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.PreMarginRate.value }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">客户资金来源</div>
+                        <div class="inputs">
+                            {{ formDataConfig.CustomFundSource.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            付款方式
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.PaymentType.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            付款条款
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.PaymentTerms.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            最终客户名称
+                        </div>
+                        <div class="inputs">
+                            {{formDataConfig.FinalUserName.value}}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            最终用户省份
+                        </div>
+                        <div class="inputs">
+                            {{ formDataConfig.FinalUserProvince.value }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row"  *ngIf="formDataConfig.LostReason.required">
+                    <div class="item">
+                        <div class="title">
+                            <span class="form-required" *ngIf="formDataConfig.LostReason.required">*</span>
+                            丢失原因
+                        </div>
+                        <div class="inputs">
+                            <input type="text" [(ngModel)]="formDataConfig.LostReason.value" name="LostReason" #LostReason="ngModel" [ngClass]="{'m-input-warn': LostReason.invalid && (LostReason.touched || isSubmit)}" [required]="formDataConfig.LostReason.required">
+                        </div>
+                        <p class="m-p-warn" *ngIf="LostReason.invalid && (LostReason.touched || isSubmit)">请填写丢失原因</p>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+        <div class="spectial-area">
+            <div class="area-title">
+                <h5>个性信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            签约代理类型
+                        </div>
+                        <div class="inputs">
+                           {{ roleFieldConfig.AgencyType.FieldValue }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            渠道分类
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.ChannelType.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            厂商PO号
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.Po.FieldValue }}
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="title">
+                            项目所属行业
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.ProjectTrade.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item">
+                        <div class="title">
+                            订单类型
+                        </div>
+                        <div class="inputs">
+                            {{ roleFieldConfig.OrderType.FieldValue }}
+                        </div>
+                    </div>
+                </div>
+                <div class="area-row">
+                    <div class="item item-filled">
+                        <div class="title">
+                            产品类型
+                        </div>
+                        <div class="inputs">
+                            <span *ngFor="let checkboxItem of roleFieldConfig.ProductType?.Data; index as i;">
+                                <input icheck type="checkbox" [id]="'checkbox' + i" [name]="'checkItem' + i" [(ngModel)]="checkboxItem.ischecked" [disabled]="true">
+                                <label [for]="'checkbox' + i">{{ checkboxItem.text }}</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="attachment-area">
+            <div class="area-title">
+                <h5>附件信息</h5>
+            </div>
+            <div class="area-content">
+                <div class="area-row">
+                    <ul>
+                        <li *ngFor="let item of formDataConfig.PipelineAccessories.value">
+                            <a (click)="toFileUrl(item.AccessoryURL)">{{ item.AccessoryName }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="m-btn-cancel" (click)="returnToList()">返回</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,80 @@
+<div class="addApply-base money">
+    <div class="m-list-head">
+        <span class="m-dialog-head-change progress-txt">合同附件</span>
+    </div>
+    <div class="addApp-base-infor">
+        <ul class="addApp-base-list">
+            <!-- 用印文件存在-->
+            <li class="addApp-form-item" style="width:100%;" *ngIf = "!isCustome && accessoryInfo['AccessorySeal']&&accessoryInfo['AccessorySeal'].length>0">
+                <div class="addApp-form-label"><label>用印文件</label></div>
+                <div class="addApp-form-right">
+                    <span *ngFor="let item of accessoryInfo['AccessorySeal'];index as i;" style="padding-left:15px;">
+                        <a *ngIf = "item.AccessoryURL!=null&&item.AccessoryType == '16'" (click) = "checkSeal(item.AccessoryURL)">
+                          {{item.AccessoryName}}
+                        </a>
+                        <a *ngIf = "item.AccessoryURL!=null&&item.AccessoryType != '16'" (click) = "commonFiles(item.AccessoryURL)">
+                          {{item.AccessoryName}}
+                        </a>
+                        <!-- 合同制作未成功-->
+                        <a *ngIf = "item.AccessoryURL==null" (click) = "openPage()">
+                          查看合同制作内容
+                        </a>
+                    </span>
+                </div>
+            </li>
+            <li class="addApp-form-item" style="width:55%;" *ngIf = "isCustome">
+                <div class="addApp-form-label"><label>用印文件</label></div>
+                <div class="addApp-form-right" *ngIf = "accessoryInfo['AccessorySeal'].length>0">
+                    <span *ngFor="let item of accessoryInfo['AccessorySeal'];index as i;" style="padding-left:15px;">
+                        <a (click) = "commonFiles(item.AccessoryURL)">
+                          {{item.AccessoryName}}
+                        </a>
+                        <i class="iqon-close" (click)="onDeleteFileItem(i)" style="color: #d2d8e0;"></i>
+                    </span>
+                </div>
+                <div class="addApp-form-right custome-file-upload" *ngIf = "accessoryInfo['AccessorySeal'].length==0">
+                    <iq-file-upload upType="1" [url]="uploadCustomeAccesslUrl" [maxFileNum]="1" [maxFileSize]="52428800" [withCredentials]=false [hasUploaded]="hasUploadedCustome"
+         (onSuccess)="onFileCallBack($event,18)" (onDeleteItem)="onDeleteFileItem($event)" (onClickFile)="onClickFile($event)"></iq-file-upload>
+                </div>
+            </li>
+            <!-- 用印文件、相关文件都不存在-->
+            <li class="addApp-form-item" style="width:100%;" *ngIf = "isCreate&&!accessoryInfo['AccessorySeal']">
+                <div class="addApp-form-label"><label>相关文件</label></div>
+                <div class="addApp-form-right">
+                  <db-sc-upload [maxFileSize]="52428800" upType="0" [url]="careerFileApi" [allowedFileType]=""  [maxFileNum] = "1"
+                  (onSuccess)="onFileCallBack($event,18)" [isEdit] = "isEdit" [isCreate] = "isCreate" class="float-right"></db-sc-upload>
+              </div>
+            </li>
+            <li class="addApp-form-item w-50" *ngIf = "isCreate&&accessoryBus">
+                <div class="addApp-form-label"><label>上传附件<br/>(事业部可见)</label></div>
+                <div class="addApp-form-right">
+                  <db-sc-upload [maxFileSize]="52428800" upType="0" [url]="careerFileApi" [allowedFileType]="" [accessoriesInfo] = "accessoryBus"
+                  (onSuccess)="onFileCallBack($event,1)" [isEdit] = "isEdit" [isCreate] = "isCreate" class="float-right"></db-sc-upload>
+                </div>
+            </li>
+            <li class="addApp-form-item w-50" *ngIf = "isCreate&&accessorySub">
+                <div class="addApp-form-label"><label>上传附件<br/>(事业部及风险可见)</label></div>
+                <div class="addApp-form-right">
+                    <db-sc-upload [maxFileSize]="52428800" upType="0" [url]="riskFileApi" [allowedFileType]="" [accessoriesInfo] = "accessorySub"
+                    (onSuccess)="onFileCallBack($event,3)" [isEdit] = "isEdit" [isCreate] = "isCreate" class="float-right"></db-sc-upload>
+                </div>
+            </li>
+            <li class="addApp-form-item" style="width:100%;" *ngIf = "!isCreate">
+                <div class="addApp-form-label"><label>相关文件</label></div>
+                <div class="addApp-form-right">
+                    <db-sc-upload [maxFileSize]="52428800" upType="0" [url]="approveFileApi" [allowedFileType]="" [accessoriesInfo] = "customFile"
+                    (onSuccess)="onFileCallBack($event,11)" [isEdit] = "isEdit" class="float-right"></db-sc-upload>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- <div class="addApply-base">
+    <div class="m-dialog-head">
+        <span class="m-dialog-head-change progress-txt">附件合同</span>
+    </div>
+
+    <div class="addApp-base-infor">
+        <db-sc-accessory [accessoryInfo] = "accessoryInfo" [isEdit] = "true" (scAccessory)="scAccessory($event)"></db-sc-accessory>
+    </div>
+</div> -->

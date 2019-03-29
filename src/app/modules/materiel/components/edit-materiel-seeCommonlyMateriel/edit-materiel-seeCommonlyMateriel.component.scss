@@ -1,0 +1,54 @@
+.m-srs{
+    margin: 0 auto;
+    width:75%;
+    .m-exm{
+    	width: 100%;
+    	.m-exm-item{
+    		position: relative;
+    		width: 100%;
+    	}
+    }
+}
+.m-cnm-title{
+	color: #76BAF2;
+	border-bottom: 1px solid #EEEFF4;
+	margin: 0px auto 20px;
+	padding:0 0 15px 0;
+	clear: both;
+}
+
+.m-srs-titleStyle{
+
+    width: 100px!important;
+}
+
+.m-srs-titleWidth{
+
+    padding-left: 120px!important;
+}
+
+.m-info-table{
+	width: 100%;
+	font-size: 12px;
+	td{
+		padding: 0 8px;
+		line-height: 30px;
+	}
+	thead,tbody tr{
+		display:table;
+        width:100%;
+        table-layout:fixed;
+	}
+
+	
+}
+
+.theadScoll{
+	width: calc( 100% - 3px )!important;
+}
+
+.m-table-tbody-scoll{
+	display:block;
+    max-height:256px;
+    overflow-y:auto;
+}

@@ -1,0 +1,35 @@
+    <div class="modal" style="display: block;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <div class="modal-header m-dialog-head">
+      <span>采购订单</span>
+      <i class="iqon-close" (click)="hide()"></i>
+    </div>
+    <div class="modal-body clearfix">
+      <div class="window-table-container">
+        <table class="table-border">
+          <thead>
+            <tr class="m-infor-tr">
+              <th [attr.colspan]="11" class="m-text-center change">
+                <span class="col-md-3">物料数量合计 {{ numAmount }}</span>
+                <span class="col-md-3">总金额 {{ modalData.untaxAmount| number:"1.2"  }}</span>
+              </th>
+            </tr>
+            <tr class="m-center">
+              <th *ngFor="let item of tableConfig" [width]="item.width">{{ item.title }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of modalData.procurementList;let i = index" class="m-center">
+              <td *ngFor="let key of tableConfig;let j = index" [title]="item[key.field]" [ngClass]="{'w100': j == 10}">{{ item[key.field] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="m-btn-confirm" (click)="hide()">关闭</button>
+    </div>
+        </div>
+    </div>
+</div>   

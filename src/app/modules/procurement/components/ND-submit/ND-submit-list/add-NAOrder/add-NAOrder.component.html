@@ -1,0 +1,185 @@
+<div style="position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100;background-color:rgba(0,0,0,0.5)">
+  <div class="m-order-number">
+    <div class="addApply-container">
+      <p class="closes" (click)="closeConpoment()">X</p>
+      <!--1、缺省页开始-->
+      <div class="m-apply margin-top-forclose" [ngClass]="{'hide': isSearch || (NAList && NAList.length > 0)}">
+        <loading [show]="loading"></loading>
+        <div class="m-apply-circle">
+          <i class="iqon-plus-circle"></i>
+          <span>暂无NA订单</span>
+        </div>
+      </div>
+      <!--缺省页结束-->
+      <!--2、搜索信息-->
+      <div class="addApply-base margin-top-forclose" [ngClass]="{'hide': !isSearch && !(NAList && NAList.length > 0)}">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">请搜索NA订单信息</span>
+          <i class="iqon-fold" (click)="searchBoxShow=!searchBoxShow"></i>
+        </div>
+        <div class="addApp-base-infor" *ngIf="searchBoxShow">
+          <ul class="addApp-base-list">
+            <li>
+              <div class="addApp-form-item">
+                <label class="addApp-form-label">需求跟踪号</label>
+                <input class="addApp-form-input" type="text" [(ngModel)]="query.TrackingNumber" (keyup.enter)="search()">
+              </div>
+            </li>
+            <li>
+              <div class="addApp-form-item">
+                <label class="addApp-form-label">ERP采购订单编号</label>
+                <input class="addApp-form-input" type="text" [(ngModel)]="query.ERPNumber" (keyup.enter)="search()">
+              </div>
+            </li>
+            <li>
+              <div class="addApp-form-item">
+                <label class="addApp-form-label">采购供应商</label>
+                <input class="addApp-form-input" type="text" [(ngModel)]="query.Vendor" (keyup.enter)="search()">
+              </div>
+            </li>
+            <li>
+                <div class="addApp-form-item">
+                  <label class="addApp-form-label">申请人</label>
+                  <iq-person-select name="person" #person="ngModel" [(ngModel)]="applicant.person" [max]="1" style="margin-left:10px;display:inline-block;"
+                    ngDefaultControl (ngModelChange)="selectedPerson($event)"></iq-person-select>
+                </div>
+              </li>
+          </ul>
+          <div class="addApp-sub-btns btns" style="padding-bottom:15px">
+            <button class="m-btn-confirm" type="button" (click)="search()">查询</button>
+            <button class="m-btn-sketch" type="button" (click)="clearSearch()">重置</button>
+          </div>
+        </div>
+      </div>
+  
+      <!--3、选择列表-->
+      <div class="addApply-base money" [ngClass]="{'hide': !isSearch && !(NAList && NAList.length > 0)}">
+        <!-- 内容页开始 -->
+        <div [ngClass]="{'hide': !NAList || NAList.length == 0}">
+          <div class="m-dialog-head">
+            <span class="m-dialog-head-change progress-txt">请选择NA订单</span>
+          </div>
+          <div class="addApp-base-infor">
+            <loading [show]="loading"></loading>
+            <table class="table table-hover table-list">
+              <thead>
+                <tr>
+                  <th class="wp5" style="text-align:center">
+                    <input type="checkbox" allcheck="allCheck" name="allCheck" icheck [(ngModel)]="fullCheckedAdd" [indeterminate]="fullCheckedIndeterminateAdd" (onCount)="checkedNumAdd = $event"
+                      (onIndeterminate)="CheckIndeterminate($event)" (onClick)="parentClick($event)">
+                  </th>
+                  <th class="wp10">需求跟踪号</th>
+                  <th class="wp15">ERP采购订单编号</th>
+                  <th class="wp25">供应商</th>
+                  <th class="wp10">采购总金额</th>
+                  <th class="wp10">申请人</th>
+                  <th class="wp10">申请日期</th>
+                  <th class="wp10">NA单系统编号</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of NAList;index as i">
+                  <td class="wp5" style="text-align:center">
+                    <input type="checkbox" allcheckChild="allCheck" icheck [disabled]="item.disabled" [(ngModel)]="item.checked" (onClick)="childClick($event,i)">
+                  </td>
+                  <td class="wp10">
+                    {{ item.TrackingNumber }}
+                  </td>
+                  <td class="wp15">
+                    {{ item.ERPOrderNumber }}
+                  </td>
+                  <td class="wp25">
+                    {{ item.VendorNo }} {{ item.Vendor }}
+                  </td>
+                  <td class="wp10" *ngIf="item.CurrencyCode=='RMB'">
+                    {{ item.PruchaseAmount }}
+                  </td>
+                  <td class="wp10" *ngIf="item.CurrencyCode!=='RMB'">
+                    {{ item.PurchaseForeignAmount }}
+                  </td>
+                  <td class="wp10">
+                    {{ item.ApplicantName }}
+                  </td>
+                  <td class="wp10">
+                    {{ item.AddTime | iqDate:'YYYY-MM-DD'}}
+                  </td>
+                  <td class="wp10">
+                    {{ item.ApplicantOrderNumber }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <iq-pager [data]="pagerData" (onChange)="onChangePager($event)"></iq-pager>
+          </div>
+        </div>
+        <!-- 内容页结束 -->
+        <!--搜索结果缺省页开始-->
+        <div class="m-noresult" [ngClass]="{'hide': !isSearch || (NAList && NAList.length > 0)}">
+          <loading [show]="loading"></loading>
+          <div class="m-noresult-msg">
+            <i class="iqon-query"></i>
+            <p class="m-noresult-notice">
+              很抱歉，没有找到相关的信息
+            </p>
+            <p class="m-p-notice">温馨提示：请检查您输入的是否正确</p>
+          </div>
+        </div>
+        <!--搜索结果缺省页结束-->
+      </div>
+      <!--4、已选择列表-->
+      <div class="addApply-base money" [ngClass]="{'hide': !NAList || NAList.length == 0}">
+        <div class="m-dialog-head">
+          <span class="m-dialog-head-change progress-txt">已选NA订单</span>
+        </div>
+        <table class="table table-hover table-list">
+          <thead>
+            <tr>
+              <th class="wp5"></th>
+              <th class="wp10">需求跟踪号</th>
+              <th class="wp15">ERP采购订单编号</th>
+              <th class="wp25">供应商</th>
+              <th class="wp10">采购总金额</th>
+              <th class="wp10">申请人</th>
+              <th class="wp10">申请日期</th>
+              <th class="wp10">NA单系统编号</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of selectedList;index as i">
+              <td class="wp5"></td>
+              <td class="wp10">
+                {{ item.TrackingNumber }}
+              </td>
+              <td class="wp15">
+                {{ item.ERPOrderNumber }}
+              </td>
+              <td class="wp25">
+                {{ item.VendorNo }} {{ item.Vendor }}
+              </td>
+              <td class="wp10" *ngIf="item.CurrencyCode=='RMB'">
+                {{ item.PruchaseAmount }}
+              </td>
+              <td class="wp10" *ngIf="item.CurrencyCode!=='RMB'">
+                {{ item.PurchaseForeignAmount }}
+              </td>
+              <td class="wp10">
+                {{ item.ApplicantName }}
+              </td>
+              <td class="wp10">
+                {{ item.AddTime | iqDate:'YYYY-MM-DD'}}
+              </td>
+              <td class="wp10">
+                {{ item.ApplicantOrderNumber }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="addApp-submit-btn" [ngClass]="{'hide': !NAList || NAList.length == 0}">
+      <div class="addApp-sub-btns btns1">
+          <button class="m-btn-confirm" type="button" (click)="nextStep()">下一步</button>
+      </div>
+    </div>
+  </div>
+</div>  

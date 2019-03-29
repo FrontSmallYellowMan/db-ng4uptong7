@@ -1,0 +1,30 @@
+.ec-save-template{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 28%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-width: 300px;
+    background: #fff;
+    z-index: 9999;
+    .ec-save-template-header{
+        padding: 0 20px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        background-color: #fff;
+        border-bottom: 1px solid #e1e3eb;
+        font-weight: 500;
+    }
+    .ec-save-template-body{
+        padding: 0 15px 15px;
+        overflow: auto;
+        .template-input-name{
+            padding: 13px;
+        }
+        .template-confirm{
+            text-align: center;
+        }
+    }
+}

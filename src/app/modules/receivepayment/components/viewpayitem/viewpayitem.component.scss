@@ -1,0 +1,31 @@
+.fp-viewpayitem{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 51%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    min-width: 300px;
+    background: #fff;
+    z-index: 9999;
+    .fp-viewpayitem-header{
+        padding: 0 20px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        background-color: #fff;
+        border-bottom: 1px solid #e1e3eb;
+        font-weight: 500;
+        i{
+            float: right;
+            line-height: 50px;
+            color: #d2d8e0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+    .fp-viewpayitem-body{
+        padding: 25px;
+        overflow: auto;
+    }
+}

@@ -1,0 +1,245 @@
+/*新增冲红首页新建*/
+.m-home-page{
+@import '../p-widget/buttons';//为了引入buttons的按钮变色方法
+  .m-orange{
+    color: #f8bc49;
+  }
+  .m-gry{
+    color: #a2a2a2;
+  }
+  /*左侧部分*/
+.m-home-pageL {
+  width: 240px;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 0 6.4px 1.1px rgba(0, 0, 0, 0.05);
+  border: solid 1px #e2e2e2;
+  position: absolute;
+  .m-usertree {
+    padding-top: 15px;
+    >.active::before{
+      height:55px;
+    }
+    /*有图标样式*/
+    .m-hasicon {
+      font-size: 14px;
+      a {
+        padding-left: 70px;
+        height: 55px;
+        line-height: 55px;
+      }
+      &.open::before {
+        height: 55px;
+      }
+      i {
+        position: absolute;
+        left: 30px;
+        font-size: 25px;
+        top: 15px;
+        color: $def-main-color;
+      }
+      .m-num {
+        top: 20px;
+      }
+      .m-tree > li > a {
+        padding-left: 25px;
+      }
+    }
+  }
+}
+  /*右侧部分*/
+.m-home-pageR {
+  width: 100%;
+  float: right;
+  /*padding-left: 240px;*/
+  /*右侧头部*/
+  .m-boardtop {
+    button.m-btn-main-2 {
+      @include m-btn(#4cc9a6);//buttons的按钮变色方法
+      width: 156px;
+      border-radius: 3px;
+      padding: 0;
+    }
+    .m-dropdown {
+      width: auto;
+      .m-dropdown-option {
+        width: 180px;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+        padding: 10px 0;
+        li {
+          padding-left: 0;
+          position: relative;
+          text-align: center;
+          color: #ffffff;
+          &:hover {
+            background-color: transparent;
+          }
+          i {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: #4cc9a6;
+            font-size: 12px;
+          }
+        }
+
+      }
+      .m-dropdown-move{
+          margin-left: -28px;
+          li{
+             text-align:left;
+             padding-left: 50px;
+             i{
+              left:30px;
+             }
+          }
+      }
+    }
+  }
+  /*右侧搜索*/
+  .m-list-menu {
+    margin: 12px 20px;
+    .m-search-all >.alter {
+      display: inline-block;
+      width: 230px;
+      height: 30px;
+      .m-select {
+        display: inline-block;
+        width: 230px;
+        margin-right: 10px;
+        select {
+          height: 30px;
+        }
+        .iqon-xia {
+          top: 10px;
+        }
+        .form-control{
+          width: 230px;
+          height: 30px;
+          margin-top: -3px;
+        }
+      }
+    }
+  }
+  /*右侧表格*/
+  .m-table-right{
+    margin: 15px 20px;
+    padding: 0 15px;
+    background: #fff;
+    min-height: calc(100vh - 190px);
+    position: relative;
+    /*table表格左右左右多出的表格*/
+    &::before {
+      content: '';
+      width: 15px;
+      border-bottom: 1px solid #ddd;
+      display: inline-block;
+      position: absolute;
+      left: 0px;
+      top: 49px;}
+    &::after {
+      content: '';
+      width: 15px;
+      border-bottom: 1px solid #ddd;
+      display: inline-block;
+      position: absolute;
+      right: 0px;
+      top: 49px;
+    }
+    /*除去操作部分的表格*/
+    .table-auto-content{
+      width: 85%;
+      overflow: auto;
+      >table {
+        position: relative;
+        margin-bottom: 6px;
+        >thead {
+          th{
+            padding: 0 10px;
+            border-bottom: 1px solid #ddd;
+          }
+        }
+        tbody > tr > td {
+          border-top: none;
+          padding: 0 10px;
+        }
+        .m-user-info {
+          padding: 0;
+        }
+      }
+      th{
+        border: none;
+        width: 120px;
+      }
+      .w250 { width: 250px; }
+      tr{
+        border-bottom: 1px solid #ddd;
+      }
+    }
+    /*操作部分表格*/
+    .table-handle-content{
+      width: 15%;
+      position: absolute;
+      right: 15px;
+      top: 0px ;
+      background: #fff;
+      table{
+        width: 100%;
+        text-align: center;
+        border-spacing: 0;
+        tr{
+          border-bottom: 1px solid #ddd;
+        }
+        thead{
+          th{
+            height: 49px;
+            line-height: 49px;
+            text-align: center;
+          }
+        }
+        tbody{
+          td{
+            height: 44px;
+            text-align: center;
+            span{
+              display: inline-block;
+              padding: 0 5px;
+              height: 22px;
+              line-height: 22px;
+              border-radius: 2.5px;
+              border: solid 1px $def-main-color;
+              color: $def-main-color;
+              text-align: center;
+              cursor: pointer;
+              margin-right: 5px;
+              &:hover{
+                background-color: $def-main-color;
+                color: #ffffff;
+              }
+            }
+            .m-del-information {
+              margin: 0;
+            }
+          }
+
+        }
+      }
+    }
+    /*页码*/
+    .page{ margin-top: 20px;}
+  }
+}
+  /*缺省右侧*/
+.m-scan-defaultup{
+  i{
+    font-size: 44px;
+    line-height: 100px;
+    color: #fff;
+  }
+  h3{
+    margin-top: 30px;
+  }
+}
+}

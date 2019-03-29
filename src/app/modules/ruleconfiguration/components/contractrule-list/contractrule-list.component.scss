@@ -1,0 +1,54 @@
+@import '../../../../../sass/base/util';
+.m-overclass{
+  padding: 15px 20px;
+}
+
+.m-search-form{
+  @extend %clearfix;
+  padding-left: 50px;
+  .m-search-input{
+    float: left;
+    left: 200px;
+    >input[type=text]{
+      width: 300px;
+    }
+    label{
+      padding-right:10px;
+    }
+    .move{
+      margin-left:20px;
+    }
+  }
+  .m-search-btn{
+    float: left;
+    padding-left: 120px;
+    .m-btn-confirm{
+      width: 78px;
+    }
+    .m-btn-default{
+      margin-left:15px;
+    }
+  }
+}
+
+.m-noresult{
+  margin-top: 10px;
+}
+
+.m-table-right {
+  // max-height: 474px;
+  padding: 0 10px;
+  margin: 0 15px;
+  overflow: auto;
+  .table-auto-content table > thead th {
+      font-size: 12px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+  }
+  background: #fff;
+  
+}
+.ellipsis{
+  @extend %text-ellipsis;
+}
+                    

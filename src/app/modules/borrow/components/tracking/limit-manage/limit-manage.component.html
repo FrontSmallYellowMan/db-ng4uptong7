@@ -1,0 +1,79 @@
+<div class="m-boardtop clearfix">
+	<div class="m-crumb">
+        <ul>我的位置：
+            <li><a>DCG业务管理平台</a></li>
+            <li><a>借用管理</a></li>
+            <li><a>借用跟踪</a></li>
+            <li><a>借用额度管理</a></li>
+        </ul>
+    </div>
+	<button type="button" class="m-btn-success float-right" (click)="newApply()" style="margin-top: 8px;"><i class="iqon-add"></i>新建申请</button>
+	<iq-file-upload upType="0" [url]="fileUploadApi" [allowedFileType]="['xls']" [text]="'额度模板导入'" (onSuccess)="onFileCallBack($event)"
+	 class="float-right" style="margin: 8px 10px 0 0;"></iq-file-upload>
+	<button type="button" class="m-btn-text mr10 float-right" style="color: #57b9f8;" (click)="loadLimitDataTpl()">额度管理模板下载</button>
+</div>
+<div class="m-overclass">
+	<div class="m-contclass">
+		<!--搜索条件-->
+		<div class="m-list-menu" >
+			<div class="m-search-big-multi">
+				<span>本部</span>
+				<input type="text" placeholder="-请填写" [(ngModel)]="bbmc" name="bbmc">
+			</div>
+			<div class="m-search-big-multi">
+				<span>事业部</span>
+				<input type="text" placeholder="-请填写" [(ngModel)]="sybmc" name="sybmc">
+			</div>
+			<div class="btn-right">
+				<button class="m-btn-cancel btn-blue" id="searchBtn" (click)="search()">搜索</button>
+				<button class="m-btn-cancel" (click)="clearSearch()">重置</button>
+			</div>
+		</div>
+
+		<div class="m-scan-result">
+			<!--搜索结果缺省页开始-->
+			<div class="m-noresult" [ngClass]="{'hide':limitData && limitData.length > 0}">
+				<loading [show]="loading"></loading>
+				<div class="m-noresult-msg">
+					<i class="iqon-query"></i>
+					<p class="m-noresult-notice">
+						暂无相关数据
+					</p>
+					
+				</div>
+			</div>
+			<!--搜索结果缺省页结束-->
+			<div class="m-card-cont" [ngClass]="{'hide':limitData && limitData.length == 0}">
+				<loading [show]="loading"></loading>
+				<table class="table table-hover table-list" style="table-layout: fixed;">
+					<thead>
+						<tr>
+
+							<th>序号</th>
+							<th>管理维度</th>
+							<th>本部</th>
+							<th>事业部</th>
+							<th>借用额度</th>
+							<th>已使用额度</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor='let item of limitData'>
+							<td (click)="goDetail(item.id)">{{item.num}}</td>
+							<td (click)="goDetail(item.id)">{{item.applyDimension==='1'?"事业部":"本部"}}</td>
+							<td (click)="goDetail(item.id)">{{item.baseDeptName}}</td>
+							<td (click)="goDetail(item.id)">{{item.deptName}}</td>
+							<td (click)="goDetail(item.id)">{{item.currentAmount}}万元</td>
+							<td (click)="goDetail(item.id)">{{item.usedAmount==null?"":item.usedAmount+"元"}}</td>
+							<td><span (click)="editForm(item.id)">编辑</span>
+							<span (click)="deleteApply(item.id)">删除</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<iq-pager [data]="pagerData" (onChange)="onChangePage($event)"></iq-pager>
+			</div>
+		</div>
+	</div>
+</div>

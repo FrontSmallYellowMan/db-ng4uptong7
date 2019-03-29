@@ -1,0 +1,228 @@
+$blurColor: #57b9f8;
+.addApp-base-infor{
+    padding: 15px;
+}
+.btn-content{
+    overflow: hidden;
+    // 采购清单中的按钮
+    .m-btn-confirm{
+        width: 88px;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+    }
+}
+:host /deep/ iq-file-upload .m-fileupload {
+    line-height: 26px;
+    height: 26px;
+    padding: 0px;
+    background-color: $blurColor;
+    color: #fff;
+    width: 88px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+// 清单的总计
+.list-summary{
+    margin-top: 15px;
+    padding-right: 48%;
+    display: flex;
+    background-color: #f3f3f3;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    .list-summary-part{
+        flex: 1;
+        padding-left: 15px;
+    }
+}
+// .addApp-form-item{
+//     select{
+//         width: 83%;
+//         margin-left: 10px;
+//         border: 1px solid #ddd;
+//         border-radius: 3px;
+//         padding: 0 15px;
+//     }
+// }
+// 是否隐藏
+.hideStyle{
+    display: none;
+}
+table{
+    table-layout: fixed;
+    width: 100%;
+    td{
+        &:not(:first-child){
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        input{
+            height: 22px;
+            line-height: 22px;
+        }
+    }
+        
+}
+.table-border{
+    border-collapse: collapse;
+    border-top: 1px solid #ddd;
+    th, td{
+        padding: 2px 8px;
+        height: 30px;
+        line-height: 30px;
+        border: 1px solid #ddd;
+    }
+    th{
+        background-color: rgb(243, 243, 243);
+        vertical-align: middle;
+        line-height: normal;
+        @media screen and (max-width: 1400px) {
+            white-space: normal;
+        }
+    }
+    tr{
+        height: 30px;
+        td:first-child, th:first-child, td:last-child, th:last-child{
+            text-align: center;
+        }
+        td:nth-child(10), th:nth-child(10){
+            width: 120px;
+        }
+        td:nth-child(10){
+            text-align: center;
+        }
+        input{
+            padding: 0 8px;
+        }
+        @media screen and (max-width: 1400px) {
+            td:nth-child(3){
+                text-overflow: inherit;
+                white-space: normal;
+                line-height: normal;
+            }
+            td:nth-child(10), th:nth-child(10){
+                width: 100px;
+            }
+        }
+    }
+    thead, tbody tr{
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+    }
+    tbody{
+        display: block;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+// 增删行
+.add-row, .delete-row{
+    display: inline-block;
+    color: $blurColor;
+    font-size: 22px;
+    cursor: pointer;
+    &:hover{
+        color: #000;
+    }
+}
+.no-scroll{
+    width: 40px;
+}
+.has-scroll{
+    width: 46px;
+}
+// 弹窗
+.modal ::ng-deep .modal-dialog{
+    width: 1000px;
+    margin: 30px auto;
+}
+.modal-header-copy{
+    span:first-child{
+        display:inline-block;
+        font-size:16px;
+        height:30px;
+        line-height:30px;
+    }
+    span:last-child{
+        font-size:25px;
+        width:18px;
+        cursor:pointer;
+        margin-right:4px;
+    }
+}
+.search-row{
+    position:relative;
+    .m-search-approval-query{
+        width: 100%;
+        overflow: hidden;
+        .item{
+            float: left;
+            width: 50%;
+            text-align: center;
+            height: 45px;
+            line-height: 45px;
+            .title{
+                float: left;
+                width: 25%;
+                font-weight: bold;
+                padding-right: 12px;
+                text-align: right
+            }
+            .inputs{
+                float: left;
+                width: 72%;
+            }
+            input{
+                padding: 0 15px;
+                width: 100%;
+                height: 35px;
+                border: 1px solid #e1e3eb;
+                border-radius: 3px;
+            }
+        }
+    }
+}
+.modal-table-row{
+    cursor: pointer;
+}
+// 审批人
+.accessory-content{
+    select{
+        width: 200px;
+        margin-right: 20px;
+    }
+    .title{
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        margin-right: 20px;
+        font-weight: bold;
+    }
+    .accessory-user-container{
+        display: inline-block;
+        margin-top: -4px;
+        vertical-align: middle;
+    }
+}
+.user-info-container{
+    display: inline-block;
+    width: 25%;
+}
+.wfApproveUser{
+    width:200px;
+    height: 25px;
+}
+
+.m-select .iqon-xia {
+    position: absolute;
+    height: 50px;
+    top: 8px;
+    right: 25px;
+    color: #a8b1bd;
+    z-index: 1;
+    display: inline-block;
+}

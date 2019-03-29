@@ -1,0 +1,34 @@
+/* 添加管理员 */
+.m-add-admin{ 
+  padding-bottom: 20px;
+  width: 440px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+
+  .m-add-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 25px 0;
+
+    .m-form-item{
+      width: 48%;
+    }
+    .m-form-item-w100{
+      width: 100%;
+    }
+  }
+
+  .m-add-btn{
+    text-align: center;
+    margin-top: 20px;
+    button{
+      margin-right: 15px;
+      &.m-btn-confirm{}
+      width: 168px;
+    }
+    .m-btn-cancel{
+      width: 88px;
+    }
+  }
+}

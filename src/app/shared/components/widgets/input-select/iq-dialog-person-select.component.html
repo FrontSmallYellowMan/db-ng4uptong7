@@ -1,0 +1,57 @@
+<div class="modal fade" [ngClass]="{'in': isShow}" style="display:block">
+  <div class="modal-dialog">
+    <div class="m-user-select">
+      <div class="m-dialog-head">
+        {{ title || "选择" }}
+        <i class="iqon-close" (click)="hide()"></i>
+      </div>
+      <div class="m-user-select-main">
+        <div class="m-user-search">
+          <i class="iqon-query"></i>
+          <input class="m-search-input" [(ngModel)]="searchkey" #term placeholder="姓名/itcode/员工编号" type="text">
+          <ul class="m-user-list">
+            <li (click)="toggle(item)" class="m-user-info" *ngFor="let item of searchList">
+<!-- icheck 的click不往外传递 点击icheck不会触发li上的click 所有手工触发-->
+              <input type="checkbox" icheck (onClick)="toggle(item)" [(ngModel)]="choosed[item[KEY]]">
+              <user-image-head [user]="item"></user-image-head>
+              <span class="m-user-name">{{item.userCN}}</span>
+              <span class="m-user-ename">{{item.userEN}}</span>
+            </li>
+          </ul>
+          <div class="m-user-nosearch" *ngIf= "!searchList || searchList.length<1 ">
+            <p>通过以下条件搜索查询个人信息</p>
+            <ul>
+              <li>
+                <i class="iqon-person"></i>
+                <span>姓名</span>
+              </li>
+              <li>
+                <i class="iqon-it"></i>
+                <span>Itcode</span>
+              </li>
+              <li>
+                <i class="iqon-no"></i>
+                <span>员工编号</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="m-user-selected">
+          <span>已选（{{count}}）</span>
+          <span [class]="count?'m-user-clear':'hide'" (click)="clear()">清除</span>
+          <ul class="m-user-selected-list">
+            <li class="m-user-info" user-image hasClose="true" (onClose)="remove(item)" [user]="item" *ngFor="let item of selectList">
+            </li>
+          </ul>
+          <div class="m-user-noselect" [ngClass]="{'hide':count}">尚未选择人员</div>
+        </div>
+      </div>
+      <div class="m-user-select-foot">
+        <div class="btn-groups">
+          <input type="button" value="确定" class="m-btn m-btn-confirm" (click)="confirm()">
+          <input type="button" value="取消" class="m-btn m-btn-cancel" (click)="hide()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

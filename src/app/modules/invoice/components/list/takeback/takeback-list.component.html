@@ -1,0 +1,358 @@
+<div class="m-home-pageR clearfix">
+    <div class="m-boardtop clearfix">
+        <div class="m-boardmenu">
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: flag === '0' }"
+                (click)="changeFlag('0')"
+                >我的申请<span class="m-num hide"></span
+            ></a>
+            <a
+                href="javascript:;"
+                [ngClass]="{ active: flag === '1' }"
+                (click)="changeFlag('1')"
+                >我的审批<span
+                    class="m-num"
+                    [ngClass]="{ hide: count === 0 }"
+                    >{{ count }}</span
+                ></a
+            >
+        </div>
+        <div class="m-dropdown g-fr">
+            <button class="m-btn-success" (click)="addsq()">
+                <i class="iqon-add"></i>新建申请
+            </button>
+        </div>
+    </div>
+
+    <div class="m-list-menu" [ngSwitch]="flag">
+        <ul *ngSwitchCase="'0'" class="m-state">
+            <li
+                [ngClass]="{ active: approveStatus == '0' }"
+                (click)="changeapplytype('0', '0')"
+            >
+                审批中
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == '1' }"
+                (click)="changeapplytype('1', '0')"
+            >
+                已完成
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == 'all' }"
+                (click)="changeapplytype('all', '0')"
+            >
+                全部
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == '2' }"
+                (click)="changeapplytype('2', '0')"
+            >
+                草稿
+            </li>
+        </ul>
+        <ul *ngSwitchCase="'1'" class="m-state">
+            <li
+                [ngClass]="{ active: approveStatus == '0' }"
+                (click)="changeapplytype('0', '1')"
+            >
+                待审批
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == '1' }"
+                (click)="changeapplytype('1', '1')"
+            >
+                已完成
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == '2' }"
+                (click)="changeapplytype('2', '1')"
+            >
+                驳回
+            </li>
+            <li
+                [ngClass]="{ active: approveStatus == 'all' }"
+                (click)="changeapplytype('all', '1')"
+            >
+                全部
+            </li>
+        </ul>
+
+        <div class="m-search-all">
+            <div class="m-search">
+                <i
+                    class="iqon-query"
+                    (click)="getTakebackApprove()"
+                    id="getTakebackApprove"
+                    style="cursor:pointer"
+                ></i>
+                <input
+                    name="state"
+                    placeholder="支票号/客户名称..."
+                    [(ngModel)]="peopleItcode"
+                    type="text"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="m-table-right">
+        <loading [show]="loading"></loading>
+        <div
+            class="m-home-default"
+            [ngClass]="{
+                hide: takebackList != null && takebackList.length > 0
+            }"
+        >
+            <div class="m-scan">
+                <div class="m-scan-body">
+                    <div class="m-scan-default">
+                        <div class="m-scan-logo">
+                            <i class="iqon-apply"></i>
+                        </div>
+                        <h3>暂无相关数据</h3>
+                        <h4>点击“新建申请”新建数据吧~</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            [ngClass]="{
+                hide: takebackList == null || takebackList.length == 0
+            }"
+        >
+            <table
+                class="table table-hover table-list"
+                style="table-layout: fixed;"
+            >
+                <thead>
+                    <tr>
+                        <th
+                            style="width:38px;"
+                            *ngIf="flag == '1' && approveStatus == '0'"
+                        >
+                            <input
+                                icheck
+                                type="checkbox"
+                                allcheck="selectedAll"
+                                [(ngModel)]="fullChecked"
+                                style="position: absolute; opacity: 0;"
+                                [indeterminate]="fullCheckedIndeterminate"
+                                (onCount)="checkedNum = $event"
+                                (onIndeterminate)="CheckIndeterminate($event)"
+                            />
+                        </th>
+
+                        <ng-container
+                            *ngIf="!fullChecked && !fullCheckedIndeterminate"
+                        >
+                            <th style="text-align:center;width:10%">支票号</th>
+                            <th style="text-align:center;width:10%">
+                                客户代码
+                            </th>
+                            <th style="text-align:center;width:20%">
+                                客户名称
+                            </th>
+                            <th style="text-align:center;width:10%">
+                                支票金额
+                            </th>
+                            <th style="text-align:center;width:15%">
+                                退票原因
+                            </th>
+                            <th style="text-align:center;width:10%">
+                                当前环节
+                            </th>
+                            <th style="text-align:center;width:10%">申请人</th>
+                            <th style="text-align:center;width:10%">
+                                申请日期
+                            </th>
+                            <!--<th style="text-align:center" *ngIf="flag=='0' && approveStatus=='2'">操作</th>-->
+                        </ng-container>
+                        <ng-container
+                            *ngIf="fullChecked || fullCheckedIndeterminate"
+                        >
+                            <th [attr.colspan]="8" style="width:90%">
+                                已选{{ checkedNum }}项
+
+                                <button
+                                    *ngIf="clickFlag == '0'"
+                                    type="button"
+                                    class="m-btn-agree"
+                                    name="button"
+                                    (click)="approveTakeback('yes')"
+                                >
+                                    同意
+                                </button>
+                                <button
+                                    *ngIf="clickFlag == '1'"
+                                    type="button"
+                                    disabled
+                                    class="m-btn-agree"
+                                    name="button"
+                                >
+                                    请稍后...
+                                </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button
+                                    *ngIf="clickFlag2 == '0'"
+                                    type="button"
+                                    class="m-btn-refuse"
+                                    name="button"
+                                    (click)="approveTakeback('no')"
+                                >
+                                    驳回
+                                </button>
+                                <button
+                                    *ngIf="clickFlag2 == '1'"
+                                    type="button"
+                                    disabled
+                                    class="m-btn-refuse"
+                                    name="button"
+                                >
+                                    请稍后...
+                                </button>
+                            </th>
+                        </ng-container>
+                        <th *ngIf="approveStatus == '2' && flag == '0'">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let invoice of takebackList">
+                        <td
+                            style="width:38px;"
+                            *ngIf="flag == '1' && approveStatus == '0'"
+                        >
+                            <input
+                                icheck
+                                type="checkbox"
+                                allcheckChild="selectedAll"
+                                [(ngModel)]="invoice.checked"
+                                style="position: absolute; opacity: 0;"
+                            />
+                        </td>
+                        <td
+                            style="width:10%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{ invoice.ticketNum }}"
+                            style="text-align:center"
+                        >
+                            {{ invoice.ticketNum }}
+                        </td>
+                        <td
+                            style="width:10%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{ invoice.customCode }}"
+                            style="text-align:center"
+                        >
+                            {{ invoice.customCode }}
+                        </td>
+                        <td
+                            style="width:20%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{ invoice.customName }}"
+                            style="text-align:center;width:150px"
+                        >
+                            {{ invoice.customName }}
+                        </td>
+                        <td
+                            style="width:10%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{
+                                invoice.ticketAmount == null
+                                    ? 0
+                                    : invoice.ticketAmount.toFixed(2)
+                            }}"
+                            style="text-align:center"
+                        >
+                            {{
+                                invoice.ticketAmount == null
+                                    ? 0
+                                    : invoice.ticketAmount.toFixed(2)
+                            }}
+                        </td>
+                        <td
+                            style="width:15%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{ invoice.takebackRemark }}"
+                            style="text-align:center"
+                        >
+                            {{ invoice.takebackRemark }}
+                        </td>
+                        <td
+                            style="width:10%"
+                            *ngIf="invoice.approveStatus == '0'"
+                            (click)="goDetail(invoice.id)"
+                            title="商务审批"
+                            style="text-align:center"
+                        >
+                            商务审批
+                        </td>
+                        <td
+                            style="width:10%"
+                            *ngIf="invoice.approveStatus == '1'"
+                            (click)="goDetail(invoice.id)"
+                            title="结束"
+                            style="text-align:center"
+                        >
+                            结束
+                        </td>
+                        <td
+                            style="width:10%"
+                            *ngIf="invoice.approveStatus == '2'"
+                            (click)="goDetail(invoice.id)"
+                            title="开始"
+                            style="text-align:center"
+                        >
+                            开始
+                        </td>
+                        <td
+                            style="width:10%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{ invoice.takebackUsername }}/{{
+                                invoice.takebackItcode
+                            }}"
+                            style="text-align:center"
+                        >
+                            {{ invoice.takebackUsername }}/{{
+                                invoice.takebackItcode
+                            }}
+                        </td>
+                        <td
+                            style="width:10%"
+                            (click)="goDetail(invoice.id)"
+                            title="{{
+                                invoice.createDate | iqDate: 'YYYY-MM-DD'
+                            }}"
+                            style="text-align:center"
+                        >
+                            {{ invoice.createDate | iqDate: "YYYY-MM-DD" }}
+                        </td>
+                        <!--<td style="text-align:center" *ngIf="flag=='0' && approveStatus=='2'"><a  href="/invoice/takeback/apply/{{invoice.id}}" target="_blank">重新申请</a></td>-->
+                        <td
+                            style="text-align:center"
+                            *ngIf="approveStatus == '2' && flag == '0'"
+                        >
+                            <a
+                                href="javascript:;"
+                                (click)="
+                                    delDraftById(invoice.id);
+                                    $event.stopPropagation()
+                                "
+                                >删除</a
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="page">
+                <iq-pager
+                    [data]="pagerData"
+                    (onChange)="onChangePage($event)"
+                ></iq-pager>
+            </div>
+        </div>
+    </div>
+</div>

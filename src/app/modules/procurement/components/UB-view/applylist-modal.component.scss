@@ -1,0 +1,67 @@
+.modal-dialog {
+    width: 900px;
+}
+.message {
+    .message-item {
+        float: left;
+        width: 33%;
+        span {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+    }
+}
+.window-table-container{
+    padding: 15px;
+    table {
+        table-layout: fixed;
+        border-top: 1px solid #ddd;
+    }
+    td, th{
+        border: 1px solid #ddd;
+    }
+    thead th{
+        background-color: #f5f7fa;
+        line-height: 20px;
+        height: 30px;
+        padding-left: 8px;
+        word-wrap: break-word;
+        word-break: break-all;
+        span{
+            font-weight: bold;
+        }
+    }
+    thead, tbody tr{
+        table-layout: fixed;
+    }
+    tbody{
+        tr{
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+}
+.wp15{
+    width: 15%!important;
+}
+.wp10{
+    width: 10%!important;
+}
+.w93{
+    width: 93px!important;
+    width: 83px\0!important;
+}
+.m-info-table > tbody > tr > td{
+    border-right:none;
+}
+.mix{
+    width: 100px\0!important;
+}
+@media (min-width: 992px){
+    .col-md-4 {
+        width: 30%;
+    }
+    .col-md-4:first-child{
+        width: 40%;
+    }
+}

@@ -1,0 +1,198 @@
+@import '../../../../../sass/base/variables';
+@import '../../../../../sass/base/util';
+
+// 边框颜色
+$borderColor: #e2e2e2;
+// 白色背景
+$backColor: #fff;
+// 布局
+.align-left{
+    text-align: left;
+}
+// 必填项
+.form-required{
+    color: red;
+    font-size: 13px;
+}
+// 右侧新增单据
+.list-operate-part{
+    height: 56px;
+    line-height: 54px;
+    border: 1px solid $borderColor;
+    background-color: $backColor;
+    padding-right: 20px;
+    .operates{
+        float: right;
+        width: 450px;
+        height: 56px;
+        line-height: 56px;
+        text-align: right;
+    }
+    a{
+        font-size: 14px;
+        cursor: pointer;
+    }
+    span{
+        height: 40px;
+        vertical-align: middle;
+    }
+    a,button,span{
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .m-btn-default{
+        line-height: 35px;
+    }
+    .m-btn-success{
+        min-width: 120px;
+    }
+}
+// 右侧搜索和表格内容
+.list-content-part{
+    padding: 0px 20px;
+}
+// 右侧搜索模块
+.list-search-part{
+    position: relative;
+}
+// 是否隐藏
+.hideStyle{
+    display: none;
+}
+// 右侧高级搜索
+.m-search-all{
+    position: relative;
+    overflow: hidden;
+    height: 40px;
+    margin-top: 10px;
+    .m-search-high{
+        width: 120px;
+        position: absolute;
+        right: 0px;
+        text-align: center;
+    }
+}
+.m-search-open{
+    margin-top: 10px;
+    float: right;
+    padding: 18px 25px;
+    background-color: #f5f7fa;
+    color: #57b9f8;
+    box-shadow: 0 -2px 3px rgba(0,0,0,.15);
+    cursor: pointer;
+}
+
+// 右侧查询
+.m-search-approval{
+    clear: both;
+    width: 100%;
+    margin: 10px 0px;
+    .m-search-approval-content{
+        width: 100%;
+        padding: 8px 25px;
+        background-color: #f5f7fa;
+    }
+    .m-search-approval-query{
+        width: 100%;
+        overflow: hidden;
+        .row{
+            margin: 0px;
+            width: 100%;
+            .item{
+                float: left;
+                width: 33.33%;
+                text-align: center;
+                height: 45px;
+                line-height: 45px;
+                .title{
+                    float: left;
+                    font-weight: bold;
+                    width: 25%;
+                    padding-right: 12px;
+                    text-align: right
+                }
+                .inputs{
+                    float: left;
+                    width: 75%;
+                }
+                input{
+                    padding: 0 15px;
+                    width: 100%;
+                    height: 35px;
+                    line-height: 35px;
+                    border: 1px solid #e1e3eb;
+                    border-radius: 3px;
+                }
+                .input-part-4{
+                    width: 40%;
+                }
+                .input-part-2{
+                    width: 16%;
+                    display: inline-block;
+                }
+            }
+            .item-filled{
+                width: 100%;
+                .title{
+                    width: 8.3%;
+                }
+                .input{
+                    width: 91.7%;
+                }
+            }
+        }
+    }
+    .m-search-approval-btn{
+        clear: both;
+        text-align: center;
+        .m-btn-confirm{
+            width: 78px;
+        }
+    }
+}
+// 右侧列表
+.list-display-part{
+    min-height: calc(100vh - 400px);
+    padding: 0px 15px;
+    background: $backColor;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    .list-edit{
+        position: absolute;
+        left: 5%;
+        z-index: 2;
+        background: #fff;
+        width: 95%;
+        text-align: left;
+        padding: 0 8px;
+        line-height: 49px;
+        white-space: nowrap;
+        vertical-align: bottom;
+        span{
+            font-weight: bold;
+        }
+        button{
+            margin-left: 40px;
+            padding: 6px 10px;
+            background: #f1f4f6;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 12px;
+            cursor: pointer;
+        }
+    }
+    table{
+        background-color: $backColor;
+        table-layout: fixed;
+        width: 100%;
+        td{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+            
+    }
+}

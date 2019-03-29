@@ -1,0 +1,51 @@
+.edit-nmc-salesList{
+    
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    z-index: 2100;
+    background-color: #fff;
+    position: absolute;
+
+    table{
+        width:90%;
+        margin: 10px auto 20px;
+
+        .a_point{
+            cursor: pointer;
+        }
+      
+    }
+
+    .edit-nmc-salesList-title{
+        margin: 10px auto 0;
+        width: 90%;
+        font-size: 16px;
+    }
+
+    .edit-nmc-button{
+        margin: 20px auto 20px;
+        text-align:center;
+    }
+
+}
+
+.m-hand-input{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px auto;
+    line-height: 35px;
+    padding: 15px;
+    background-color: rgb(237, 241, 247);
+    
+    label{
+     width: 25%;
+     font-size: 13px;
+    }
+
+    input{
+        width: 75%;
+    }
+}

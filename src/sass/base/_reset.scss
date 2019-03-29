@@ -1,0 +1,91 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+
+}
+ol, ul {
+	list-style: none;
+}
+body,html{
+  height:100%;
+  color:#4a4a4a;
+  /*font-family: Helvetica Neue,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;*/
+  font-family: 微软雅黑;
+  font-size: 12px;
+  background: #f3f3f3;
+}
+
+
+:focus {
+    outline: none;
+}
+::-ms-clear,
+::-ms-reveal {
+    display: none;
+}
+input::-ms-clear {
+    display: none;
+}
+textarea {
+    resize: none;
+}
+
+
+pre {
+    font-family: "Microsoft YaHei";
+    padding: 0;
+    border: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background: 0 0;
+    white-space: pre-wrap!important;
+}
+
+//多行文本共用的(文章内容)，不能附加其它用途的css
+.content {
+    line-height: 180%;
+    img {
+        max-width: 100%;
+    }
+}
+
+.table > thead > tr > th {
+    border-bottom: 1px solid #ddd;
+    vertical-align: bottom;
+}
+
+.table > thead > tr > th {
+	padding-bottom: 15px;
+}
+
+.container{
+	padding: 0;
+
+}
+
+a{
+	text-decoration: none;
+	&:hover{
+		text-decoration: none;
+	}
+  &:focus{
+    text-decoration: none;
+  }
+}
+
+
+.fb { font-weight: bold!important; }

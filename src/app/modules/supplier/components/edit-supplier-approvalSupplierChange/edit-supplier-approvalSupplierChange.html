@@ -1,0 +1,210 @@
+<form #form="ngForm">
+  <div class="apply-p-left">
+
+    <div class="m-apply-exm2 m-srs">
+      <h3>查看修改供应商详情信息</h3>
+      <div class="m-exm">
+
+        <div class="m-exm-item">
+          <ul class="info-uls">
+            <li class="m-edit-supplier-asc-form">
+              <label>申请人</label>
+              <div class="m-user-info-small">
+                <div user-image [hasClose]="false" [user]="userInfo"></div>
+              </div>
+            </li>
+            <li class="m-edit-supplier-asc-form">
+              <label>申请日期</label>
+              <div class="m-user-info-small">
+                {{changeSupplierDetailData.addtime|iqDate:'YYYY-MM-DD'}}
+              </div>
+            </li>
+          </ul>
+          <ul class="info-uls">
+            <li class="m-edit-supplier-asc-form">
+              <label>联系方式</label>
+              <div class="m-user-info-small">
+                {{changeSupplierDetailData.phone}}
+              </div>
+            </li>
+            <li class="m-edit-supplier-asc-form">
+              <label>成本中心</label>
+              {{changeSupplierDetailData.costcenter}}
+            </li>
+          </ul>
+          <ul class="info-uls">
+            <li class="m-edit-supplier-asc-form">
+              <label>本部</label>
+              <div class="m-user-info-small">
+                {{changeSupplierDetailData.BBMC}}
+              </div>
+            </li>
+            <li class="m-edit-supplier-asc-form">
+              <label>事业部</label>
+              {{changeSupplierDetailData.SYBMC}}
+            </li>
+          </ul>
+          <ul class="info-uls">
+              <li class="m-edit-supplier-asc-form">
+                <label>供应商编号</label>
+                <div class="m-user-info-small">
+                  {{changeSupplierDetailData.vendorno}}
+                </div>
+              </li>
+              <li class="m-edit-supplier-asc-form">
+                   <!-- 占位用 -->
+              </li>
+            </ul>
+        </div>
+
+        <div class="m-exm-item">
+          <table class="m-info-table">
+            <thead>
+              <tr>
+                <th width="20%">字段</th>
+                <th width="40%">修改前</th>
+                <th width="40%">修改后</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  供应商名称
+                </td>
+                <td>{{supplierDetailData.vendor}}</td>
+                <td [ngClass]="{'changeColor':supplierDetailData.vendor!=changeSupplierDetailData.vendor}">{{changeSupplierDetailData.vendor}}</td>
+              </tr>
+              <tr>
+                <td>注册地址</td>
+                <td [title]="supplierDetailData.registeredaddress">{{supplierDetailData.registeredaddress}}</td>
+                <td [title]="changeSupplierDetailData.registeredaddress" [ngClass]="{'changeColor':changeSupplierDetailData.registeredaddress!=supplierDetailData.registeredaddress}">
+                  {{changeSupplierDetailData.registeredaddress}}
+                </td>
+              </tr>
+              <tr>
+                <td>供应商类别</td>
+                <td >{{supplierDetailData.vendorcountry|supplierPipe}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.vendorcountry!=supplierDetailData.vendorcountry}">
+                  {{changeSupplierDetailData.vendorcountry|supplierPipe}}
+                </td>
+              </tr>
+              <tr>
+                <td>增值税号或统一社会信用代码</td>
+                <td>{{supplierDetailData.valueaddedtaxno}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.valueaddedtaxno!=supplierDetailData.valueaddedtaxno}">
+                  {{changeSupplierDetailData.valueaddedtaxno}}
+                </td>
+              </tr>
+              <tr>
+                <td>银行国别</td>
+                <td>{{supplierDetailData.bankcountry}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.bankcountry!=supplierDetailData.bankcountry}">
+                  {{changeSupplierDetailData.bankcountry}}
+                </td>
+              </tr>
+              <tr>
+                <td>银行名称</td>
+                <td>{{supplierDetailData.bankname}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.bankname!=supplierDetailData.bankname}">
+                  {{changeSupplierDetailData.bankname}}
+                </td>
+              </tr>
+              <tr>
+                <td>银行账号</td>
+                <td>{{supplierDetailData.bankaccount}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.bankaccount!=supplierDetailData.bankaccount}">
+                  {{changeSupplierDetailData.bankaccount}}
+                </td>
+              </tr>
+              <tr>
+                <td>付款条款</td>
+                <td>{{supplierDetailData.paymentterms}}</td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.paymentterms!=supplierDetailData.paymentterms}">
+                  {{changeSupplierDetailData.paymentterms}}
+                </td>
+              </tr>
+              <tr>
+                <td>国际贸易条件</td>
+                <td>
+                  {{supplierDetailData.internationaltradeterms}}
+                </td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.internationaltradeterms!=supplierDetailData.internationaltradeterms}">
+                  {{changeSupplierDetailData.internationaltradeterms}}
+                </td>
+              </tr>
+              <tr>
+                <td>国际贸易地点</td>
+                <td>
+                  {{supplierDetailData.internationaltradelocation}}
+                </td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.internationaltradelocation!=supplierDetailData.internationaltradelocation}">
+                  {{changeSupplierDetailData.internationaltradelocation}}
+                </td>
+              </tr>
+              <tr>
+                <td>币种</td>
+                <td>
+                  {{supplierDetailData.currency}}
+                </td>
+                <td [ngClass]="{'changeColor':changeSupplierDetailData.currency!=supplierDetailData.currency}">
+                  {{changeSupplierDetailData.currency}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="m-edit-supplier-ssd-failUpLoad">
+            <p class="m-edit-supplier-ssd-failUpLoad-title">
+              <span class="m-form-need"></span>参考资料</p>
+            <div class="m-select m-edit-supplier-ssd-select-style1">
+              <ul class="m-enclosure" *ngFor="let list of changeSupplierDetailData.AccessoryList;index as i">
+                <li class="uploaded">
+                  <i class="iqon-enclosure"></i>
+                  <span class="filename" (click)="seeFileUpLoad(list.AccURL)">
+                      {{list.AccName}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!--审批历史记录-->
+      <div class="m-div-margin" *ngIf="wfHistory.length>0">
+      <db-wfhistory [wfHistoryData]="wfHistory"></db-wfhistory>
+    </div>
+      <!--审批历史记录 end-->
+
+      <!--审批按钮-->
+      <div class="m-div-margin" *ngIf="mySupplierRouterType==='e'&&taskState==='0'&&ADP!='1'">
+        <db-wfapproval [appParms]="approveData" [hasSaved]="isApproval" (onSave)="writeSupplierType($event)" (onApprovalComplateCallBack)="wariteStorage()"></db-wfapproval>
+      </div>
+
+      <!-- 反填环节审批按钮 -->
+      <!-- <div class="m-button-margin" *ngIf="taskState=='0'&&ADP=='0'&&approveData.nodeid==='7'">
+      <button type="button" (click)="backSaleApplval()" class="m-btn-agree">同意</button>
+      <button class="approval-button-back" type="button" (click)="cancel()">返回</button>
+    </div> -->
+
+      <!-- 加签审批按钮 -->
+    <div *ngIf="taskState=='0'&&ADP=='1'" class="m-div-margin">
+      <db-wfadp [adpAppParms]="approveData"></db-wfadp>
+    </div>
+
+    <div class="m-commonly-btn" *ngIf="mySupplierRouterType!='e'||taskState==='1'">
+      <button class="m-btn-cancel" (click)="cancel()">关闭</button>
+    </div>
+
+    </div>
+
+  </div>
+  <!-- 审批全景图 -->
+  <div class="apply-p-right">
+    <db-wfview #wfView></db-wfview>
+  </div>
+
+</form>

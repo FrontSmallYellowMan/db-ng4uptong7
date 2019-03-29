@@ -1,0 +1,49 @@
+.g-hdp{
+  width: 100%;
+  min-width: 1200px;
+  height: calc(100vh - 61.5px);
+  position: absolute;
+  top: 61.5px;
+  bottom: 0;
+}
+.m-btn-2 {
+   text-align: center;
+    height: 35px;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    transition: all .7s;
+    font-size: 14px;
+    overflow: hidden;
+    background-color: #41ab8e;
+    padding: 0 50px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    }
+.m-commonly-noresult{
+    margin: 10px 0 0 20px;    
+    /*height: 550px;*/
+   
+}
+.m-apply {
+    width: 97%;
+    height: 100%;
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 2px;
+    cursor: pointer;
+    min-height: calc(92vh - 190px);
+}
+ .iqon-report,.iqon-right, .iqon-more{
+      display: block;
+      margin: 0 auto;
+      width: 90px;
+      height: 90px;
+      text-align:center;
+      line-height: 90px;
+      font-size: 54px;
+      color: #fff;
+      background:#57b9f8;
+      border-radius:50%;
+ }

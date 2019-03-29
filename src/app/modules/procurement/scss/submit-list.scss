@@ -1,0 +1,39 @@
+// 所有 提交页面 采购清单
+.btn-content {
+    margin:15px 20px;
+    overflow: hidden;
+    .font-small {
+        font-size: 12px!important;
+        margin-top: 1px;
+    }
+    .left {
+        span {
+            color:#57b9f8;
+        }
+        label {
+            margin-right: 30px;
+        }
+        .label-first {
+            margin-left: 30px;
+        }
+    }
+    .min-btn {
+        width: 88px;
+        height: 24px;
+        line-height: 24px;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+}
+.head-cont {
+    display: inline-block;
+    width: 24%;
+}
+:host /deep/ .min-btn .m-fileupload {
+        height: 24px;
+        line-height: 24px;
+        background-color: #57b9f8;
+        color: #fff;
+        font-size: 12px;
+    
+}

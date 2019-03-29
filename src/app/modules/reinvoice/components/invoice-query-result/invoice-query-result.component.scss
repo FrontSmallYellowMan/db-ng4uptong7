@@ -1,0 +1,26 @@
+.invoice-result-modal{
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    transform:translateX(-50%);
+    z-index: 9999;
+    background-color: #fff;
+    width: 600px;
+    padding: 25px;
+    text-align: center;
+    .m-info-table{
+        width: 100%;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
+        // transform: translate(-50%, -50%);
+        tr{
+            cursor: pointer;
+        }
+    }
+    .m-at-btn{
+        text-align: center;
+        clear: both;
+        padding-top: 15px;
+    }
+}

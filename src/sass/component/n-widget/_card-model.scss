@@ -1,0 +1,51 @@
+//名片模板
+.m-card-model{
+  background: #fff;
+
+  .m-model-head{
+    @extend %clearfix;
+
+    p{
+      float: left;
+      margin: 15px 0 0 15px;
+      font-weight: bold;
+    }
+
+    .m-model-operate{
+      @extend %clearfix;
+      float: right;
+      margin-top: 15px;
+
+      >li{
+        float: left;
+        margin-right: 15px;
+        cursor: pointer;
+
+        &:last-child{
+          margin-left: 40px;
+        }
+
+        >i{
+          margin-right: 5px;
+          color: $def-main-color;
+        }
+
+        .m-switch{
+          margin: -4px 0 0 10px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  .m-model-body{
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-around;
+
+    .m-card-chinese,.m-card-english{
+      width: 500px;
+      height: 300px; 
+      border: 1px solid $def-link1-color;
+    }
+  }
+}

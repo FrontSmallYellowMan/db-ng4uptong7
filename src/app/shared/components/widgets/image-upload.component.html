@@ -1,0 +1,18 @@
+<div class="">
+  <div class="up-pic-show">
+    <img [src]="file.filePath" />
+    <span class="up-pic-del" (click)="clearImage()">
+          <i class="icon-remove"></i>
+      </span>
+  </div>
+  <div class="up-pic-up">
+    <button class="up-pic-btn btn">
+      <input type="file" accept="image/gif, image/jpeg, image/png" ng2FileSelect [uploader]="uploader" />
+      <i class="icon-plus"></i>选择图片
+    </button>
+    <p class="up-pic-tips">
+      请选择一个图片！<br>
+      <span class="color-danger">480*360</span>像素效果最佳
+    </p>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+// 名片设置- 公司信息- 导入 xuewp
+
+.m-import {
+  width: 100%;
+  height: 100%;
+  border: 1px solid $border-color;
+  background-color: #FFFFFF;
+
+  .m-fun-head {
+    border-bottom: 1px solid $border-color;
+  }
+
+  .m-import-error{
+    margin: 25px 0;
+    padding: 0 25px;
+    >p{
+      font-size: 12px;
+    }
+    .m-p-warn{
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 26px;
+    }
+  }
+
+  .m-import-body {
+    margin-top: 17px;
+    padding: 0 25px 16px;
+
+    .table > thead > tr > th {
+      font-size: 12px;
+      font-weight: normal;
+      color: #4A4A4A;
+      height: 35px;
+      line-height: 35px;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+      background-color: #f5f8fb;
+    }
+  }
+
+  .m-import-foot {
+    margin-bottom: 20px;
+
+    .m-btn-cancel {
+      margin-left: 15px;
+    }
+  }
+}
